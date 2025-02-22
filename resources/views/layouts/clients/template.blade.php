@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>Index - OnePage Bootstrap Template</title>
+    <title>PPDB | SPENYOSI</title>
     <meta name="description" content="">
     <meta name="keywords" content="">
 
@@ -28,6 +28,9 @@
 
     <!-- Main CSS File -->
     <link href="{{ asset('OnePage/assets/css/main.css') }}" rel="stylesheet">
+    {{-- custom css file --}}
+    <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
+
 
     <!-- =======================================================
   * Template Name: OnePage
@@ -42,9 +45,9 @@
 
     @include('layouts.clients.header')
 
-    <main class="main">
+    <div class="container">
         @yield('content')
-    </main>
+    </div>
 
     @include('layouts.clients.footer')
 
@@ -61,7 +64,7 @@
     <script src="{{ asset('OnePage/assets/vendor/aos/aos.js') }}"></script>
     <script src="{{ asset('OnePage/assets/vendor/purecounter/purecounter_vanilla.js') }}"></script>
     <script src="{{ asset('OnePage/assets/vendor/glightbox/js/glightbox.min.js') }}"></script>
-    <script src="{{ asset('OnePage/assets/vendor/swiper/swiper-bundle.min.js') }}"></script>
+    <script src="{{ asset('OnePage/assets/vendor/swiper/swiper-bundle.min.css') }}"></script>
     <script src="{{ asset('OnePage/assets/vendor/imagesloaded/imagesloaded.pkgd.min.js') }}"></script>
     <script src="{{ asset('OnePage/assets/vendor/isotope-layout/isotope.pkgd.min.js') }}"></script>
 

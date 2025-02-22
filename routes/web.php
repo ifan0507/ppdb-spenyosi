@@ -1,6 +1,11 @@
 <?php
 
 use App\Http\Controllers\BerandaController;
+use App\Http\Controllers\PortalController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [BerandaController::class, 'index']);
+// Beranda
+Route::get('/beranda', [BerandaController::class, 'index'])->name('beranda');
+
+// Portal
+Route::get('/portal', [PortalController::class, 'index'])->name('portal');
