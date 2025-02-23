@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\BerandaController;
-use App\Http\Controllers\PortalController;
+use App\Http\Controllers\client\BerandaController;
+use App\Http\Controllers\client\PortalController;
 use Illuminate\Support\Facades\Route;
 
 // Beranda
