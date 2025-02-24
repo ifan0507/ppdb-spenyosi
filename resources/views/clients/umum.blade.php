@@ -10,26 +10,33 @@
                 <p>Untuk siswa <strong>Luar Negeri</strong> yang berasal dari <strong>sekolah non SRI (Sekolah Rakyat
                         Indonesia)</strong> dapat menggunakan NPSN 69999999.</p>
 
-                <form action="#" method="POST">
+                <form action="{{ route('registerUmum') }}" method="POST">
                     @csrf
                     <div class="mb-3">
+                        <label for="nama" class="form-label">Nama Lengkap <span class="text-danger">*</span></label>
+                        <input type="text" name="nama_lengkap" class="form-control" id="nama"
+                            placeholder="1234567890">
+                    </div>
+
+                    <div class="mb-3">
                         <label for="nisn" class="form-label">NISN <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="nisn" placeholder="1234567890">
+                        <input type="text" name="nisn" class="form-control" id="nisn" placeholder="12345678">
                     </div>
 
                     <div class="mb-3">
-                        <label for="npsn" class="form-label">NPSN <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="npsn" placeholder="12345678">
+                        <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
+                        <input type="email" name="email" class="form-control" id="email">
                     </div>
 
                     <div class="mb-3">
-                        <label for="tanggal_lahir" class="form-label">Tanggal Lahir <span
-                                class="text-danger">*</span></label>
-                        <input type="date" class="form-control" id="tanggal_lahir">
+                        <label for="password" class="form-label">Password <span class="text-danger">*</span></label>
+                        <input type="password" name="password" class="form-control" id="password">
                     </div>
 
                     <div class="d-flex justify-content-between">
-                        <button type="button" class="btn btn-light">Kembali</button>
+                        <a href="{{ route('regist') }}">
+                            <button type="button" class="btn btn-light">Kembali</button>
+                        </a>
                         <button type="submit" class="btn btn-primary">Selanjutnya →</button>
                     </div>
                 </form>
