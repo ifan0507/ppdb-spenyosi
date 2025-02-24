@@ -35,12 +35,24 @@ return [
     |
     */
 
+    // 'guards' => [
+    //     'web' => [
+    //         'driver' => 'session',
+    //         'provider' => 'users',
+    //     ],
+    // ],
     'guards' => [
         'web' => [
             'driver' => 'session',
-            'provider' => 'users',
+            'provider' => 'users', // Guard untuk admin
+        ],
+
+        'siswa' => [
+            'driver' => 'session',
+            'provider' => 'registers', // Guard untuk siswa
         ],
     ],
+
 
     /*
     |--------------------------------------------------------------------------
@@ -59,17 +71,30 @@ return [
     |
     */
 
+    // 'providers' => [
+    //     'users' => [
+    //         'driver' => 'eloquent',
+    //         'model' => env('AUTH_MODEL', App\Models\User::class),
+    //     ],
+
+    //     // 'users' => [
+    //     //     'driver' => 'database',
+    //     //     'table' => 'users',
+    //     // ],
+    // ],
+
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => env('AUTH_MODEL', App\Models\User::class),
+            'model' => App\Models\User::class, // Model admin
         ],
 
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+        'registers' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Register::class, // Model siswa
+        ],
     ],
+
 
     /*
     |--------------------------------------------------------------------------

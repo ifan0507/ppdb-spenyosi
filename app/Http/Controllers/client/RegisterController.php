@@ -4,7 +4,9 @@ namespace App\Http\Controllers\client;
 
 use App\Http\Controllers\Controller;
 use App\Models\Register;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class RegisterController extends Controller
@@ -37,7 +39,7 @@ class RegisterController extends Controller
             'jalur_ppdb.required' => 'Jalur PPDB wajib dipilih.',
         ]);
 
-        $register = Register::create([
+        $siswa = Register::create([
             'nama_lengkap' => $request->nama_lengkap,
             'nisn' => $request->nisn,
             'email' => $request->email,
@@ -45,12 +47,10 @@ class RegisterController extends Controller
             'jalur_ppdb' => $request->jalur_ppdb,
         ]);
 
-        if ($register) {
-            return response()->json([
-                'success' => true,
-                'redirect_url' => route('login-siswa')
-            ]);
-        }
+        event(new Registered($siswa));
+
+        Auth::guard('siswa')->login($siswa);
+        return redirect('/email/verify');
     }
 
     public function registerUmum(Request $request)
@@ -68,7 +68,7 @@ class RegisterController extends Controller
             'password.required' => 'Password wajib diisi.',
         ]);
 
-        $register = Register::create([
+        $siswa = Register::create([
             'nama_lengkap' => $request->nama_lengkap,
             'nisn' => $request->nisn,
             'email' => $request->email,
@@ -76,12 +76,10 @@ class RegisterController extends Controller
             'jalur_ppdb' => 'Umum',
         ]);
 
-        if ($register) {
-            return response()->json([
-                'success' => true,
-                'redirect_url' => route('login-siswa')
-            ]);
-        }
+        event(new Registered($siswa));
+
+        Auth::guard('siswa')->login($siswa);
+        return redirect('/email/verify');
     }
 
     /**
