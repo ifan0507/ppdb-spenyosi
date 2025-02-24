@@ -19,4 +19,9 @@ class SiswaBaru extends Model
     {
         return $this->hasOne(OrtuSiswa::class, 'id_siswa');
     }
+
+    public function pendaftaran(): HasOne
+    {
+        return $this->hasOne(Pendaftaran::class, 'id_siswa');
+    }
 }

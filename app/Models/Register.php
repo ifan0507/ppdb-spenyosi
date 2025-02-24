@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Register extends Model
 {
     use HasFactory;
-
+    public $incrementing = false;
+    protected $keyType = 'string';
     protected $table = 'registers';
     protected $fillable = ['nama_lengkap', 'nisn', 'email', 'password', 'jalur_ppdb'];
 }

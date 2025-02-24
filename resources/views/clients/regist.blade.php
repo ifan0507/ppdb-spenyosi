@@ -2,29 +2,34 @@
 
 @section('content')
     <div class="container text-center mt-5">
-    <h2>Registrasi Akun SNPMB</h2>
-    <div class="row justify-content-center mt-4">
-        <!-- Box Siswa -->
-        <div class="col-md-5">
-            <div class="card shadow">
-                <img src="{{ asset('') }}" class="img-fluid" alt="Siswa">
-                <h4 class="mt-3">Siswa</h4>
-                <p>Saya adalah siswa yang memiliki NISN</p>
-                <a href="{{ route('') }}" class="btn btn-primary">Daftar Akun Siswa</a>
+        <h2>Registrasi Akun PPDB</h2>
+
+        <div class="row justify-content-center mt-4">
+            <!-- Box Siswa -->
+            <div class="col-md-5">
+                <a href="{{ route('register.umum') }}" class="text-decoration-none">
+                    <div class="box-icon p-4 text-center">
+                        <img src="{{ asset('assets/img/illustration.png') }}" alt="Siswa" class="img-fluid mb-3"
+                            width="150">
+                        <h4 class="fw-bold text-dark">Jalur Umum</h4>
+                        <p class="text-muted">Saya adalah siswa yang memiliki NISN</p>
+                        <button class="btn btn-primary">Daftar Akun Umum</button>
+                    </div>
+                </a>
             </div>
-        </div>
-        <!-- Box Sekolah -->
-        <div class="col-md-5">
-            <div class="card shadow disabled-card">
-                <img src="{{ asset('') }}" class="img-fluid" alt="Sekolah">
-                <h4 class="mt-3">Sekolah</h4>
-                <p>Saya adalah wakil sekolah yang memiliki NPSN dan kode registrasi Dapodik</p>
-                <div class="alert alert-danger p-2" role="alert">
-                    <i class="bi bi-info-circle"></i> Pendaftaran akun sekolah <strong>sudah ditutup!</strong>
-                </div>
-                <button class="btn btn-secondary" disabled>Daftar Akun Sekolah</button>
+
+            <!-- Box Sekolah -->
+            <div class="col-md-5">
+                <a href="" class="text-decoration-none">
+                    <div class="box-icon p-4 text-center disabled-box">
+                        <img src="{{ asset('assets/img/illustration.png') }}" alt="Sekolah" class="img-fluid mb-3"
+                            width="150">
+                        <h4 class="fw-bold text-dark">Jalur Khusus</h4>
+                        <p class="text-muted">Saya adalah wakil sekolah yang memiliki NPSN</p>
+                        <button class="btn btn-primary">Daftar Akun Khusus</button>   
+                    </div>
+                </a>
             </div>
         </div>
     </div>
-</div>
 @endsection

@@ -24,13 +24,19 @@
     transition: transform 0.3s ease-in-out;
 }
 .container {
-    margin-bottom: 50px; /* Jarak antara konten dan footer */
-    margin-top: 50px;
+    padding-top: 0 !important;
+    margin-top: 0 !important;
 }
-.carousel-caption h5,
-.carousel-caption p {
-    font-weight: 700; /* Atau gunakan 700 untuk bold biasa */
+
+.carousel {
+    margin-top: -50px !important; /* Sesuaikan angka ini */
+    padding-top: 0 !important;
 }
-.custom-title {
-    color: black !important;
+.navbar {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+}
+.navbar {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
 }

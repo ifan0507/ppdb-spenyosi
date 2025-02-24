@@ -2,7 +2,7 @@
 @section('content')
     {{-- <section id="beranda" class="hero"> --}}
 
-        {{-- <img src="assets/img/hero-bg-abstract.jpg" alt="" data-aos="fade-in" class=""> --}}
+    {{-- <img src="assets/img/hero-bg-abstract.jpg" alt="" data-aos="fade-in" class=""> --}}
 
     <div class="container">
         <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
@@ -17,24 +17,24 @@
             <div class="carousel-inner">
                 <div class="carousel-item active" data-bs-interval="10000">
                     <img src="{{ asset('assets/img/bg01.png') }}" class="img-fluid" alt="Slide 1">
-                    <div class="carousel-caption d-none d-md-block">
+                    {{-- <div class="carousel-caption d-none d-md-block">
                         <h5>First slide label</h5>
                         <p>Some representative placeholder content for the first slide.</p>
-                    </div>
+                    </div> --}}
                 </div>
                 <div class="carousel-item" data-bs-interval="2000">
                     <img src="{{ asset('assets/img/bg02.png') }}" class="img-fluid" alt="Slide 2">
-                    <div class="carousel-caption d-none d-md-block">
+                    {{-- <div class="carousel-caption d-none d-md-block">
                         <h5>Second slide label</h5>
                         <p>Some representative placeholder content for the second slide.</p>
-                    </div>
+                    </div> --}}
                 </div>
                 <div class="carousel-item">
                     <img src="{{ asset('assets/img/bg03.png') }}" class="img-fluid" alt="Slide 3">
-                    <div class="carousel-caption d-none d-md-block">
+                    {{-- <div class="carousel-caption d-none d-md-block">
                         <h5>Third slide label</h5>
                         <p>Some representative placeholder content for the third slide.</p>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>
