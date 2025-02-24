@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>PPDB | SPENYOSI</title>
+    <title>Portal | SPENYOSI</title>
     <meta name="description" content="">
     <meta name="keywords" content="">
 
@@ -41,15 +41,15 @@
   ======================================================== -->
 </head>
 
-<body class="index-page">
+<body class="portal-page">
 
-    @include('layouts.clients.header')
+    @include('layouts.portal.header')
 
     <div class="container">
         @yield('content')
     </div>
 
-    @include('layouts.clients.footer')
+    @include('layouts.portal.footer')
 
     <!-- Scroll Top -->
     <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
