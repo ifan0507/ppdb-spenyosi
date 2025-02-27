@@ -30,6 +30,11 @@
     <link href="{{ asset('OnePage/assets/css/main.css') }}" rel="stylesheet">
     {{-- custom css file --}}
     <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/all.min.css') }}">
+    {{-- custom js --}}
+    <script src="{{ asset('assets/js/jquery-3.7.1.js') }}"></script>
+    <script src="{{ asset('assets/js/sweetalert2.all.min.js') }}"></script>
+    <script src="{{ asset('assets/js/all.min.js') }}"></script>
 
 
     <!-- =======================================================
