@@ -2,17 +2,19 @@
 
 @section('content')
     <div class="container">
-        <h3>Verifikasi Email Anda</h3>
-        <p>Kami telah mengirimkan email verifikasi ke {{ Auth::user()->email }}.</p>
-        <p>Silakan periksa inbox atau spam folder Anda.</p>
 
-        <form method="POST" action="{{ route('verification.send') }}">
+        <h5>Masukan kode otp anda</h5>
+
+        <form action="{{ url('/verify') }}" method="POST">
             @csrf
-            <button type="submit">Kirim Ulang Email Verifikasi</button>
+            <label>Email:</label>
+            <input type="email" name="email" value="{{ $email }}" readonly>
+
+            <label>Kode OTP:</label>
+            <input type="text" name="otp" required>
+
+            <button type="submit">Verifikasi</button>
         </form>
 
-        @if (session('message'))
-            <p style="color: green;">{{ session('message') }}</p>
-        @endif
     </div>
 @endsection

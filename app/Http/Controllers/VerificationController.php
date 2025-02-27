@@ -7,24 +7,24 @@ use Illuminate\Http\Request;
 
 class VerificationController extends Controller
 {
-    public function show()
-    {
-        return view('auth.verify-email');
-    }
+    // public function show()
+    // {
+    //     return view('auth.verify-email');
+    // }
 
-    public function verify(EmailVerificationRequest $request)
-    {
-        $request->fulfill();
-        return redirect('/dashboard-siswa')->with('message', 'Email berhasil diverifikasi!');
-    }
+    // public function verify(EmailVerificationRequest $request)
+    // {
+    //     $request->fulfill();
+    //     return redirect('/dashboard-siswa')->with('message', 'Email berhasil diverifikasi!');
+    // }
 
-    public function resend(Request $request)
-    {
-        if ($request->user()->hasVerifiedEmail()) {
-            return redirect('/dashboard-siswa');
-        }
+    // public function resend(Request $request)
+    // {
+    //     if ($request->user()->hasVerifiedEmail()) {
+    //         return redirect('/dashboard-siswa');
+    //     }
 
-        $request->user()->sendEmailVerificationNotification();
-        return back()->with('message', 'Link verifikasi telah dikirim!');
-    }
+    //     $request->user()->sendEmailVerificationNotification();
+    //     return back()->with('message', 'Link verifikasi telah dikirim!');
+    // }
 }

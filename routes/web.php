@@ -22,14 +22,17 @@ Route::post('/register-khusus', [RegisterController::class, 'registerKhusus'])->
 Route::post('/register-umum', [RegisterController::class, 'registerUmum'])->name('registerUmum');
 // Login
 
-Route::middleware('auth:siswa')->group(function () {
-    Route::get('/email/verify', [VerificationController::class, 'show'])->name('verification.notice');
-    Route::get('/email/verify/{id}/{hash}', [VerificationController::class, 'verify'])->middleware('signed')->name('verification.verify');
-    Route::post('/email/verification-notification', [VerificationController::class, 'resend'])->middleware('throttle:6,1')->name('verification.send');
-});
+// Route::middleware('auth:siswa')->group(function () {
+//     Route::get('/email/verify', [VerificationController::class, 'show'])->name('verification.notice');
+//     Route::get('/email/verify/{id}/{hash}', [VerificationController::class, 'verify'])->middleware('signed')->name('verification.verify');
+//     Route::post('/email/verification-notification', [VerificationController::class, 'resend'])->middleware('throttle:6,1')->name('verification.send');
+// });
+
+Route::post('/verify', [LoginController::class, 'verify']);
+
 
 Route::post('/login-siswa', [LoginController::class, 'login']);
 // Dashboard hanya untuk pengguna yang sudah verifikasi
-// Route::get('/dashboard-siswa', function () {
-//     return view('dashboard-siswa');
-// })->middleware(['auth:siswa', 'verified']);
+Route::get('/dashboard-siswa', function () {
+    return view('siswa.dashboard');
+})->middleware(['auth:siswa'])->name('dashboard-siswa');
