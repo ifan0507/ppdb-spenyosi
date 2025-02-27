@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\client;
 
 use App\Http\Controllers\Controller;
+use App\Mail\VerificationMail;
 use App\Models\Register;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class RegisterController extends Controller
 {
@@ -80,18 +82,21 @@ class RegisterController extends Controller
             'password.required' => 'Password wajib diisi.',
         ]);
 
+        $otp = rand(100000, 999999);
+
         $siswa = Register::create([
             'nama_lengkap' => $request->nama_lengkap,
             'nisn' => $request->nisn,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'jalur_ppdb' => 'Umum',
+            'verification_code' => $otp,
         ]);
 
-        event(new Registered($siswa));
-
-        Auth::guard('siswa')->login($siswa);
-        return redirect('/email/verify');
+        Mail::to($siswa->email)->send(new VerificationMail($otp));
+        $email = $siswa->email;
+        // Auth::guard('siswa')->login($siswa);
+        return view('auth.verify-email', ['email' => $email]);
     }
 
     /**

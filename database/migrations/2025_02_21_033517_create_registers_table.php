@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('nisn')->unique();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
+            $table->string('verification_code')->nullable();
             $table->string('password');
             $table->string('jalur_ppdb');
             $table->rememberToken();
