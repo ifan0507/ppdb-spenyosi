@@ -24,6 +24,11 @@ class RegisterController extends Controller
         return view('clients.umum');
     }
 
+    public function registKhusus()
+    {
+        return view('clients.khusus');
+    }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -31,13 +36,15 @@ class RegisterController extends Controller
     {
         $request->validate([
             'nama_lengkap' => 'required',
-            'nisn' => ['unique:registers,nisn', 'required'],
-            'email' => ['unique:registers,email', 'required', 'email'],
+            'nisn' => ['required', 'unique:registers,nisn'],
+            'email' => ['required', 'unique:registers,email', 'email'],
             'password' => ['required'],
             'jalur_ppdb' => ['required'],
         ], [
             'nama_lengkap.required' => 'Nama lengkap wajib diisi.',
+            'nisn.required' => 'NISN wajib di isi',
             'nisn.unique' => 'NISN sudah terdaftar.',
+            'email.required' => 'Email wajib di isi',
             'email.unique' => 'Email sudah terdaftar.',
             'email.email' => 'Email harus valid.',
             'password.required' => 'Password wajib diisi.',

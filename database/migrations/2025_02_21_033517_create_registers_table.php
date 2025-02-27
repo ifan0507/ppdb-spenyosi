@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('registers', function (Blueprint $table) {
             $table->ulid('id');
             $table->string('nama_lengkap');
-            $table->string('nisn');
+            $table->string('nisn')->unique();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

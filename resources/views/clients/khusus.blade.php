@@ -4,10 +4,12 @@
     <div class="container py-5">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <h2 class="fw-bold">Registrasi Jalur Umum</h2>
-                <p>Untuk mendapatkan akun Jalur Umum, masukkan kombinasi <strong>Nama Lengkap</strong>, <strong>NISN</strong>, <strong>Email</strong> 
-                    dan <strong>Password</strong>.</p>
-                <form action="{{ route('registerUmum') }}" method="POST">
+                <h2 class="fw-bold">Registrasi Jalur Khusus</h2>
+                <p>Untuk mendapatkan akun Jalur Khusus, masukkan kombinasi <strong>Nama Lengkap</strong>,
+                    <strong>NISN</strong>, <strong>Email</strong>, <strong>Password</strong>, dan pilih salah satu kategori
+                    jalur khusus.
+                </p>
+                <form action="{{ route('registerKhusus') }}" method="POST">
                     @csrf
                     <div class="mb-3">
                         <label for="nama" class="form-label">Nama Lengkap <span class="text-danger">*</span></label>
@@ -28,6 +30,18 @@
                     <div class="mb-3">
                         <label for="password" class="form-label">Password <span class="text-danger">*</span></label>
                         <input type="password" name="password" class="form-control" id="password">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="jalur_ppdb" class="form-label">Pilih Jalur Khusus <span
+                                class="text-danger">*</span></label>
+                        <select name="jalur_ppdb" id="jalur_ppdb" class="form-control">
+                            <option value="" selected disabled>-- Pilih Jalur --</option>
+                            <option value="afirmasi">Afirmasi (Siswa dari keluarga kurang mampu)</option>
+                            <option value="pindah_tugas">Pindah Tugas (Orang tua/wali pindah kerja)</option>
+                            <option value="tahfidz">Tahfidz (Memiliki hafalan Al-Qur'an)</option>
+                            <option value="prestasi">Prestasi (Akademik atau non-akademik)</option>
+                        </select>
                     </div>
 
                     <div class="d-flex justify-content-between">

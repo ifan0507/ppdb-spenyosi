@@ -4,7 +4,7 @@
 
     {{-- <img src="assets/img/hero-bg-abstract.jpg" alt="" data-aos="fade-in" class=""> --}}
 
-    <div class="container">
+    <div class="container mt-1 mb-5">
         <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
             <div class="carousel-indicators">
                 <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active"

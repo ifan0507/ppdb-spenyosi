@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>Portal | SPENYOSI</title>
+    <title>@yield('title', 'Portal | SPENYOSI')</title>
     <meta name="description" content="">
     <meta name="keywords" content="">
 
@@ -22,38 +22,36 @@
     <!-- Vendor CSS Files -->
     <link href="{{ asset('OnePage/assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('OnePage/assets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
-    <link href="{{ asset('OnePage/assets/vendor/aos/aos.css') }}"rel="stylesheet">
+    <link href="{{ asset('OnePage/assets/vendor/aos/aos.css') }}" rel="stylesheet">
     <link href="{{ asset('OnePage/assets/vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
     <link href="{{ asset('OnePage/assets/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
 
     <!-- Main CSS File -->
     <link href="{{ asset('OnePage/assets/css/main.css') }}" rel="stylesheet">
-    {{-- custom css file --}}
     <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
 
+    {{-- @yield('custom-css') <!-- Tambahkan jika ada CSS tambahan --> --}}
 
-    <!-- =======================================================
-  * Template Name: OnePage
-  * Template URL: https://bootstrapmade.com/onepage-multipurpose-bootstrap-template/
-  * Updated: Aug 07 2024 with Bootstrap v5.3.3
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
 </head>
 
 <body class="portal-page">
 
-    @include('layouts.portal.header')
+    @section('header')
+        @include('layouts.portal.header')
+    @show
 
     <div class="container">
         @yield('content')
     </div>
 
-    @include('layouts.portal.footer')
+    @section('footer')
+        @include('layouts.portal.footer')
+    @show
 
     <!-- Scroll Top -->
-    <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
-            class="bi bi-arrow-up-short"></i></a>
+    <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center">
+        <i class="bi bi-arrow-up-short"></i>
+    </a>
 
     <!-- Preloader -->
     <div class="preloader"></div>
@@ -64,12 +62,14 @@
     <script src="{{ asset('OnePage/assets/vendor/aos/aos.js') }}"></script>
     <script src="{{ asset('OnePage/assets/vendor/purecounter/purecounter_vanilla.js') }}"></script>
     <script src="{{ asset('OnePage/assets/vendor/glightbox/js/glightbox.min.js') }}"></script>
-    <script src="{{ asset('OnePage/assets/vendor/swiper/swiper-bundle.min.css') }}"></script>
+    <script src="{{ asset('OnePage/assets/vendor/swiper/swiper-bundle.min.js') }}"></script>
     <script src="{{ asset('OnePage/assets/vendor/imagesloaded/imagesloaded.pkgd.min.js') }}"></script>
     <script src="{{ asset('OnePage/assets/vendor/isotope-layout/isotope.pkgd.min.js') }}"></script>
 
     <!-- Main JS File -->
     <script src="{{ asset('OnePage/assets/js/main.js') }}"></script>
+
+    {{-- @yield('custom-js') <!-- Tambahkan jika ada script tambahan --> --}}
 
 </body>
 

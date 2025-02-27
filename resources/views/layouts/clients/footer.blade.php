@@ -18,8 +18,8 @@
             <div class="col-lg-2 col-6 footer-links">
                 <h4>Useful Links</h4>
                 <ul>
-                    <li><a href="#">Beranda</a></li>
-                    <li><a href="#">Portal</a></li>
+                    <li><a href="{{ route('beranda') }}">Beranda</a></li>
+                    <li><a href="{{ route('portal') }}">Portal</a></li>
                     <li><a href="#">jadwal</a></li>
                     <li><a href="#">Unduhan</a></li>
                 </ul>
@@ -48,7 +48,7 @@
         </div>
     </div>
 
-    <div class="container copyright text-center mt-4">
+    {{-- <div class="container copyright text-center mt-4">
         <p>© <span>Copyright</span> <strong class="px-1 sitename">Spenyosi</strong> <span>All Rights Reserved</span></p>
         <div class="credits">
             <!-- All the links in the footer should remain intact. -->
@@ -57,7 +57,7 @@
             <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
             Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> Distributed by <a
                 href=“https://themewagon.com>ThemeWagon
-        </div>
+        </div> --}}
     </div>
 
 </footer>

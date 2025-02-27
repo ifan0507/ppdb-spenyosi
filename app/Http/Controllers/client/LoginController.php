@@ -11,9 +11,9 @@ class LoginController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function loginView()
     {
-        //
+        return view('clients.login');
     }
 
     /**
