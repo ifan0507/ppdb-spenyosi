@@ -24,7 +24,10 @@
     transform: scale(1.1);
     transition: transform 0.3s ease-in-out;
 }
-/* login */
+body {
+    background-color: white;
+}
+/* login
 body {
     background-color: #f8f9fa;
 }
@@ -108,4 +111,4 @@ body {
 .btn-outline-light:hover {
     background-color: white;
     color: #3383ff;
-}
+} */
