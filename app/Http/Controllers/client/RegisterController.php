@@ -70,16 +70,12 @@ class RegisterController extends Controller
     public function registerUmum(Request $request)
     {
         $request->validate([
-            'nama_lengkap' => 'required',
-            'nisn' => ['unique:registers,nisn', 'required'],
-            'email' => ['unique:registers,email', 'required', 'email'],
-            'password' => ['required'],
+            'nisn' => ['unique:registers,nisn'],
+            'email' => ['unique:registers,email', 'email'],
         ], [
-            'nama_lengkap.required' => 'Nama lengkap wajib diisi.',
             'nisn.unique' => 'NISN sudah terdaftar.',
             'email.unique' => 'Email sudah terdaftar.',
             'email.email' => 'Email harus valid.',
-            'password.required' => 'Password wajib diisi.',
         ]);
 
         $otp = rand(100000, 999999);

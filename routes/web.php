@@ -18,12 +18,14 @@ Route::get('/regist', [RegisterController::class, 'regist'])->name('regist');
 Route::get('/register/umum', [RegisterController::class, 'registUmum'])->name('register.umum');
 Route::get('/register/khusus', [RegisterController::class, 'registKhusus'])->name('register.khusus');
 
+
 // Register
+Route::post('/register-khusus', [RegisterController::class, 'registerKhusus'])->name('registerKhusus');
+Route::post('/register-umum', [RegisterController::class, 'registerUmum'])->name('registerUmum');
 Route::post('/register-khusus', [RegisterController::class, 'registerKhusus'])->name('registerKhusus');
 Route::post('/register-umum', [RegisterController::class, 'registerUmum'])->name('registerUmum');
 // Login
 Route::get('/login', [LoginController::class, 'loginView'])->name('logview');
-
 
 // route verikasi 
 Route::get('/verify-email', function () {

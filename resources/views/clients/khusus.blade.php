@@ -9,6 +9,7 @@
                     <strong>NISN</strong>, <strong>Email</strong>, <strong>Password</strong>, dan pilih salah satu kategori
                     jalur khusus.
                 </p>
+                <div id="errorAlert" class="alert alert-danger d-none" role="alert"></div>
                 <form id="formPendaftaran" action="{{ route('registerKhusus') }}" method="POST">
                     @csrf
 
@@ -16,14 +17,15 @@
                     <div class="mb-3">
                         <label for="nama" class="form-label">Nama Lengkap <span class="text-danger">*</span></label>
                         <input type="text" name="nama_lengkap" class="form-control" id="nama"
-                            placeholder="Nama Lengkap">
+                            placeholder="Nama Lengkap" value="{{ old('nama_lengkap') }}">
                         <div id="validasiNama" class="invalid-feedback">Nama tidak boleh kosong!</div>
                     </div>
 
                     <!-- NISN -->
                     <div class="mb-3">
                         <label for="nisn" class="form-label">NISN <span class="text-danger">*</span></label>
-                        <input type="text" name="nisn" class="form-control" id="nisn" placeholder="1234567898">
+                        <input type="text" name="nisn" class="form-control" id="nisn" placeholder="1234567898"
+                            value="{{ old('nisn') }}">
                         <div id="validasiNisn" class="invalid-feedback">NISN harus terdiri dari 10 digit angka!</div>
                     </div>
 
@@ -31,14 +33,15 @@
                     <div class="mb-3">
                         <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
                         <input type="email" name="email" class="form-control" id="email"
-                            placeholder="example@gmail.com">
+                            placeholder="example@gmail.com" value="{{ old('email') }}">
                         <div id="validasiEmail" class="invalid-feedback">Email tidak boleh kosong!</div>
                     </div>
 
                     <!-- Password -->
                     <div class="mb-3">
                         <label for="password" class="form-label">Password <span class="text-danger">*</span></label>
-                        <input type="password" name="password" class="form-control" id="password" placeholder="password">
+                        <input type="password" name="password" class="form-control" id="password"
+                            placeholder="Masukan Password" value="{{ old('password') }}">
                         <div id="validasiPassword" class="invalid-feedback">Password tidak boleh kosong!</div>
                     </div>
 
@@ -75,114 +78,152 @@
     <script>
         $(document).ready(function() {
             $("#nisn").on("input", function() {
-                var nisn = $(this).val().trim();
-                var nisnRegex = /^[0-9]{10}$/; // Hanya angka, tepat 10 digit
+                var nisn = $(this).val();
+                var nisnRegex = /^[0-9]{10}$/;
 
-                if (nisn === "") {
-                    $("#validasiNisn").text("NISN tidak boleh kosong!").show();
-                    $(this).addClass("is-invalid").removeClass("is-valid");
-                } else if (!nisnRegex.test(nisn)) {
+                if (!nisnRegex.test(nisn)) {
                     $("#validasiNisn").text("NISN harus terdiri dari 10 digit angka!").show();
-                    $(this).addClass("is-invalid").removeClass("is-valid");
+                    $(this).addClass("is-invalid");
                 } else {
                     $("#validasiNisn").hide();
                     $(this).removeClass("is-invalid").addClass("is-valid");
                 }
             });
 
+            $("#email").on("input", function() {
+                var email = $(this).val();
+                var emailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+
+                if (email.trim() === "") {
+                    $("#email").addClass("is-invalid");
+                    $("#validasiEmail").text("Email tidak boleh kosong!").show();
+                } else if (!emailRegex.test(email)) {
+                    $("#email").addClass("is-invalid");
+                    $("#validasiEmail").text("Email harus menggunakan @gmail.com!").show();
+                } else {
+                    $("#email").removeClass("is-invalid").addClass("is-valid");
+                    $("#validasiEmail").hide();
+                }
+            });
+
+            $("#nama, #password").on("input", function() {
+                if ($(this).val().trim() === "") {
+                    $(this).addClass("is-invalid");
+                } else {
+                    $(this).removeClass("is-invalid").addClass("is-valid");
+                }
+            });
+
+            $("#jalur_ppdb").on("change", function() {
+                if ($(this).val()) {
+                    $(this).removeClass("is-invalid").addClass("is-valid");
+                    $("#validasiJalur").hide();
+                }
+            });
+
+
             $("#formPendaftaran").submit(function(e) {
                 e.preventDefault();
                 var isValid = true;
 
-                // Validasi Nama
                 if ($("#nama").val().trim() === "") {
-                    $("#nama").addClass("is-invalid").removeClass("is-valid");
+                    $("#nama").addClass("is-invalid");
                     $("#validasiNama").text("Nama tidak boleh kosong!").show();
                     isValid = false;
                 } else {
                     $("#nama").removeClass("is-invalid").addClass("is-valid");
-                    $("#validasiNama").hide();
                 }
 
-                // Validasi NISN
-                var nisn = $("#nisn").val().trim();
+                var nisn = $("#nisn").val();
                 if (nisn === "") {
                     $("#validasiNisn").text("NISN tidak boleh kosong!").show();
                     $("#nisn").addClass("is-invalid").removeClass("is-valid");
-                    isValid = false;
                 } else if (!/^[0-9]{10}$/.test(nisn)) {
-                    $("#nisn").addClass("is-invalid").removeClass("is-valid");
+                    $("#nisn").addClass("is-invalid");
                     $("#validasiNisn").text("NISN harus terdiri dari 10 digit angka!").show();
                     isValid = false;
                 } else {
                     $("#validasiNisn").hide();
-                    $("#nisn").removeClass("is-invalid").addClass("is-valid");
+                    $(this).removeClass("is-invalid").addClass("is-valid");
                 }
 
-                // Validasi Email
-                if ($("#email").val().trim() === "") {
-                    $("#email").addClass("is-invalid").removeClass("is-valid");
+                var email = $("#email").val();
+                var emailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+
+                if (email.trim() === "") {
+                    $("#email").addClass("is-invalid");
                     $("#validasiEmail").text("Email tidak boleh kosong!").show();
+                    isValid = false;
+                } else if (!emailRegex.test(email)) {
+                    $("#email").addClass("is-invalid");
+                    $("#validasiEmail").text("Email harus menggunakan @gmail.com!").show();
                     isValid = false;
                 } else {
                     $("#email").removeClass("is-invalid").addClass("is-valid");
                     $("#validasiEmail").hide();
                 }
 
-                // Validasi Password
                 if ($("#password").val().trim() === "") {
-                    $("#password").addClass("is-invalid").removeClass("is-valid");
+                    $("#password").addClass("is-invalid");
                     $("#validasiPassword").text("Password tidak boleh kosong!").show();
                     isValid = false;
                 } else {
                     $("#password").removeClass("is-invalid").addClass("is-valid");
-                    $("#validasiPassword").hide();
                 }
 
-                // Validasi Jalur Khusus
-                if ($("#jalur_ppdb").val() === null) {
+                if ($("#jalur_ppdb").val() === null || $("#jalur_ppdb").val() === "") {
                     $("#jalur_ppdb").addClass("is-invalid").removeClass("is-valid");
-                    $("#validasiJalur").text("Silakan pilih jalur khusus!").show();
+                    $("#validasiJalur").text("Pilih jalur PPDB!").show();
                     isValid = false;
                 } else {
                     $("#jalur_ppdb").removeClass("is-invalid").addClass("is-valid");
                     $("#validasiJalur").hide();
                 }
 
-                // Jika Semua Valid, Kirim Form
+
+
                 if (isValid) {
                     $("#btnSubmit").attr("disabled", true);
-                    $("#btnText").addClass("d-none");
                     $("#btnLoading").removeClass("d-none");
 
                     $.ajax({
-                        url: $("#formPendaftaran").attr("action"),
+                        url: $("#formPendaftaran").attr(
+                            "action"),
                         type: "POST",
                         data: $("#formPendaftaran").serialize(),
                         success: function(response) {
+                            $("#btnSubmit").attr("disabled", false);
+                            $("#btnLoading").addClass("d-none");
+
                             Swal.fire({
                                 title: "Berhasil!",
-                                text: "Kami telah mengirimkan kode OTP ke email " + $(
-                                    "#email").val() + ".",
+                                text: "kami telah mengirimkan kode otp ke email " +
+                                    $(
+                                        "#email").val() + ".",
                                 icon: "success",
                                 confirmButtonText: "OK",
                                 confirmButtonColor: "#18a342",
                             }).then(() => {
-                                window.location.href = response.redirect;
+                                window.location.href = response
+                                    .redirect;
                             });
                         },
+
                         error: function(xhr) {
                             $("#btnSubmit").attr("disabled", false);
-                            $("#btnText").removeClass("d-none");
                             $("#btnLoading").addClass("d-none");
-                            Swal.fire({
-                                title: "Gagal!",
-                                text: "Gagal mengirim email verifikasi, silakan coba lagi!.",
-                                icon: "error",
-                                confirmButtonText: "OK",
-                                confirmButtonColor: "#d33",
-                            });
-                        },
+                            let errorMessages = "";
+                            if (xhr.responseJSON && xhr.responseJSON.errors) {
+                                $.each(xhr.responseJSON.errors, function(key, value) {
+                                    errorMessages += value[0] + "\n";
+                                });
+                            } else {
+                                errorMessages =
+                                    "<p>Terjadi kesalahan, silakan coba lagi.</p>";
+                            }
+
+                            $("#errorAlert").html(errorMessages).removeClass("d-none");
+                        }
                     });
                 }
             });

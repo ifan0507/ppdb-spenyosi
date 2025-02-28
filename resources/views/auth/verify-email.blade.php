@@ -72,7 +72,7 @@
                     type: "POST",
                     data: $("#formVerifikasi").serialize(),
                     beforeSend: function() {
-                        inputs.prop("disabled", true); // Matikan input saat proses
+                        inputs.prop("disabled", true);
                     },
                     success: function(response) {
                         Swal.fire({
@@ -91,9 +91,9 @@
                             icon: "error",
                         });
 
-                        inputs.prop("disabled", false); // Aktifkan input kembali
-                        inputs.val(""); // Kosongkan input OTP
-                        inputs.first().focus(); // Kembalikan fokus ke input pertama
+                        inputs.prop("disabled", false);
+                        inputs.val("");
+                        inputs.first().focus();
                     }
                 });
             }
