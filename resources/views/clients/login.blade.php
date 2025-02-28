@@ -23,11 +23,24 @@
                 </div> --}}
 
                 <p>Masukkan alamat email dan kata sandi Akun Anda yang terdaftar.</p>
+                @if ($errors->any())
+                    <div class="alert alert-danger" role="alert">
+                        <center>
+                            <span class="font-medium">
+                                @foreach ($errors->all() as $error)
+                                    {{ $error }}
+                                @endforeach
+                            </span>
+                        </center>
 
-                <form action="#" method="POST">
+                    </div>
+                @endif
+                <form action="{{ route('login') }}" method="POST">
                     @csrf
-                    <input type="email" name="email" class="form-control" placeholder="Email" required>
-                    <input type="password" name="password" class="form-control" placeholder="Password" required>
+                    <input type="email" name="email" class="form-control" placeholder="example@gmail.com" required
+                        value="{{ old('email') }}">
+                    <input type="password" name="password" class="form-control" placeholder="Masukan Password" required
+                        value="{{ old('password') }}">
 
                     <a href="#" class="d-block text-muted mb-3">Lupa kata sandi Anda?</a>
 
