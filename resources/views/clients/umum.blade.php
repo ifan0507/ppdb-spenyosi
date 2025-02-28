@@ -9,12 +9,13 @@
                     <strong>NISN</strong>, <strong>Email</strong>
                     dan <strong>Password</strong>.
                 </p>
+                <div id="errorAlert" class="alert alert-danger d-none" role="alert" style="max-height: 60px;"></div>
                 <form action="{{ route('registerUmum') }}" method="POST" id="formPendaftaran">
                     @csrf
                     <div class="mb-3">
                         <label for="nama" class="form-label">Nama Lengkap <span class="text-danger">*</span></label>
                         <input type="text" name="nama_lengkap" class="form-control" id="nama"
-                            placeholder="Nama Lengkap">
+                            placeholder="Nama Lengkap" value="{{ old('nama_lengkap') }}">
                         <div id="validasiNama" class="invalid-feedback">
                             Nama Tidak Boleh Koseng!.
                         </div>
@@ -22,7 +23,8 @@
 
                     <div class="mb-3">
                         <label for="nisn" class="form-label">NISN <span class="text-danger">*</span></label>
-                        <input type="text" name="nisn" class="form-control" id="nisn" placeholder="1234567890">
+                        <input type="text" name="nisn" class="form-control" value="{{ old('nisn') }}" id="nisn"
+                            placeholder="1234567890">
                         <div id="validasiNisn" class="invalid-feedback">
 
                         </div>
@@ -31,7 +33,7 @@
                     <div class="mb-3">
                         <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
                         <input type="email" name="email" class="form-control" id="email"
-                            placeholder="example@gmail.com">
+                            placeholder="example@gmail.com" value="{{ old('email') }}">
                         <div id="validasiEmail" class="invalid-feedback">
                             Email Tidak Boleh Koseng!.
                         </div>
@@ -40,7 +42,7 @@
                     <div class="mb-3">
                         <label for="password" class="form-label">Password <span class="text-danger">*</span></label>
                         <input type="password" name="password" class="form-control" id="password"
-                            placeholder="Masukan Password">
+                            placeholder="Masukan Password" value="{{ old('password') }}">
                         <div id="validasiPassword" class="invalid-feedback">
                             Password Tidak Boleh Koseng!.
                         </div>
@@ -77,7 +79,23 @@
                 }
             });
 
-            $("#nama, #email, #password").on("input", function() {
+            $("#email").on("input", function() {
+                var email = $(this).val();
+                var emailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+
+                if (email.trim() === "") {
+                    $("#email").addClass("is-invalid");
+                    $("#validasiEmail").text("Email tidak boleh kosong!").show();
+                } else if (!emailRegex.test(email)) {
+                    $("#email").addClass("is-invalid");
+                    $("#validasiEmail").text("Email harus menggunakan @gmail.com!").show();
+                } else {
+                    $("#email").removeClass("is-invalid").addClass("is-valid");
+                    $("#validasiEmail").hide();
+                }
+            });
+
+            $("#nama, #password").on("input", function() {
                 if ($(this).val().trim() === "") {
                     $(this).addClass("is-invalid");
                 } else {
@@ -110,12 +128,20 @@
                     $(this).removeClass("is-invalid").addClass("is-valid");
                 }
 
-                if ($("#email").val().trim() === "") {
+                var email = $("#email").val();
+                var emailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+
+                if (email.trim() === "") {
                     $("#email").addClass("is-invalid");
                     $("#validasiEmail").text("Email tidak boleh kosong!").show();
                     isValid = false;
+                } else if (!emailRegex.test(email)) {
+                    $("#email").addClass("is-invalid");
+                    $("#validasiEmail").text("Email harus menggunakan @gmail.com!").show();
+                    isValid = false;
                 } else {
                     $("#email").removeClass("is-invalid").addClass("is-valid");
+                    $("#validasiEmail").hide();
                 }
 
                 if ($("#password").val().trim() === "") {
@@ -156,19 +182,16 @@
                         error: function(xhr) {
                             $("#btnSubmit").attr("disabled", false);
                             $("#btnLoading").addClass("d-none");
-                            let errorMessage =
-                                "Gagal mengirim email verifikasi, silakan coba lagi!.";
-                            if (xhr.responseJSON && xhr.responseJSON.error) {
-                                errorMessage = xhr.responseJSON.error;
+                            let errorMessages = "";
+                            if (xhr.responseJSON && xhr.responseJSON.errors) {
+                                $.each(xhr.responseJSON.errors, function(key, value) {
+                                    errorMessages += "<p>" + value[0] + "</p>";
+                                });
+                            } else {
+                                errorMessages = "<p>Terjadi kesalahan, silakan coba lagi.</p>";
                             }
 
-                            Swal.fire({
-                                title: "Gagal!",
-                                text: errorMessage,
-                                icon: "error",
-                                confirmButtonText: "OK",
-                                confirmButtonColor: "#d33",
-                            });
+                            $("#errorAlert").html(errorMessages).removeClass("d-none");
                         }
                     });
                 }

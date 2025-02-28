@@ -1,6 +1,6 @@
 @extends('layouts.portal.template')
 @section('content')
-    <div class="container d-flex align-items-center justify-content-center py-5 ">
+    <div class="container d-flex align-items-center justify-content-center py-5 mt-3 mb-5">
         <div class="row d-flex align-items-center">
             <div class="col-lg-6">
                 <h1 class="display-5 fw-bold my-3" style="color: black">Selamat Datang di Portal PPDB Spenyosi</h1>
