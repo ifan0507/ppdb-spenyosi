@@ -52,7 +52,9 @@ class LoginController extends Controller
         if ($request->otp != session('otp')) {
             return response()->json(['message' => 'Kode OTP salah atau sudah kedaluwarsa.'], 400);
         }
+
         $data = session('register_data');
+
         $siswa = Register::create([
             'nama_lengkap' => $data['nama_lengkap'],
             'nisn' => $data['nisn'],

@@ -9,7 +9,7 @@
                     <strong>NISN</strong>, <strong>Email</strong>
                     dan <strong>Password</strong>.
                 </p>
-                <div id="errorAlert" class="alert alert-danger d-none" role="alert" style="max-height: 60px;"></div>
+                <div id="errorAlert" class="alert alert-danger d-none" role="alert"></div>
                 <form action="{{ route('registerUmum') }}" method="POST" id="formPendaftaran">
                     @csrf
                     <div class="mb-3">
@@ -185,7 +185,7 @@
                             let errorMessages = "";
                             if (xhr.responseJSON && xhr.responseJSON.errors) {
                                 $.each(xhr.responseJSON.errors, function(key, value) {
-                                    errorMessages += "<p>" + value[0] + "</p>";
+                                    errorMessages += value[0] + "\n";
                                 });
                             } else {
                                 errorMessages = "<p>Terjadi kesalahan, silakan coba lagi.</p>";
