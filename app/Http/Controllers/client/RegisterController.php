@@ -84,19 +84,17 @@ class RegisterController extends Controller
 
         $otp = rand(100000, 999999);
 
-        $siswa = Register::create([
-            'nama_lengkap' => $request->nama_lengkap,
-            'nisn' => $request->nisn,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
+        session([
+            'register_data' => $request->only('nama_lengkap', 'nisn', 'email', 'password'),
+            'otp' => $otp,
             'jalur_ppdb' => 'Umum',
-            'verification_code' => $otp,
         ]);
 
-        Mail::to($siswa->email)->send(new VerificationMail($otp));
-        $email = $siswa->email;
-        // Auth::guard('siswa')->login($siswa);
-        return view('auth.verify-email', ['email' => $email]);
+        Mail::to($request->email)->send(new VerificationMail($otp));
+
+        session()->flash('email_verifikasi', $request->email);
+
+        return response()->json(['redirect' => route('verify.email')]);
     }
 
     /**

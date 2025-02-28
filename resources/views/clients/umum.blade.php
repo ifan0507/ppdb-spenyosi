@@ -22,7 +22,7 @@
 
                     <div class="mb-3">
                         <label for="nisn" class="form-label">NISN <span class="text-danger">*</span></label>
-                        <input type="text" name="nisn" class="form-control" id="nisn" placeholder="12345678">
+                        <input type="text" name="nisn" class="form-control" id="nisn" placeholder="1234567890">
                         <div id="validasiNisn" class="invalid-feedback">
 
                         </div>
@@ -30,17 +30,19 @@
 
                     <div class="mb-3">
                         <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
-                        <input type="email" name="email" class="form-control" id="email">
+                        <input type="email" name="email" class="form-control" id="email"
+                            placeholder="example@gmail.com">
                         <div id="validasiEmail" class="invalid-feedback">
-                            Nama Tidak Boleh Koseng!.
+                            Email Tidak Boleh Koseng!.
                         </div>
                     </div>
 
                     <div class="mb-3">
                         <label for="password" class="form-label">Password <span class="text-danger">*</span></label>
-                        <input type="password" name="password" class="form-control" id="password">
+                        <input type="password" name="password" class="form-control" id="password"
+                            placeholder="Masukan Password">
                         <div id="validasiPassword" class="invalid-feedback">
-                            Nama Tidak Boleh Koseng!.
+                            Password Tidak Boleh Koseng!.
                         </div>
                     </div>
 
@@ -64,7 +66,7 @@
         $(document).ready(function() {
             $("#nisn").on("input", function() {
                 var nisn = $(this).val();
-                var nisnRegex = /^[0-9]{10}$/; // Hanya angka, tepat 10 digit
+                var nisnRegex = /^[0-9]{10}$/;
 
                 if (!nisnRegex.test(nisn)) {
                     $("#validasiNisn").text("NISN harus terdiri dari 10 digit angka!").show();
@@ -77,7 +79,7 @@
 
 
             $("#formPendaftaran").submit(function(e) {
-                e.preventDefault(); // Mencegah submit jika tidak valid
+                e.preventDefault();
                 var isValid = true;
 
                 if ($("#nama").val().trim() === "") {
@@ -97,7 +99,8 @@
                     $("#validasiNisn").text("NISN harus terdiri dari 10 digit angka!").show();
                     isValid = false;
                 } else {
-                    $("#nisn").removeClass("is-invalid").addClass("is-valid");
+                    $("#validasiNisn").hide();
+                    $(this).removeClass("is-invalid").addClass("is-valid");
                 }
 
                 if ($("#email").val().trim() === "") {
@@ -116,20 +119,51 @@
                     $("#password").removeClass("is-invalid").addClass("is-valid");
                 }
 
+
                 if (isValid) {
-                    // Tampilkan animasi loading di tombol
-                    $("#btnSubmit").attr("disabled", true); // Nonaktifkan tombol
+                    $("#btnSubmit").attr("disabled", true);
+                    $("#btnLoading").removeClass("d-none");
 
-                    $("#btnLoading").removeClass("d-none"); // Tampilkan spinner
+                    $.ajax({
+                        url: $("#formPendaftaran").attr(
+                            "action"),
+                        type: "POST",
+                        data: $("#formPendaftaran").serialize(),
+                        success: function(response) {
+                            $("#btnSubmit").attr("disabled", false);
+                            $("#btnLoading").addClass("d-none");
 
-                    // Simulasi proses verifikasi email (bisa diganti dengan AJAX request)
-                    setTimeout(function() {
-                        alert("Verifikasi email berhasil dikirim!");
-                        $("#btnSubmit").attr("disabled", false); // Aktifkan kembali tombol
-                        $("#btnText").text("Selanjutnya →");
-                        $("#btnLoading").addClass("d-none"); // Sembunyikan spinner
-                        $("#formPendaftaran")[0].submit(); // Submit form setelah loading selesai
-                    }, 3000); // Simulasi delay 3 detik
+                            Swal.fire({
+                                title: "Berhasil!",
+                                text: "kami telah mengirimkan kode otp ke email " + $(
+                                    "#email").val() + ".",
+                                icon: "success",
+                                confirmButtonText: "OK",
+                                confirmButtonColor: "#18a342",
+                            }).then(() => {
+                                window.location.href = response
+                                    .redirect;
+                            });
+                        },
+
+                        error: function(xhr) {
+                            $("#btnSubmit").attr("disabled", false);
+                            $("#btnLoading").addClass("d-none");
+                            let errorMessage =
+                                "Gagal mengirim email verifikasi, silakan coba lagi!.";
+                            if (xhr.responseJSON && xhr.responseJSON.error) {
+                                errorMessage = xhr.responseJSON.error;
+                            }
+
+                            Swal.fire({
+                                title: "Gagal!",
+                                text: errorMessage,
+                                icon: "error",
+                                confirmButtonText: "OK",
+                                confirmButtonColor: "#d33",
+                            });
+                        }
+                    });
                 }
             });
         });
