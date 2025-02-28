@@ -66,10 +66,7 @@
                 var nisn = $(this).val();
                 var nisnRegex = /^[0-9]{10}$/; // Hanya angka, tepat 10 digit
 
-                if (nisn === "") {
-                    $("#validasiNisn").text("NISN tidak boleh kosong!").show();
-                    $(this).addClass("is-invalid").removeClass("is-valid");
-                } else if (!nisnRegex.test(nisn)) {
+                if (!nisnRegex.test(nisn)) {
                     $("#validasiNisn").text("NISN harus terdiri dari 10 digit angka!").show();
                     $(this).addClass("is-invalid");
                 } else {
@@ -78,13 +75,6 @@
                 }
             });
 
-            $("#nama, #email, #password").on("input", function() {
-                if ($(this).val().trim() === "") {
-                    $(this).addClass("is-invalid");
-                } else {
-                    $(this).removeClass("is-invalid").addClass("is-valid");
-                }
-            });
 
             $("#formPendaftaran").submit(function(e) {
                 e.preventDefault(); // Mencegah submit jika tidak valid
@@ -99,7 +89,10 @@
                 }
 
                 var nisn = $("#nisn").val();
-                if (!/^[0-9]{10}$/.test(nisn)) {
+                if (nisn === "") {
+                    $("#validasiNisn").text("NISN tidak boleh kosong!").show();
+                    $("#nisn").addClass("is-invalid").removeClass("is-valid");
+                } else if (!/^[0-9]{10}$/.test(nisn)) {
                     $("#nisn").addClass("is-invalid");
                     $("#validasiNisn").text("NISN harus terdiri dari 10 digit angka!").show();
                     isValid = false;
