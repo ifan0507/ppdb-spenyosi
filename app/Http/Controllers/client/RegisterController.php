@@ -37,34 +37,27 @@ class RegisterController extends Controller
     public function registerKhusus(Request $request)
     {
         $request->validate([
-            'nama_lengkap' => 'required',
-            'nisn' => ['required', 'unique:registers,nisn'],
-            'email' => ['required', 'unique:registers,email', 'email'],
-            'password' => ['required'],
-            'jalur_ppdb' => ['required'],
+            'nisn' => ['unique:registers,nisn'],
+            'email' => ['unique:registers,email', 'email'],
         ], [
-            'nama_lengkap.required' => 'Nama lengkap wajib diisi.',
-            'nisn.required' => 'NISN wajib di isi',
-            'nisn.unique' => 'NISN sudah terdaftar.',
-            'email.required' => 'Email wajib di isi',
-            'email.unique' => 'Email sudah terdaftar.',
+            'nisn.unique' => 'NISN sudah terdaftar!.',
+            'email.unique' => 'Email sudah terdaftar!.',
             'email.email' => 'Email harus valid.',
-            'password.required' => 'Password wajib diisi.',
-            'jalur_ppdb.required' => 'Jalur PPDB wajib dipilih.',
         ]);
 
-        $siswa = Register::create([
-            'nama_lengkap' => $request->nama_lengkap,
-            'nisn' => $request->nisn,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'jalur_ppdb' => $request->jalur_ppdb,
+        $otp = rand(100000, 999999);
+
+        session([
+            'register_data' => $request->only('nama_lengkap', 'nisn', 'email', 'password'),
+            'otp' => $otp,
+            'jalur_ppdb' => $request->jalur_ppdb
         ]);
 
-        event(new Registered($siswa));
+        Mail::to($request->email)->send(new VerificationMail($otp));
 
-        Auth::guard('siswa')->login($siswa);
-        return redirect('/email/verify');
+        session()->flash('email_verifikasi', $request->email);
+
+        return response()->json(['redirect' => route('verify.email')]);
     }
 
     public function registerUmum(Request $request)
@@ -79,6 +72,7 @@ class RegisterController extends Controller
         ]);
 
         $otp = rand(100000, 999999);
+
 
         session([
             'register_data' => $request->only('nama_lengkap', 'nisn', 'email', 'password'),
