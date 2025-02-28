@@ -1,1 +1,4 @@
-<h1>Berhasil verikasi dan login</h1>
+@extends('layouts.siswa.template')
+@section('content')
+    <h1>Selamat datang</h1>
+@endsection
