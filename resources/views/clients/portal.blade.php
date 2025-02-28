@@ -1,14 +1,25 @@
 @extends('layouts.portal.template')
 @section('content')
     <div class="container d-flex align-items-center justify-content-center py-5 ">
-        <div class="row">
-            <div class="col-lg-6 d-flex flex-column align-items-start justify-content-center">
-                <h1 class="fw-bold">Selamat Datang Di Portal PPDB SPENYOSI</h1>
-                <p>Belum memiliki akun? Daftar segera di sini.</p>
-                <a href="{{ route('regist') }}" class="btn btn-primary btn-sm px-4 py-2">Daftar</a>
-            </div>
+        <div class="row d-flex align-items-center">
             <div class="col-lg-6">
-                <img src="{{ asset('assets/img/illustration.png') }}" alt="Illustration" class="img-fluid">
+                <h1 class="display-5 fw-bold my-3" style="color: black">Selamat Datang di Portal PPDB Spenyosi</h1>
+                <div class="row gap-3 gap-lg-0">
+                    <div class="col-lg-12">
+                        <p class="lead">Belum memiliki akun PPDB? Daftar segera di sini.</p>
+                        <a class="btn btn-primary px-4" href="{{ route('regist') }}">Daftar</a>
+                    </div>
+                    <div class="col-12 mt-2 d-lg-none">
+                        <hr class="my-0">
+                    </div>
+                    <div class="col-lg-12 d-lg-none">
+                        <p class="lead">Sudah memiliki akun PPDB?</p>
+                        <a class="btn btn-outline-primary px-4" href="{{ route('login') }}">Masuk</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 text-center d-none d-lg-inline-flex justify-content-center">
+                <img src="{{ asset('assets/img/illustration.png') }}" alt="landing-img" width="350" class="img-fluid">
             </div>
         </div>
     </div>
