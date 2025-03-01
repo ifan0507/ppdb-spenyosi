@@ -44,7 +44,7 @@
                 <div class="container">
                     <div class="alert alert-primary">
                         <i class="fas fa-check"></i>
-                        Jalur PPDB Umum
+                        Jalur PPDB {{ $data->jalur_ppdb }}
                     </div>
                     <div class="row justify-content-center">
                         <div class="card card-primary card-outline card-outline-tabs m-0 p-0 col-md-12">
@@ -59,9 +59,13 @@
                                                     <h4 class="font-bold" style="display: inline-block";>
                                                         Status Kelengkapan Berkas
                                                     </h4>
-                                                    <span class="badge badge-success p-2 ml-2"
-                                                        style="border-radius: 0.5rem";>Lengkap</span>
-
+                                                    @if ($data->siswa->status_berkas == '0')
+                                                        <span class="badge badge-danger p-2 ml-2"
+                                                            style="border-radius: 0.5rem";>Belum Lengkap</span>
+                                                    @else
+                                                        <span class="badge badge-success p-2 ml-2"
+                                                            style="border-radius: 0.5rem";>Lengkap</span>
+                                                    @endif
                                                 </div>
 
                                             </h5>
@@ -81,12 +85,13 @@
                                             data-toggle="pill" href="#biodata" role="tab" aria-controls="biodata"
                                             aria-selected="true">Biodata</a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link remove-tab-format font-bold" id="keluarga-tab"
-                                            data-toggle="pill" href="#keluarga" role="tab" aria-controls="keluarga"
-                                            aria-selected="false">Raport</a>
-                                    </li>
-
+                                    @if ($data->jalur_ppdb == 'Prestasi')
+                                        <li class="nav-item">
+                                            <a class="nav-link remove-tab-format font-bold" id="keluarga-tab"
+                                                data-toggle="pill" href="#keluarga" role="tab"
+                                                aria-controls="keluarga" aria-selected="false">Raport</a>
+                                        </li>
+                                    @endif
                                 </ul>
                             </div>
                             <div class="card-body">

@@ -39,10 +39,18 @@
 
                     <!-- Password -->
                     <div class="mb-3">
-                        <label for="password" class="form-label">Password <span class="text-danger">*</span></label>
-                        <input type="password" name="password" class="form-control" id="password"
-                            placeholder="Masukan Password" value="{{ old('password') }}">
-                        <div id="validasiPassword" class="invalid-feedback">Password tidak boleh kosong!</div>
+                        <label for="new-password" class="form-label">Password <span class="text-danger">*</span></label>
+                        <input type="password" name="new-password" class="form-control" id="new-password"
+                            placeholder="Password" value="{{ old('new-password') }}">
+                        <div id="validasiNewPassword" class="invalid-feedback">Password tidak boleh kosong!</div>
+                    </div>
+                    {{-- Confirmasi password --}}
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Confirmasi Password <span
+                                class="text-danger">*</span></label>
+                        <input type="password" name="password" class="form-control" id="password" placeholder="Password"
+                            value="{{ old('password') }}">
+                        <div id="validasiPassword" class="invalid-feedback">Confirmasi Password tidak boleh kosong!</div>
                     </div>
 
                     <!-- Jalur Khusus -->
@@ -51,14 +59,20 @@
                                 class="text-danger">*</span></label>
                         <select name="jalur_ppdb" id="jalur_ppdb" class="form-control">
                             <option value="" selected disabled>-- Pilih Jalur --</option>
-                            <option value="afirmasi">Afirmasi (Siswa dari keluarga kurang mampu)</option>
-                            <option value="pindah_tugas">Pindah Tugas (Orang tua/wali pindah kerja)</option>
-                            <option value="tahfidz">Tahfidz (Memiliki hafalan Al-Qur'an)</option>
-                            <option value="prestasi">Prestasi (Akademik atau non-akademik)</option>
+                            <option value="Afirmasi">Afirmasi (Siswa dari keluarga kurang mampu)</option>
+                            <option value="Pindah Tugas">Pindah Tugas (Orang tua/wali pindah kerja)</option>
+                            <option value="Tahfidz">Tahfidz (Memiliki hafalan Al-Qur'an)</option>
+                            <option value="Prestasi">Prestasi (Nilai Raport)</option>
                         </select>
                         <div id="validasiJalur" class="invalid-feedback">Silakan pilih jalur khusus!</div>
                     </div>
-
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        <label class="form-check-label" for="flexCheckDefault" style="color: red">
+                            Saya telah memverifikasi data dan jalur yang saya pilih. Saya menyetujui bahwa data tidak dapat
+                            diubah setelah ini.
+                        </label>
+                    </div>
                     <!-- Tombol Submit -->
                     <div class="d-flex justify-content-between">
                         <a href="{{ route('regist') }}">
@@ -106,7 +120,26 @@
                 }
             });
 
-            $("#nama, #password").on("input", function() {
+            $("#password").on("input", function() {
+                var confirmPassword = $(this).val();
+                var newPassword = $("#new-password").val();
+
+                if (confirmPassword.trim() === "") {
+                    $("#password").addClass("is-invalid").removeClass("is-valid");
+                    $("#validasiPassword").text("Konfirmasi Password tidak boleh kosong!").show();
+                } else if (confirmPassword !== newPassword) {
+                    $("#password").addClass("is-invalid").removeClass("is-valid");
+                    $("#validasiPassword").text("Konfirmasi Password tidak cocok!").show();
+                } else {
+                    $("#password").removeClass("is-invalid").addClass("is-valid");
+                    $("#validasiPassword").hide();
+                }
+            });
+            $("#new-password").on("input", function() {
+                $("#password").trigger("input");
+            });
+
+            $("#nama, #new-password").on("input", function() {
                 if ($(this).val().trim() === "") {
                     $(this).addClass("is-invalid");
                 } else {
@@ -121,6 +154,15 @@
                 }
             });
 
+            $("#btnSubmit").prop("disabled", true);
+
+            $("#flexCheckDefault").on("change", function() {
+                if ($(this).is(":checked")) {
+                    $("#btnSubmit").prop("disabled", false);
+                } else {
+                    $("#btnSubmit").prop("disabled", true);
+                }
+            });
 
             $("#formPendaftaran").submit(function(e) {
                 e.preventDefault();
@@ -163,9 +205,17 @@
                     $("#validasiEmail").hide();
                 }
 
+                if ($("#new-password").val().trim() === "") {
+                    $("#new-password").addClass("is-invalid");
+                    $("#validasiNewPassword").text("Password tidak boleh kosong!").show();
+                    isValid = false;
+                } else {
+                    $("#new-password").removeClass("is-invalid").addClass("is-valid");
+                }
+
                 if ($("#password").val().trim() === "") {
                     $("#password").addClass("is-invalid");
-                    $("#validasiPassword").text("Password tidak boleh kosong!").show();
+                    $("#validasiPassword").text("Confirmasi Password tidak boleh kosong!").show();
                     isValid = false;
                 } else {
                     $("#password").removeClass("is-invalid").addClass("is-valid");
@@ -212,16 +262,20 @@
                         error: function(xhr) {
                             $("#btnSubmit").attr("disabled", false);
                             $("#btnLoading").addClass("d-none");
+                            $("#flexCheckDefault").prop("checked", false);
+                            $("#btnSubmit").prop("disabled", true);
+
                             let errorMessages = "";
                             if (xhr.responseJSON && xhr.responseJSON.errors) {
                                 $.each(xhr.responseJSON.errors, function(key, value) {
                                     errorMessages += value[0] + "\n";
+                                    console.log(errorMessages);
+
                                 });
                             } else {
                                 errorMessages =
                                     "<p>Terjadi kesalahan, silakan coba lagi.</p>";
                             }
-
                             $("#errorAlert").html(errorMessages).removeClass("d-none");
                         }
                     });

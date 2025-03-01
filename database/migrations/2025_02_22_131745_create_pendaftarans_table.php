@@ -19,6 +19,7 @@ return new class extends Migration
                 table: 'users',
                 indexName: 'user_id'
             );
+            $table->string('jalur_ppdb');
             $table->date('tanggal_daftar');
             $table->enum('confirmations', ['0', '1'])->default('0');
             $table->enum('decline', ['0', '1'])->default('0');

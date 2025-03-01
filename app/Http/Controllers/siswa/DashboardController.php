@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\siswa;
 
 use App\Http\Controllers\Controller;
+use App\Models\SiswaBaru;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
@@ -12,7 +14,8 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('siswa.dashboard');
+        $data  = Auth::guard('siswa')->user();
+        return view('siswa.dashboard', compact('data'));
     }
 
     /**

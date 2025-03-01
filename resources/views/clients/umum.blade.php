@@ -38,16 +38,29 @@
                             Email Tidak Boleh Koseng!.
                         </div>
                     </div>
-
                     <div class="mb-3">
-                        <label for="password" class="form-label">Password <span class="text-danger">*</span></label>
-                        <input type="password" name="password" class="form-control" id="password"
-                            placeholder="Masukan Password" value="{{ old('password') }}">
-                        <div id="validasiPassword" class="invalid-feedback">
-                            Password Tidak Boleh Koseng!.
-                        </div>
+                        <label for="new-password" class="form-label">Password <span class="text-danger">*</span></label>
+                        <input type="password" name="new-password" class="form-control" id="new-password"
+                            placeholder="Password" value="{{ old('new-password') }}">
+                        <div id="validasiNewPassword" class="invalid-feedback">Password tidak boleh kosong!</div>
                     </div>
 
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Confirmasi Password <span
+                                class="text-danger">*</span></label>
+                        <input type="password" name="password" class="form-control" id="password" placeholder="Password"
+                            value="{{ old('password') }}">
+                        <div id="validasiPassword" class="invalid-feedback">Confirmasi Password tidak boleh kosong!</div>
+                    </div>
+
+
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        <label class="form-check-label" for="flexCheckDefault" style="color: red">
+                            Saya telah memverifikasi data dan jalur yang saya pilih. Saya menyetujui bahwa data tidak dapat
+                            diubah setelah ini.
+                        </label>
+                    </div>
                     <div class="d-flex justify-content-between">
                         <a href="{{ route('regist') }}">
                             <button type="button" class="btn btn-light">Kembali</button>
@@ -95,7 +108,27 @@
                 }
             });
 
-            $("#nama, #password").on("input", function() {
+            $("#password").on("input", function() {
+                var confirmPassword = $(this).val();
+                var newPassword = $("#new-password").val();
+
+                if (confirmPassword.trim() === "") {
+                    $("#password").addClass("is-invalid").removeClass("is-valid");
+                    $("#validasiPassword").text("Konfirmasi Password tidak boleh kosong!").show();
+                } else if (confirmPassword !== newPassword) {
+                    $("#password").addClass("is-invalid").removeClass("is-valid");
+                    $("#validasiPassword").text("Konfirmasi Password tidak cocok!").show();
+                } else {
+                    $("#password").removeClass("is-invalid").addClass("is-valid");
+                    $("#validasiPassword").hide();
+                }
+            });
+            $("#new-password").on("input", function() {
+                $("#password").trigger("input");
+            });
+
+
+            $("#nama, #new-password").on("input", function() {
                 if ($(this).val().trim() === "") {
                     $(this).addClass("is-invalid");
                 } else {
@@ -103,7 +136,15 @@
                 }
             });
 
+            $("#btnSubmit").prop("disabled", true);
 
+            $("#flexCheckDefault").on("change", function() {
+                if ($(this).is(":checked")) {
+                    $("#btnSubmit").prop("disabled", false);
+                } else {
+                    $("#btnSubmit").prop("disabled", true);
+                }
+            });
             $("#formPendaftaran").submit(function(e) {
                 e.preventDefault();
                 var isValid = true;
@@ -145,6 +186,15 @@
                     $("#validasiEmail").hide();
                 }
 
+                if ($("#new-password").val().trim() === "") {
+                    $("#new-password").addClass("is-invalid");
+                    $("#validasiNewPassword").text("Password tidak boleh kosong!").show();
+                    isValid = false;
+                } else {
+                    $("#new-password").removeClass("is-invalid").addClass("is-valid");
+                }
+
+
                 if ($("#password").val().trim() === "") {
                     $("#password").addClass("is-invalid");
                     $("#validasiPassword").text("Password tidak boleh kosong!").show();
@@ -178,6 +228,7 @@
                                 window.location.href = response
                                     .redirect;
                             });
+
                         },
 
                         error: function(xhr) {

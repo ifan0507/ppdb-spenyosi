@@ -163,7 +163,7 @@
                         </center>
                     </div>
                 @endif
-                <form action="{{ route('login') }}" method="POST">
+                <form action="{{ route('login.post') }}" method="POST">
                     @csrf
                     <input type="email" name="email" class="form-control" placeholder="Email" required>
                     <input type="password" name="password" class="form-control" placeholder="Password" required>

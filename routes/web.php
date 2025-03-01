@@ -7,6 +7,7 @@ use App\Http\Controllers\client\RegisterController;
 use App\Http\Controllers\siswa\DashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\VerificationController;
+use Illuminate\Support\Facades\Auth;
 
 // Beranda
 Route::get('/', [BerandaController::class, 'index'])->name('beranda');
@@ -25,11 +26,13 @@ Route::post('/register-khusus', [RegisterController::class, 'registerKhusus'])->
 Route::post('/register-umum', [RegisterController::class, 'registerUmum'])->name('registerUmum');
 Route::post('/register-khusus', [RegisterController::class, 'registerKhusus'])->name('registerKhusus');
 Route::post('/register-umum', [RegisterController::class, 'registerUmum'])->name('registerUmum');
-// Login
-Route::get('/login', [LoginController::class, 'loginView'])->name('logview');
+
 
 // route verikasi 
 Route::get('/verify-email', function () {
+    if (Auth::guard('siswa')->check()) {
+        return redirect('/dashboard-siswa');
+    }
     if (!session('email_verifikasi')) {
         return redirect('/');
     }
@@ -37,7 +40,8 @@ Route::get('/verify-email', function () {
 })->name('verify.email');
 Route::post('/verify', [LoginController::class, 'verify']);
 
-
-Route::post('/login-siswa', [LoginController::class, 'login'])->name('login');
+// Login
+Route::get('/login', [LoginController::class, 'loginView'])->name('login');
+Route::post('/login-siswa', [LoginController::class, 'login'])->name('login.post');
 // Dashboard hanya untuk pengguna yang sudah verifikasi
-Route::get('/dashboard-siswa', [DashboardController::class, 'index'])->middleware(['auth:siswa'])->name('dashboard-siswa');
+Route::get('/dashboard-siswa', [DashboardController::class, 'index'])->middleware(['auth:siswa', 'auth'])->name('dashboard-siswa');
