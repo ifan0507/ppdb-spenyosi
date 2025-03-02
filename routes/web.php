@@ -36,11 +36,15 @@ Route::get('/verify-email', function () {
         return redirect('/');
     }
     return view('auth.verify-email', ['email' => session('email_verifikasi')]);
-})->name('verify.email');
+})->name('verify.email')->middleware('cache_verify');
 Route::post('/verify', [LoginController::class, 'verify']);
 
 // Login
-Route::get('/login', [LoginController::class, 'loginView'])->name('login');
+Route::get('/login', [LoginController::class, 'loginView'])->name('login')->middleware('cache_verify');
 Route::post('/login-siswa', [LoginController::class, 'login'])->name('login.post');
 // Dashboard hanya untuk pengguna yang sudah verifikasi
-Route::get('/dashboard-siswa', [DashboardController::class, 'index'])->middleware(['auth:siswa', 'auth'])->name('dashboard-siswa');
+
+Route::middleware(['auth:siswa', 'auth', 'cache_verify'])->group(function () {
+    Route::get('/dashboard-siswa', [DashboardController::class, 'index'])->name('dashboard-siswa');
+    Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
+});
