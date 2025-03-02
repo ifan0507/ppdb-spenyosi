@@ -1,0 +1,222 @@
+.error {
+    color: firebrick;
+}
+
+.select2-selection--single {
+    height: 39px !important;
+}
+
+.select2-selection__rendered {
+    line-height: 28px !important;
+}
+
+.select2-selection__arrow {
+    height: 38px !important;
+}
+
+.form-group.required > label:after {
+    content: " *";
+    color: #e3342f;
+}
+
+.form-group.required > label.title:after {
+    content: " *";
+    color: #e3342f;
+}
+
+.vertical-timeline {
+    width: 100%;
+    position: relative;
+    padding: 1.5rem 0 1rem;
+}
+
+.vertical-timeline::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 7px;
+    height: 100%;
+    width: 4px;
+    background: #e9ecef;
+    border-radius: 0.25rem;
+}
+
+.vertical-timeline-element {
+    position: relative;
+    margin: 0 0 1rem;
+}
+
+.vertical-timeline--animate .vertical-timeline-element-icon.bounce-in {
+    visibility: visible;
+    animation: cd-bounce-1 0.8s;
+}
+.vertical-timeline-element-icon {
+    position: absolute;
+    top: 8px;
+    left: 0;
+}
+
+.vertical-timeline-element-icon .badge-dot-xl {
+    box-shadow: 0 0 0 5px #fff;
+}
+
+.badge-dot-xl {
+    width: 18px;
+    height: 18px;
+    position: relative;
+}
+.badge:empty {
+    display: none;
+}
+
+.badge-dot-xl::before {
+    content: "";
+    width: 10px;
+    height: 10px;
+    border-radius: 0.25rem;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin: -5px 0 0 -5px;
+    background: #fff;
+}
+
+.vertical-timeline-element-content {
+    position: relative;
+    margin-left: 30px;
+    font-size: 0.8rem;
+}
+
+.vertical-timeline-element-content .timeline-title {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    /* margin: 0 0 .5rem; */
+    margin: 0;
+    padding: 2px 0 0;
+}
+
+.vertical-timeline-element-content .timeline-title-bold {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    /* margin: 0 0 .5rem; */
+    margin: 0;
+    padding: 2px 0 0;
+    font-weight: bold;
+}
+
+.vertical-timeline-element-content .vertical-timeline-element-date {
+    display: block;
+    position: absolute;
+    left: -90px;
+    top: 0;
+    padding-right: 10px;
+    text-align: right;
+    color: #adb5bd;
+    font-size: 0.7619rem;
+    white-space: nowrap;
+}
+
+.vertical-timeline-element-content:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+.btn-header {
+    width: 10.5%;
+    min-width: 50px;
+    margin-top: 10px;
+}
+.nav {
+    flex-wrap: inherit;
+}
+.nav-tabs {
+    display: inline-flex;
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    background-image: linear-gradient(to right, white, white),
+        linear-gradient(to right, white, white),
+        linear-gradient(
+            to right,
+            rgba(159, 159, 159, 0.5),
+            rgba(255, 255, 255, 0)
+        ),
+        linear-gradient(
+            to left,
+            rgba(159, 159, 159, 0.5),
+            rgba(255, 255, 255, 0)
+        );
+    /* Shadows */
+    /* Shadow covers */
+    background-position: left center, right center, left center, right center;
+    background-repeat: no-repeat;
+    background-color: white;
+    background-size: 20px 100%, 20px 100%, 15px 100%, 15px 100%;
+    background-attachment: local, local, scroll, scroll;
+}
+
+.nav-tabs > li.active > a,
+.nav-tabs > li.active > a:focus,
+.nav-tabs > li.active > a:hover {
+    border-width: 0;
+}
+.nav-tabs > li > a {
+    border: none;
+    color: #666;
+    white-space: nowrap;
+}
+.nav-tabs .nav-link.active,
+.nav-tabs > li.active > a,
+.nav-tabs > li > a:hover {
+    border: none;
+    color: #1b2532 !important;
+    background: transparent;
+}
+.nav-tabs .nav-link.active::after,
+.nav-tabs > li > a::after {
+    content: "";
+    background: #4285f4;
+    height: 5px;
+    position: absolute;
+    width: 100%;
+    left: 0px;
+    bottom: 1px;
+    transition: all 250ms ease 0s;
+    transform: scale(0);
+}
+.kelengkapan {
+    width: 42%;
+}
+@media (max-width: 768px) {
+    .nav-tabs .nav-link.active::after,
+    .nav-tabs > li.active > a::after {
+        transform: scale(1) !important;
+    }
+    .nav-tabs > li > a:hover {
+        color: #666 !important;
+    }
+    .kelengkapan {
+        width: 80%;
+    }
+}
+@media (min-width: 768px) {
+    .nav-tabs .nav-link.active::after,
+    .nav-tabs > li.active > a::after,
+    .nav-tabs > li:hover > a::after {
+        transform: scale(1) !important;
+    }
+    .kelengkapan {
+        width: 80%;
+    }
+}
+.nav > li > a {
+    position: relative;
+    display: block;
+    padding: 10px 15px;
+}
+.nav-cetak {
+    color: #2786fb !important;
+}
+.card-primary.card-outline-tabs .card-header a.active {
+    border-top: 3px solid #fff !important;
+}

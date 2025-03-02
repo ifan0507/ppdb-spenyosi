@@ -27,8 +27,8 @@ body {
 
 .right-panel {
     width: 50%;
-    background: linear-gradient(135deg, #5bb8ff, #3383ff);
-    color: white;
+    background: linear-gradient(135deg, #f0f8ff, #f0f8ff);
+    color: rgb(0, 0, 0);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -96,4 +96,14 @@ body {
 .text-white p {
     font-size: 14px;
     opacity: 0.9;
+}
+
+.welcome-logo {
+    width: 80px;
+    margin-bottom: 10px;
+}
+
+.sign-in-title{
+    text-align: center;
+    width: 100%;
 }

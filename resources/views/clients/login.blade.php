@@ -12,16 +12,8 @@
             <!-- Panel Kiri (Login Form) -->
             <div class="left-panel">
                 <div class="d-flex align-items-center mb-3">
-                    <img src="{{ asset('assets/img/logo.png') }}" alt="Logo SPENYOSI" class="logo">
-                    <h3 class="fw-bold ms-2">Sign In</h3>
+                    <h3 class="fw-bold sign-in-title">Sign In</h3>
                 </div>
-
-                {{-- <div class="social-icons">
-                    <a href="#"><i class="bi bi-facebook"></i></a>
-                    <a href="#"><i class="bi bi-google"></i></a>
-                    <a href="#"><i class="bi bi-linkedin"></i></a>
-                </div> --}}
-
                 <p>Masukkan alamat email dan kata sandi Akun Anda yang terdaftar.</p>
                 @if ($errors->any())
                     <div class="alert alert-danger" role="alert">
@@ -37,7 +29,7 @@
                 @endif
                 <form action="{{ route('login') }}" method="POST">
                     @csrf
-                    <input type="email" name="email" class="form-control" placeholder="example@gmail.com" required
+                    <input type="email" name="email" class="form-control mb-3" placeholder="Example@gmail.com" required
                         value="{{ old('email') }}">
                     <input type="password" name="password" class="form-control" placeholder="Masukan Password" required
                         value="{{ old('password') }}">
@@ -50,9 +42,14 @@
 
             <!-- Panel Kanan (Info) -->
             <div class="right-panel">
-                <h2 class="fw-bold">Halo, Teman!</h2>
-                <p>Belum punya akun? daftarkan diri anda segera!</p>
-                <a href="{{ route('regist') }}" class="btn btn-outline-light">SIGN UP</a>
+                <img src="{{ asset('assets/img/logo.png') }}" alt="Logo" class="welcome-logo">
+                <h2 class="fw-bold">Selamat Datang!</h2>
+                <p>Silakan masuk untuk melanjutkan.</p>
+                <div class="social-icons">
+                    <a href="#"><i class="bi bi-facebook"></i></a>
+                    <a href="#"><i class="bi bi-google"></i></a>
+                    <a href="#"><i class="bi bi-linkedin"></i></a>
+                </div>
             </div>
         </div>
     </div>
