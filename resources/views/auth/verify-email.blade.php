@@ -1,38 +1,71 @@
 @extends('layouts.portal.template')
 
+@section('header')
+    <header id="header" class="header d-flex align-items-center sticky-top">
+        <div class="container-fluid container-xl position-relative d-flex align-items-center">
+            <a href="#" class="logo d-flex align-items-center me-auto">
+                <!-- Uncomment the line below if you also wish to use an image logo -->
+                <img src="{{ asset('assets/img/logo.png') }}" alt="logo">
+                <h1 class="sitename fw-bold">SPENYOSI</h1>
+            </a>
+        </div>
+    </header>
+@endsection
+
 @section('content')
-    <div class="container text-center mt-5 mb-5">
-        <h5>Masukkan Kode OTP Anda</h5>
+    <div class="d-flex flex-column min-vh-100">
+        <div class="container text-center mt-5 mb-5 flex-grow-1 d-flex flex-column justify-content-center">
+            <h5>Masukkan Kode OTP Anda</h5>
 
-        <form id="formVerifikasi">
-            @csrf
-
-            <div class="d-flex justify-content-center">
-                @for ($i = 1; $i <= 6; $i++)
-                    <input type="text" class="otp-input" id="otp{{ $i }}" maxlength="1">
-                @endfor
-            </div>
-
-            <input type="hidden" name="otp" id="otp" required>
-        </form>
+            <form id="formVerifikasi">
+                @csrf
+                <div class="d-flex justify-content-center mt-3">
+                    @for ($i = 1; $i <= 6; $i++)
+                        <input type="text" class="otp-input" id="otp{{ $i }}" maxlength="1">
+                    @endfor
+                </div>
+                <input type="hidden" name="otp" id="otp" required>
+            </form>
+        </div>
     </div>
+@endsection
+
+@section('footer')
+    <footer class="footer mt-auto py-3 bg-light border-top">
+        <div class="container text-center">
+            <p class="m-0 text-muted">
+                &copy; 2025 SPENYOSI <em>v1.0</em>.
+            </p>
+        </div>
+    </footer>
 
     <style>
+        /* Agar footer selalu di bawah */
+        html,
+        body {
+            height: 100%;
+        }
+
+        /* Input OTP */
         .otp-input {
-            width: 40px;
-            height: 40px;
+            width: 45px;
+            height: 50px;
             text-align: center;
-            font-size: 20px;
-            margin: 0 5px;
-            border: 2px solid #ddd;
-            border-radius: 5px;
+            font-size: 22px;
+            font-weight: bold;
+            margin: 0 7px;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            transition: 0.3s;
         }
 
         .otp-input:focus {
             border-color: #007bff;
             outline: none;
+            box-shadow: 0px 0px 5px rgba(0, 123, 255, 0.5);
         }
     </style>
+
     <script>
         $(document).ready(function() {
             const inputs = $(".otp-input");

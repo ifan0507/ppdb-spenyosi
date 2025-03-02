@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers\client;
 
-use App\Http\Controllers\Controller;
+
 use App\Models\Register;
+use App\Models\SiswaBaru;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
@@ -14,6 +18,9 @@ class LoginController extends Controller
      */
     public function loginView()
     {
+        if (Auth::check()) {
+            return redirect('/dashboard-siswa');
+        }
         return view('clients.login');
     }
 
@@ -45,6 +52,7 @@ class LoginController extends Controller
 
     public function verify(Request $request)
     {
+
         $request->validate([
             'otp' => 'required|digits:6',
         ]);
@@ -59,14 +67,22 @@ class LoginController extends Controller
             'nama_lengkap' => $data['nama_lengkap'],
             'nisn' => $data['nisn'],
             'email' => $data['email'],
-            'password' => bcrypt($data['password']),
+            'password' => Hash::make($data['password']),
             'jalur_ppdb' => session('jalur_ppdb'),
             'email_verified_at' => now(),
             'verification_code' => null,
         ]);
+        SiswaBaru::create([
+            'id_register_siswa' => $siswa->id,
+            'nama' => $data['nama_lengkap'],
+            'nisn' => $data['nisn'],
+            'email' => $data['email'],
+        ]);
+
 
         Auth::guard('siswa')->login($siswa);
         session()->forget(['register_data', 'otp']);
+
         return response()->json(['redirect' => route('dashboard-siswa')]);
     }
 }
