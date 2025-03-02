@@ -9,13 +9,13 @@
     <!-- Sidebar -->
     <div class="sidebar">
         <!-- Sidebar user panel (optional) -->
-        <div class="user-panel mt-3 pb-3 mb-3 d-flex align-items-center gap-2">
+        <div class="user-panel d-flex align-items-center gap-2">
             <div class="image">
                 <img src="{{ asset('assets/img/siswa.png') }}" class="img-circle elevation-2" alt="User Image"
                     width="50">
             </div>
             <div class="info">
-                <a href="#" class="d-block">{{ $data->nama_lengkap }}</a>
+                <a href="#" class="d-block font-thin">{{ $data->nama_lengkap }}</a>
                 <span class="badge badge-dark">{{ $data->siswa->nisn }}</span>
             </div>
         </div>
@@ -32,6 +32,12 @@
                     <a href="#" class="nav-link active">
                         <i class="fa-solid fa-gauge-high nav-icon"></i>
                         <p>Dashboard</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('logout') }}" class="nav-link">
+                        <i class="nav-icon fas fa-power-off"></i>
+                        <p>Logout</p>
                     </a>
                 </li>
 

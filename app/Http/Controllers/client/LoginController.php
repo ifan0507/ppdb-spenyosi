@@ -8,6 +8,7 @@ use App\Models\SiswaBaru;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -18,7 +19,7 @@ class LoginController extends Controller
      */
     public function loginView()
     {
-        if (Auth::check()) {
+        if (Auth::guard('siswa')->check()) {
             return redirect('/dashboard-siswa');
         }
         return view('clients.login');
@@ -84,5 +85,16 @@ class LoginController extends Controller
         session()->forget(['register_data', 'otp']);
 
         return response()->json(['redirect' => route('dashboard-siswa')]);
+    }
+
+    public function logout(Request $request): RedirectResponse
+    {
+        Auth::guard('siswa')->logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect('/login');
     }
 }
