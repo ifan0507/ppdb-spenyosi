@@ -3,20 +3,20 @@
 namespace App\Http\Controllers\siswa;
 
 use App\Http\Controllers\Controller;
-use App\Models\SiswaBaru;
+use App\Models\MataPelajaran;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class DashboardController extends Controller
+class RaportController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $data = Auth::guard('siswa')->user();
-        $active_tab = 'biodata';
-        return view('siswa.dashboard', compact('data'), ['active_tab' => $active_tab]);
+        $data  = Auth::guard('siswa')->user();
+        $active_tab = "raport";
+        return view('siswa.raport', compact('data'), ['active_tab' => $active_tab]);
     }
 
     /**
@@ -24,7 +24,9 @@ class DashboardController extends Controller
      */
     public function create()
     {
-        //
+        $data  = Auth::guard('siswa')->user();
+        $mapel = MataPelajaran::all();
+        return view('siswa.form-raport', compact('data'), ["mapels" => $mapel]);
     }
 
     /**
