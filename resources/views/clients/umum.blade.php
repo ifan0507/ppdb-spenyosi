@@ -56,7 +56,7 @@
 
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                        <label class="form-check-label" for="flexCheckDefault" style="color: red">
+                        <label class="form-check-label mb-3" for="flexCheckDefault" style="color: red">
                             Saya telah memverifikasi data dan jalur yang saya pilih. Saya menyetujui bahwa data tidak dapat
                             diubah setelah ini.
                         </label>

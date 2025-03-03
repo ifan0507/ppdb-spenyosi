@@ -14,7 +14,6 @@ class PortalController extends Controller
     {
         return view('clients.portal');
     }
-
     /**
      * Show the form for creating a new resource.
      */
