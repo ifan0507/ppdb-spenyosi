@@ -9,7 +9,7 @@
                         <h5 class="row justify-content-between">
                             <div class="col-8 pt-lg-2">
                                 <h4 class="font-bold" style="display: inline-block";>
-                                    Form input raport
+                                    {{ $header }}
                                 </h4>
                             </div>
 

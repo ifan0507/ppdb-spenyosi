@@ -38,27 +38,7 @@
             </div>
             <div class="row justify-content-center">
                 <div class="card card-primary card-outline card-outline-tabs col-md-12">
-                    <div class="card-header p-0 border-bottom-0">
-                        <ul class="nav nav-tabs" id="formulir-tabs" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link remove-tab-format font-bold {{ $active_tab == 'biodata' ? 'active' : '' }}"
-                                    id="biodata-tab" data-toggle="pill" href="{{ route('dashboard-siswa') }}" role="tab"
-                                    aria-controls="biodata" aria-selected="true">Biodata</a>
-                            </li>
-                            @if ($data->jalur_ppdb == 'Prestasi')
-                                <li class="nav-item">
-                                    <a class="nav-link remove-tab-format font-bold {{ $active_tab == 'raport' ? 'active' : '' }}"
-                                        id="keluarga-tab" data-toggle="pill" href="{{ route('raport') }}" role="tab"
-                                        aria-controls="keluarga" aria-selected="false">Raport</a>
-                                </li>
-                            @endif
-                            <li class="nav-item">
-                                <a class="nav-link remove-tab-format font-bold {{ $active_tab == 'pendaftaran' ? 'active' : '' }}"
-                                    id="biodata-tab" data-toggle="pill" href="{{ route('pendaftaran') }}" role="tab"
-                                    aria-controls="biodata" aria-selected="true">Konfirmasi pendaftaran</a>
-                            </li>
-                        </ul>
-                    </div>
+                    @include('layouts.siswa.tab-content')
                     <div class="card-body">
                         <div class="row justify-content-center">
                             <div class="card-body p-0">
@@ -67,7 +47,8 @@
                                         @if (!$raports->isEmpty() && optional($raports->first())->status == '1')
                                             <div class="card-header d-flex justify-content-between align-items-center">
                                                 <h4>Raport</h4>
-                                                <a href="{{ route('form-raport') }}" class="btn btn-primary ms-auto">
+                                                <a href="{{ route('edit-raport', ['id' => $data->siswa->id]) }}"
+                                                    class="btn btn-primary ms-auto">
                                                     <i class="fas fa-edit"></i> Perbarui data raport
                                                 </a>
                                             </div>

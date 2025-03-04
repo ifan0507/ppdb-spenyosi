@@ -48,9 +48,15 @@ Route::post('/login-siswa', [LoginController::class, 'login'])->name('login.post
 
 Route::middleware(['auth:siswa', 'auth', 'cache_verify'])->group(function () {
     Route::get('/dashboard-siswa', [DashboardController::class, 'index'])->name('dashboard-siswa');
+
+    // Raport
     Route::get('/raport', [RaportController::class, 'index'])->name('raport');
     Route::get('/form-raport', [RaportController::class, 'create'])->name('form-raport');
     Route::post('/form-raport', [RaportController::class, 'store'])->name('form-raport.post');
+    Route::get('/raport/{id}', [RaportController::class, 'edit'])->name('edit-raport');
+    Route::put('/raport/{id}', [RaportController::class, 'update'])->name('update-raport');
+
+    // Pendaftaran
     Route::get('/pendaftaran', [Pendaftaran::class, 'index'])->name('pendaftaran');
     Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 });
