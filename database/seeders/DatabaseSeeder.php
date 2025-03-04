@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\MataPelajaran;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -15,9 +16,20 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        // User::factory()->create([
+        //     'name' => 'Test User',
+        //     'email' => 'test@example.com',
+        // ]);
+
+        MataPelajaran::insert([
+            ["nama_matapelajaran" => "Pendidikan Agama"],
+            ["nama_matapelajaran" => "Pendidikan Pancasila & Kewarganegaraan"],
+            ["nama_matapelajaran" => "Bahasa Indonesia"],
+            ["nama_matapelajaran" => "Matematika"],
+            ["nama_matapelajaran" => "Ilmu Pengetahuan Alam (IPA)"],
+            ["nama_matapelajaran" => "Ilmu Pengetahuan Sosial (IPS)"],
+            ["nama_matapelajaran" => "Seni Budaya dan Prakarya"],
+            ["nama_matapelajaran" => "Pend. Jasmani, Olahraga dan Kesehatan"]
         ]);
     }
 }

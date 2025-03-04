@@ -219,8 +219,7 @@
 
                             Swal.fire({
                                 title: "Berhasil!",
-                                text: "kami telah mengirimkan kode otp ke email " + $(
-                                    "#email").val() + ".",
+                                text: "periksa kode otp diemail anda",
                                 icon: "success",
                                 confirmButtonText: "OK",
                                 confirmButtonColor: "#18a342",

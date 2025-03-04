@@ -109,9 +109,10 @@
                     },
                     success: function(response) {
                         Swal.fire({
-                            title: "Verifikasi Berhasil!",
-                            text: "Anda akan diarahkan ke dashboard.",
+                            title: "Berhasil!",
+                            text: "Verifikasi berhasil",
                             icon: "success",
+                            confirmButtonColor: "#18a342",
                             confirmButtonText: "OK",
                         }).then(() => {
                             window.location.href = response.redirect;

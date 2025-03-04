@@ -3,11 +3,10 @@
 namespace App\Http\Controllers\siswa;
 
 use App\Http\Controllers\Controller;
-use App\Models\SiswaBaru;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class DashboardController extends Controller
+class Pendaftaran extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +14,8 @@ class DashboardController extends Controller
     public function index()
     {
         $data = Auth::guard('siswa')->user();
-        $active_tab = 'biodata';
-        return view('siswa.dashboard', compact('data'), ['active_tab' => $active_tab]);
+        $active_tab = "pendaftaran";
+        return view('siswa.pendaftaran', compact('data'), ["active_tab" => $active_tab]);
     }
 
     /**
