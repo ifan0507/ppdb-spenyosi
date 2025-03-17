@@ -4,7 +4,7 @@
         <div class="container">
             <div class="alert alert-primary">
                 <i class="fas fa-check"></i>
-                Jalur PPDB {{ $data->jalur_ppdb }}
+                Jalur PPDB {{ $data->jalur->nama_jalur }}
             </div>
             <div class="row justify-content-center">
                 <div class="card card-primary card-outline card-outline-tabs m-0 p-0 col-md-12">

@@ -39,4 +39,9 @@ class DataRaport extends Model
     {
         return $this->belongsTo(MataPelajaran::class, 'id_mapel');
     }
+
+    public function jalur(): BelongsTo
+    {
+        return $this->belongsTo(Jalur::class, "id_jalur");
+    }
 }

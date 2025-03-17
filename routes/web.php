@@ -42,12 +42,12 @@ Route::get('/verify-email', function () {
 Route::post('/verify', [LoginController::class, 'verify']);
 
 // Login
-Route::get('/login', [LoginController::class, 'loginView'])->name('login')->middleware('cache_verify');
+Route::get('/auth/login', [LoginController::class, 'loginView'])->name('login')->middleware('cache_verify');
 Route::post('/login-siswa', [LoginController::class, 'login'])->name('login.post');
 // Dashboard hanya untuk pengguna yang sudah verifikasi
 
 Route::middleware(['auth:siswa', 'auth', 'cache_verify'])->group(function () {
-    Route::get('/dashboard-siswa', [DashboardController::class, 'index'])->name('dashboard-siswa');
+    Route::get('/siswa', [DashboardController::class, 'index'])->name('dashboard-siswa');
 
     // Raport
     Route::get('/raport', [RaportController::class, 'index'])->name('raport');

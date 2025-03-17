@@ -20,7 +20,7 @@ class LoginController extends Controller
     public function loginView()
     {
         if (Auth::guard('siswa')->check()) {
-            return redirect('/dashboard-siswa');
+            return redirect('/siswa');
         }
         return view('clients.login');
     }
@@ -45,7 +45,7 @@ class LoginController extends Controller
 
         if (Auth::guard('siswa')->attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->intended('/dashboard-siswa');
+            return redirect()->intended('/siswa');
         }
 
         return back()->withInput()->withErrors('Email or Password Incorrect!');
@@ -69,7 +69,7 @@ class LoginController extends Controller
             'nisn' => $data['nisn'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'jalur_ppdb' => session('jalur_ppdb'),
+            'id_jalur' => session('jalur_ppdb'),
             'email_verified_at' => now(),
             'verification_code' => null,
         ]);
@@ -95,6 +95,6 @@ class LoginController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/login');
+        return redirect('/auth/login');
     }
 }

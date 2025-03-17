@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Jalur;
 use App\Models\MataPelajaran;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -30,6 +31,14 @@ class DatabaseSeeder extends Seeder
             ["nama_matapelajaran" => "Ilmu Pengetahuan Sosial (IPS)"],
             ["nama_matapelajaran" => "Seni Budaya dan Prakarya"],
             ["nama_matapelajaran" => "Pend. Jasmani, Olahraga dan Kesehatan"]
+        ]);
+
+        Jalur::insert([
+            ["nama_jalur" => "Umum"],
+            ["nama_jalur" => "Afirmasi (Siswa dari keluarga kurang mampu)"],
+            ["nama_jalur" => "Pindah Tugas (Orang tua/wali pindah kerja)"],
+            ["nama_jalur" => "Lomba/Tahfidz (Peraih prestasi di bidang akademik/non-akademik atau tahfidz Al-Qur'an)"],
+            ["nama_jalur" => "Prestasi (Nilai Raport)"]
         ]);
     }
 }
