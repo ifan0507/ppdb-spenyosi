@@ -24,18 +24,14 @@ class RegisterController extends Controller
 
     public function registUmum()
     {
-        if (Auth::guard('siswa')->check()) {
-            return redirect('/dashboard-siswa');
-        }
+
         return view('clients.umum');
     }
 
     public function registKhusus()
     {
         $jalur = Jalur::all();
-        if (Auth::guard('siswa')->check()) {
-            return redirect('/dashboard-siswa');
-        }
+
         return view('clients.khusus', ["jalurs" => $jalur]);
     }
 

@@ -47,9 +47,12 @@ Route::post('/login-siswa', [LoginController::class, 'login'])->name('login.post
 // Dashboard hanya untuk pengguna yang sudah verifikasi
 
 Route::middleware(['auth:siswa', 'auth', 'cache_verify'])->group(function () {
+
+    Route::get('/siswa/edit-biodata', [DashboardController::class, 'edit'])->name('siswa.edit');
+    // Route::put('/siswa/update-biodata/{id}', [DashboardController::class, 'update'])->name('siswa.update');
+
     Route::get('/siswa', [DashboardController::class, 'index'])->name('dashboard-siswa');
 
-    // Raport
     Route::get('/raport', [RaportController::class, 'index'])->name('raport');
     Route::get('/form-raport', [RaportController::class, 'create'])->name('form-raport');
     Route::post('/form-raport', [RaportController::class, 'store'])->name('form-raport.post');
@@ -59,4 +62,7 @@ Route::middleware(['auth:siswa', 'auth', 'cache_verify'])->group(function () {
     // Pendaftaran
     Route::get('/pendaftaran', [Pendaftaran::class, 'index'])->name('pendaftaran');
     Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
+});
+Route::get('/map', function () {
+    return view('siswa/map');
 });
