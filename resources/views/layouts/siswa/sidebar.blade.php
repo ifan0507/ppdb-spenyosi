@@ -15,7 +15,7 @@
                     width="50">
             </div>
             <div class="info">
-                <a href="#" class="d-block font-thin">{{ $data->nama_lengkap }}</a>
+                <a href="#" class="d-block font-thin">{{ $data->siswa->nama }}</a>
                 <span class="badge badge-dark">{{ $data->siswa->nisn }}</span>
             </div>
         </div>

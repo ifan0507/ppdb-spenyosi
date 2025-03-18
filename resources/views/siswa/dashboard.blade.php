@@ -40,7 +40,7 @@
                 <div class="card card-primary card-outline card-outline-tabs col-md-12">
                     @include('layouts.siswa.tab-content')
                     <div class="card-body">
-
+                        <img src="{{ asset('storage/' . $data->siswa->foto_kk) }}" alt="foto kk">
                     </div>
                     <!-- /.card -->
                 </div>

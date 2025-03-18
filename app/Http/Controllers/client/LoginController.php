@@ -5,7 +5,6 @@ namespace App\Http\Controllers\client;
 
 use App\Models\Register;
 use App\Models\SiswaBaru;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
@@ -65,7 +64,6 @@ class LoginController extends Controller
         $data = session('register_data');
 
         $siswa = Register::create([
-            'nama_lengkap' => $data['nama_lengkap'],
             'nisn' => $data['nisn'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
@@ -78,6 +76,22 @@ class LoginController extends Controller
             'nama' => $data['nama_lengkap'],
             'nisn' => $data['nisn'],
             'email' => $data['email'],
+            'nik' => "_",
+            "tempat_lahir" => "_",
+            "tanggal_lahir" => "_",
+            "asal_sekolah" => "_",
+            "kabupaten" => "_",
+            "kecamatan" => "_",
+            "desa" => "_",
+            "dusun" => "_",
+            "rt" => "_",
+            "rw" => "_",
+            "alamat" => "_",
+            "no_hp" => "_",
+            "lokasi" => "_",
+            "foto_kk" => 'default_document.png',
+            "foto_siswa" => 'default_siswa.png',
+            "foto_akte" => 'default_document.png',
         ]);
 
 
