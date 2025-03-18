@@ -5,11 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class DataRaport extends Model
 {
     use HasFactory, HasUlids;
     protected $table = 'data_raports';
+    protected $with = 'mapel';
     public $incrementing = false;
     protected $keyType = 'string';
     protected $fillable = [
@@ -27,4 +29,14 @@ class DataRaport extends Model
         'rata_kelas6_sem1',
         'status'
     ];
+
+    public function siswa(): BelongsTo
+    {
+        return $this->belongsTo(SiswaBaru::class, 'id_siswa');
+    }
+
+    public function mapel(): BelongsTo
+    {
+        return $this->belongsTo(MataPelajaran::class, 'id_mapel');
+    }
 }
