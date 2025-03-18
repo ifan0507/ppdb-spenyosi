@@ -31,7 +31,7 @@
 @endsection
 
 @section('footer')
-    <footer class="footer mt-auto py-3 bg-light border-top">
+    <footer class="footer mt-auto bg-light border-top">
         <div class="container text-center">
             <p class="m-0 text-muted">
                 &copy; 2025 SPENYOSI <em>v1.0</em>.

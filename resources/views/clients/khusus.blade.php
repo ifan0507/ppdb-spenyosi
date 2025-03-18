@@ -59,11 +59,13 @@
                                 class="text-danger">*</span></label>
                         <select name="jalur_ppdb" id="jalur_ppdb" class="form-control">
                             <option value="" selected disabled>-- Pilih Jalur --</option>
-                            <option value="Afirmasi">Afirmasi (Siswa dari keluarga kurang mampu)</option>
-                            <option value="Pindah Tugas">Pindah Tugas (Orang tua/wali pindah kerja)</option>
-                            <option value="Tahfidz">Tahfidz (Memiliki hafalan Al-Qur'an)</option>
-                            <option value="Prestasi">Prestasi (Nilai Raport)</option>
+                            @foreach ($jalurs as $jalur)
+                                @if ($jalur->nama_jalur !== 'Umum')
+                                    <option value="{{ $jalur->id }}">{{ $jalur->nama_jalur }}</option>
+                                @endif
+                            @endforeach
                         </select>
+
                         <div id="validasiJalur" class="invalid-feedback">Silakan pilih jalur khusus!</div>
                     </div>
                     <div class="form-check">

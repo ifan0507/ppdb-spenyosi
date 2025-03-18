@@ -33,7 +33,6 @@ return new class extends Migration
             $table->string('foto_kk')->nullable();
             $table->string('foto_siswa')->nullable();
             $table->string('foto_akte')->nullable();
-            $table->string('documents')->nullable();
             $table->enum('status_berkas', ['0', '1'])->default('0');
             // $table->ulid('id_register_siswa');
             $table->foreignUlid('id_register_siswa')->references('id')->on('registers')->onDelete('cascade')->onUpdate('cascade');

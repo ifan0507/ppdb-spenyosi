@@ -4,7 +4,7 @@
             <a class="nav-link remove-tab-format font-bold {{ $active_tab == 'biodata' ? 'active' : '' }}"
                 id="biodata-tab" data-toggle="pill" href="{{ route('dashboard-siswa') }}" role="tab">Biodata</a>
         </li>
-        @if ($data->jalur_ppdb == 'Prestasi')
+        @if ($data->jalur->id == '5')
             <li class="nav-item">
                 <a class="nav-link remove-tab-format font-bold {{ $active_tab == 'raport' ? 'active' : '' }}"
                     id="keluarga-tab" data-toggle="pill" href="{{ route('raport') }}" role="tab">Raport</a>

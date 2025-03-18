@@ -4,6 +4,7 @@ namespace App\Http\Controllers\client;
 
 use App\Http\Controllers\Controller;
 use App\Mail\VerificationMail;
+use App\Models\Jalur;
 use App\Models\Register;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
@@ -31,10 +32,11 @@ class RegisterController extends Controller
 
     public function registKhusus()
     {
+        $jalur = Jalur::all();
         if (Auth::guard('siswa')->check()) {
             return redirect('/dashboard-siswa');
         }
-        return view('clients.khusus');
+        return view('clients.khusus', ["jalurs" => $jalur]);
     }
 
     /**
@@ -83,7 +85,7 @@ class RegisterController extends Controller
         session([
             'register_data' => $request->only('nama_lengkap', 'nisn', 'email', 'password'),
             'otp' => $otp,
-            'jalur_ppdb' => 'Umum',
+            'jalur_ppdb' => '1',
         ]);
 
         Mail::to($request->email)->send(new VerificationMail($otp));

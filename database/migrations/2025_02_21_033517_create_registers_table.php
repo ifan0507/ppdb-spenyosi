@@ -19,7 +19,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('verification_code')->nullable();
             $table->string('password');
-            $table->string('jalur_ppdb');
+            $table->foreignId('id_jalur')->references('id')->on('jalurs')->onUpdate('cascade')->onDelete('cascade');
             $table->rememberToken();
             $table->timestamps();
         });
