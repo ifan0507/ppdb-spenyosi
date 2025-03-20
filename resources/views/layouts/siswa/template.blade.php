@@ -9,6 +9,8 @@
     <link rel="icon" type="image/png" href="{{ asset('assets/img/logo.png') }}">
     <!-- CSS untuk Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Choices.js -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css">
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -23,11 +25,23 @@
 
 
     <!-- Script JS yang dibutuhkan (di bagian head sebaiknya hanya untuk library eksternal yang tidak menghalangi rendering) -->
+    <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
     <script src="{{ asset('assets/js/jquery-3.7.1.js') }}"></script> <!-- Hanya jika kamu memang membutuhkan jQuery -->
     <script src="{{ asset('assets/js/sweetalert2.all.min.js') }}"></script> <!-- SweetAlert2 -->
     <style>
         #map {
             height: 500px;
+        }
+
+        .choices__inner {
+            min-height: 30px;
+            font-size: 14px;
+            padding: 4px 8px;
+        }
+
+        .choices__list--dropdown {
+            max-height: 200px;
+            overflow-y: auto;
         }
     </style>
 </head>

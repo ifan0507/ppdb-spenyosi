@@ -128,7 +128,7 @@
                                                     <td><img src="{{ asset('storage/' . $data->siswa->foto_akte) }}"
                                                             alt="Foto Akte"></td>
                                                 </tr>
-                                                <tr class="{{ $jalur_ppdb === 'Umum' ? 'd-none' : '' }}">
+                                                <tr class="{{ $data->jalur->id !== '1' ? 'd-none' : '' }}">
                                                     <th>Document</th>
                                                     <td>{{ $data->siswa->documents }}</td>
                                                 </tr>

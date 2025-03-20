@@ -26,8 +26,7 @@ Route::get('/register/khusus', [RegisterController::class, 'registKhusus'])->nam
 // Register
 Route::post('/register-khusus', [RegisterController::class, 'registerKhusus'])->name('registerKhusus');
 Route::post('/register-umum', [RegisterController::class, 'registerUmum'])->name('registerUmum');
-Route::post('/register-khusus', [RegisterController::class, 'registerKhusus'])->name('registerKhusus');
-Route::post('/register-umum', [RegisterController::class, 'registerUmum'])->name('registerUmum');
+
 
 // route verikasi 
 Route::get('/verify-email', function () {
