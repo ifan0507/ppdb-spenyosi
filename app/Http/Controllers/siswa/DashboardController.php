@@ -84,6 +84,10 @@ class DashboardController extends Controller
             $siswa->foto_akte = $fileName;
         }
 
+        
+
+
+
         $siswa->save();
 
         return redirect('/siswa/dashboard')->with('success', 'Biodata berhasil diperbarui.');

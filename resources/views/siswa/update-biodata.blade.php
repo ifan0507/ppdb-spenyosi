@@ -4,7 +4,7 @@
     <div class="container py-3">
         <div class="card" style="border-top: 3px solid #007bff;">
             <div class="card-header py-2 d-flex justify-content-between align-items-center">
-                <h4 class="card-title mt-3 mb-3"><b>Biodata Siswa</b></h4>
+                <h4 class="card-title mt-3 mb-3"><b>Perbarui Biodata Siswa</b></h4>
             </div>
             <div class="card-body">
                 <form action="#" method="POST" enctype="multipart/form-data">
@@ -80,35 +80,100 @@
                             </div>
 
                             <div class="form-group required mb-3">
-                                <label class="form-label">Alamat</label>
-                                <textarea class="form-control" name="alamat" rows="3" required>{{ $data->siswa->alamat }}</textarea>
+                                <label class="form-label">Kabupaten</label>
+                                <select id="kabupaten_id" class="form-select form-select-sm">
+                                    <option value="">Pilih Kabupaten</option>
+                                </select>
+                                <input type="hidden" id="kab_name">
                             </div>
-
-
+                            <div class="form-group required mb-3">
+                                <label class="form-label">Kecamatan</label>
+                                <select id="kecamatan_id" class="form-select form-select-sm">
+                                    <option value="">Pilih Kecamatan</option>
+                                </select>
+                                <input type="hidden" id="kec_name">
+                            </div>
+                            <div class="form-group required mb-3">
+                                <label class="form-label">Kelurahan/Desa</label>
+                                <select id="desa_id" class="form-select form-select-sm">
+                                    <option value="">Pilih Kelurahan/Desa</option>
+                                </select>
+                                <input type="hidden" id="desa_name">
+                            </div>
+                            <div class="form-group required mb-3">
+                                <label for="alamat" class="form-label">Alamat</label>
+                                <textarea class="form-control" id="alamat" name="alamat" rows="3" required></textarea>
+                            </div>
                             <div class="form-group required mb-3">
                                 <label class="form-label">No HP</label>
-                                <input type="text" class="form-control" name="no_hp" value="{{ $data->siswa->no_hp }}"
-                                    required>
+                                <input type="text" class="form-control" name="no_hp"
+                                    value="{{ $data->siswa->no_hp }}" required>
                             </div>
-
                             <div class="form-group required mb-3">
                                 <label class="form-label">Email</label>
-                                <input type="email" class="form-control" name="email" value="{{ $data->siswa->email }}"
-                                    required>
+                                <input type="email" class="form-control" name="email"
+                                    value="{{ $data->siswa->email }}" required>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="border m-3 py-1 px-2 text-center">
+                                        <label for="foto_kk" class="form-label">
+                                            Foto KK <span style="color:#e3342f">*</span><br />
+                                            <b>(format: JPG/JPEG maks. 300KB)</b>
+                                        </label>
+
+                                        <img id="img-foto_kk" src="{{ asset('storage/' . $data->siswa->foto_kk) }}"
+                                            class="img-fluid rounded border mb-2" style="max-width: 80%; height: auto;">
+                                        <label for="foto_kk" class="btn btn-primary w-100">
+                                            <i class="fas fa-folder-open"></i> Pilih Foto
+                                        </label>
+                                        <input type="file" id="foto_kk" name="foto_kk" class="d-none"
+                                            accept="image/jpeg">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="border m-3 py-1 px-2 text-center">
+                                        <label for="foto_akte" class="form-label">
+                                            Foto Akte <span style="color:#e3342f">*</span><br />
+                                            <b>(format: JPG/JPEG maks. 300KB)</b>
+                                        </label>
+
+                                        <img id="img-foto_akte" src="{{ asset('storage/' . $data->siswa->foto_akte) }}"
+                                            class="img-fluid rounded border mb-2" style="max-width: 80%; height: auto;">
+                                        <label for="foto_akte" class="btn btn-primary w-100">
+                                            <i class="fas fa-folder-open"></i> Pilih Foto
+                                        </label>
+                                        <input type="file" id="foto_akte" name="foto_akte" class="d-none"
+                                            accept="image/jpeg">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="border m-3 py-1 px-2 text-center">
+                                        <label for="foto_lainnya" class="form-label">
+                                            Foto Lainnya <span style="color:#e3342f">*</span><br />
+                                            <b>(format: JPG/JPEG maks. 300KB)</b>
+                                        </label>
+
+                                        <img id="img-foto_lainnya"
+                                            src="{{ asset('storage/' . $data->siswa->documents) }}"
+                                            class="img-fluid rounded border mb-2" style="max-width: 80%; height: auto;">
+                                        <label for="foto_lainnya" class="btn btn-primary w-100">
+                                            <i class="fas fa-folder-open"></i> Pilih Foto
+                                        </label>
+                                        <input type="file" id="foto_lainnya" name="foto_lainnya" class="d-none"
+                                            accept="image/jpeg">
+                                    </div>
+                                </div>
                             </div>
                             <label class="form-label">Titik Koordinat Rumah</label>
                             <div class="input-group mb-3">
                                 <input type="text" class="form-control" placeholder="Masukan titik koordinat rumah"
                                     aria-label="Recipient's username" aria-describedby="button-addon2" id="coordinates">
-
                                 <button class="btn btn-outline-secondary" type="button" id="button-addon2"
                                     data-bs-toggle="modal" data-bs-target="#mapModal"><i
                                         class="fa-solid fa-location-dot"></i></button>
-
                             </div>
                         </div>
-
-
                     </div>
 
                     <div class="row justify-content-end">
@@ -169,6 +234,123 @@
                     map.invalidateSize();
                 }, 200);
             }
+        });
+
+        // scrip jquery dan ajax untuk kabupaten
+        document.addEventListener("DOMContentLoaded", function() {
+            let kabupatenSelect = document.getElementById("kabupaten_id");
+            let kecamatanSelect = document.getElementById("kecamatan_id");
+            let desaSelect = document.getElementById("desa_id");
+
+            let kabupatenName = document.getElementById("kab_name");
+            let kacamatanName = document.getElementById("kec_name");
+            let desaName = document.getElementById("desa_name");
+
+            let kabupatenChoices = new Choices(kabupatenSelect, {
+                searchEnabled: true
+            });
+            let kecamatanChoices = new Choices(kecamatanSelect, {
+                searchEnabled: true
+            });
+            let desaChoices = new Choices(desaSelect, {
+                searchEnabled: true
+            });
+
+            // Ambil data kabupaten dari API
+            fetch("https://www.emsifa.com/api-wilayah-indonesia/api/regencies/35.json")
+                .then(response => response.json())
+                .then(data => {
+                    kabupatenChoices.clearChoices();
+                    kabupatenChoices.setChoices(
+                        data.map(item => ({
+                            value: item.id,
+                            label: item.name
+                        })),
+                        "value",
+                        "label",
+                        true
+                    );
+                });
+
+            // Event listener ketika kabupaten dipilih
+            kabupatenSelect.addEventListener("change", function() {
+                let kabupatenId = kabupatenSelect.value;
+                let selectedOption = kabupatenSelect.options[kabupatenSelect.selectedIndex];
+                kabupatenName.value = selectedOption.text;
+                kecamatanChoices.clearChoices();
+                kecamatanChoices.setChoices([{
+                    value: "",
+                    label: "Memuat...",
+                    disabled: true
+                }]);
+                desaChoices.clearChoices();
+                desaChoices.setChoices([{
+                    value: "",
+                    label: "Pilih Kecamatan Terlebih Dahulu",
+                    disabled: true
+                }]);
+
+                if (kabupatenId) {
+                    fetch(`https://www.emsifa.com/api-wilayah-indonesia/api/districts/${kabupatenId}.json`)
+                        .then(response => response.json())
+                        .then(data => {
+                            kecamatanChoices.clearChoices();
+                            kecamatanChoices.setChoices(
+                                data.map(item => ({
+                                    value: item.id,
+                                    label: item.name
+                                })),
+                                "value",
+                                "label",
+                                true
+                            );
+                        });
+                }
+            });
+
+            // Event listener ketika kecamatan dipilih
+            kecamatanSelect.addEventListener("change", function() {
+                let kecamatanId = kecamatanSelect.value;
+
+                let selectedOption = kecamatanSelect.options[kecamatanSelect.selectedIndex];
+                kacamatanName.value = selectedOption.text;
+
+                desaChoices.clearChoices();
+                desaChoices.setChoices([{
+                    value: "",
+                    label: "Memuat...",
+                    disabled: true
+                }]);
+
+                if (kecamatanId) {
+                    fetch(`https://www.emsifa.com/api-wilayah-indonesia/api/villages/${kecamatanId}.json`)
+                        .then(response => response.json())
+                        .then(data => {
+                            desaChoices.clearChoices();
+                            desaChoices.setChoices(
+                                data.map(item => ({
+                                    value: item.id,
+                                    label: item.name
+                                })),
+                                "value",
+                                "label",
+                                true
+                            );
+                        });
+                } else {
+                    desaChoices.clearChoices();
+                    desaChoices.setChoices([{
+                        value: "",
+                        label: "Pilih Kecamatan Terlebih Dahulu",
+                        disabled: true
+                    }]);
+                }
+            });
+
+            desaSelect.addEventListener("change", function() {
+                let selectedOption = desaSelect.options[desaSelect.selectedIndex];
+                desaName.value = selectedOption.text;
+            });
         });
     </script>
 @endsection

@@ -239,7 +239,7 @@
                                     errorMessages += value[0] + "\n";
                                 });
                             } else {
-                                errorMessages = "<p>Terjadi kesalahan, silakan coba lagi.</p>";
+                                errorMessages = "Terjadi kesalahan, silakan coba lagi.";
                             }
 
                             $("#errorAlert").html(errorMessages).removeClass("d-none");

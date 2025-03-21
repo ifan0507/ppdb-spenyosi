@@ -7,6 +7,7 @@ use App\Models\Register;
 use App\Models\SiswaBaru;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Document;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -93,7 +94,13 @@ class LoginController extends Controller
             "foto_siswa" => 'default_siswa.png',
             "foto_akte" => 'default_document.png',
         ]);
+        if (session('jalur_ppdb') !== "1" && session('jalur_ppdb') !== "5") {
 
+            Document::create([
+                'id_jalur' => session('jalur_ppdb'),
+                'document' => 'default_document.png'
+            ]);
+        }
 
         Auth::guard('siswa')->login($siswa);
         session()->forget(['register_data', 'otp']);
