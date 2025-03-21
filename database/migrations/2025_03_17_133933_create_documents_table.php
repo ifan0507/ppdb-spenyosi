@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('documents', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('id_jalur')->nullable()->references('id')->on('jalurs')->onDelete('cascade')->onUpdate('cascade');
+            $table->ulid('id');
+            $table->foreignUlid('id_register')->nullable()->references('id')->on('registers')->onDelete('cascade')->onUpdate('cascade');
             $table->string('document');
             $table->timestamps();
         });

@@ -17,9 +17,7 @@ class DashboardController extends Controller
         $data = Auth::guard('siswa')->user();
         $active_tab = 'biodata';
 
-        $jalur_ppdb = $data->jalur_ppdb ?? null;
-
-        return view('siswa.dashboard', compact('data', 'jalur_ppdb', 'active_tab'));
+        return view('siswa.dashboard', compact('data', 'active_tab'));
     }
 
 

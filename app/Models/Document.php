@@ -2,18 +2,21 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Document extends Model
 {
-    use HasFactory;
+    use HasFactory, HasUlids;
+    public $incrementing = false;
+    protected $keyType = 'string';
     protected $table = "documents";
-    protected $fillable = ["document"];
+    protected $fillable = ["id_register", "document"];
 
-    public function jalur(): BelongsTo
+    public function register(): BelongsTo
     {
-        return $this->belongsTo(Jalur::class, "id_jalur");
+        return $this->belongsTo(Register::class, "id_register");
     }
 }

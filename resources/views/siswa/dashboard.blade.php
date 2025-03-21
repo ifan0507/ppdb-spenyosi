@@ -74,12 +74,16 @@
                                                 </tr>
                                                 <tr>
                                                     <th>Jenis Kelamin</th>
-                                                    <td>{{ $data->siswa->jenis_kelamin }}</td>
+                                                    <td>{{ $data->siswa->jenis_kelamin ?? '_' }}</td>
                                                 </tr>
                                                 <tr>
                                                     <th>Tempat, Tanggal Lahir</th>
-                                                    <td>{{ $data->siswa->tempat_lahir }},
-                                                        {{ $data->siswa->tanggal_lahir }}</td>
+                                                    @if ($data->siswa->tanggal_lahir == '')
+                                                        <td>{{ $data->siswa->tempat_lahir }}</td>
+                                                    @else
+                                                        <td>{{ $data->siswa->tempat_lahir }},
+                                                            {{ $data->siswa->tanggal_lahir }}</td>
+                                                    @endif
                                                 </tr>
                                                 <tr>
                                                     <th>Asal sekolah</th>
@@ -100,9 +104,6 @@
                                                 <tr>
                                                     <th>Alamat</th>
                                                     <td>
-                                                        {{ $data->siswa->dusun }},
-                                                        {{ $data->siswa->rt }},
-                                                        {{ $data->siswa->rw }},
                                                         {{ $data->siswa->alamat }}
                                                     </td>
                                                 </tr>
@@ -128,10 +129,13 @@
                                                     <td><img src="{{ asset('storage/' . $data->siswa->foto_akte) }}"
                                                             alt="Foto Akte"></td>
                                                 </tr>
-                                                <tr class="{{ $data->jalur->id !== '1' ? 'd-none' : '' }}">
-                                                    <th>Document</th>
-                                                    <td>{{ $data->siswa->documents }}</td>
-                                                </tr>
+                                                @if ($data->jalur->id == '2')
+                                                    <tr>
+                                                        <th>KIP/KIS/PIP/PKH/SKTM</th>
+                                                        <td><img src="{{ asset('storage/' . $data->document->document) }}"
+                                                                alt=""></td>
+                                                    </tr>
+                                                @endif
                                             </tbody>
                                         </table>
                                     </div>

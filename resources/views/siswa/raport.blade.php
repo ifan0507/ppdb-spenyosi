@@ -4,7 +4,7 @@
         <div class="container">
             <div class="alert alert-primary">
                 <i class="fas fa-check"></i>
-                Jalur PPDB {{ $data->jalur_ppdb }}
+                Jalur PPDB {{ $data->jalur->nama_jalur }}
             </div>
             <div class="row justify-content-center">
                 <div class="card card-primary card-outline card-outline-tabs m-0 p-0 col-md-12">
@@ -47,7 +47,7 @@
                                         @if (!$raports->isEmpty() && optional($raports->first())->status == '1')
                                             <div class="card-header d-flex justify-content-between align-items-center">
                                                 <h4>Raport</h4>
-                                                <a href="{{ route('edit-raport', ['id' => $data->siswa->id]) }}"
+                                                <a href="{{ route('edit-raport', ['id' => $data->id]) }}"
                                                     class="btn btn-primary ms-auto">
                                                     <i class="fas fa-edit"></i> Perbarui data raport
                                                 </a>

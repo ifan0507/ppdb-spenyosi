@@ -79,14 +79,10 @@ class LoginController extends Controller
             'email' => $data['email'],
             'nik' => "_",
             "tempat_lahir" => "_",
-            "tanggal_lahir" => "_",
             "asal_sekolah" => "_",
             "kabupaten" => "_",
             "kecamatan" => "_",
             "desa" => "_",
-            "dusun" => "_",
-            "rt" => "_",
-            "rw" => "_",
             "alamat" => "_",
             "no_hp" => "_",
             "lokasi" => "_",
@@ -94,10 +90,10 @@ class LoginController extends Controller
             "foto_siswa" => 'default_siswa.png',
             "foto_akte" => 'default_document.png',
         ]);
-        if (session('jalur_ppdb') !== "1" && session('jalur_ppdb') !== "5") {
 
+        if (session('jalur_ppdb') !== "1" || session('jalur_ppdb') !== "5") {
             Document::create([
-                'id_jalur' => session('jalur_ppdb'),
+                'id_register' => $siswa->id,
                 'document' => 'default_document.png'
             ]);
         }

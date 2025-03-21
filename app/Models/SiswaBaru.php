@@ -16,7 +16,7 @@ class SiswaBaru extends Model
     public $incrementing = false;
     protected $keyType = 'string';
 
-    protected $with = ['ortu', 'raport'];
+    protected $with = ['ortu'];
 
     protected $fillable = [
         'id_register_siswa',
@@ -30,9 +30,8 @@ class SiswaBaru extends Model
         'kabupaten',
         'kecamatan',
         'desa',
-        'dusun',
-        'rt',
-        'rw',
+        'kab_id',
+        'kec_id',
         'alamat',
         'no_hp',
         'email',
@@ -40,7 +39,6 @@ class SiswaBaru extends Model
         'foto_kk',
         'foto_siswa',
         'foto_akte',
-        'documents',
         'status_berkas'
     ];
 
@@ -57,10 +55,5 @@ class SiswaBaru extends Model
     public function register(): BelongsTo
     {
         return $this->belongsTo(Register::class, 'id_register_siswa');
-    }
-
-    public function raport(): HasOne
-    {
-        return $this->hasOne(DataRaport::class, 'id_siswa');
     }
 }
