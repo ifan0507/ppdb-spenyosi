@@ -6,7 +6,7 @@
             <div class="row justify-content-center">
                 <div class="card card-primary card-outline card-outline-tabs col-md-12">
                     <div class="card-body">
-                        <form action="{{ route('update-raport', ['id' => optional($raports->first())->id_siswa]) }}"
+                        <form action="{{ route('update-raport', ['id' => optional($raports->first())->id_register]) }}"
                             method="PUT" id="editRaporForm">
                             @csrf
 

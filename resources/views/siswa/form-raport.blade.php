@@ -8,7 +8,7 @@
                     <div class="card-body">
                         <form action="{{ route('form-raport.post') }}" method="POST" id="raporForm">
                             @csrf
-                            <input type="hidden" name="id_siswa" value="{{ $data->siswa->id }}">
+                            <input type="hidden" name="id_register" value="{{ $data->id }}">
                             <div class="table-responsive">
                                 <table class="table table-bordered text-center">
                                     <thead>

@@ -23,9 +23,8 @@ return new class extends Migration
             $table->string('kabupaten')->nullable();
             $table->string('kecamatan')->nullable();
             $table->string('desa')->nullable();
-            $table->string('dusun')->nullable();
-            $table->char('rt', length: 4)->nullable();
-            $table->char('rw', length: 4)->nullable();
+            $table->char('kab_id', length: 4)->nullable();
+            $table->char('kec_id', length: 4)->nullable();
             $table->text('alamat')->nullable();
             $table->string('no_hp')->nullable();
             $table->string('email')->nullable();

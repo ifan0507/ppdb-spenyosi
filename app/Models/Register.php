@@ -17,7 +17,7 @@ class Register extends Authenticatable implements MustVerifyEmail
     public $incrementing = false;
     protected $keyType = 'string';
     protected $table = 'registers';
-    protected $width = ['siswa', 'jalur'];
+    protected $width = ['siswa', 'jalur', "document", "raport"];
     protected $fillable = ['nama_lengkap', 'nisn', 'email', 'verification_code', 'email_verified_at', 'password', 'id_jalur'];
     protected $hidden = [
         'password',
@@ -34,6 +34,16 @@ class Register extends Authenticatable implements MustVerifyEmail
     public function siswa(): HasOne
     {
         return $this->hasOne(SiswaBaru::class, 'id_register_siswa');
+    }
+
+    public function raport(): HasOne
+    {
+        return $this->hasOne(DataRaport::class, 'id_register');
+    }
+
+    public function document(): HasOne
+    {
+        return $this->hasOne(Document::class, 'id_register');
     }
 
     public function jalur(): BelongsTo

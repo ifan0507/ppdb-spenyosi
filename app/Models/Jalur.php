@@ -18,14 +18,4 @@ class Jalur extends Model
     {
         return $this->hasMany(Register::class, "id_jalur");
     }
-
-    public function raport(): HasMany
-    {
-        return $this->hasMany(DataRaport::class, "id_jalur");
-    }
-
-    public function document(): HasMany
-    {
-        return $this->hasMany(Document::class, "id_jalur");
-    }
 }

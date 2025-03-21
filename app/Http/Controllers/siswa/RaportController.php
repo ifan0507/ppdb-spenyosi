@@ -16,7 +16,7 @@ class RaportController extends Controller
     public function index()
     {
         $data  = Auth::guard('siswa')->user();
-        $raports = DataRaport::where('id_siswa', $data->siswa->id)->get();
+        $raports = DataRaport::where('id_register', $data->id)->get();
         $active_tab = "raport";
         return view('siswa.raport', compact('data', 'raports'), ['active_tab' => $active_tab,]);
     }
@@ -38,7 +38,7 @@ class RaportController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'id_siswa' => 'required|exists:siswa_barus,id',
+            'id_register' => 'required|exists:registers,id',
             'id_mapel' => 'required|array',
             'kelas4_1' => 'nullable|array',
             'kelas4_2' => 'nullable|array',
@@ -55,7 +55,7 @@ class RaportController extends Controller
 
         foreach ($request->id_mapel as $key => $id_mapel) {
             DataRaport::create([
-                'id_siswa' => $request->id_siswa,
+                'id_register' => $request->id_register,
                 'id_mapel' => $id_mapel,
                 'kelas4_1' => $request->kelas4_1[$key] ?? null,
                 'kelas4_2' => $request->kelas4_2[$key] ?? null,
@@ -65,7 +65,7 @@ class RaportController extends Controller
             ]);
         }
 
-        DataRaport::where('id_siswa', $request->id_siswa)->update([
+        DataRaport::where('id_register', $request->id_register)->update([
             'rata_kelas4_sem1' => $request->rata_kelas4_sem1,
             'rata_kelas4_sem2' => $request->rata_kelas4_sem2,
             'rata_kelas5_sem1' => $request->rata_kelas5_sem1,
@@ -91,7 +91,7 @@ class RaportController extends Controller
     public function edit(string $id)
     {
         $data  = Auth::guard('siswa')->user();
-        $raports = DataRaport::where('id_siswa', $id)->get();
+        $raports = DataRaport::where('id_register', $id)->get();
         $header = "Perbarui raport";
         return view('siswa.edit-raport', compact('raports', 'data'), ["header" => $header]);
     }
@@ -117,7 +117,7 @@ class RaportController extends Controller
         ]);
 
         foreach ($request->id_mapel as $key => $id_mapel) {
-            DataRaport::where('id_siswa', $id)
+            DataRaport::where('id_register', $id)
                 ->where('id_mapel', $id_mapel)
                 ->update([
                     'kelas4_1' => $request->kelas4_1[$key] ?? null,
@@ -129,7 +129,7 @@ class RaportController extends Controller
         }
 
 
-        DataRaport::where('id_siswa', $id)->update([
+        DataRaport::where('id_register', $id)->update([
             'rata_kelas4_sem1' => $request->rata_kelas4_sem1,
             'rata_kelas4_sem2' => $request->rata_kelas4_sem2,
             'rata_kelas5_sem1' => $request->rata_kelas5_sem1,

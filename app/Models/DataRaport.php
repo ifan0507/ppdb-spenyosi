@@ -15,7 +15,7 @@ class DataRaport extends Model
     public $incrementing = false;
     protected $keyType = 'string';
     protected $fillable = [
-        'id_siswa',
+        'id_register',
         'id_mapel',
         'kelas4_1',
         'kelas4_2',
@@ -30,18 +30,13 @@ class DataRaport extends Model
         'status'
     ];
 
-    public function siswa(): BelongsTo
+    public function register(): BelongsTo
     {
-        return $this->belongsTo(SiswaBaru::class, 'id_siswa');
+        return $this->belongsTo(Register::class, 'id_register');
     }
 
     public function mapel(): BelongsTo
     {
         return $this->belongsTo(MataPelajaran::class, 'id_mapel');
-    }
-
-    public function jalur(): BelongsTo
-    {
-        return $this->belongsTo(Jalur::class, "id_jalur");
     }
 }

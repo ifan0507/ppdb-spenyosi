@@ -13,9 +13,8 @@ return new class extends Migration
     {
         Schema::create('data_raports', function (Blueprint $table) {
             $table->ulid('id')->primary();
-            $table->foreignUlid('id_siswa')->references('id')->on('siswa_barus')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignUlid('id_register')->references('id')->on('registers')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('id_mapel')->references('id')->on('mata_pelajarans')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignId('id_jalur')->nullable()->references('id')->on('jalurs')->onUpdate('cascade')->onDelete('cascade');
             $table->integer('kelas4_1')->nullable();
             $table->integer('kelas4_2')->nullable();
             $table->integer('kelas5_1')->nullable();
