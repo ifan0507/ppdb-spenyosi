@@ -274,7 +274,7 @@
                                 });
                             } else {
                                 errorMessages =
-                                    "<p>Terjadi kesalahan, silakan coba lagi.</p>";
+                                    "Terjadi kesalahan, silakan coba lagi.";
                             }
                             $("#errorAlert").html(errorMessages).removeClass("d-none");
                         }

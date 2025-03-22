@@ -75,6 +75,24 @@
         <!-- /.control-sidebar -->
     </div>
     <!-- ./wrapper -->
+    <script>
+        // document.addEventListener("contextmenu", function(event) {
+        //     event.preventDefault();
+        //     alert("Klik kanan dinonaktifkan!");
+        // });
+
+        document.addEventListener("keydown", function(event) {
+            if (event.ctrlKey && (event.key === "u" || event.key === "s" || event.key === "i" || event.key ===
+                    "j")) {
+                event.preventDefault();
+
+            }
+            // if (event.keyCode === 123) { // F12
+            //     event.preventDefault();
+
+            // }
+        });
+    </script>
 
     <!-- Memindahkan Skrip JavaScript ke bawah (sebelum penutupan </body>) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script> <!-- Bootstrap JS -->

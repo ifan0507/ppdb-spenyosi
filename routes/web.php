@@ -54,7 +54,6 @@ Route::middleware(['auth:siswa', 'auth', 'cache_verify'])->group(function () {
     Route::get('/ortu', [OrtuController::class, 'index'])->name('ortu');
     Route::get('/ortu/edit-ortu', [OrtuController::class, 'edit'])->name('ortu.edit');
 
-
     Route::get('/raport', [RaportController::class, 'index'])->name('raport');
     Route::get('/form-raport', [RaportController::class, 'create'])->name('form-raport');
     Route::post('/form-raport', [RaportController::class, 'store'])->name('form-raport.post');
@@ -64,7 +63,4 @@ Route::middleware(['auth:siswa', 'auth', 'cache_verify'])->group(function () {
     // Pendaftaran
     Route::get('/pendaftaran', [Pendaftaran::class, 'index'])->name('pendaftaran');
     Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
-});
-Route::get('/map', function () {
-    return view('siswa/map');
 });
