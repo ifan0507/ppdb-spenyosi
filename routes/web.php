@@ -5,6 +5,7 @@ use App\Http\Controllers\client\LoginController;
 use App\Http\Controllers\client\PortalController;
 use App\Http\Controllers\client\RegisterController;
 use App\Http\Controllers\siswa\DashboardController;
+use App\Http\Controllers\siswa\OrtuController;
 use App\Http\Controllers\siswa\Pendaftaran;
 use App\Http\Controllers\siswa\RaportController;
 use Illuminate\Support\Facades\Route;
@@ -46,10 +47,13 @@ Route::post('/login-siswa', [LoginController::class, 'login'])->name('login.post
 
 Route::middleware(['auth:siswa', 'auth', 'cache_verify'])->group(function () {
 
+    Route::get('/siswa', [DashboardController::class, 'index'])->name('dashboard-siswa');
     Route::get('/siswa/edit-biodata', [DashboardController::class, 'edit'])->name('siswa.edit');
     // Route::put('/siswa/update-biodata/{id}', [DashboardController::class, 'update'])->name('siswa.update');
 
-    Route::get('/siswa', [DashboardController::class, 'index'])->name('dashboard-siswa');
+    Route::get('/ortu', [OrtuController::class, 'index'])->name('ortu');
+    Route::get('/ortu/edit-ortu', [OrtuController::class, 'edit'])->name('ortu.edit');
+
 
     Route::get('/raport', [RaportController::class, 'index'])->name('raport');
     Route::get('/form-raport', [RaportController::class, 'create'])->name('form-raport');

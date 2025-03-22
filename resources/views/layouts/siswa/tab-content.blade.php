@@ -4,6 +4,10 @@
             <a class="nav-link remove-tab-format font-bold {{ $active_tab == 'biodata' ? 'active' : '' }}"
                 id="biodata-tab" data-toggle="pill" href="{{ route('dashboard-siswa') }}" role="tab">Biodata</a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link remove-tab-format font-bold {{ $active_tab == 'orang tua' ? 'active' : '' }}"
+                id="biodata-tab" data-toggle="pill" href="{{ route('ortu') }}" role="tab">Orang Tua</a>
+        </li>
         @if ($data->jalur->id == '5')
             <li class="nav-item">
                 <a class="nav-link remove-tab-format font-bold {{ $active_tab == 'raport' ? 'active' : '' }}"
