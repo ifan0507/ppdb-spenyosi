@@ -7,7 +7,7 @@
                 <h4 class="card-title mt-3 mb-3"><b>Perbarui Biodata Siswa</b></h4>
             </div>
             <div class="card-body">
-                <form action="#" method="POST" enctype="multipart/form-data" id="form_biodata">
+                <form action="{{ route('update-biodata') }}" method="POST" enctype="multipart/form-data" id="form_biodata">
                     @csrf
                     @method('PUT')
                     <div class="row">
@@ -15,7 +15,7 @@
                             <div class="border m-3 py-1 px-2 text-center" id="photo-box">
                                 <label for="pribadi_blob" class="form-label">
                                     Foto Pribadi <span style="color:#e3342f">*</span><br />
-                                    <b>(format: JPG/JPEG maks. 300KB)</b>
+                                    <b>(format: JPG/JPEG maks. 1MB)</b>
                                 </label>
 
                                 <img id="img-pribadi_blob" src="{{ asset('storage/' . $data->siswa->foto_siswa) }}"
@@ -81,25 +81,31 @@
 
                             <div class="form-group  mb-3">
                                 <label class="form-label">Kabupaten <span style="color:#e3342f">*</span></label>
-                                <select id="kabupaten_id" class="form-select form-select-sm">
+                                <select id="kabupaten_id" class="form-select form-select-sm" name="kab_id">
                                     <option value="">Pilih Kabupaten</option>
                                 </select>
-                                <input type="hidden" id="kab_name">
+                                <input type="hidden" id="kab_name" name="kabupaten">
                             </div>
                             <div class="form-group  mb-3">
                                 <label class="form-label">Kecamatan <span style="color:#e3342f">*</span></label>
-                                <select id="kecamatan_id" class="form-select form-select-sm">
+                                <select id="kecamatan_id" name="kec_id" class="form-select form-select-sm">
                                     <option value="">Pilih Kecamatan</option>
                                 </select>
-                                <input type="hidden" id="kec_name">
+                                <input type="hidden" id="kec_name" name="kecamatan">
                             </div>
                             <div class="form-group  mb-3">
                                 <label class="form-label">Kelurahan/Desa <span style="color:#e3342f">*</span></label>
-                                <select id="desa_id" class="form-select form-select-sm">
+                                <select id="desa_id" class="form-select form-select-sm" name="desa_id">
                                     <option value="">Pilih Kelurahan/Desa</option>
                                 </select>
-                                <input type="hidden" id="desa_name">
+                                <input type="hidden" id="desa_name" name="desa">
                             </div>
+                            <input type="hidden" id="selected_kab"
+                                value="{{ old('kab_id', $data->siswa->kab_id ?? '') }}">
+                            <input type="hidden" id="selected_kec"
+                                value="{{ old('kec_id', $data->siswa->kec_id ?? '') }}">
+                            <input type="hidden" id="selected_desa"
+                                value="{{ old('desa_id', $data->siswa->desa_id ?? '') }}">
                             <div class="form-group  mb-3">
                                 <label for="alamat" class="form-label">Alamat <span
                                         style="color:#e3342f">*</span></label>
@@ -125,12 +131,17 @@
                                     data-bs-toggle="modal" data-bs-target="#mapModal"><i
                                         class="fa-solid fa-location-dot"></i></button>
                             </div>
+                            <div class="form-group  mb-3">
+                                <label class="form-label">Asal Sekolah</label>
+                                <input type="text" class="form-control" name="asal_sekolah"
+                                    value="{{ old('asal_sekolah', $data->siswa->asal_sekolah) }}">
+                            </div>
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="border m-3 py-1 px-2 text-center">
                                         <label for="foto_kk" class="form-label">
                                             Foto KK <span style="color:#e3342f">*</span><br />
-                                            <b>(format: JPG/JPEG maks. 300KB)</b>
+                                            <b>(format: JPG/JPEG maks. 1MB)</b>
                                         </label>
 
                                         <img id="img-foto_kk" src="{{ asset('storage/' . $data->siswa->foto_kk) }}"
@@ -140,13 +151,14 @@
                                         </label>
                                         <input type="file" id="foto_kk" name="foto_kk" class="d-none"
                                             accept="image/jpeg">
+                                        <div id="info-kk_blob" class="text-muted mt-2" style="display:none;"></div>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="border m-3 py-1 px-2 text-center">
                                         <label for="foto_akte" class="form-label">
                                             Foto Akte <span style="color:#e3342f">*</span><br />
-                                            <b>(format: JPG/JPEG maks. 300KB)</b>
+                                            <b>(format: JPG/JPEG maks. 1MB)</b>
                                         </label>
 
                                         <img id="img-foto_akte" src="{{ asset('storage/' . $data->siswa->foto_akte) }}"
@@ -156,6 +168,8 @@
                                         </label>
                                         <input type="file" id="foto_akte" name="foto_akte" class="d-none"
                                             accept="image/jpeg">
+                                        <div id="info-akte_blob" class="text-muted mt-2" style="display:none;"></div>
+
                                     </div>
                                 </div>
                                 @if ($data->jalur->id == '2' || $data->jalur->id == '3' || $data->jalur->id == '4')
@@ -170,7 +184,7 @@
                                                     Piagam Prestasi
                                                 @endif
                                                 <span style="color:#e3342f">*</span><br />
-                                                <b>(format: JPG/JPEG maks. 300KB)</b>
+                                                <b>(format: JPG/JPEG maks. 1MB)</b>
                                             </label>
 
                                             <img id="img-foto_lainnya"
@@ -180,8 +194,11 @@
                                             <label for="foto_lainnya" class="btn btn-primary w-100">
                                                 <i class="fas fa-folder-open"></i> Pilih Foto
                                             </label>
-                                            <input type="file" id="foto_lainnya" name="foto_lainnya" class="d-none"
+                                            <input type="file" id="foto_lainnya" name="document" class="d-none"
                                                 accept="image/jpeg">
+                                            <div id="info-document_blob" class="text-muted mt-2" style="display:none;">
+                                            </div>
+
                                         </div>
                                     </div>
                                 @endif
@@ -196,6 +213,8 @@
                                 Biodata</button>
                         </div>
                     </div>
+
+
                 </form>
             </div>
         </div>
@@ -257,8 +276,12 @@
             let desaSelect = document.getElementById("desa_id");
 
             let kabupatenName = document.getElementById("kab_name");
-            let kacamatanName = document.getElementById("kec_name");
+            let kecamatanName = document.getElementById("kec_name");
             let desaName = document.getElementById("desa_name");
+
+            let selectedKab = document.getElementById("selected_kab").value;
+            let selectedKec = document.getElementById("selected_kec").value;
+            let selectedDesa = document.getElementById("selected_desa").value;
 
             let kabupatenChoices = new Choices(kabupatenSelect, {
                 searchEnabled: true
@@ -270,7 +293,6 @@
                 searchEnabled: true
             });
 
-            // Ambil data kabupaten dari API
             fetch("https://www.emsifa.com/api-wilayah-indonesia/api/regencies/35.json")
                 .then(response => response.json())
                 .then(data => {
@@ -278,19 +300,24 @@
                     kabupatenChoices.setChoices(
                         data.map(item => ({
                             value: item.id,
-                            label: item.name
+                            label: item.name,
+                            selected: item.id ===
+                                selectedKab
                         })),
                         "value",
                         "label",
                         true
                     );
+
+                    if (selectedKab) {
+                        kabupatenName.value = kabupatenSelect.options[kabupatenSelect.selectedIndex].text;
+                        loadKecamatan(selectedKab, selectedKec);
+                    }
                 });
 
-            // Event listener ketika kabupaten dipilih
             kabupatenSelect.addEventListener("change", function() {
                 let kabupatenId = kabupatenSelect.value;
-                let selectedOption = kabupatenSelect.options[kabupatenSelect.selectedIndex];
-                kabupatenName.value = selectedOption.text;
+                kabupatenName.value = kabupatenSelect.options[kabupatenSelect.selectedIndex].text;
                 kecamatanChoices.clearChoices();
                 kecamatanChoices.setChoices([{
                     value: "",
@@ -305,30 +332,36 @@
                 }]);
 
                 if (kabupatenId) {
-                    fetch(`https://www.emsifa.com/api-wilayah-indonesia/api/districts/${kabupatenId}.json`)
-                        .then(response => response.json())
-                        .then(data => {
-                            kecamatanChoices.clearChoices();
-                            kecamatanChoices.setChoices(
-                                data.map(item => ({
-                                    value: item.id,
-                                    label: item.name
-                                })),
-                                "value",
-                                "label",
-                                true
-                            );
-                        });
+                    loadKecamatan(kabupatenId);
                 }
             });
 
-            // Event listener ketika kecamatan dipilih
+            function loadKecamatan(kabupatenId, selectedKec = "") {
+                fetch(`https://www.emsifa.com/api-wilayah-indonesia/api/districts/${kabupatenId}.json`)
+                    .then(response => response.json())
+                    .then(data => {
+                        kecamatanChoices.clearChoices();
+                        kecamatanChoices.setChoices(
+                            data.map(item => ({
+                                value: item.id,
+                                label: item.name,
+                                selected: item.id === selectedKec
+                            })),
+                            "value",
+                            "label",
+                            true
+                        );
+
+                        if (selectedKec) {
+                            kecamatanName.value = kecamatanSelect.options[kecamatanSelect.selectedIndex].text;
+                            loadDesa(selectedKec, selectedDesa);
+                        }
+                    });
+            }
+
             kecamatanSelect.addEventListener("change", function() {
                 let kecamatanId = kecamatanSelect.value;
-
-                let selectedOption = kecamatanSelect.options[kecamatanSelect.selectedIndex];
-                kacamatanName.value = selectedOption.text;
-
+                kecamatanName.value = kecamatanSelect.options[kecamatanSelect.selectedIndex].text;
                 desaChoices.clearChoices();
                 desaChoices.setChoices([{
                     value: "",
@@ -337,35 +370,37 @@
                 }]);
 
                 if (kecamatanId) {
-                    fetch(`https://www.emsifa.com/api-wilayah-indonesia/api/villages/${kecamatanId}.json`)
-                        .then(response => response.json())
-                        .then(data => {
-                            desaChoices.clearChoices();
-                            desaChoices.setChoices(
-                                data.map(item => ({
-                                    value: item.id,
-                                    label: item.name
-                                })),
-                                "value",
-                                "label",
-                                true
-                            );
-                        });
-                } else {
-                    desaChoices.clearChoices();
-                    desaChoices.setChoices([{
-                        value: "",
-                        label: "Pilih Kecamatan Terlebih Dahulu",
-                        disabled: true
-                    }]);
+                    loadDesa(kecamatanId);
                 }
             });
 
+            function loadDesa(kecamatanId, selectedDesa = "") {
+                fetch(`https://www.emsifa.com/api-wilayah-indonesia/api/villages/${kecamatanId}.json`)
+                    .then(response => response.json())
+                    .then(data => {
+                        desaChoices.clearChoices();
+                        desaChoices.setChoices(
+                            data.map(item => ({
+                                value: item.id,
+                                label: item.name,
+                                selected: item.id === selectedDesa
+                            })),
+                            "value",
+                            "label",
+                            true
+                        );
+
+                        if (selectedDesa) {
+                            desaName.value = desaSelect.options[desaSelect.selectedIndex].text;
+                        }
+                    });
+            }
+
             desaSelect.addEventListener("change", function() {
-                let selectedOption = desaSelect.options[desaSelect.selectedIndex];
-                desaName.value = selectedOption.text;
+                desaName.value = desaSelect.options[desaSelect.selectedIndex].text;
             });
         });
+
 
         $(document).ready(function() {
 
@@ -376,13 +411,11 @@
 
                 if (input.files && input.files[0]) {
                     const file = input.files[0];
-
-
-                    if (file.size > 300 * 1024) {
+                    if (file.size > 1 * 1024 * 1024) {
                         Swal.fire({
                             icon: "error",
                             title: "Oops...",
-                            text: "Ukuran file terlalu besar! Maksimal 300KB.!",
+                            text: "Ukuran file terlalu besar! Maksimal 1MB.!",
                         })
                         $(this).val("");
                         imgPreview.attr("src",
@@ -402,6 +435,98 @@
                 }
             });
 
+            $("#foto_kk").on("change", function() {
+                const input = this;
+                const imgPreview = $("#img-foto_kk");
+                const infoBox = $("#info-kk_blob");
+
+                if (input.files && input.files[0]) {
+                    const file = input.files[0];
+                    if (file.size > 1 * 1024 * 1024) {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Oops...",
+                            text: "Ukuran file terlalu besar! Maksimal 1MB.!",
+                        })
+                        $(this).val("");
+                        imgPreview.attr("src",
+                            "{{ asset('storage/' . $data->siswa->foto_kk) }}"
+                        );
+                        infoBox.hide();
+                        return;
+                    }
+
+                    infoBox.text(`File: ${file.name} (${(file.size / 1024).toFixed(2)} KB)`).show();
+
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        imgPreview.attr("src", e.target.result);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            $("#foto_akte").on("change", function() {
+                const input = this;
+                const imgPreview = $("#img-foto_akte");
+                const infoBox = $("#info-akte_blob");
+
+                if (input.files && input.files[0]) {
+                    const file = input.files[0];
+                    if (file.size > 1 * 1024 * 1024) {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Oops...",
+                            text: "Ukuran file terlalu besar! Maksimal 1MB.!",
+                        })
+                        $(this).val("");
+                        imgPreview.attr("src",
+                            "{{ asset('storage/' . $data->siswa->foto_akte) }}"
+                        );
+                        infoBox.hide();
+                        return;
+                    }
+
+                    infoBox.text(`File: ${file.name} (${(file.size / 1024).toFixed(2)} KB)`).show();
+
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        imgPreview.attr("src", e.target.result);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            $("#foto_lainnya").on("change", function() {
+                const input = this;
+                const imgPreview = $("#img-foto_lainnya");
+                const infoBox = $("#info-document_blob");
+
+                if (input.files && input.files[0]) {
+                    const file = input.files[0];
+                    if (file.size > 1 * 1024 * 1024) {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Oops...",
+                            text: "Ukuran file terlalu besar! Maksimal 1MB.!",
+                        })
+                        $(this).val("");
+                        imgPreview.attr("src",
+                            "{{ asset('storage/' . $data->siswa->foto_akte) }}"
+                        );
+                        infoBox.hide();
+                        return;
+                    }
+
+                    infoBox.text(`File: ${file.name} (${(file.size / 1024).toFixed(2)} KB)`).show();
+
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        imgPreview.attr("src", e.target.result);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
 
 
             $("#nik").on("input", function() {
@@ -438,17 +563,13 @@
                 }
             });
 
-
+            // Submit
             $("#form_biodata").on("submit", function(e) {
                 e.preventDefault();
+                const formData = new FormData(this);
+                formData.append("_method", "PUT");
                 let isChecked = $("input[name='jenis_kelamin']:checked").length > 0;
-                if ($("#pribadi_blob").get(0).files.length === 0) {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Oops...",
-                        text: "Foto pribadi wajib diisi!",
-                    })
-                } else if ($("#nik").val() == "" || $("#nik").val() === "_") {
+                if ($("#nik").val() == "" || $("#nik").val() === "_") {
                     Swal.fire({
                         icon: "error",
                         title: "Oops...",
@@ -507,6 +628,45 @@
                         icon: "error",
                         title: "Oops...",
                         text: "Koordinate rumah wajib diisi!",
+                    })
+                } else {
+                    $.ajax({
+                        url: $(this).attr("action"),
+                        type: "POST",
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function(res) {
+                            Swal.fire({
+                                title: "Berhasil",
+                                icon: "success",
+                                text: "diperbarui!",
+                                confirmButtonText: "OK",
+                                confirmButtonColor: "#18a342",
+                            }).then(() => {
+                                window.location.href = res.redirect;
+                            });
+                        },
+                        error: function(xhr) {
+                            var errorString = "";
+
+                            if (xhr.responseJSON && xhr.responseJSON.errors) {
+                                $.each(xhr.responseJSON.errors, function(key, messages) {
+                                    errorString += messages[0] + "\n";
+                                });
+                            } else if (xhr.responseJSON && xhr.responseJSON.error) {
+                                errorString += xhr.responseJSON.error;
+                            } else {
+                                errorString += "Kesalahan tidak diketahui.";
+                            }
+
+                            Swal.fire({
+                                icon: "error",
+                                title: "Oops...",
+                                text: errorString,
+                            });
+                        }
+
                     })
                 }
             })

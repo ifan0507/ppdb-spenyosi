@@ -58,94 +58,97 @@
                                     </div>
 
                                     <div class="col-md-9">
-                                        <table class="table table-striped table-hover table-bordered align-middle">
-                                            <tbody class="table-light">
-                                                <tr>
-                                                    <th width="30%">NISN</th>
-                                                    <td>{{ $data->siswa->nisn }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>Nama Lengkap</th>
-                                                    <td>{{ $data->siswa->nama }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>NIK</th>
-                                                    <td>{{ $data->siswa->nik ?? '-' }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>Jenis Kelamin</th>
-                                                    <td>{{ $data->siswa->jenis_kelamin ?? '_' }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>Tempat, Tanggal Lahir</th>
-                                                    @if ($data->siswa->tanggal_lahir == '')
-                                                        <td>{{ $data->siswa->tempat_lahir }}</td>
-                                                    @else
-                                                        <td>{{ $data->siswa->tempat_lahir }},
-                                                            {{ $data->siswa->tanggal_lahir }}</td>
-                                                    @endif
-                                                </tr>
-                                                <tr>
-                                                    <th>Asal sekolah</th>
-                                                    <td>{{ $data->siswa->asal_sekolah }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>Kabupaten</th>
-                                                    <td>{{ $data->siswa->kabupaten }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>Kecamatan</th>
-                                                    <td>{{ $data->siswa->kecamatan }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>Desa</th>
-                                                    <td>{{ $data->siswa->desa }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>Alamat</th>
-                                                    <td>
-                                                        {{ $data->siswa->alamat }}
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th>No. HP</th>
-                                                    <td>{{ $data->siswa->no_hp }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>Email</th>
-                                                    <td>{{ $data->siswa->email }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>Titik Koordinat</th>
-                                                    <td>{{ $data->siswa->lokasi }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>Foto KK</th>
-                                                    <td><img src="{{ asset('storage/' . $data->siswa->foto_kk) }}"
-                                                            alt="Foto KK"></td>
-                                                </tr>
-                                                <tr>
-                                                    <th>Foto Akte</th>
-                                                    <td><img src="{{ asset('storage/' . $data->siswa->foto_akte) }}"
-                                                            alt="Foto Akte"></td>
-                                                </tr>
-                                                @if ($data->jalur->id == '2' || $data->jalur->id == '3' || $data->jalur->id == '4')
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-hover table-bordered align-middle">
+                                                <tbody class="table-light">
                                                     <tr>
-                                                        <th>
-                                                            @if ($data->jalur->id == '2')
-                                                                KIP/KIS/PIP/PKH/SKTM
-                                                            @elseif ($data->jalur->id == '3')
-                                                                Surat Pindah Tugas
-                                                            @elseif ($data->jalur->id == '4')
-                                                                Piagam Prestasi
-                                                            @endif
-                                                        </th>
-                                                        <td><img src="{{ asset('storage/' . $data->document->document) }}"
-                                                                alt=""></td>
+                                                        <th width="30%">NISN</th>
+                                                        <td>{{ $data->siswa->nisn }}</td>
                                                     </tr>
-                                                @endif
-                                            </tbody>
-                                        </table>
+                                                    <tr>
+                                                        <th>Nama Lengkap</th>
+                                                        <td>{{ $data->siswa->nama }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>NIK</th>
+                                                        <td>{{ $data->siswa->nik ?? '-' }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Jenis Kelamin</th>
+                                                        <td>{{ $data->siswa->jenis_kelamin ?? '_' }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Tempat, Tanggal Lahir</th>
+                                                        @if ($data->siswa->tanggal_lahir == '')
+                                                            <td>{{ $data->siswa->tempat_lahir }}</td>
+                                                        @else
+                                                            <td>{{ $data->siswa->tempat_lahir }},
+                                                                {{ $data->siswa->tanggal_lahir }}</td>
+                                                        @endif
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Asal sekolah</th>
+                                                        <td>{{ $data->siswa->asal_sekolah }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Kabupaten</th>
+                                                        <td>{{ $data->siswa->kabupaten }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Kecamatan</th>
+                                                        <td>{{ $data->siswa->kecamatan }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Desa</th>
+                                                        <td>{{ $data->siswa->desa }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Alamat</th>
+                                                        <td>
+                                                            {{ $data->siswa->alamat }}
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>No. HP</th>
+                                                        <td>{{ $data->siswa->no_hp }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Email</th>
+                                                        <td>{{ $data->siswa->email }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Titik Koordinat</th>
+                                                        <td>{{ $data->siswa->lokasi }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Foto KK</th>
+                                                        <td><img src="{{ asset('storage/' . $data->siswa->foto_kk) }}"
+                                                                alt="Foto KK" style="width: 130px; height: 130px;"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Foto Akte</th>
+                                                        <td><img src="{{ asset('storage/' . $data->siswa->foto_akte) }}"
+                                                                alt="Foto Akte" style="width: 130px; height: 130px;"></td>
+                                                    </tr>
+                                                    @if ($data->jalur->id == '2' || $data->jalur->id == '3' || $data->jalur->id == '4')
+                                                        <tr>
+                                                            <th>
+                                                                @if ($data->jalur->id == '2')
+                                                                    KIP/KIS/PIP/PKH/SKTM
+                                                                @elseif ($data->jalur->id == '3')
+                                                                    Surat Pindah Tugas
+                                                                @elseif ($data->jalur->id == '4')
+                                                                    Piagam Prestasi
+                                                                @endif
+                                                            </th>
+                                                            <td><img src="{{ asset('storage/' . $data->document->document) }}"
+                                                                    alt="" style="width: 130px; height: 130px;">
+                                                            </td>
+                                                        </tr>
+                                                    @endif
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
