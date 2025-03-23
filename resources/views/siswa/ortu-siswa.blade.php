@@ -52,51 +52,51 @@
                                             </a>
                                         </div>
                                         <div class="card-body">
-                                            <div class="row">
-                                                <div class="col-md-6 mb-3">
-                                                    <span class="info-label">Nama:</span>
-                                                    <span
-                                                        class="d-block">{{ $ortu?->nama_ortu ?? 'Data tidak tersedia' }}</span>
-                                                </div>
-                                                <div class="col-md-6 mb-3">
-                                                    <span class="info-label">Tempat Lahir:</span>
-                                                    <span
-                                                        class="d-block">{{ $ortu?->tempat_lahir ?? 'Data tidak tersedia' }}</span>
-                                                </div>
-                                                <div class="col-md-6 mb-3">
-                                                    <span class="info-label">Tanggal Lahir:</span>
-                                                    <span
-                                                        class="d-block">{{ $ortu?->tanggal_lahir ?? 'Data tidak tersedia' }}</span>
-                                                </div>
-                                                <div class="col-md-6 mb-3">
-                                                    <span class="info-label">Kabupaten:</span>
-                                                    <span
-                                                        class="d-block">{{ $ortu?->kabupaten ?? 'Data tidak tersedia' }}</span>
-                                                </div>
-                                                <div class="col-md-6 mb-3">
-                                                    <span class="info-label">Kecamatan:</span>
-                                                    <span
-                                                        class="d-block">{{ $ortu?->Kecamatan ?? 'Data tidak tersedia' }}</span>
-                                                </div>
-                                                <div class="col-md-6 mb-3">
-                                                    <span class="info-label">Desa:</span>
-                                                    <span class="d-block">{{ $ortu?->Desa ?? 'Data tidak tersedia' }}</span>
-                                                </div>
-                                                <div class="col-md-6 mb-3">
-                                                    <span class="info-label">Alamat:</span>
-                                                    <span
-                                                        class="d-block">{{ $ortu?->Alamat ?? 'Data tidak tersedia' }}</span>
-                                                </div>
-                                                <div class="col-md-6 mb-3">
-                                                    <span class="info-label">Pekerjaan:</span>
-                                                    <span
-                                                        class="d-block">{{ $ortu?->pekerjaan ?? 'Data tidak tersedia' }}</span>
-                                                </div>
-                                                <div class="col-md-6 mb-3">
-                                                    <span class="info-label">No. HP:</span>
-                                                    <span
-                                                        class="d-block">{{ $ortu?->no_hp ?? 'Data tidak tersedia' }}</span>
-                                                </div>
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-bordered">
+                                                    <tbody class="table-light">
+                                                        <tr>
+                                                            <th>Nama Ayah / Wali</th>
+                                                            <td>{{ $ortu?->nama_ortu ?? 'Data tidak tersedia' }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Status Ayah / Wali</th>
+                                                            <td>{{ $ortu?->tempat_lahir ?? 'Data tidak tersedia' }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Hubungan dengan Ayah</th>
+                                                            <td>{{ $ortu?->tanggal_lahir ?? 'Data tidak tersedia' }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Pendidikan Ayah / Wali</th>
+                                                            <td>{{ $ortu?->kabupaten ?? 'Data tidak tersedia' }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Pekerjaan Ayah / Wali</th>
+                                                            <td>{{ $ortu?->kecamatan ?? 'Data tidak tersedia' }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Nama Ibu</th>
+                                                            <td>{{ $ortu?->desa ?? 'Data tidak tersedia' }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Status Ibu</th>
+                                                            <td>{{ $ortu?->alamat ?? 'Data tidak tersedia' }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Pendidikan Ibu</th>
+                                                            <td>{{ $ortu?->pekerjaan ?? 'Data tidak tersedia' }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Pekerjaan Ibu</th>
+                                                            <td>{{ $ortu?->pekerjaan ?? 'Data tidak tersedia' }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Nomor Telepon Orang Tua</th>
+                                                            <td>{{ $ortu?->no_hp ?? 'Data tidak tersedia' }}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
                                             </div>
                                         </div>
                                     </div>

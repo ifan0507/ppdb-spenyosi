@@ -9,72 +9,155 @@
                         <form action="#" method="POST">
                             @csrf
 
-                            <div class="row mb-3">
-                                <div class="form-group required col-md-6">
-                                    <label class="form-label fw-bold">Nama Orang Tua</label>
-                                    <input type="text" name="nama_ortu" class="form-control" required>
+                            <div class="row">
+                                <div class="col-sm-12 col-lg-6">
+                                    <div class="card card-default card-outline">
+                                        <div class="card-header">
+                                            <div class="d-flex">
+                                                <h5 class="m-0">Informasi Ayah</h5>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="form-group required">
+                                                <label class="form-label">Nama Ayah</label>
+                                                <input type="text" class="form-control " name="ayah" id="nama_ayah"
+                                                    value="{{ old('ayah', $data->siswa->ortu) }}">
+                                            </div>
+                                            <div class="form-group required">
+                                                <label class="form-label">Status Ayah</label><br>
+                                                <div class="d-block">
+                                                    <div class="form-check mr-2">
+                                                        <input class="form-check-input status_ayah" type="radio"
+                                                            name="status_ayah" id="status_ayah_1" value="Hidup"
+                                                            {{ $data->siswa->ortu == 'Hidup' ? 'checked' : '' }}>
+                                                        <label class="form-check-label" for="status_ayah_1">Hidup</label>
+                                                    </div>
+                                                    <div class="form-check mr-2">
+                                                        <input class="form-check-input status_ayah" type="radio"
+                                                            name="status_ayah" id="status_ayah_2" value="Wafat"
+                                                            {{ $data->siswa->ortu == 'Wafat' ? 'checked' : '' }}>
+                                                        <label class="form-check-label" for="status_ayah_2">Wafat</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group required">
+                                                <label class="form-label">Pendidikan Ayah</label>
+                                                <select class="form-control" name="pendidikan_ayah" id="pendidikanAyah">
+                                                    <option value="">-- Pilih Pendidikan --</option>
+                                                    <option value="1">Tidak Sekolah</option>
+                                                    <option value="2" selected="selected">SD/MI / Sederajat</option>
+                                                    <option value="3">SMP/MTs / Sederajat</option>
+                                                    <option value="4">SMA/MA / Sederajat</option>
+                                                    <option value="5">D1 / Sederajat</option>
+                                                    <option value="6">D2 / Sederajat</option>
+                                                    <option value="7">D3 / Sederajat</option>
+                                                    <option value="8">D4/S1 / Sederajat</option>
+                                                    <option value="9">S2/Sp1 / Sederajat</option>
+                                                    <option value="10">S3/Sp2 / Sederajat</option>
+                                                </select>
+                                                <div class="invalid-feedback">
+                                                    Harap pilih pendidikan ayah!
+                                                </div>
+                                            </div>
+                                            <div class="form-group required">
+                                                <label class="form-label">Pekerjaan Ayah</label>
+                                                <select class="form-control" name="pekerjaan_ayah" id="pekerjaanAyah">
+                                                    <option value="">-- Pilih Pekerjaan --</option>
+                                                    <option value="PNS">PNS</option>
+                                                    <option value="Peg. Swasta">Peg. Swasta</option>
+                                                    <option value="Wirausaha">Wirausaha</option>
+                                                    <option value="TNI / POLRI">TNI / POLRI</option>
+                                                    <option value="Petani">Petani</option>
+                                                    <option value="Nelayan">Nelayan</option>
+                                                    <option value="Lainnya">Lainnya</option>
+                                                    <option value="Tidak Bekerja">TIDAK BEKERJA</option>
+                                                </select>
+                                                <div class="invalid-feedback">
+                                                    Harap pekerjaan ayah!
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="form-group required col-md-6">
-                                    <label class="form-label fw-bold">Tempat Lahir</label>
-                                    <input type="text" name="tempat_lahir" class="form-control" required>
+                                <div class="col-sm-12 col-lg-6">
+                                    <div class="card card-default card-outline">
+                                        <div class="card-header">
+                                            <div class="d-flex">
+                                                <h5 class="m-0">Informasi Ibu</h5>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="form-group required">
+                                                <label class="title">Nama Ibu</label>
+                                                <input type="text" class="form-control " name="nama_ibu" id="nama_ibu"
+                                                    value="YULIL FITRIYAWATI" required="">
+                                            </div>
+                                            <div class="form-group required">
+                                                <label class="title">Status Ibu</label><br>
+                                                <div class="d-block">
+                                                    <div class="custom-control custom-radio mr-2">
+                                                        <input type="radio" class="custom-control-input" id="status_ibu_1"
+                                                            name="status_ibu" value="hidup" checked>
+                                                        <label class="custom-control-label" for="status_ibu_1">Masih
+                                                            Hidup</label>
+                                                    </div>
+                                                    <div class="custom-control custom-radio">
+                                                        <input type="radio" class="custom-control-input"
+                                                            id="status_ibu_2" name="status_ibu" value="wafat">
+                                                        <label class="custom-control-label"
+                                                            for="status_ibu_2">Wafat</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group required">
+                                                <label class="title">Pendidikan Ibu</label>
+                                                <select class="form-control" required="" name="pendidikan_ibu">
+                                                    <option value="">-- Pilih Pendidikan --</option>
+                                                    <option value="1">Tidak Sekolah</option>
+                                                    <option value="2" selected="selected">SD/MI / Sederajat</option>
+                                                    <option value="3">SMP/MTs / Sederajat</option>
+                                                    <option value="4">SMA/MA / Sederajat</option>
+                                                    <option value="5">D1 / Sederajat</option>
+                                                    <option value="6">D2 / Sederajat</option>
+                                                    <option value="7">D3 / Sederajat</option>
+                                                    <option value="8">D4/S1 / Sederajat</option>
+                                                    <option value="9">S2/Sp1 / Sederajat</option>
+                                                    <option value="10">S3/Sp2 / Sederajat</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group required">
+                                                <label class="title">Pekerjaan Ibu</label>
+                                                <select class="form-control" required="" name="pekerjaan_ibu">
+                                                    <option value="">-- Pilih Pekerjaan --</option>
+                                                    <option value="1">PNS</option>
+                                                    <option value="2">Peg. Swasta</option>
+                                                    <option value="3">Wirausaha</option>
+                                                    <option value="4">TNI / POLRI</option>
+                                                    <option value="5" selected="selected">Petani</option>
+                                                    <option value="6">Nelayan</option>
+                                                    <option value="7">Lainnya</option>
+                                                    <option value="8">TIDAK BEKERJA</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
+                                <div class="col-sm-12 col-lg-6">
+                                    <div class="card card-default card-outline">
+                                        <div class="card-header">
+                                            <div class="d-flex">
+                                                <h5 class="m-0">Informasi Tambahan</h5>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="form-group">
+                                                <label class="title">No Telepon Orang Tua</label>
+                                                <input type="text" class="form-control " name="no_telepon_ortu"
+                                                    id="no_telepon_ortu" value="087837629378">
+                                            </div>
 
-                            <div class="row mb-3">
-                                <div class="form-group required col-md-6">
-                                    <label class="form-label fw-bold">Tanggal Lahir</label>
-                                    <input type="date" name="tanggal_lahir" class="form-control" required>
-                                </div>
-                                <div class="form-group required col-md-6">
-                                    <label class="form-label fw-bold">Kabupaten</label>
-                                    <select id="kabupaten_id" class="form-select form-select-sm">
-                                        <option value="">Pilih Kabupaten</option>
-                                    </select>
-                                    <input type="hidden" id="kab_name">
-                                </div>
-                            </div>
-
-                            <div class="row mb-3">
-                                <div class="form-group required col-md-6">
-                                    <label class="form-label fw-bold">Kecamatan</label>
-                                    <select id="kecamatan_id" class="form-select form-select-sm">
-                                        <option value="">Pilih Kecamatan</option>
-                                    </select>
-                                    <input type="hidden" id="kec_name">
-                                </div>
-                                <div class="form-group required col-md-6">
-                                    <label class="form-label fw-bold">Desa</label>
-                                    <select id="desa_id" class="form-select form-select-sm">
-                                        <option value="">Pilih Kelurahan/Desa</option>
-                                    </select>
-                                    <input type="hidden" id="desa_name">
-                                </div>
-                            </div>
-
-                            <div class="form-group required mb-3">
-                                <label class="form-label fw-bold">Alamat</label>
-                                <textarea name="alamat" class="form-control" rows="3" required></textarea>
-                            </div>
-
-                            <div class="row mb-3">
-                                <div class="form-group required col-md-6">
-                                    <label class="form-label fw-bold">Pekerjaan</label>
-                                    <input type="text" name="pekerjaan" class="form-control" required>
-                                </div>
-                                <div class="form-group required col-md-6">
-                                    <label class="form-label fw-bold">Pendidikan</label>
-                                    <input type="text" name="pendidikan" class="form-control" required>
-                                </div>
-                            </div>
-
-                            <div class="row mb-3">
-                                <div class="form-group required col-md-6">
-                                    <label class="form-label fw-bold">Nomor HP</label>
-                                    <input type="text" name="no_hp" class="form-control" required>
-                                </div>
-                                <div class="form-group required col-md-6">
-                                    <label class="form-label fw-bold">Email</label>
-                                    <input type="email" name="email" class="form-control" required>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
