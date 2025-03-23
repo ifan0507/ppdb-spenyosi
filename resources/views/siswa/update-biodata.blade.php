@@ -209,8 +209,13 @@
 
                     <div class="row justify-content-end">
                         <div class="col-sm-8 col-lg-8">
-                            <button type="submit" class="btn btn-primary btn-block"><i class="fas fa-save"></i> Perbarui
-                                Biodata</button>
+                            <button type="submit" class="btn btn-primary btn-block" id="btnSubmit"><i
+                                    class="fas fa-save" id="icon_save"></i>
+                                <span id="btnText"> Perbarui Biodata</span>
+                                <span id="btnLoading" class="spinner-border spinner-border-sm d-none" role="status"
+                                    aria-hidden="true"></span>
+                            </button>
+
                         </div>
                     </div>
 
@@ -630,6 +635,10 @@
                         text: "Koordinate rumah wajib diisi!",
                     })
                 } else {
+                    $("#btnSubmit").attr("disabled", true);
+                    $("#btnText").addClass("d-none");
+                    $("#icon_save").addClass("d-none");
+                    $("#btnLoading").removeClass("d-none");
                     $.ajax({
                         url: $(this).attr("action"),
                         type: "POST",
@@ -637,6 +646,10 @@
                         processData: false,
                         contentType: false,
                         success: function(res) {
+                            $("#btnSubmit").attr("disabled", false);
+                            $("#btnLoading").addClass("d-none");
+                            $("#btnText").removeClass("d-none");
+                            $("#icon_save").removeClass("d-none");
                             Swal.fire({
                                 title: "Berhasil",
                                 icon: "success",
@@ -649,7 +662,10 @@
                         },
                         error: function(xhr) {
                             var errorString = "";
-
+                            $("#btnSubmit").attr("disabled", false);
+                            $("#btnLoading").addClass("d-none");
+                            $("#btnText").removeClass("d-none");
+                            $("#icon_save").removeClass("d-none");
                             if (xhr.responseJSON && xhr.responseJSON.errors) {
                                 $.each(xhr.responseJSON.errors, function(key, messages) {
                                     errorString += messages[0] + "\n";

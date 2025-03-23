@@ -9,12 +9,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class OrtuSiswa extends Model
 {
-    use HasFactory;
-    use HasUlids;
+    use HasFactory, HasUlids;
     protected $table = 'ortu_siswas';
     public $incrementing = false;
     protected $keyType = 'string';
-    protected $fillable = ['nama_ortu', 'tempat_lahir', 'tanggal_lahir', 'kabupaten', 'kecamatan', 'desa', 'dusun', 'rt', 'rw', 'alamat', 'pekerjaan', 'pendidikan', 'no_hp'];
+    protected $fillable = ['ayah', 'status_ayah', 'pekerjaan_ayah', 'pendidikan_ayah', 'ibu', 'status_ibu', 'pekerjaan_ibu', 'pendidikan_ibu', 'no_hp', 'id_siswa'];
 
     public function siswa(): BelongsTo
     {
