@@ -13,21 +13,17 @@ return new class extends Migration
     {
         Schema::create('ortu_siswas', function (Blueprint $table) {
             $table->ulid('id')->primary();
-            $table->ulid('id_siswa');
-            $table->foreign('id_siswa')->references('id')->on('siswa_barus')->onDelete('cascade')->onUpdate('cascade');
-            $table->string('nama_ortu');
-            $table->string('tempat_lahir');
-            $table->date('tanggal_lahir');
-            $table->string('kabupaten');
-            $table->string('kecamatan');
-            $table->string('desa');
-            $table->string('dusun');
-            $table->string('rt');
-            $table->string('rw');
-            $table->text('alamat');
-            $table->string('pekerjaan');
-            $table->string('pendidikan');
+            $table->foreignUlid('id_siswa')->references('id')->on('siswa_barus')->onDelete('cascade')->onUpdate('cascade');
+            $table->string('ayah');
+            $table->enum('status_ayah', ['Hidup', 'Wafat'])->nullable();
+            $table->string('pekerjaan_ayah');
+            $table->string('pendidikan_ayah');
+            $table->string('ibu');
+            $table->enum('status_ibu', ['Hidup', 'Wafat'])->nullable();
+            $table->string('pekerjaan_ibu');
+            $table->string('pendidikan_ibu');
             $table->string('no_hp');
+            $table->enum('status_berkas', ['0', '1'])->default('0');
             $table->timestamps();
         });
     }

@@ -8,6 +8,7 @@ use App\Models\SiswaBaru;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Document;
+use App\Models\OrtuSiswa;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -64,7 +65,7 @@ class LoginController extends Controller
 
         $data = session('register_data');
 
-        $siswa = Register::create([
+        $akun = Register::create([
             'nisn' => $data['nisn'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
@@ -72,8 +73,9 @@ class LoginController extends Controller
             'email_verified_at' => now(),
             'verification_code' => null,
         ]);
-        SiswaBaru::create([
-            'id_register_siswa' => $siswa->id,
+
+        $siswa =  SiswaBaru::create([
+            'id_register_siswa' => $akun->id,
             'nama' => $data['nama_lengkap'],
             'nisn' => $data['nisn'],
             'email' => $data['email'],
@@ -91,14 +93,25 @@ class LoginController extends Controller
             "foto_akte" => 'default_document.png',
         ]);
 
+        OrtuSiswa::create([
+            'id_siswa' => $siswa->id,
+            "ayah" => "_",
+            "pekerjaan_ayah" => "_",
+            "pendidikan_ayah" => "_",
+            "ibu" => "_",
+            "pekerjaan_ibu" => "_",
+            "pendidikan_ibu" => "_",
+            "no_hp" => "_",
+        ]);
+
         if (session('jalur_ppdb') !== "1" || session('jalur_ppdb') !== "5") {
             Document::create([
-                'id_register' => $siswa->id,
+                'id_register' => $akun->id,
                 'document' => 'default_document.png'
             ]);
         }
 
-        Auth::guard('siswa')->login($siswa);
+        Auth::guard('siswa')->login($akun);
         session()->forget(['register_data', 'otp']);
 
         return response()->json(['redirect' => route('dashboard-siswa')]);

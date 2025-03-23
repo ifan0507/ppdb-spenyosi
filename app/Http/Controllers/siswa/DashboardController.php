@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\siswa;
 
 use App\Http\Controllers\Controller;
+use App\Models\Document;
+use App\Models\Register;
 use App\Models\SiswaBaru;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class DashboardController extends Controller
 {
@@ -54,41 +57,109 @@ class DashboardController extends Controller
         return view('siswa.update-biodata', compact('data'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        $siswa = SiswaBaru::findOrFail($id);
+        $defaultSiswa = 'default_siswa.png';
+        $defaultDocument = 'default_document.png';
 
-        $siswa->update([
-            'nama' => $request->nama,
-            'nisn' => $request->nisn,
-            'nik' => $request->nik,
-            'jenis_kelamin' => $request->jenis_kelamin,
-            'tempat_lahir' => $request->tempat_lahir,
-            'tanggal_lahir' => $request->tanggal_lahir,
-            'alamat' => $request->alamat,
-            'no_hp' => $request->no_hp,
-            'email' => $request->email,
+        $request->validate([
+            'foto_siswa' => 'file|image',
+            'foto_kk' => 'file|image',
+            'foto_akte' => 'file|image',
+            'document' => 'file|image'
+        ], [
+            'foto_siswa.file' => 'Foto pribadi harus berupa file!',
+            'foto_siswa.image' => 'Foto pribadi harus berupa gambar!',
+            'foto_kk.file' => 'Foto kk harus berupa file!',
+            'foto_kk.image' => 'Foto kk harus berupa gambar!',
+            'foto_akte.file' => 'Foto akte harus berupa file!',
+            'foto_akte.image' => 'Foto akte harus berupa gambar!',
+            'document.file' => 'Document harus berupa file!',
+            'document.image' => 'Document harus berupa gambar!'
         ]);
 
+        $akun = Auth::guard('siswa')->user();
+
+        if ($akun->siswa->foto_siswa === $defaultSiswa && !$request->hasFile('foto_siswa')) {
+            return response()->json(['errors' => ['foto_siswa' => ['Foto pribadi tidak boleh kosong!']]], 400);
+        }
+        if ($akun->siswa->foto_kk === $defaultDocument  && !$request->hasFile('foto_kk')) {
+            return response()->json(['errors' => ['foto_kk' => ['Foto KK tidak boleh kosong!']]], 400);
+        }
+        if ($akun->siswa->foto_akte === $defaultDocument  && !$request->hasFile('foto_akte')) {
+            return response()->json(['errors' => ['foto_akte' => ['Foto Akte tidak boleh kosong!']]], 400);
+        }
+
+        if ($akun->jalur->id != "1"  ||  $akun->jalur->id != "5") {
+
+            if ($akun->document->document === $defaultDocument && !$request->hasFile('document')) {
+                return response()->json(['errors' => ['document' => ['Dokumen penunjang tidak boleh kosong!']]], 400);
+            }
+
+            if ($request->hasFile('document')) {
+                if ($akun->document->document !== $defaultDocument) {
+                    Storage::delete($akun->document->document);
+                }
+                $documentPath = $request->file('document')->store('siswa/dokumen');
+                Document::where("id_register", $akun->id)->update([
+                    "document" => $documentPath
+                ]);
+            }
+        }
+
+        if ($request->hasFile('foto_siswa')) {
+            if ($akun->siswa->foto_siswa !== $defaultSiswa) {
+                Storage::delete($akun->siswa->foto_siswa);
+            }
+            $fotoSiswaPath = $request->file('foto_siswa')->store('siswa/foto');
+        } else {
+            $fotoSiswaPath = $akun->siswa->foto_siswa;
+        }
+
         if ($request->hasFile('foto_kk')) {
-            $fileName = time() . '_kk.' . $request->foto_kk->extension();
-            $request->foto_kk->move(public_path('images'), $fileName);
-            $siswa->foto_kk = $fileName;
+            if ($akun->siswa->foto_kk !== $defaultDocument) {
+                Storage::delete($akun->siswa->foto_kk);
+            }
+            $fotoKKPath = $request->file('foto_kk')->store('siswa/kk');
+        } else {
+            $fotoKKPath = $akun->siswa->foto_kk;
         }
 
         if ($request->hasFile('foto_akte')) {
-            $fileName = time() . '_akte.' . $request->foto_akte->extension();
-            $request->foto_akte->move(public_path('images'), $fileName);
-            $siswa->foto_akte = $fileName;
+            if ($akun->siswa->foto_akte !== $defaultDocument) {
+                Storage::delete($akun->siswa->foto_akte);
+            }
+            $fotoAktePath = $request->file('foto_akte')->store('siswa/akte');
+        } else {
+            $fotoAktePath = $akun->siswa->foto_akte;
         }
 
-        
+        $update = SiswaBaru::where("id", $akun->siswa->id)->update([
+            "foto_siswa" => $fotoSiswaPath,
+            "nik" => $request->nik,
+            "jenis_kelamin" => $request->jenis_kelamin,
+            "tempat_lahir" => $request->tempat_lahir,
+            "tanggal_lahir" => $request->tanggal_lahir,
+            "asal_sekolah" => $request->asal_sekolah,
+            "kabupaten" => $request->kabupaten,
+            "kab_id" => $request->kab_id,
+            "kecamatan" => $request->kecamatan,
+            "kec_id" => $request->kec_id,
+            "desa" => $request->desa,
+            "desa_id" => $request->desa_id,
+            "alamat" => $request->alamat,
+            "no_hp" => $request->no_hp,
+            "lokasi" => $request->lokasi,
+            "foto_kk" => $fotoKKPath,
+            "foto_akte" => $fotoAktePath,
+            "status_berkas" => "1"
+        ]);
 
-
-
-        $siswa->save();
-
-        return redirect('/siswa/dashboard')->with('success', 'Biodata berhasil diperbarui.');
+        if ($update) {
+            return response()->json(['redirect' => route('dashboard-siswa')]);
+        } else {
+            return back()->withInput()->withErrors('ERROR CONTROLLER');
+        }
     }
 
     /**
