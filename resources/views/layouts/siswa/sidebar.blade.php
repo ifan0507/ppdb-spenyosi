@@ -26,7 +26,7 @@
                 data-accordion="false">
 
                 <li class="nav-item">
-                    <a href="#" class="nav-link active">
+                    <a href="{{ route('dashboard-siswa') }}" class="nav-link active">
                         <i class="fa-solid fa-gauge-high nav-icon"></i>
                         <p>Dashboard</p>
                     </a>
