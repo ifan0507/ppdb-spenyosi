@@ -6,9 +6,9 @@
             <div class="row justify-content-center">
                 <div class="card card-primary card-outline card-outline-tabs col-md-12">
                     <div class="card-body">
-                        <form action="#" method="POST">
+                        <form action="#" method="POST" id="form-ortu">
                             @csrf
-
+                            @method('PUT')
                             <div class="row">
                                 <div class="col-sm-12 col-lg-6">
                                     <div class="card card-default card-outline">
@@ -44,16 +44,16 @@
                                                 <label class="form-label">Pendidikan Ayah</label>
                                                 <select class="form-control" name="pendidikan_ayah" id="pendidikanAyah">
                                                     <option value="">-- Pilih Pendidikan --</option>
-                                                    <option value="1">Tidak Sekolah</option>
-                                                    <option value="2" selected="selected">SD/MI / Sederajat</option>
-                                                    <option value="3">SMP/MTs / Sederajat</option>
-                                                    <option value="4">SMA/MA / Sederajat</option>
-                                                    <option value="5">D1 / Sederajat</option>
-                                                    <option value="6">D2 / Sederajat</option>
-                                                    <option value="7">D3 / Sederajat</option>
-                                                    <option value="8">D4/S1 / Sederajat</option>
-                                                    <option value="9">S2/Sp1 / Sederajat</option>
-                                                    <option value="10">S3/Sp2 / Sederajat</option>
+                                                    <option value="Tidak Sekolah">Tidak Sekolah</option>
+                                                    <option value="SD/MI / Sederajat">SD/MI / Sederajat</option>
+                                                    <option value="SMP/MTs / Sederajat">SMP/MTs / Sederajat</option>
+                                                    <option value="SMA/MA / Sederajat">SMA/MA / Sederajat</option>
+                                                    <option value="D1 / Sederajat">D1 / Sederajat</option>
+                                                    <option value="D2 / Sederajat">D2 / Sederajat</option>
+                                                    <option value="D3 / Sederajat">D3 / Sederajat</option>
+                                                    <option value="D4/S1 / Sederajat">D4/S1 / Sederajat</option>
+                                                    <option value="S2/Sp1 / Sederajat">S2/Sp1 / Sederajat</option>
+                                                    <option value="S3/Sp1 / Sederajat">S3/Sp2 / Sederajat</option>
                                                 </select>
                                                 <div class="invalid-feedback">
                                                     Harap pilih pendidikan ayah!
@@ -73,7 +73,7 @@
                                                     <option value="Tidak Bekerja">TIDAK BEKERJA</option>
                                                 </select>
                                                 <div class="invalid-feedback">
-                                                    Harap pekerjaan ayah!
+                                                    Harap pilih pekerjaan ayah!
                                                 </div>
                                             </div>
                                         </div>
@@ -88,56 +88,62 @@
                                         </div>
                                         <div class="card-body">
                                             <div class="form-group required">
-                                                <label class="title">Nama Ibu</label>
-                                                <input type="text" class="form-control " name="nama_ibu" id="nama_ibu"
-                                                    value="YULIL FITRIYAWATI" required="">
+                                                <label class="form-label">Nama Ibu</label>
+                                                <input type="text" class="form-control " name="ibu" id="nama_ibu"
+                                                    value="{{ old('ibu', $data->siswa->ortu) }}">
                                             </div>
                                             <div class="form-group required">
-                                                <label class="title">Status Ibu</label><br>
+                                                <label class="form-label">Status Ibu</label><br>
                                                 <div class="d-block">
-                                                    <div class="custom-control custom-radio mr-2">
-                                                        <input type="radio" class="custom-control-input" id="status_ibu_1"
-                                                            name="status_ibu" value="hidup" checked>
-                                                        <label class="custom-control-label" for="status_ibu_1">Masih
-                                                            Hidup</label>
+                                                    <div class="form-check mr-2">
+                                                        <input class="form-check-input status_ibu" type="radio"
+                                                            name="status_ibu" id="status_ibu_1" value="Hidup"
+                                                            {{ $data->siswa->ortu == 'Hidup' ? 'checked' : '' }}>
+                                                        <label class="form-check-label" for="status_ibu_1">Hidup</label>
                                                     </div>
-                                                    <div class="custom-control custom-radio">
-                                                        <input type="radio" class="custom-control-input"
-                                                            id="status_ibu_2" name="status_ibu" value="wafat">
-                                                        <label class="custom-control-label"
-                                                            for="status_ibu_2">Wafat</label>
+                                                    <div class="form-check mr-2">
+                                                        <input class="form-check-input status_ibu" type="radio"
+                                                            name="status_ibu" id="status_ibu_2" value="Wafat"
+                                                            {{ $data->siswa->ortu == 'Wafat' ? 'checked' : '' }}>
+                                                        <label class="form-check-label" for="status_ibu_2">Wafat</label>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="form-group required">
                                                 <label class="title">Pendidikan Ibu</label>
-                                                <select class="form-control" required="" name="pendidikan_ibu">
+                                                <select class="form-control" name="pendidikan_ibu" id="pendidikanIbu">
                                                     <option value="">-- Pilih Pendidikan --</option>
-                                                    <option value="1">Tidak Sekolah</option>
-                                                    <option value="2" selected="selected">SD/MI / Sederajat</option>
-                                                    <option value="3">SMP/MTs / Sederajat</option>
-                                                    <option value="4">SMA/MA / Sederajat</option>
-                                                    <option value="5">D1 / Sederajat</option>
-                                                    <option value="6">D2 / Sederajat</option>
-                                                    <option value="7">D3 / Sederajat</option>
-                                                    <option value="8">D4/S1 / Sederajat</option>
-                                                    <option value="9">S2/Sp1 / Sederajat</option>
-                                                    <option value="10">S3/Sp2 / Sederajat</option>
+                                                    <option value="Tidak Sekolah">Tidak Sekolah</option>
+                                                    <option value="SD/MI / Sederajat">SD/MI / Sederajat</option>
+                                                    <option value="SMP/MTs / Sederajat">SMP/MTs / Sederajat</option>
+                                                    <option value="SMA/MA / Sederajat">SMA/MA / Sederajat</option>
+                                                    <option value="D1 / Sederajat">D1 / Sederajat</option>
+                                                    <option value="D2 / Sederajat">D2 / Sederajat</option>
+                                                    <option value="D3 / Sederajat">D3 / Sederajat</option>
+                                                    <option value="D4/S1 / Sederajat">D4/S1 / Sederajat</option>
+                                                    <option value="S2/Sp1 / Sederajat">S2/Sp1 / Sederajat</option>
+                                                    <option value="S3/Sp1 / Sederajat">S3/Sp2 / Sederajat</option>
                                                 </select>
+                                                <div class="invalid-feedback">
+                                                    Harap pilih pendidikan Ibu!
+                                                </div>
                                             </div>
                                             <div class="form-group required">
                                                 <label class="title">Pekerjaan Ibu</label>
-                                                <select class="form-control" required="" name="pekerjaan_ibu">
+                                                <select class="form-control" name="pekerjaan_ibu" id="pekerjaanIbu">
                                                     <option value="">-- Pilih Pekerjaan --</option>
-                                                    <option value="1">PNS</option>
-                                                    <option value="2">Peg. Swasta</option>
-                                                    <option value="3">Wirausaha</option>
-                                                    <option value="4">TNI / POLRI</option>
-                                                    <option value="5" selected="selected">Petani</option>
-                                                    <option value="6">Nelayan</option>
-                                                    <option value="7">Lainnya</option>
-                                                    <option value="8">TIDAK BEKERJA</option>
+                                                    <option value="PNS">PNS</option>
+                                                    <option value="Peg. Swasta">Peg. Swasta</option>
+                                                    <option value="Wirausaha">Wirausaha</option>
+                                                    <option value="TNI / POLRI">TNI / POLRI</option>
+                                                    <option value="Petani">Petani</option>
+                                                    <option value="Nelayan">Nelayan</option>
+                                                    <option value="Lainnya">Lainnya</option>
+                                                    <option value="Tidak Bekerja">TIDAK BEKERJA</option>
                                                 </select>
+                                                <div class="invalid-feedback">
+                                                    Harap pilih pekerjaan Ibu!
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -150,10 +156,11 @@
                                             </div>
                                         </div>
                                         <div class="card-body">
-                                            <div class="form-group">
-                                                <label class="title">No Telepon Orang Tua</label>
-                                                <input type="text" class="form-control " name="no_telepon_ortu"
-                                                    id="no_telepon_ortu" value="087837629378">
+                                            <div class="form-group required">
+                                                <label class="form-label">No HP</label>
+                                                <input type="text" class="form-control" name="no_hp" id="no_hp"
+                                                    value="{{ old('no_hp', $data->siswa->no_hp) }}">
+                                                <div id="validasiNoHp" class="invalid-feedback"></div>
                                             </div>
 
                                         </div>
@@ -174,121 +181,136 @@
     </div>
 
     <script>
-        // scrip jquery dan ajax untuk kabupaten
-        document.addEventListener("DOMContentLoaded", function() {
-            let kabupatenSelect = document.getElementById("kabupaten_id");
-            let kecamatanSelect = document.getElementById("kecamatan_id");
-            let desaSelect = document.getElementById("desa_id");
+        $(document).ready(function() {
+            $("[name='no_hp']").on("input", function() {
+                var no = $(this).val();
+                var noRegex = /^[0-9]{12}$/;
 
-            let kabupatenName = document.getElementById("kab_name");
-            let kacamatanName = document.getElementById("kec_name");
-            let desaName = document.getElementById("desa_name");
-
-            let kabupatenChoices = new Choices(kabupatenSelect, {
-                searchEnabled: true
-            });
-            let kecamatanChoices = new Choices(kecamatanSelect, {
-                searchEnabled: true
-            });
-            let desaChoices = new Choices(desaSelect, {
-                searchEnabled: true
-            });
-
-            // Ambil data kabupaten dari API
-            fetch("https://www.emsifa.com/api-wilayah-indonesia/api/regencies/35.json")
-                .then(response => response.json())
-                .then(data => {
-                    kabupatenChoices.clearChoices();
-                    kabupatenChoices.setChoices(
-                        data.map(item => ({
-                            value: item.id,
-                            label: item.name
-                        })),
-                        "value",
-                        "label",
-                        true
-                    );
-                });
-
-            // Event listener ketika kabupaten dipilih
-            kabupatenSelect.addEventListener("change", function() {
-                let kabupatenId = kabupatenSelect.value;
-                let selectedOption = kabupatenSelect.options[kabupatenSelect.selectedIndex];
-                kabupatenName.value = selectedOption.text;
-                kecamatanChoices.clearChoices();
-                kecamatanChoices.setChoices([{
-                    value: "",
-                    label: "Memuat...",
-                    disabled: true
-                }]);
-                desaChoices.clearChoices();
-                desaChoices.setChoices([{
-                    value: "",
-                    label: "Pilih Kecamatan Terlebih Dahulu",
-                    disabled: true
-                }]);
-
-                if (kabupatenId) {
-                    fetch(`https://www.emsifa.com/api-wilayah-indonesia/api/districts/${kabupatenId}.json`)
-                        .then(response => response.json())
-                        .then(data => {
-                            kecamatanChoices.clearChoices();
-                            kecamatanChoices.setChoices(
-                                data.map(item => ({
-                                    value: item.id,
-                                    label: item.name
-                                })),
-                                "value",
-                                "label",
-                                true
-                            );
-                        });
-                }
-            });
-
-            // Event listener ketika kecamatan dipilih
-            kecamatanSelect.addEventListener("change", function() {
-                let kecamatanId = kecamatanSelect.value;
-
-                let selectedOption = kecamatanSelect.options[kecamatanSelect.selectedIndex];
-                kacamatanName.value = selectedOption.text;
-
-                desaChoices.clearChoices();
-                desaChoices.setChoices([{
-                    value: "",
-                    label: "Memuat...",
-                    disabled: true
-                }]);
-
-                if (kecamatanId) {
-                    fetch(`https://www.emsifa.com/api-wilayah-indonesia/api/villages/${kecamatanId}.json`)
-                        .then(response => response.json())
-                        .then(data => {
-                            desaChoices.clearChoices();
-                            desaChoices.setChoices(
-                                data.map(item => ({
-                                    value: item.id,
-                                    label: item.name
-                                })),
-                                "value",
-                                "label",
-                                true
-                            );
-                        });
+                if (!noRegex.test(no)) {
+                    $("#validasiNoHp").text("Nomor HP harus terdiri dari 12 digit angka!").show();
+                    $(this).addClass("is-invalid");
                 } else {
-                    desaChoices.clearChoices();
-                    desaChoices.setChoices([{
-                        value: "",
-                        label: "Pilih Kecamatan Terlebih Dahulu",
-                        disabled: true
-                    }]);
+                    $("#validasiNoHp").hide();
+                    $(this).removeClass("is-invalid").addClass("is-valid");
                 }
             });
+            $("#form_ortu").on("submit", function(e) {
+                e.preventDefault();
+                const formData = new FormData(this);
+                formData.append("_method", "PUT");
+                let isChecked = $("input[name='jenis_kelamin']:checked").length > 0;
+                if ($("#nama_ayah").val() == "" || $("#nama_ayah").val() === "_") {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "Nama ayah wajib di isi!",
+                    })
+                } else if (!isChecked) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "Jenis kelamin wajib dipilih!",
+                    })
+                } else if ($("#tempat_lahir").val() == "" || $("#tempat_lahir").val() === "_") {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "Tempat lahir wajib diisi!",
+                    })
+                } else if ($("#tanggal_lahir").val() == "" || $("#tanggal_lahir").val() === "_") {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "Tanggal lahir wajib diisi!",
+                    })
+                } else if ($("#kab_name").val() == "") {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "Kabupaten wajib dipilih!",
+                    })
+                } else if ($("#kec_name").val() == "") {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "Kecamatan wajib dipilih!",
+                    })
+                } else if ($("#desa_name").val() == "") {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "Desa wajib dipilih!",
+                    })
+                } else if ($("#alamat").val() == "" || $("#alamat").val() === "_") {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "Alamat wajib diisi!",
+                    })
+                } else if ($("#no_hp").val() == "" || $("#no_hp").val() === "_") {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "No HP wajib diisi!",
+                    })
+                } else if ($("#coordinates").val() == "" || $("#coordinates").val() === "_") {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "Koordinate rumah wajib diisi!",
+                    })
+                } else {
+                    $("#btnSubmit").attr("disabled", true);
+                    $("#btnText").addClass("d-none");
+                    $("#icon_save").addClass("d-none");
+                    $("#btnLoading").removeClass("d-none");
+                    $.ajax({
+                        url: $(this).attr("action"),
+                        type: "POST",
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function(res) {
+                            $("#btnSubmit").attr("disabled", false);
+                            $("#btnLoading").addClass("d-none");
+                            $("#btnText").removeClass("d-none");
+                            $("#icon_save").removeClass("d-none");
+                            Swal.fire({
+                                title: "Berhasil",
+                                icon: "success",
+                                text: "diperbarui!",
+                                confirmButtonText: "OK",
+                                confirmButtonColor: "#18a342",
+                            }).then(() => {
+                                window.location.href = res.redirect;
+                            });
+                        },
+                        error: function(xhr) {
+                            var errorString = "";
+                            $("#btnSubmit").attr("disabled", false);
+                            $("#btnLoading").addClass("d-none");
+                            $("#btnText").removeClass("d-none");
+                            $("#icon_save").removeClass("d-none");
+                            if (xhr.responseJSON && xhr.responseJSON.errors) {
+                                $.each(xhr.responseJSON.errors, function(key, messages) {
+                                    errorString += messages[0] + "\n";
+                                });
+                            } else if (xhr.responseJSON && xhr.responseJSON.error) {
+                                errorString += xhr.responseJSON.error;
+                            } else {
+                                errorString += "Kesalahan tidak diketahui.";
+                            }
 
-            desaSelect.addEventListener("change", function() {
-                let selectedOption = desaSelect.options[desaSelect.selectedIndex];
-                desaName.value = selectedOption.text;
-            });
-        });
+                            Swal.fire({
+                                icon: "error",
+                                title: "Oops...",
+                                text: errorString,
+                            });
+                        }
+
+                    })
+                }
+            })
+        })
     </script>
 @endsection
