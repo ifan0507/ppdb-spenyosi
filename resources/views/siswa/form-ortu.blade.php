@@ -21,7 +21,7 @@
                                             <div class="form-group required">
                                                 <label class="form-label">Nama Ayah</label>
                                                 <input type="text" class="form-control " name="ayah" id="nama_ayah"
-                                                    value="{{ old('ayah', $data->siswa->ortu) }}">
+                                                    value="{{ old('ayah', $data->ayah) }}">
                                             </div>
                                             <div class="form-group required">
                                                 <label class="form-label">Status Ayah</label><br>
@@ -29,13 +29,13 @@
                                                     <div class="form-check mr-2">
                                                         <input class="form-check-input status_ayah" type="radio"
                                                             name="status_ayah" id="status_ayah_1" value="Hidup"
-                                                            {{ $data->siswa->ortu == 'Hidup' ? 'checked' : '' }}>
+                                                            {{ $data->status_ayah == 'Hidup' ? 'checked' : '' }}>
                                                         <label class="form-check-label" for="status_ayah_1">Hidup</label>
                                                     </div>
                                                     <div class="form-check mr-2">
                                                         <input class="form-check-input status_ayah" type="radio"
                                                             name="status_ayah" id="status_ayah_2" value="Wafat"
-                                                            {{ $data->siswa->ortu == 'Wafat' ? 'checked' : '' }}>
+                                                            {{ $data->status_ayah == 'Wafat' ? 'checked' : '' }}>
                                                         <label class="form-check-label" for="status_ayah_2">Wafat</label>
                                                     </div>
                                                 </div>
@@ -44,16 +44,36 @@
                                                 <label class="form-label">Pendidikan Ayah</label>
                                                 <select class="form-control" name="pendidikan_ayah" id="pendidikanAyah">
                                                     <option value="">-- Pilih Pendidikan --</option>
-                                                    <option value="Tidak Sekolah">Tidak Sekolah</option>
-                                                    <option value="SD/MI / Sederajat">SD/MI / Sederajat</option>
-                                                    <option value="SMP/MTs / Sederajat">SMP/MTs / Sederajat</option>
-                                                    <option value="SMA/MA / Sederajat">SMA/MA / Sederajat</option>
-                                                    <option value="D1 / Sederajat">D1 / Sederajat</option>
-                                                    <option value="D2 / Sederajat">D2 / Sederajat</option>
-                                                    <option value="D3 / Sederajat">D3 / Sederajat</option>
-                                                    <option value="D4/S1 / Sederajat">D4/S1 / Sederajat</option>
-                                                    <option value="S2/Sp1 / Sederajat">S2/Sp1 / Sederajat</option>
-                                                    <option value="S3/Sp1 / Sederajat">S3/Sp2 / Sederajat</option>
+                                                    <option value="Tidak Sekolah"
+                                                        {{ old('pendidikan_ayah', $data->pendidikan_ayah) == 'Tidak Sekolah' ? 'selected' : '' }}>
+                                                        Tidak Sekolah</option>
+                                                    <option value="SD/MI / Sederajat"
+                                                        {{ old('pendidikan_ayah', $data->pendidikan_ayah) == 'SD/MI / Sederajat' ? 'selected' : '' }}>
+                                                        SD/MI / Sederajat</option>
+                                                    <option value="SMP/MTs / Sederajat"
+                                                        {{ old('pendidikan_ayah', $data->pendidikan_ayah) == 'SMP/MTs / Sederajat' ? 'selected' : '' }}>
+                                                        SMP/MTs / Sederajat</option>
+                                                    <option value="SMA/MA / Sederajat"
+                                                        {{ old('pendidikan_ayah', $data->pendidikan_ayah) == 'SMA/MA / Sederajat' ? 'selected' : '' }}>
+                                                        SMA/MA / Sederajat</option>
+                                                    <option value="D1 / Sederajat"
+                                                        {{ old('pendidikan_ayah', $data->pendidikan_ayah) == 'D1 / Sederajat' ? 'selected' : '' }}>
+                                                        D1 / Sederajat</option>
+                                                    <option value="D2 / Sederajat"
+                                                        {{ old('pendidikan_ayah', $data->pendidikan_ayah) == 'D2 / Sederajat' ? 'selected' : '' }}>
+                                                        D2 / Sederajat</option>
+                                                    <option value="D3 / Sederajat"
+                                                        {{ old('pendidikan_ayah', $data->pendidikan_ayah) == 'D3 / Sederajat' ? 'selected' : '' }}>
+                                                        D3 / Sederajat</option>
+                                                    <option value="D4/S1 / Sederajat"
+                                                        {{ old('pendidikan_ayah', $data->pendidikan_ayah) == 'D4/S1 / Sederajat' ? 'selected' : '' }}>
+                                                        D4/S1 / Sederajat</option>
+                                                    <option value="S2/Sp1 / Sederajat"
+                                                        {{ old('pendidikan_ayah', $data->pendidikan_ayah) == 'S2/Sp1 / Sederajat' ? 'selected' : '' }}>
+                                                        S2/Sp1 / Sederajat</option>
+                                                    <option value="S3/Sp1 / Sederajat"
+                                                        {{ old('pendidikan_ayah', $data->pendidikan_ayah) == 'S3/Sp1 / Sederajat' ? 'selected' : '' }}>
+                                                        S3/Sp2 / Sederajat</option>
                                                 </select>
                                                 <div class="invalid-feedback">
                                                     Harap pilih pendidikan ayah!
@@ -63,14 +83,30 @@
                                                 <label class="form-label">Pekerjaan Ayah</label>
                                                 <select class="form-control" name="pekerjaan_ayah" id="pekerjaanAyah">
                                                     <option value="">-- Pilih Pekerjaan --</option>
-                                                    <option value="PNS">PNS</option>
-                                                    <option value="Peg. Swasta">Peg. Swasta</option>
-                                                    <option value="Wirausaha">Wirausaha</option>
-                                                    <option value="TNI / POLRI">TNI / POLRI</option>
-                                                    <option value="Petani">Petani</option>
-                                                    <option value="Nelayan">Nelayan</option>
-                                                    <option value="Lainnya">Lainnya</option>
-                                                    <option value="Tidak Bekerja">TIDAK BEKERJA</option>
+                                                    <option value="PNS"
+                                                        {{ old('pekerjaan_ayah', $data->pekerjaan_ayah) == 'PNS' ? 'selected' : '' }}>
+                                                        PNS</option>
+                                                    <option value="Peg. Swasta"
+                                                        {{ old('pekerjaan_ayah', $data->pekerjaan_ayah) == 'Peg. Swasta' ? 'selected' : '' }}>
+                                                        Peg. Swasta</option>
+                                                    <option value="Wirausaha"
+                                                        {{ old('pekerjaan_ayah', $data->pekerjaan_ayah) == 'Wirausaha' ? 'selected' : '' }}>
+                                                        Wirausaha</option>
+                                                    <option value="TNI / POLRI"
+                                                        {{ old('pekerjaan_ayah', $data->pekerjaan_ayah) == 'TNI / POLRI' ? 'selected' : '' }}>
+                                                        TNI / POLRI</option>
+                                                    <option value="Petani"
+                                                        {{ old('pekerjaan_ayah', $data->pekerjaan_ayah) == 'Petani' ? 'selected' : '' }}>
+                                                        Petani</option>
+                                                    <option value="Nelayan"
+                                                        {{ old('pekerjaan_ayah', $data->pekerjaan_ayah) == 'Nelayan' ? 'selected' : '' }}>
+                                                        Nelayan</option>
+                                                    <option value="Lainnya"
+                                                        {{ old('pekerjaan_ayah', $data->pekerjaan_ayah) == 'Lainnya' ? 'selected' : '' }}>
+                                                        Lainnya</option>
+                                                    <option value="Tidak Bekerja"
+                                                        {{ old('pekerjaan_ayah', $data->pekerjaan_ayah) == 'Tidak Bekerja' ? 'selected' : '' }}>
+                                                        TIDAK BEKERJA</option>
                                                 </select>
                                                 <div class="invalid-feedback">
                                                     Harap pilih pekerjaan ayah!
@@ -90,7 +126,7 @@
                                             <div class="form-group required">
                                                 <label class="form-label">Nama Ibu</label>
                                                 <input type="text" class="form-control " name="ibu" id="nama_ibu"
-                                                    value="{{ old('ibu', $data->siswa->ortu) }}">
+                                                    value="{{ old('ibu', $data->ibu) }}">
                                             </div>
                                             <div class="form-group required">
                                                 <label class="form-label">Status Ibu</label><br>
@@ -98,13 +134,13 @@
                                                     <div class="form-check mr-2">
                                                         <input class="form-check-input status_ibu" type="radio"
                                                             name="status_ibu" id="status_ibu_1" value="Hidup"
-                                                            {{ $data->siswa->ortu == 'Hidup' ? 'checked' : '' }}>
+                                                            {{ $data->status_ibu == 'Hidup' ? 'checked' : '' }}>
                                                         <label class="form-check-label" for="status_ibu_1">Hidup</label>
                                                     </div>
                                                     <div class="form-check mr-2">
                                                         <input class="form-check-input status_ibu" type="radio"
                                                             name="status_ibu" id="status_ibu_2" value="Wafat"
-                                                            {{ $data->siswa->ortu == 'Wafat' ? 'checked' : '' }}>
+                                                            {{ $data->status_ibu == 'Wafat' ? 'checked' : '' }}>
                                                         <label class="form-check-label" for="status_ibu_2">Wafat</label>
                                                     </div>
                                                 </div>
@@ -113,16 +149,36 @@
                                                 <label class="title">Pendidikan Ibu</label>
                                                 <select class="form-control" name="pendidikan_ibu" id="pendidikanIbu">
                                                     <option value="">-- Pilih Pendidikan --</option>
-                                                    <option value="Tidak Sekolah">Tidak Sekolah</option>
-                                                    <option value="SD/MI / Sederajat">SD/MI / Sederajat</option>
-                                                    <option value="SMP/MTs / Sederajat">SMP/MTs / Sederajat</option>
-                                                    <option value="SMA/MA / Sederajat">SMA/MA / Sederajat</option>
-                                                    <option value="D1 / Sederajat">D1 / Sederajat</option>
-                                                    <option value="D2 / Sederajat">D2 / Sederajat</option>
-                                                    <option value="D3 / Sederajat">D3 / Sederajat</option>
-                                                    <option value="D4/S1 / Sederajat">D4/S1 / Sederajat</option>
-                                                    <option value="S2/Sp1 / Sederajat">S2/Sp1 / Sederajat</option>
-                                                    <option value="S3/Sp1 / Sederajat">S3/Sp2 / Sederajat</option>
+                                                    <option value="Tidak Sekolah"
+                                                        {{ old('pendidikan_ibu', $data->pendidikan_ibu) == 'Tidak Sekolah' ? 'selected' : '' }}>
+                                                        Tidak Sekolah</option>
+                                                    <option value="SD/MI / Sederajat"
+                                                        {{ old('pendidikan_ibu', $data->pendidikan_ibu) == 'Tidak Sekolah' ? 'selected' : '' }}>
+                                                        SD/MI / Sederajat</option>
+                                                    <option value="SMP/MTs / Sederajat"
+                                                        {{ old('pendidikan_ibu', $data->pendidikan_ibu) == 'SMP/MTs / Sederajat' ? 'selected' : '' }}>
+                                                        SMP/MTs / Sederajat</option>
+                                                    <option value="SMA/MA / Sederajat"
+                                                        {{ old('pendidikan_ibu', $data->pendidikan_ibu) == 'SMA/MA / Sederajat' ? 'selected' : '' }}>
+                                                        SMA/MA / Sederajat</option>
+                                                    <option value="D1 / Sederajat"
+                                                        {{ old('pendidikan_ibu', $data->pendidikan_ibu) == 'D1 / Sederajat' ? 'selected' : '' }}>
+                                                        D1 / Sederajat</option>
+                                                    <option value="D2 / Sederajat"
+                                                        {{ old('pendidikan_ibu', $data->pendidikan_ibu) == 'D2 / Sederajat' ? 'selected' : '' }}>
+                                                        D2 / Sederajat</option>
+                                                    <option value="D3 / Sederajat"
+                                                        {{ old('pendidikan_ibu', $data->pendidikan_ibu) == 'D3 / Sederajat' ? 'selected' : '' }}>
+                                                        D3 / Sederajat</option>
+                                                    <option value="D4/S1 / Sederajat"
+                                                        {{ old('pendidikan_ibu', $data->pendidikan_ibu) == 'D4/S1 / Sederajat' ? 'selected' : '' }}>
+                                                        D4/S1 / Sederajat</option>
+                                                    <option value="S2/Sp1 / Sederajat"
+                                                        {{ old('pendidikan_ibu', $data->pendidikan_ibu) == 'S2/Sp1 / Sederajat' ? 'selected' : '' }}>
+                                                        S2/Sp1 / Sederajat</option>
+                                                    <option value="S3/Sp1 / Sederajat"
+                                                        {{ old('pendidikan_ibu', $data->pendidikan_ibu) == 'S3/Sp1 / Sederajat' ? 'selected' : '' }}>
+                                                        S3/Sp2 / Sederajat</option>
                                                 </select>
                                                 <div class="invalid-feedback">
                                                     Harap pilih pendidikan Ibu!
@@ -132,14 +188,30 @@
                                                 <label class="title">Pekerjaan Ibu</label>
                                                 <select class="form-control" name="pekerjaan_ibu" id="pekerjaanIbu">
                                                     <option value="">-- Pilih Pekerjaan --</option>
-                                                    <option value="PNS">PNS</option>
-                                                    <option value="Peg. Swasta">Peg. Swasta</option>
-                                                    <option value="Wirausaha">Wirausaha</option>
-                                                    <option value="TNI / POLRI">TNI / POLRI</option>
-                                                    <option value="Petani">Petani</option>
-                                                    <option value="Nelayan">Nelayan</option>
-                                                    <option value="Lainnya">Lainnya</option>
-                                                    <option value="Tidak Bekerja">TIDAK BEKERJA</option>
+                                                    <option value="PNS"
+                                                        {{ old('pekerjaan_ibu', $data->pekerjaan_ibu) == 'PNS' ? 'selected' : '' }}>
+                                                        PNS</option>
+                                                    <option value="Peg. Swasta"
+                                                        {{ old('pekerjaan_ibu', $data->pekerjaan_ibu) == 'Peg. Swasta' ? 'selected' : '' }}>
+                                                        Peg. Swasta</option>
+                                                    <option value="Wirausaha"
+                                                        {{ old('pekerjaan_ibu', $data->pekerjaan_ibu) == 'Wirausaha' ? 'selected' : '' }}>
+                                                        Wirausaha</option>
+                                                    <option value="TNI / POLRI"
+                                                        {{ old('pekerjaan_ibu', $data->pekerjaan_ibu) == 'TNI / POLRI' ? 'selected' : '' }}>
+                                                        TNI / POLRI</option>
+                                                    <option value="Petani"
+                                                        {{ old('pekerjaan_ibu', $data->pekerjaan_ibu) == 'Petani' ? 'selected' : '' }}>
+                                                        Petani</option>
+                                                    <option value="Nelayan"
+                                                        {{ old('pekerjaan_ibu', $data->pekerjaan_ibu) == 'Nelayan' ? 'selected' : '' }}>
+                                                        Nelayan</option>
+                                                    <option value="Lainnya"
+                                                        {{ old('pekerjaan_ibu', $data->pekerjaan_ibu) == 'Lainnya' ? 'selected' : '' }}>
+                                                        Lainnya</option>
+                                                    <option value="Tidak Bekerja"
+                                                        {{ old('pekerjaan_ibu', $data->pekerjaan_ibu) == 'Tidak Bekerj' ? 'selected' : '' }}>
+                                                        TIDAK BEKERJA</option>
                                                 </select>
                                                 <div class="invalid-feedback">
                                                     Harap pilih pekerjaan Ibu!
@@ -159,7 +231,7 @@
                                             <div class="form-group required">
                                                 <label class="form-label">No HP</label>
                                                 <input type="text" class="form-control" name="no_hp" id="no_hp"
-                                                    value="{{ old('no_hp', $data->siswa->no_hp) }}">
+                                                    value="{{ old('no_hp', $data->no_hp) }}">
                                                 <div id="validasiNoHp" class="invalid-feedback"></div>
                                             </div>
 
@@ -198,7 +270,7 @@
                 e.preventDefault();
                 const formData = new FormData(this);
                 formData.append("_method", "PUT");
-                let isChecked = $("input[name='jenis_kelamin']:checked").length > 0;
+                let isChecked = $("input[name='status_ayah']:checked").length > 0;
                 if ($("#nama_ayah").val() == "" || $("#nama_ayah").val() === "_") {
                     Swal.fire({
                         icon: "error",
@@ -209,9 +281,9 @@
                     Swal.fire({
                         icon: "error",
                         title: "Oops...",
-                        text: "Jenis kelamin wajib dipilih!",
+                        text: "Status ayah wajib dipilih!",
                     })
-                } else if ($("#tempat_lahir").val() == "" || $("#tempat_lahir").val() === "_") {
+                } else if ($("#").val() == "" || $("#tempat_lahir").val() === "_") {
                     Swal.fire({
                         icon: "error",
                         title: "Oops...",
