@@ -4,6 +4,7 @@ namespace App\Http\Controllers\siswa;
 
 use App\Http\Controllers\Controller;
 use App\Models\OrtuSiswa;
+use App\Models\SiswaBaru;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -48,9 +49,9 @@ class OrtuController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit()
+    public function edit(string $id)
     {
-        $data = Auth::guard('siswa')->user();
+        $data = OrtuSiswa::where("id_siswa", $id)->get();
         $header = "Form Orang Tua";
         return view('siswa.form-ortu', compact('data', 'header'));
     }

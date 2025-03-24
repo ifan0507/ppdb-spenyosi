@@ -47,7 +47,8 @@
                                     <div class="card card-primary card-outline">
                                         <div class="card-header d-flex justify-content-between align-items-center">
                                             <h4>Data Orang Tua</h4>
-                                            <a href="{{ route('ortu.edit') }}" class="btn btn-primary ms-auto">
+                                            <a href="{{ route('ortu.edit', ['id' => $data->siswa->id]) }}"
+                                                class="btn btn-primary ms-auto">
                                                 <i class="fa-solid fa-square-plus"></i> Perbarui data orang tua
                                             </a>
                                         </div>
