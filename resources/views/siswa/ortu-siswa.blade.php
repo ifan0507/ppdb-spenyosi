@@ -57,43 +57,39 @@
                                                     <tbody class="table-light">
                                                         <tr>
                                                             <th>Nama Ayah / Wali</th>
-                                                            <td>{{ $ortu?->nama_ortu ?? 'Data tidak tersedia' }}</td>
+                                                            <td>{{ $data->siswa->ortu->ayah ?? '_' }}</td>
                                                         </tr>
                                                         <tr>
                                                             <th>Status Ayah / Wali</th>
-                                                            <td>{{ $ortu?->tempat_lahir ?? 'Data tidak tersedia' }}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>Hubungan dengan Ayah</th>
-                                                            <td>{{ $ortu?->tanggal_lahir ?? 'Data tidak tersedia' }}</td>
+                                                            <td>{{ $data->siswa->ortu->status_ayah ?? '_' }}</td>
                                                         </tr>
                                                         <tr>
                                                             <th>Pendidikan Ayah / Wali</th>
-                                                            <td>{{ $ortu?->kabupaten ?? 'Data tidak tersedia' }}</td>
+                                                            <td>{{ $data->siswa->ortu->pendidikan_ayah ?? '_' }}</td>
                                                         </tr>
                                                         <tr>
                                                             <th>Pekerjaan Ayah / Wali</th>
-                                                            <td>{{ $ortu?->kecamatan ?? 'Data tidak tersedia' }}</td>
+                                                            <td>{{ $data->siswa->ortu->pekerjaan_ayah ?? '_' }}</td>
                                                         </tr>
                                                         <tr>
                                                             <th>Nama Ibu</th>
-                                                            <td>{{ $ortu?->desa ?? 'Data tidak tersedia' }}</td>
+                                                            <td>{{ $data->siswa->ortu->ibu ?? '_' }}</td>
                                                         </tr>
                                                         <tr>
                                                             <th>Status Ibu</th>
-                                                            <td>{{ $ortu?->alamat ?? 'Data tidak tersedia' }}</td>
+                                                            <td>{{ $data->siswa->ortu->status_ibu ?? '_' }}</td>
                                                         </tr>
                                                         <tr>
                                                             <th>Pendidikan Ibu</th>
-                                                            <td>{{ $ortu?->pekerjaan ?? 'Data tidak tersedia' }}</td>
+                                                            <td>{{ $data->siswa->ortu->pendidikan_ibu ?? '_' }}</td>
                                                         </tr>
                                                         <tr>
                                                             <th>Pekerjaan Ibu</th>
-                                                            <td>{{ $ortu?->pekerjaan ?? 'Data tidak tersedia' }}</td>
+                                                            <td>{{ $data->siswa->ortu->pekerjaan_ibu ?? '_' }}</td>
                                                         </tr>
                                                         <tr>
                                                             <th>Nomor Telepon Orang Tua</th>
-                                                            <td>{{ $ortu?->no_hp ?? 'Data tidak tersedia' }}</td>
+                                                            <td>{{ $data->siswa->ortu->no_hp ?? '_' }}</td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
