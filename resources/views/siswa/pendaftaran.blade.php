@@ -45,6 +45,11 @@
                                     id="biodata-tab" data-toggle="pill" href="{{ route('dashboard-siswa') }}" role="tab"
                                     aria-controls="biodata" aria-selected="true">Biodata</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link remove-tab-format font-bold {{ $active_tab == 'orang tua' ? 'active' : '' }}"
+                                    id="biodata-tab" data-toggle="pill" href="{{ route('ortu') }}" role="tab">Orang
+                                    Tua</a>
+                            </li>
                             @if ($data->jalur_ppdb == 'Prestasi')
                                 <li class="nav-item">
                                     <a class="nav-link remove-tab-format font-bold {{ $active_tab == 'raport' ? 'active' : '' }}"

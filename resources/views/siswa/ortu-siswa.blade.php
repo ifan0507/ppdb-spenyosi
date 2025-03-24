@@ -49,7 +49,7 @@
                                             <h4>Data Orang Tua</h4>
                                             <a href="{{ route('ortu.edit', ['id' => $data->siswa->ortu->id]) }}"
                                                 class="btn btn-primary ms-auto">
-                                                <i class="fa-solid fa-square-plus"></i> Perbarui data orang tua
+                                                <i class="fa-solid fa-square-plus"></i> Perbarui Data Orang Tua
                                             </a>
                                         </div>
                                         <div class="card-body">

@@ -54,7 +54,8 @@ class DashboardController extends Controller
     public function edit()
     {
         $data = Auth::guard('siswa')->user();
-        return view('siswa.update-biodata', compact('data'));
+        $header = "Perbarui Biodata";
+        return view('siswa.update-biodata', compact('data', 'header'));
     }
 
     public function update(Request $request)

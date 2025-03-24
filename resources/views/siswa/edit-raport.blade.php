@@ -1,6 +1,12 @@
 @extends('layouts.siswa.template')
 @section('content')
     <div class="misc-content pt-4">
+        @include('layouts.siswa.breadcrumb', [
+            'breadcrumb' => [
+                'Data raport' => route('raport'),
+                'Edit data raport' => '',
+            ],
+        ])
         <div class="container">
             @include('layouts.siswa.header-update')
             <div class="row justify-content-center">

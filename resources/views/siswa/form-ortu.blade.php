@@ -1,7 +1,13 @@
 @extends('layouts.siswa.template')
 @section('content')
     <div class="misc-content pt-4">
-        <div class="container">
+        @include('layouts.siswa.breadcrumb', [
+            'breadcrumb' => [
+                'Data orang tua' => route('ortu'),
+                'Perbarui data orang tua' => '',
+            ],
+        ])
+        <div class="container-fluid">
             @include('layouts.siswa.header-update')
             <div class="row justify-content-center">
                 <div class="card card-primary card-outline card-outline-tabs col-md-12">
@@ -75,7 +81,7 @@
                                                         {{ old('pendidikan_ayah', $data->pendidikan_ayah) == 'S3/Sp1 / Sederajat' ? 'selected' : '' }}>
                                                         S3/Sp2 / Sederajat</option>
                                                 </select>
-                                                <div class="invalid-feedback">
+                                                <div class="invalid-feedback" id="validasiPendidikanAyah">
                                                     Harap pilih pendidikan ayah!
                                                 </div>
                                             </div>
@@ -180,7 +186,7 @@
                                                         {{ old('pendidikan_ibu', $data->pendidikan_ibu) == 'S3/Sp1 / Sederajat' ? 'selected' : '' }}>
                                                         S3/Sp2 / Sederajat</option>
                                                 </select>
-                                                <div class="invalid-feedback">
+                                                <div class="invalid-feedback" id="validasiPendidikanIbu">
                                                     Harap pilih pendidikan Ibu!
                                                 </div>
                                             </div>
@@ -252,137 +258,105 @@
         </div>
     </div>
 
+
     <script>
         $(document).ready(function() {
-            $("[name='no_hp']").on("input", function() {
-                var no = $(this).val();
-                var noRegex = /^[0-9]{12}$/;
+            $("#nama_ayah, #nama_ibu").on("input", function() {
+                let value = $(this).val().trim();
 
-                if (!noRegex.test(no)) {
-                    $("#validasiNoHp").text("Nomor HP harus terdiri dari 12 digit angka!").show();
-                    $(this).addClass("is-invalid");
+                if (value === "" || value === "_") {
+                    $(this).addClass("is-invalid").removeClass("is-valid");
                 } else {
-                    $("#validasiNoHp").hide();
-                    $(this).removeClass("is-invalid").addClass("is-valid");
+                    $(this).addClass("is-valid").removeClass("is-invalid");
                 }
             });
-            $("#form_ortu").on("submit", function(e) {
-                e.preventDefault();
-                const formData = new FormData(this);
-                formData.append("_method", "PUT");
-                let isChecked = $("input[name='status_ayah']:checked").length > 0;
-                if ($("#nama_ayah").val() == "" || $("#nama_ayah").val() === "_") {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Oops...",
-                        text: "Nama ayah wajib di isi!",
-                    })
-                } else if (!isChecked) {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Oops...",
-                        text: "Status ayah wajib dipilih!",
-                    })
-                } else if ($("#").val() == "" || $("#tempat_lahir").val() === "_") {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Oops...",
-                        text: "Tempat lahir wajib diisi!",
-                    })
-                } else if ($("#tanggal_lahir").val() == "" || $("#tanggal_lahir").val() === "_") {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Oops...",
-                        text: "Tanggal lahir wajib diisi!",
-                    })
-                } else if ($("#kab_name").val() == "") {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Oops...",
-                        text: "Kabupaten wajib dipilih!",
-                    })
-                } else if ($("#kec_name").val() == "") {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Oops...",
-                        text: "Kecamatan wajib dipilih!",
-                    })
-                } else if ($("#desa_name").val() == "") {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Oops...",
-                        text: "Desa wajib dipilih!",
-                    })
-                } else if ($("#alamat").val() == "" || $("#alamat").val() === "_") {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Oops...",
-                        text: "Alamat wajib diisi!",
-                    })
-                } else if ($("#no_hp").val() == "" || $("#no_hp").val() === "_") {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Oops...",
-                        text: "No HP wajib diisi!",
-                    })
-                } else if ($("#coordinates").val() == "" || $("#coordinates").val() === "_") {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Oops...",
-                        text: "Koordinate rumah wajib diisi!",
-                    })
+
+            $("[name='no_hp']").on("input", function() {
+                let no = $(this).val();
+                let noRegex = /^[0-9]{12}$/;
+
+                if (!noRegex.test(no) || no === "_") {
+                    $("#validasiNoHp").text("Nomor HP harus terdiri dari 12 digit angka!").show();
+                    $(this).addClass("is-invalid").removeClass("is-valid");
                 } else {
-                    $("#btnSubmit").attr("disabled", true);
-                    $("#btnText").addClass("d-none");
-                    $("#icon_save").addClass("d-none");
-                    $("#btnLoading").removeClass("d-none");
-                    $.ajax({
-                        url: $(this).attr("action"),
-                        type: "POST",
-                        data: formData,
-                        processData: false,
-                        contentType: false,
-                        success: function(res) {
-                            $("#btnSubmit").attr("disabled", false);
-                            $("#btnLoading").addClass("d-none");
-                            $("#btnText").removeClass("d-none");
-                            $("#icon_save").removeClass("d-none");
-                            Swal.fire({
-                                title: "Berhasil",
-                                icon: "success",
-                                text: "diperbarui!",
-                                confirmButtonText: "OK",
-                                confirmButtonColor: "#18a342",
-                            }).then(() => {
-                                window.location.href = res.redirect;
-                            });
-                        },
-                        error: function(xhr) {
-                            var errorString = "";
-                            $("#btnSubmit").attr("disabled", false);
-                            $("#btnLoading").addClass("d-none");
-                            $("#btnText").removeClass("d-none");
-                            $("#icon_save").removeClass("d-none");
-                            if (xhr.responseJSON && xhr.responseJSON.errors) {
-                                $.each(xhr.responseJSON.errors, function(key, messages) {
-                                    errorString += messages[0] + "\n";
-                                });
-                            } else if (xhr.responseJSON && xhr.responseJSON.error) {
-                                errorString += xhr.responseJSON.error;
-                            } else {
-                                errorString += "Kesalahan tidak diketahui.";
-                            }
-
-                            Swal.fire({
-                                icon: "error",
-                                title: "Oops...",
-                                text: errorString,
-                            });
-                        }
-
-                    })
+                    $("#validasiNoHp").hide();
+                    $(this).addClass("is-valid").removeClass("is-invalid");
                 }
-            })
-        })
+            });
+
+            $("#pendidikanAyah, #pendidikanIbu, #pekerjaanAyah, #pekerjaanIbu").on("change", function() {
+                if ($(this).val() !== "") {
+                    $(this).addClass("is-valid").removeClass("is-invalid");
+                    $(this).next(".invalid-feedback").hide(); // Sembunyikan pesan error
+                }
+            });
+
+            $("#form-ortu").on("submit", function(e) {
+                e.preventDefault();
+                let isValid = true; // Flag validasi
+
+                $("#nama_ayah, #nama_ibu").each(function() {
+                    if ($(this).val().trim() === "" || $(this).val().trim() === "_") {
+                        $(this).addClass("is-invalid").removeClass("is-valid");
+                        isValid = false;
+                    }
+                });
+
+                let noHp = $("[name='no_hp']").val();
+                if (!/^[0-9]{12}$/.test(noHp) || noHp === "_") {
+                    $("[name='no_hp']").addClass("is-invalid").removeClass("is-valid");
+                    isValid = false;
+                }
+
+                let checkedStatusAyah = $("input[name='status_ayah']:checked").length > 0;
+                let checkedStatusIbu = $("input[name='status_ibu']:checked").length > 0;
+
+                if ($("#pendidikanAyah").val() === "") {
+                    $("#pendidikanAyah").addClass("is-invalid").removeClass("is-valid");
+                    $("#validasiPendidikanAyah").text("Pilih Pendidikan Ayah").show();
+                    isValid = false;
+                }
+
+                if ($("#pendidikanIbu").val() === "") {
+                    $("#pendidikanIbu").addClass("is-invalid").removeClass("is-valid");
+                    $("#validasiPendidikanIbu").text("Pilih Pendidikan Ibu").show();
+                    isValid = false;
+                }
+
+                if ($("#pekerjaanAyah").val() === "") {
+                    $("#pekerjaanAyah").addClass("is-invalid").removeClass("is-valid");
+                    $("#validasiPekerjaanAyah").text("Pilih Pekerjaan Ayah").show();
+                    isValid = false;
+                }
+
+                if ($("#pekerjaanIbu").val() === "") {
+                    $("#pekerjaanIbu").addClass("is-invalid").removeClass("is-valid");
+                    $("#validasiPekerjaanIbu").text("Pilih Pekerjaan Ibu").show();
+                    isValid = false;
+                }
+
+                if (!checkedStatusAyah) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "Jenis status ayah wajib dipilih!",
+                    });
+                    return false;
+                }
+
+                if (!checkedStatusIbu) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "Jenis status ibu wajib dipilih!",
+                    });
+                    return false;
+                }
+
+                if (isValid) {
+                    this.submit();
+                }
+            });
+        });
     </script>
 @endsection

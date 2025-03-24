@@ -242,3 +242,8 @@
     font-size: 50px;
     color: #007bff;
 }
+
+.misc-content {
+    margin-left: 20px; /* Sesuaikan jaraknya */
+    margin-right: 20px; /* Sesuaikan jaraknya */
+}
