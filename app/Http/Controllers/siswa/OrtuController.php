@@ -51,7 +51,7 @@ class OrtuController extends Controller
      */
     public function edit(string $id)
     {
-        $data = OrtuSiswa::where("id_siswa", $id)->get();
+        $data = OrtuSiswa::where("id", $id)->first();
         $header = "Form Orang Tua";
         return view('siswa.form-ortu', compact('data', 'header'));
     }
