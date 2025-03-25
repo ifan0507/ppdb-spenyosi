@@ -91,7 +91,7 @@ class DashboardController extends Controller
             return response()->json(['errors' => ['foto_akte' => ['Foto Akte tidak boleh kosong!']]], 400);
         }
 
-        if ($akun->jalur->id != "1"  ||  $akun->jalur->id != "5") {
+        if ($akun->jalur->id == "2"  ||  $akun->jalur->id == "3" || $akun->jalur->id == "4") {
 
             if ($akun->document->document === $defaultDocument && !$request->hasFile('document')) {
                 return response()->json(['errors' => ['document' => ['Dokumen penunjang tidak boleh kosong!']]], 400);

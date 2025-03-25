@@ -64,19 +64,20 @@ class OrtuController extends Controller
         $data = OrtuSiswa::where("id", $id)->update([
             "ayah" => $request->ayah,
             "status_ayah" => $request->status_ayah,
-            "pendidikan_aya h" => $request->pendidikan_ayah,
+            "pendidikan_ayah" => $request->pendidikan_ayah,
             "pekerjaan_ayah" => $request->pekerjaan_ayah,
             "ibu" => $request->ibu,
             "status_ibu" => $request->status_ibu,
             "pendidikan_ibu" => $request->pendidikan_ibu,
             "pekerjaan_ibu" => $request->pekerjaan_ibu,
-            "no_hp" => $request->no_hp
+            "no_hp" => $request->no_hp,
+            "status_berkas" => "1"
         ]);
 
         if ($data) {
             return response()->json(["redirect" => route("ortu")]);
         } else {
-            return back()->withInput()->withErrors("ERROR CONTROLLER");
+            return redirect()->back()->withInput();
         }
     }
 

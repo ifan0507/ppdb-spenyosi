@@ -12,7 +12,7 @@
             <div class="row justify-content-center">
                 <div class="card card-primary card-outline card-outline-tabs col-md-12">
                     <div class="card-body">
-                        <form action="#" method="POST" id="form-ortu">
+                        <form action="{{ route('ortu.update', ['id' => $data->id]) }}" method="POST" id="form-ortu">
                             @csrf
                             @method('PUT')
                             <div class="row">
@@ -159,7 +159,7 @@
                                                         {{ old('pendidikan_ibu', $data->pendidikan_ibu) == 'Tidak Sekolah' ? 'selected' : '' }}>
                                                         Tidak Sekolah</option>
                                                     <option value="SD/MI / Sederajat"
-                                                        {{ old('pendidikan_ibu', $data->pendidikan_ibu) == 'Tidak Sekolah' ? 'selected' : '' }}>
+                                                        {{ old('pendidikan_ibu', $data->pendidikan_ibu) == 'SD/MI / Sederajat' ? 'selected' : '' }}>
                                                         SD/MI / Sederajat</option>
                                                     <option value="SMP/MTs / Sederajat"
                                                         {{ old('pendidikan_ibu', $data->pendidikan_ibu) == 'SMP/MTs / Sederajat' ? 'selected' : '' }}>
@@ -216,7 +216,7 @@
                                                         {{ old('pekerjaan_ibu', $data->pekerjaan_ibu) == 'Lainnya' ? 'selected' : '' }}>
                                                         Lainnya</option>
                                                     <option value="Tidak Bekerja"
-                                                        {{ old('pekerjaan_ibu', $data->pekerjaan_ibu) == 'Tidak Bekerj' ? 'selected' : '' }}>
+                                                        {{ old('pekerjaan_ibu', $data->pekerjaan_ibu) == 'Tidak Bekerja' ? 'selected' : '' }}>
                                                         TIDAK BEKERJA</option>
                                                 </select>
                                                 <div class="invalid-feedback">
@@ -245,10 +245,14 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="text-end">
-                                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Simpan
-                                    Data</button>
+                            <div class="row justify-content-center">
+                                <div class="col-sm-8 col-lg-8">
+                                    <button type="submit" class="btn btn-primary btn-block" id="btnSave"><i
+                                            class="fas fa-save" id="fa_save"></i> <span id="textBtn"> Perbarui
+                                            Data</span>
+                                        <span id="loadingBtn" class="spinner-border spinner-border-sm d-none"
+                                            role="status" aria-hidden="true"></span></button>
+                                </div>
                             </div>
                         </form>
                     </div>
@@ -293,8 +297,7 @@
 
             $("#form-ortu").on("submit", function(e) {
                 e.preventDefault();
-                let isValid = true; // Flag validasi
-
+                let isValid = true;
                 $("#nama_ayah, #nama_ibu").each(function() {
                     if ($(this).val().trim() === "" || $(this).val().trim() === "_") {
                         $(this).addClass("is-invalid").removeClass("is-valid");
@@ -354,7 +357,52 @@
                 }
 
                 if (isValid) {
-                    this.submit();
+                    $("#btnSave").attr("disabled", true);
+                    $("#fa_save").addClass("d-none");
+                    $("#textBtn").addClass("d-none");
+                    $("#loadingBtn").removeClass("d-none");
+                    $.ajax({
+                        url: $(this).attr("action"),
+                        type: "POST",
+                        data: $(this).serialize(),
+                        success: function(response) {
+                            $("#btnSave").attr("disabled", true);
+                            $("#fa_save").removeClass("d-none");
+                            $("#textBtn").removeClass("d-none");
+                            $("#loadingBtn").addClass("d-none");
+                            Swal.fire({
+                                title: "Berhasil",
+                                icon: "success",
+                                text: "diperbarui!",
+                                confirmButtonText: "OK",
+                                confirmButtonColor: "#18a342",
+                            }).then(() => {
+                                window.location.href = response.redirect;
+                            })
+                        },
+                        error: function(xhr) {
+                            var errorString = "";
+                            $("#btnSave").attr("disabled", true);
+                            $("#fa_save").removeClass("d-none");
+                            $("#textBtn").removeClass("d-none");
+                            $("#loadingBtn").addClass("d-none");
+                            if (xhr.responseJSON && xhr.responseJSON.errors) {
+                                $.each(xhr.responseJSON.errors, function(key, messages) {
+                                    errorString += messages[0] + "\n";
+                                });
+                            } else if (xhr.responseJSON && xhr.responseJSON.error) {
+                                errorString += xhr.responseJSON.error;
+                            } else {
+                                errorString += "Kesalahan tidak diketahui.";
+                            }
+
+                            Swal.fire({
+                                icon: "error",
+                                title: "Oops...",
+                                text: errorString,
+                            });
+                        }
+                    })
                 }
             });
         });

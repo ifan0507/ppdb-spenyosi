@@ -17,7 +17,7 @@ class Register extends Authenticatable implements MustVerifyEmail
     public $incrementing = false;
     protected $keyType = 'string';
     protected $table = 'registers';
-    protected $width = ['siswa', 'jalur', "document", "raport"];
+    protected $with = ['siswa', 'jalur', "document", "raport"];
     protected $fillable = ['nama_lengkap', 'nisn', 'email', 'verification_code', 'email_verified_at', 'password', 'id_jalur'];
     protected $hidden = [
         'password',

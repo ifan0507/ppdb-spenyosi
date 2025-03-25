@@ -51,8 +51,9 @@ Route::middleware(['auth:siswa', 'auth', 'cache_verify'])->group(function () {
     Route::get('/siswa/edit-biodata', [DashboardController::class, 'edit'])->name('siswa.edit');
     Route::put('/siswa/update-biodata', [DashboardController::class, 'update'])->name('update-biodata');
 
-    Route::get('/ortu', [OrtuController::class, 'index'])->name('ortu');
-    Route::get('/ortu/edit-ortu/{id}', [OrtuController::class, 'edit'])->name('ortu.edit');
+    Route::get('/orang-tua', [OrtuController::class, 'index'])->name('ortu');
+    Route::get('/orang-tua/{id}/edit', [OrtuController::class, 'edit'])->name('ortu.edit');
+    route::put('/ortu/{id}/update', [OrtuController::class, 'update'])->name('ortu.update');
 
     Route::get('/raport', [RaportController::class, 'index'])->name('raport');
     Route::get('/form-raport', [RaportController::class, 'create'])->name('form-raport');

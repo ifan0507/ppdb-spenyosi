@@ -13,7 +13,7 @@ class OrtuSiswa extends Model
     protected $table = 'ortu_siswas';
     public $incrementing = false;
     protected $keyType = 'string';
-    protected $fillable = ['ayah', 'status_ayah', 'pekerjaan_ayah', 'pendidikan_ayah', 'ibu', 'status_ibu', 'pekerjaan_ibu', 'pendidikan_ibu', 'no_hp', 'id_siswa'];
+    protected $fillable = ['ayah', 'status_ayah', 'pekerjaan_ayah', 'pendidikan_ayah', 'ibu', 'status_ibu', 'pekerjaan_ibu', 'pendidikan_ibu', 'no_hp', 'id_siswa', 'status_berkas'];
 
     public function siswa(): BelongsTo
     {

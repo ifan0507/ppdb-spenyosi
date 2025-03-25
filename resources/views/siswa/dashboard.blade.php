@@ -13,22 +13,7 @@
                         <div class="card-body p-0">
                             <div class="accordion" id="accordionExample">
                                 <div class="card card-primary card-outline">
-                                    <div class="card-header" id="headingOne">
-                                        <h5 class="row justify-content-between">
-                                            <div class="col-8 pt-lg-2">
-                                                <h4 class="font-bold" style="display: inline-block";>
-                                                    Status Kelengkapan Berkas
-                                                </h4>
-                                                @if ($data->siswa->status_berkas == '0')
-                                                    <span class="badge badge-danger p-2 ml-2"
-                                                        style="border-radius: 0.5rem";>Belum Lengkap</span>
-                                                @else
-                                                    <span class="badge badge-success p-2 ml-2"
-                                                        style="border-radius: 0.5rem";>Lengkap</span>
-                                                @endif
-                                            </div>
-                                        </h5>
-                                    </div>
+                                    @include('layouts.siswa.status_berkas')
 
                                 </div>
                             </div>
