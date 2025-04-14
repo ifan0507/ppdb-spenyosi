@@ -1,5 +1,42 @@
 @extends('layouts.siswa.template')
 @section('content')
+    <style>
+        table {
+            width: 100%;
+            /* Pastikan tabel penuh dalam card */
+            border-collapse: collapse;
+            /* Hilangkan jarak antar sel */
+        }
+
+        th,
+        td {
+            padding: 10px 15px;
+            /* Kurangi padding agar lebih rapat */
+            border-bottom: 1px solid #dee2e6;
+            /* Tambahkan garis pemisah */
+        }
+
+        th {
+            font-weight: 600;
+            /* Tidak terlalu tebal */
+            color: #333;
+            /* Warna sedikit lebih lembut dari hitam */
+            background-color: #f8f9fa;
+            /* Warna latar belakang abu-abu sangat terang */
+            text-align: left;
+            /* Pastikan teks rata kiri */
+            width: 30%;
+            /* Atur agar th tidak terlalu panjang */
+        }
+
+        td {
+            color: #555;
+            background-color: #f8f9fa;
+            /* Sama dengan th agar selaras */
+            width: 70%;
+            /* Pastikan td tidak terlalu melebar */
+        }
+    </style>
     <div class="misc-content pt-4">
         <div class="container">
             <div class="alert alert-primary">
