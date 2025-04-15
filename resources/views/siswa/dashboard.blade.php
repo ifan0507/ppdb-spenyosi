@@ -46,8 +46,7 @@
 
                                                 <div class="col-md-9">
                                                     <div class="table-responsive">
-                                                        <table
-                                                            class="table table-striped table-hover table-bordered align-middle">
+                                                        <table class="table table-striped table-bordered align-middle">
                                                             <tbody class="table-light">
                                                                 <tr>
                                                                     <th width="30%">NISN</th>

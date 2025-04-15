@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\client\BerandaController;
 use App\Http\Controllers\client\LoginController;
 use App\Http\Controllers\client\PortalController;
@@ -63,5 +64,9 @@ Route::middleware(['auth:siswa', 'auth', 'cache_verify'])->group(function () {
 
     // Pendaftaran
     Route::get('/pendaftaran', [Pendaftaran::class, 'index'])->name('pendaftaran');
+    Route::post('/pendaftaran/${id}', [Pendaftaran::class, 'store'])->name('post.pendaftaran');
     Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 });
+
+//Admin
+Route::get('/admin', [AdminDashboardController::class, 'index']);

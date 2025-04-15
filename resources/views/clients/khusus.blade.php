@@ -182,6 +182,7 @@
                 if (nisn === "") {
                     $("#validasiNisn").text("NISN tidak boleh kosong!").show();
                     $("#nisn").addClass("is-invalid").removeClass("is-valid");
+                    isValid = false;
                 } else if (!/^[0-9]{10}$/.test(nisn)) {
                     $("#nisn").addClass("is-invalid");
                     $("#validasiNisn").text("NISN harus terdiri dari 10 digit angka!").show();

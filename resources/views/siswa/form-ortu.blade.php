@@ -245,13 +245,14 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row justify-content-center">
+                            <div class="row justify-content-start">
                                 <div class="col-sm-8 col-lg-8">
-                                    <button type="submit" class="btn btn-primary btn-block" id="btnSave"><i
-                                            class="fas fa-save" id="fa_save"></i> <span id="textBtn"> Perbarui
+                                    <button type="submit" class="btn btn-primary" id="btnSave"><i class="fas fa-save"
+                                            id="fa_save"></i> <span id="textBtn"> Perbarui
                                             Data</span>
                                         <span id="loadingBtn" class="spinner-border spinner-border-sm d-none"
-                                            role="status" aria-hidden="true"></span></button>
+                                            role="status" aria-hidden="true"></span>
+                                    </button>
                                 </div>
                             </div>
                         </form>
