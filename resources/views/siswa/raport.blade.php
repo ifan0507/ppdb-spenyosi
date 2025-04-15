@@ -44,8 +44,6 @@
                                             </div>
                                         @endif
 
-
-
                                         <div class="card-header" id="headingOne">
                                             <div class="table-responsive">
                                                 <table class="table table-bordered">

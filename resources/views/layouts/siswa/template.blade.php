@@ -32,42 +32,6 @@
     <script src="{{ asset('assets/js/jquery-3.7.1.js') }}"></script> <!-- Hanya jika kamu memang membutuhkan jQuery -->
     <script src="{{ asset('assets/js/sweetalert2.all.min.js') }}"></script> <!-- SweetAlert2 -->
     <style>
-        table {
-            width: 100%;
-            /* Pastikan tabel penuh dalam card */
-            border-collapse: collapse;
-            /* Hilangkan jarak antar sel */
-        }
-
-        th,
-        td {
-            padding: 10px 15px;
-            /* Kurangi padding agar lebih rapat */
-            border-bottom: 1px solid #dee2e6;
-            /* Tambahkan garis pemisah */
-        }
-
-        th {
-            font-weight: 600;
-            /* Tidak terlalu tebal */
-            color: #333;
-            /* Warna sedikit lebih lembut dari hitam */
-            background-color: #f8f9fa;
-            /* Warna latar belakang abu-abu sangat terang */
-            text-align: left;
-            /* Pastikan teks rata kiri */
-            width: 30%;
-            /* Atur agar th tidak terlalu panjang */
-        }
-
-        td {
-            color: #555;
-            background-color: #f8f9fa;
-            /* Sama dengan th agar selaras */
-            width: 70%;
-            /* Pastikan td tidak terlalu melebar */
-        }
-
         #map {
             height: 500px;
         }
