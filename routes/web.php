@@ -12,6 +12,7 @@ use App\Http\Controllers\siswa\RaportController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\VerificationController;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Broadcast;
 
 // Beranda
 Route::get('/', [BerandaController::class, 'index'])->name('beranda');
@@ -41,10 +42,15 @@ Route::get('/verify-email', function () {
 })->name('verify.email')->middleware('cache_verify');
 Route::post('/verify', [LoginController::class, 'verify']);
 
-// Login
+// Login Siswa
 Route::get('/auth/login', [LoginController::class, 'loginView'])->name('login')->middleware('cache_verify');
 Route::post('/login-siswa', [LoginController::class, 'login'])->name('login.post');
 // Dashboard hanya untuk pengguna yang sudah verifikasi
+
+// Login admin
+Route::get('/auth/master/admin', [LoginController::class, 'loginView'])->name('login')->middleware('cache_verify');
+Route::post('/login-admin', [LoginController::class, 'login'])->name('login.post');
+
 
 Route::middleware(['auth:siswa', 'auth', 'cache_verify'])->group(function () {
 
@@ -69,9 +75,17 @@ Route::middleware(['auth:siswa', 'auth', 'cache_verify'])->group(function () {
 });
 
 //Admin
-Route::get('/admin', [AdminDashboardController::class, 'index'])->name('dashboard-admin');
-Route::get('/admin/umum', [AdminDashboardController::class, 'viewUmum'])->name('umum');
-Route::get('/admin/afirmasi', [AdminDashboardController::class, 'viewAfirmasi'])->name('afirmasi');
-Route::get('/admin/pindah-tugas', [AdminDashboardController::class, 'viewpindahTugas'])->name('pindah.tugas');
-Route::get('/admin/tahfidz', [AdminDashboardController::class, 'viewTahfidz'])->name('tahfidz');
-Route::get('/admin/prestasi', [AdminDashboardController::class, 'viewPrestasi'])->name('prestasi');
+
+Route::middleware(['auth:users', 'auth'])->group(function () {
+
+    Broadcast::channel('admin-channel', function ($user) {
+        return auth()->guard('admin')->check();
+    });
+
+    Route::get('/admin', [AdminDashboardController::class, 'index'])->name('dashboard-admin');
+    Route::get('/admin/umum', [AdminDashboardController::class, 'viewUmum'])->name('umum');
+    Route::get('/admin/afirmasi', [AdminDashboardController::class, 'viewAfirmasi'])->name('afirmasi');
+    Route::get('/admin/pindah-tugas', [AdminDashboardController::class, 'viewpindahTugas'])->name('pindah.tugas');
+    Route::get('/admin/tahfidz', [AdminDashboardController::class, 'viewTahfidz'])->name('tahfidz');
+    Route::get('/admin/prestasi', [AdminDashboardController::class, 'viewPrestasi'])->name('prestasi');
+});
