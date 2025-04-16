@@ -64,6 +64,7 @@ Route::middleware(['auth:siswa', 'auth', 'cache_verify'])->group(function () {
 
     // Pendaftaran
     Route::get('/pendaftaran', [Pendaftaran::class, 'index'])->name('pendaftaran');
+    Route::post('/pendaftaran/${id}', [Pendaftaran::class, 'store'])->name('post.pendaftaran');
     Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 });
 

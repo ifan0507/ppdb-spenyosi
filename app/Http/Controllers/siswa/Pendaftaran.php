@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\siswa;
 
 use App\Http\Controllers\Controller;
+use App\Models\Register;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -21,48 +22,23 @@ class Pendaftaran extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        //
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function store(string $id)
     {
-        //
-    }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
+        $data = Register::where("id", $id)->first();
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
+        if ($data->siswa->status_berkas == "0") {
+            return response()->json(['errors' => ['Biodata siswa belum lengkap!']], 422);
+        }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+        if ($data->siswa->ortu->status_berkas == "0") {
+            return response()->json(['errors' => ['Data Orang Tua belum lengkap!']], 422);
+        }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        if ($data->jalur->id == "5") {
+            if ($data->raport?->status != "1" || $data->raport?->status == "0")
+                return response()->json(['errors' => ['Raport belum lengkap!']], 422);
+        }
     }
 }
