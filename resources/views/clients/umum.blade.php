@@ -53,7 +53,6 @@
                         <div id="validasiPassword" class="invalid-feedback">Confirmasi Password tidak boleh kosong!</div>
                     </div>
 
-
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
                         <label class="form-check-label mb-3" for="flexCheckDefault" style="color: red">
