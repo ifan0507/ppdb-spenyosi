@@ -69,4 +69,9 @@ Route::middleware(['auth:siswa', 'auth', 'cache_verify'])->group(function () {
 });
 
 //Admin
-Route::get('/admin', [AdminDashboardController::class, 'index']);
+Route::get('/admin', [AdminDashboardController::class, 'index'])->name('dashboard-admin');
+Route::get('/admin/umum', [AdminDashboardController::class, 'viewUmum'])->name('umum');
+Route::get('/admin/afirmasi', [AdminDashboardController::class, 'viewAfirmasi'])->name('afirmasi');
+Route::get('/admin/pindah-tugas', [AdminDashboardController::class, 'viewpindahTugas'])->name('pindah.tugas');
+Route::get('/admin/tahfidz', [AdminDashboardController::class, 'viewTahfidz'])->name('tahfidz');
+Route::get('/admin/prestasi', [AdminDashboardController::class, 'viewPrestasi'])->name('prestasi');

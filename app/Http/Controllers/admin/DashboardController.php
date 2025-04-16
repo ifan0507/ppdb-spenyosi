@@ -14,6 +14,27 @@ class DashboardController extends Controller
     {
         return view('admin.dashboard');
     }
+    public function viewUmum()
+    {
+        return view('admin.umum');
+    }
+    public function viewAfirmasi()
+    {
+        return view('admin.afirmasi');
+    }
+    public function viewpindahTugas()
+    {
+        return view('admin.pindahTugas');
+    }
+    public function viewTahfidz()
+    {
+        return view('admin.tahfidz');
+    }
+    public function viewPrestasi()
+    {
+        return view('admin.prestasi');
+    }
+
 
     /**
      * Show the form for creating a new resource.
