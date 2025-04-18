@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Models\Pendaftaran;
 use App\Models\Register;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
@@ -20,7 +21,7 @@ class SiswaBaruMendaftar implements ShouldBroadcast
      */
 
     public $siswa;
-    public function __construct(Register $siswa)
+    public function __construct($siswa)
     {
         $this->siswa = $siswa;
     }
@@ -39,12 +40,12 @@ class SiswaBaruMendaftar implements ShouldBroadcast
         ];
     }
 
-    public function broadcastWith()
-    {
-        return [
-            'id' => $this->siswa->id,
-            'no_register' => $this->siswa->no_register,
-            'nama' => $this->siswa->siswa->nama,
-        ];
-    }
+    // public function broadcastWith()
+    // {
+    //     return [
+    //         'id' => $this->siswa->register->id,
+    //         'no_register' => $this->siswa->register->no_register,
+    //         'nama' => $this->siswa->register->siswa->nama,
+    //     ];
+    // }
 }

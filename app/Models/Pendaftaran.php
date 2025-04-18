@@ -13,7 +13,7 @@ class Pendaftaran extends Model
     protected $table = 'pendaftarans';
     public $incrementing = false;
     protected $keyType = 'string';
-    protected $width = ['register', 'user'];
+    protected $with = ['register', 'user'];
     protected $fillable = ['tanggal_daftar', 'confirmations', 'decline', 'id_register', 'id_user'];
 
     public function register(): BelongsTo

@@ -1,6 +1,5 @@
  <!-- ======= Header ======= -->
  <header id="header" class="header fixed-top d-flex align-items-center">
-
      <div class="d-flex align-items-center justify-content-between">
          <a href="#" class="logo d-flex align-items-center">
              <img src="{{ asset('assets/img/logo.png') }}" alt="">
@@ -8,19 +7,19 @@
          </a>
          <i class="bi bi-list toggle-sidebar-btn"></i>
      </div><!-- End Logo -->
-
      <nav class="header-nav ms-auto">
          <ul class="d-flex align-items-center">
 
              <li class="nav-item dropdown">
                  <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
                      <i class="bi bi-bell"></i>
-                     <span class="badge bg-primary badge-number">
+                     <span class="badge bg-primary badge-number" id="notification-count">
                          {{ auth()->user()->unreadNotifications->count() }}
                      </span>
                  </a><!-- End Notification Icon -->
 
-                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
+                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications"
+                     id="notification-container">
                      <li class="dropdown-header">
                          You have {{ auth()->user()->unreadNotifications->count() }} new notifications
                          <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>

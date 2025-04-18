@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -10,10 +11,10 @@ class AuthController extends Controller
 {
     public function loginView()
     {
-        if (Auth::guard('users')->check()) {
+        if (Auth::guard('web')->check()) {
             return redirect('/admin');
         }
-        return view('admin');
+        return view('admin.login');
     }
 
     /**
@@ -34,11 +35,22 @@ class AuthController extends Controller
 
         $credentials = $request->only('email', 'password');
 
-        if (Auth::guard('users')->attempt($credentials)) {
+        if (Auth::guard('web')->attempt($credentials)) {
             $request->session()->regenerate();
             return redirect()->intended('/admin');
         }
 
         return back()->withInput()->withErrors('Email or Password Incorrect!');
+    }
+
+    public function logout(Request $request): RedirectResponse
+    {
+        Auth::guard('web')->logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect('/auth/master');
     }
 }

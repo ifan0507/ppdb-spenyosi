@@ -9,8 +9,8 @@ use App\Models\Register;
 use App\Models\User;
 use App\Notifications\SiswaBaruDaftar;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
 
 class Pendaftaran extends Controller
 {
@@ -51,16 +51,15 @@ class Pendaftaran extends Controller
             'id_register' => $data->id,
         ]);
 
-        $admins = User::all();
-        foreach ($admins as $admin) {
-            $admin->notify(new SiswaBaruDaftar($dataSiswa));
-        }
+        $admin = User::where('role', 'admin')->get();
+        Notification::send($admin, new SiswaBaruDaftar($dataSiswa));
 
-        $data->update([
+        event(new SiswaBaruMendaftar($dataSiswa));
+
+        Register::where('id', $id)->update([
             "submit" => "1"
         ]);
 
-        event(new SiswaBaruMendaftar($dataSiswa));
 
         return response()->json(['redirect' => route('pendaftaran')]);
     }
