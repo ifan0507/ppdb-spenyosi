@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Pendaftaran;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -16,7 +17,8 @@ class DashboardController extends Controller
     }
     public function viewUmum()
     {
-        return view('admin.umum');
+        $pendaftarans = Pendaftaran::all(); 
+        return view('admin.umum', compact('pendaftarans'));
     }
     public function viewAfirmasi()
     {
