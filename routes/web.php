@@ -82,7 +82,7 @@ Broadcast::routes([
     'middleware' => ['custom_broadcast_auth', 'auth:web'],
 ]);
 //Admin
-Route::middleware(['auth:web', 'auth', 'cache_verify'])->group(function () {
+Route::middleware(['cache_verify', 'auth_admin'])->group(function () {
 
     Route::patch('/notifications/{id}/mark-as-read', [NotificationController::class, 'markAsRead'])
         ->name('notifications.markAsread');
@@ -93,4 +93,6 @@ Route::middleware(['auth:web', 'auth', 'cache_verify'])->group(function () {
     Route::get('/admin/pindah-tugas', [AdminDashboardController::class, 'viewpindahTugas'])->name('pindah.tugas');
     Route::get('/admin/tahfidz', [AdminDashboardController::class, 'viewTahfidz'])->name('tahfidz');
     Route::get('/admin/prestasi', [AdminDashboardController::class, 'viewPrestasi'])->name('prestasi');
+
+    Route::get('/logout', [AuthController::class, 'logout'])->name('logout-admin');
 });
