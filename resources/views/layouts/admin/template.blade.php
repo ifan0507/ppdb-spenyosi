@@ -4,15 +4,14 @@
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Master Admin</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
-
     <!-- Favicons -->
     <link href="{{ asset('assets/img/logo.png') }}" rel="icon">
     <link href="{{ asset('NiceAdmin/assets/img/apple-touch-icon.png') }}" rel="apple-touch-icon">
-
+    @vite(['resources/js/app.js'])
     <!-- Google Fonts -->
     <link href="https://fonts.gstatic.com" rel="preconnect">
     <link
@@ -68,7 +67,8 @@
 
     <!-- Template Main JS File -->
     <script src="{{ asset('NiceAdmin/assets/js/main.js') }}"></script>
-
+    <script src="{{ asset('assets/js/jquery-3.7.1.js') }}"></script> <!-- Hanya jika kamu memang membutuhkan jQuery -->
+    <script src="{{ asset('assets/js/sweetalert2.all.min.js') }}"></script> <!-- SweetAlert2 -->
 </body>
 
 </html>

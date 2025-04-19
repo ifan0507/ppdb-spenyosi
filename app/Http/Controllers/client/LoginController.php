@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Document;
 use App\Models\OrtuSiswa;
+use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -63,9 +64,18 @@ class LoginController extends Controller
             return response()->json(['message' => 'Kode OTP salah atau sudah kedaluwarsa.'], 400);
         }
 
+        $tanggal = Carbon::now();
+        $tglFormat = $tanggal->format('Ymd');
+
+        $count = Register::whereDate('created_at', $tanggal->toDateString())->count() + 1;
+
+        $noReg = $tglFormat . str_pad($count, 4, '0', STR_PAD_LEFT);
+
+
         $data = session('register_data');
 
         $akun = Register::create([
+            'no_register' => $noReg,
             'nisn' => $data['nisn'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),

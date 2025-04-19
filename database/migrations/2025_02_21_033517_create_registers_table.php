@@ -13,12 +13,14 @@ return new class extends Migration
     {
         Schema::create('registers', function (Blueprint $table) {
             $table->ulid('id')->primary();
+            $table->string('no_register');
             $table->string('nisn')->unique();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('verification_code')->nullable();
             $table->string('password');
             $table->foreignId('id_jalur')->references('id')->on('jalurs')->onUpdate('cascade')->onDelete('cascade');
+            $table->enum('submit', ['0', '1'])->default('0');
             $table->rememberToken();
             $table->timestamps();
         });

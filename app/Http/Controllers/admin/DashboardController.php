@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Models\Pendaftaran;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
@@ -13,76 +14,83 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('admin.dashboard');
+        $data = Auth::guard('web')->user();
+        return view('admin.dashboard', ['data' => $data]);
     }
     public function viewUmum()
     {
-        $pendaftarans = Pendaftaran::all(); 
+        $pendaftarans = Pendaftaran::with('register')
+            ->whereHas('register', function ($query) {
+                $query->where('id_jalur', '1');
+            })->get();
         return view('admin.umum', compact('pendaftarans'));
     }
     public function viewAfirmasi()
     {
-        return view('admin.afirmasi');
+        $pendaftarans = Pendaftaran::with('register')
+            ->whereHas('register', function ($query) {
+                $query->where('id_jalur', '2');
+            })->get();
+        return view('admin.afirmasi', compact('pendaftarans'));
     }
     public function viewpindahTugas()
     {
-        return view('admin.pindahTugas');
+        $pendaftarans = Pendaftaran::with('register')
+            ->whereHas('register', function ($query) {
+                $query->where('id_jalur', '3');
+            })->get();
+        return view('admin.pindahTugas', compact('pendaftarans'));
     }
     public function viewTahfidz()
     {
-        return view('admin.tahfidz');
+        $pendaftarans = Pendaftaran::with('register')
+            ->whereHas('register', function ($query) {
+                $query->where('id_jalur', '4');
+            })->get();
+        return view('admin.tahfidz', compact('pendaftarans'));
     }
     public function viewPrestasi()
     {
-        return view('admin.prestasi');
+        $pendaftarans = Pendaftaran::with('register')
+            ->whereHas('register', function ($query) {
+                $query->where('id_jalur', '5');
+            })->get();
+        return view('admin.prestasi', compact('pendaftarans'));
+    }
+
+    public function detail()
+    {
+        return view('admin.detail');
     }
 
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function confirm(string $id)
     {
-        //
+
+        $data = Auth::guard('web')->user();
+
+        Pendaftaran::where('id', $id)->update([
+            'confirmations' => '1',
+            'status' => 'Diterima',
+            'id_user' => $data->id
+        ]);
+
+        return redirect('/admin/umum');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function decline(string $id)
     {
-        //
-    }
+        $data = Auth::guard('web')->user();
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
+        Pendaftaran::where('id', $id)->update([
+            'decline' => '1',
+            'status' => 'Ditolak',
+            'id_user' => $data->id
+        ]);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return response()->json(['success' => true]);
     }
 }

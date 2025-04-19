@@ -4,6 +4,9 @@ namespace Database\Seeders;
 
 use App\Models\Jalur;
 use App\Models\MataPelajaran;
+use App\Models\OrtuSiswa;
+use App\Models\Register;
+use App\Models\SiswaBaru;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -40,5 +43,13 @@ class DatabaseSeeder extends Seeder
             ["nama_jalur" => "Lomba/Tahfidz (Peraih prestasi di bidang akademik/non-akademik atau tahfidz Al-Qur'an)"],
             ["nama_jalur" => "Prestasi (Nilai Raport)"]
         ]);
+
+        User::create([
+            'email' => "ipan@gmail.com",
+            'password' => '123',
+            'name' => "ifan",
+            'role' => "admin",
+        ]);
+
     }
 }

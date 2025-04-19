@@ -1,10 +1,13 @@
 <?php
 
+use App\Http\Controllers\admin\AuthController;
+use App\Http\Controllers\admin\BroadcastingController;
 use App\Http\Controllers\admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\client\BerandaController;
 use App\Http\Controllers\client\LoginController;
 use App\Http\Controllers\client\PortalController;
 use App\Http\Controllers\client\RegisterController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\siswa\DashboardController;
 use App\Http\Controllers\siswa\OrtuController;
 use App\Http\Controllers\siswa\Pendaftaran;
@@ -12,6 +15,8 @@ use App\Http\Controllers\siswa\RaportController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\VerificationController;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Broadcast;
+use Illuminate\Support\Facades\Request;
 
 // Beranda
 Route::get('/', [BerandaController::class, 'index'])->name('beranda');
@@ -41,10 +46,15 @@ Route::get('/verify-email', function () {
 })->name('verify.email')->middleware('cache_verify');
 Route::post('/verify', [LoginController::class, 'verify']);
 
-// Login
+// Login Siswa
 Route::get('/auth/login', [LoginController::class, 'loginView'])->name('login')->middleware('cache_verify');
 Route::post('/login-siswa', [LoginController::class, 'login'])->name('login.post');
 // Dashboard hanya untuk pengguna yang sudah verifikasi
+
+// Login admin
+Route::get('/auth/master', [AuthController::class, 'loginView'])->name('admin.login')->middleware('cache_verify');
+Route::post('/login-admin', [AuthController::class, 'login'])->name('admin.login.post');
+
 
 Route::middleware(['auth:siswa', 'auth', 'cache_verify'])->group(function () {
 
@@ -68,10 +78,22 @@ Route::middleware(['auth:siswa', 'auth', 'cache_verify'])->group(function () {
     Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 });
 
+Broadcast::routes([
+    'middleware' => ['custom_broadcast_auth', 'auth:web'],
+]);
 //Admin
-Route::get('/admin', [AdminDashboardController::class, 'index'])->name('dashboard-admin');
-Route::get('/admin/umum', [AdminDashboardController::class, 'viewUmum'])->name('umum');
-Route::get('/admin/afirmasi', [AdminDashboardController::class, 'viewAfirmasi'])->name('afirmasi');
-Route::get('/admin/pindah-tugas', [AdminDashboardController::class, 'viewpindahTugas'])->name('pindah.tugas');
-Route::get('/admin/tahfidz', [AdminDashboardController::class, 'viewTahfidz'])->name('tahfidz');
-Route::get('/admin/prestasi', [AdminDashboardController::class, 'viewPrestasi'])->name('prestasi');
+Route::middleware(['auth:web', 'auth', 'cache_verify'])->group(function () {
+
+    Route::patch('/notifications/{id}/mark-as-read', [NotificationController::class, 'markAsRead'])
+        ->name('notifications.markAsread');
+
+    Route::get('/admin', [AdminDashboardController::class, 'index'])->name('dashboard-admin');
+    Route::get('/admin/umum', [AdminDashboardController::class, 'viewUmum'])->name('umum');
+    Route::get('/admin/afirmasi', [AdminDashboardController::class, 'viewAfirmasi'])->name('afirmasi');
+    Route::get('/admin/pindah-tugas', [AdminDashboardController::class, 'viewpindahTugas'])->name('pindah.tugas');
+    Route::get('/admin/tahfidz', [AdminDashboardController::class, 'viewTahfidz'])->name('tahfidz');
+    Route::get('/admin/prestasi', [AdminDashboardController::class, 'viewPrestasi'])->name('prestasi');
+    Route::get('/admin/{id}/confirm', [AdminDashboardController::class, 'confirm'])->name('admin.confirm');
+    Route::get('/admin/{id}/decline', [AdminDashboardController::class, 'decline'])->name('admin.decline');
+    Route::get('/admin/detail', [AdminDashboardController::class, 'detail'])->name('admin.detail');
+});

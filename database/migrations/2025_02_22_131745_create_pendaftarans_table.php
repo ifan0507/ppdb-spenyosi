@@ -13,11 +13,12 @@ return new class extends Migration
     {
         Schema::create('pendaftarans', function (Blueprint $table) {
             $table->ulid('id')->primary();
-            $table->foreignUlid('id_register')->references('id')->on('siswa_barus')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignUlid('id_register')->references('id')->on('registers')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignUlid('id_user')->nullable()->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->date('tanggal_daftar');
             $table->enum('confirmations', ['0', '1'])->default('0');
             $table->enum('decline', ['0', '1'])->default('0');
+            $table->string('status');
             $table->timestamps();
         });
     }

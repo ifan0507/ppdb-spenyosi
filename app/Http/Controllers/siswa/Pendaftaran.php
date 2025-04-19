@@ -2,10 +2,15 @@
 
 namespace App\Http\Controllers\siswa;
 
+use App\Events\SiswaBaruMendaftar;
 use App\Http\Controllers\Controller;
+use App\Models\Pendaftaran as ModelsPendaftaran;
 use App\Models\Register;
-use Illuminate\Http\Request;
+use App\Models\User;
+use App\Notifications\SiswaBaruDaftar;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
 
 class Pendaftaran extends Controller
 {
@@ -40,5 +45,23 @@ class Pendaftaran extends Controller
             if ($data->raport?->status != "1" || $data->raport?->status == "0")
                 return response()->json(['errors' => ['Raport belum lengkap!']], 422);
         }
+
+        $dataSiswa = ModelsPendaftaran::create([
+            'tanggal_daftar' => Carbon::now(),
+            'id_register' => $data->id,
+            'status' => 'Pending'
+        ]);
+
+        $admin = User::where('role', 'admin')->get();
+        Notification::send($admin, new SiswaBaruDaftar($dataSiswa));
+
+        event(new SiswaBaruMendaftar($dataSiswa));
+
+        Register::where('id', $id)->update([
+            "submit" => "1"
+        ]);
+
+
+        return response()->json(['redirect' => route('pendaftaran')]);
     }
 }
