@@ -82,7 +82,7 @@ Broadcast::routes([
     'middleware' => ['custom_broadcast_auth', 'auth:web'],
 ]);
 //Admin
-Route::middleware(['auth:web', 'auth', 'cache_verify'])->group(function () {
+Route::middleware(['cache_verify', 'auth_admin'])->group(function () {
 
     Route::patch('/notifications/{id}/mark-as-read', [NotificationController::class, 'markAsRead'])
         ->name('notifications.markAsread');
@@ -96,4 +96,6 @@ Route::middleware(['auth:web', 'auth', 'cache_verify'])->group(function () {
     Route::get('/admin/{id}/confirm', [AdminDashboardController::class, 'confirm'])->name('admin.confirm');
     Route::get('/admin/{id}/decline', [AdminDashboardController::class, 'decline'])->name('admin.decline');
     Route::get('/admin/detail', [AdminDashboardController::class, 'detail'])->name('admin.detail');
+
+    Route::get('/logout', [AuthController::class, 'logout'])->name('logout-admin');
 });
