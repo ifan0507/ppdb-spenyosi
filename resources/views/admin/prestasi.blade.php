@@ -2,7 +2,12 @@
 
 @section('content')
     <section class="section">
-
+        @include('layouts.admin.breadcrumb', [
+            'breadcrumb' => [
+                'Master Data' => '',
+                'Jalur Prestasi' => '',
+            ],
+        ])
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title">Jalur Raport</h5>
@@ -82,8 +87,8 @@
                                         <div class="d-flex gap-2 justify-content-center">
                                             <button type="button" class="btn btn-success btn-sm""><i
                                                     class="bi bi-check-circle"></i></button>
-                                            <button type="button" class="btn btn-danger btn-sm"><i
-                                                    class="bi bi-x-circle"></i></button>
+                                            <button type="button" class="btn btn-danger btn-sm btn-decline"
+                                                data-id="{{ $pendaftaran->id }}"><i class="bi bi-x-circle"></i></button>
                                             <button type="button" class="btn btn-info btn-sm""><i
                                                     class="bi bi-info-circle"></i></button>
                                         </div>
@@ -115,4 +120,52 @@
         </div>
 
     </section>
+
+    <script>
+        $(document).ready(function() {
+            $('.btn-decline').on('click', function(e) {
+                e.preventDefault();
+
+                const id = $(this).data('id');
+
+                Swal.fire({
+                    title: 'Invalid Data Pendaftaran',
+                    input: 'textarea',
+                    inputLabel: 'Pesan Invalid Data',
+                    inputPlaceholder: '',
+                    showCancelButton: true,
+                    confirmButtonText: 'Kirim',
+                    cancelButtonText: 'Batal',
+                    inputValidator: (value) => {
+                        if (!value) {
+                            return 'Alasan wajib diisi!';
+                        }
+                    }
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: `/admin/${id}/decline`,
+                            method: 'POST',
+                            contentType: 'application/json',
+                            data: JSON.stringify({
+                                alasan: result.value
+                            }),
+                            success: function(response) {
+                                Swal.fire('Berhasil!', 'Pesan telah disampaikan.',
+                                        'success')
+                                    .then(() => {
+                                        location.reload();
+                                    });
+                            },
+                            error: function() {
+                                Swal.fire('Error',
+                                    'Terjadi kesalahan saat mengirim data.', 'error'
+                                );
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    </script>
 @endsection

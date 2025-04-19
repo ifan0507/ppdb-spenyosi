@@ -1,7 +1,7 @@
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ route('dashboard-siswa') }}">Dashboard</a></li>
-        
+
         @if (isset($breadcrumb))
             @foreach ($breadcrumb as $key => $link)
                 @if ($loop->last)

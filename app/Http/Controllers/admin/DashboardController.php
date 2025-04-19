@@ -26,19 +26,35 @@ class DashboardController extends Controller
     }
     public function viewUmum()
     {
-        return view('admin.umum', ['data' => $this->data]);
+        $pendaftarans = Pendaftaran::with('register')
+            ->whereHas('register', function ($query) {
+                $query->where('id_jalur', '1');
+            })->get();
+        return view('admin.umum', ['pendaftarans' => $pendaftarans, 'data' => $this->data]);
     }
     public function viewAfirmasi()
     {
-        return view('admin.afirmasi', ['data' => $this->data]);
+        $pendaftarans = Pendaftaran::with('register')
+            ->whereHas('register', function ($query) {
+                $query->where('id_jalur', '2');
+            })->get();
+        return view('admin.afirmasi', ['pendaftarans' => $pendaftarans, 'data' => $this->data]);
     }
     public function viewpindahTugas()
     {
-        return view('admin.pindahTugas', ['data' => $this->data]);
+        $pendaftarans = Pendaftaran::with('register')
+            ->whereHas('register', function ($query) {
+                $query->where('id_jalur', '3');
+            })->get();
+        return view('admin.pindahTugas', ['pendaftarans' => $pendaftarans, 'data' => $this->data]);
     }
     public function viewTahfidz()
     {
-        return view('admin.tahfidz', ['data' => $this->data]);
+        $pendaftarans = Pendaftaran::with('register')
+            ->whereHas('register', function ($query) {
+                $query->where('id_jalur', '4');
+            })->get();
+        return view('admin.tahfidz', ['pendaftarans' => $pendaftarans, 'data' => $this->data]);
     }
     public function viewPrestasi()
     {
@@ -48,52 +64,37 @@ class DashboardController extends Controller
         return view('admin.prestasi', ['data' => $this->data, 'prestasis' => $prestasis]);
     }
 
+    public function detail()
+    {
+        return view('admin.detail');
+    }
+
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function confirm(string $id)
     {
-        //
+
+        $data = Auth::guard('web')->user();
+
+        Pendaftaran::where('id', $id)->update([
+            'confirmations' => '1',
+            'status' => 'valid',
+            'id_user' => $data->id
+        ]);
+
+        return redirect('/admin/umum');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function decline(string $id)
     {
-        //
-    }
+        Pendaftaran::where('id', $id)->update([
+            'decline' => '1',
+            'status' => 'invalid',
+            'id_user' => $this->data->id,
+        ]);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return response()->json(['success' => true]);
     }
 }
