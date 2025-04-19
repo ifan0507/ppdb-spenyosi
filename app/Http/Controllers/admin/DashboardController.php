@@ -12,10 +12,17 @@ class DashboardController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+    protected $data;
+
+    public function __construct()
+    {
+        $this->data =  Auth::guard('web')->user();;
+    }
+
     public function index()
     {
-        $data = Auth::guard('web')->user();
-        return view('admin.dashboard', ['data' => $data]);
+        return view('admin.dashboard', ['data' => $this->data]);
     }
     public function viewUmum()
     {
@@ -23,7 +30,7 @@ class DashboardController extends Controller
             ->whereHas('register', function ($query) {
                 $query->where('id_jalur', '1');
             })->get();
-        return view('admin.umum', compact('pendaftarans'));
+        return view('admin.umum', ['pendaftarans' => $pendaftarans, 'data' => $this->data]);
     }
     public function viewAfirmasi()
     {
@@ -31,7 +38,7 @@ class DashboardController extends Controller
             ->whereHas('register', function ($query) {
                 $query->where('id_jalur', '2');
             })->get();
-        return view('admin.afirmasi', compact('pendaftarans'));
+        return view('admin.afirmasi', ['pendaftarans' => $pendaftarans, 'data' => $this->data]);
     }
     public function viewpindahTugas()
     {
@@ -39,7 +46,7 @@ class DashboardController extends Controller
             ->whereHas('register', function ($query) {
                 $query->where('id_jalur', '3');
             })->get();
-        return view('admin.pindahTugas', compact('pendaftarans'));
+        return view('admin.pindahTugas', ['pendaftarans' => $pendaftarans, 'data' => $this->data]);
     }
     public function viewTahfidz()
     {
@@ -47,15 +54,14 @@ class DashboardController extends Controller
             ->whereHas('register', function ($query) {
                 $query->where('id_jalur', '4');
             })->get();
-        return view('admin.tahfidz', compact('pendaftarans'));
+        return view('admin.tahfidz', ['pendaftarans' => $pendaftarans, 'data' => $this->data]);
     }
     public function viewPrestasi()
     {
-        $pendaftarans = Pendaftaran::with('register')
-            ->whereHas('register', function ($query) {
-                $query->where('id_jalur', '5');
-            })->get();
-        return view('admin.prestasi', compact('pendaftarans'));
+        $prestasis = Pendaftaran::with('register')->whereHas('register', function ($query) {
+            $query->where('id_jalur', '5');
+        })->get();
+        return view('admin.prestasi', ['data' => $this->data, 'prestasis' => $prestasis]);
     }
 
     public function detail()
@@ -74,7 +80,7 @@ class DashboardController extends Controller
 
         Pendaftaran::where('id', $id)->update([
             'confirmations' => '1',
-            'status' => 'Diterima',
+            'status' => 'valid',
             'id_user' => $data->id
         ]);
 
@@ -83,12 +89,10 @@ class DashboardController extends Controller
 
     public function decline(string $id)
     {
-        $data = Auth::guard('web')->user();
-
         Pendaftaran::where('id', $id)->update([
             'decline' => '1',
-            'status' => 'Ditolak',
-            'id_user' => $data->id
+            'status' => 'invalid',
+            'id_user' => $this->data->id,
         ]);
 
         return response()->json(['success' => true]);

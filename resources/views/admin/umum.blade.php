@@ -2,7 +2,6 @@
 
 @section('content')
     @include('layouts.admin.breadcrumb', [
-        'title' => 'Jalur Umum',
         'breadcrumb' => [
             'Master Data' => '',
             'Jalur Umum' => '',

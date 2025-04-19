@@ -14,7 +14,7 @@
                     </div>
                     <div class="col-lg-12 d-lg-none">
                         <p class="lead">Sudah memiliki akun PPDB?</p>
-                        <a class="btn btn-outline-primary px-4" href="{{ route('login') }}">Masuk</a>
+                        <a class="btn btn-outline-primary px-4" href="{{ route('siswa-login') }}">Masuk</a>
                     </div>
                 </div>
             </div>

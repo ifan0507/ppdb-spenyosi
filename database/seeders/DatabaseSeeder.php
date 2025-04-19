@@ -51,5 +51,47 @@ class DatabaseSeeder extends Seeder
             'role' => "admin",
         ]);
 
+
+        $akun = Register::create([
+            'nisn' => '1234567890',
+            "no_register" => "202504180001",
+            'email' => 'ipan.lmj0507@gmail.com',
+            'password' => '123',
+            'id_jalur' => '5',
+            'email_verified_at' => now(),
+            'verification_code' => null,
+        ]);
+
+        $siswa = SiswaBaru::create([
+            'id_register_siswa' => $akun->id,
+            'nama' => 'ifan',
+            'nisn' => '1234567890',
+            'email' => 'ipan.lmj0507@gmail.com',
+            'nik' => "_",
+            "tempat_lahir" => "_",
+            "asal_sekolah" => "_",
+            "kabupaten" => "_",
+            "kecamatan" => "_",
+            "desa" => "_",
+            "alamat" => "_",
+            "no_hp" => "_",
+            "lokasi" => "_",
+            "foto_kk" => 'default_document.png',
+            "foto_siswa" => 'default_siswa.png',
+            "foto_akte" => 'default_document.png',
+            "status_berkas" => "1"
+        ]);
+
+        OrtuSiswa::create([
+            'id_siswa' => $siswa->id,
+            "ayah" => "_",
+            "pekerjaan_ayah" => "_",
+            "pendidikan_ayah" => "_",
+            "ibu" => "_",
+            "pekerjaan_ibu" => "_",
+            "pendidikan_ibu" => "_",
+            "no_hp" => "_",
+            "status_berkas" => "1"
+        ]);
     }
 }

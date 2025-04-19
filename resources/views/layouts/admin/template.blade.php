@@ -4,7 +4,6 @@
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Master Admin</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
@@ -17,6 +16,7 @@
     <link
         href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
         rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
     <!-- Vendor CSS Files -->
     <link href="{{ asset('NiceAdmin/assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -37,6 +37,9 @@
   * Author: BootstrapMade.com
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
+
+    <script src="{{ asset('assets/js/jquery-3.7.1.js') }}"></script>
+
 </head>
 
 <body>
@@ -45,9 +48,6 @@
     @include('layouts.admin.sidebar')
     <main id="main" class="main">
         @yield('content')
-
-
-
     </main><!-- End #main -->
     @include('layouts.admin.footer')
 

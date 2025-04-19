@@ -47,7 +47,7 @@ Route::get('/verify-email', function () {
 Route::post('/verify', [LoginController::class, 'verify']);
 
 // Login Siswa
-Route::get('/auth/login', [LoginController::class, 'loginView'])->name('login')->middleware('cache_verify');
+Route::get('/auth/login', [LoginController::class, 'loginView'])->name('siswa-login')->middleware('cache_verify');
 Route::post('/login-siswa', [LoginController::class, 'login'])->name('login.post');
 // Dashboard hanya untuk pengguna yang sudah verifikasi
 
@@ -56,7 +56,7 @@ Route::get('/auth/master', [AuthController::class, 'loginView'])->name('admin.lo
 Route::post('/login-admin', [AuthController::class, 'login'])->name('admin.login.post');
 
 
-Route::middleware(['auth:siswa', 'auth', 'cache_verify'])->group(function () {
+Route::middleware(['cache_verify', 'auth_siswa'])->group(function () {
 
     Route::get('/siswa', [DashboardController::class, 'index'])->name('dashboard-siswa');
     Route::get('/siswa/edit-biodata', [DashboardController::class, 'edit'])->name('siswa.edit');
@@ -84,8 +84,11 @@ Broadcast::routes([
 //Admin
 Route::middleware(['cache_verify', 'auth_admin'])->group(function () {
 
-    Route::patch('/notifications/{id}/mark-as-read', [NotificationController::class, 'markAsRead'])
-        ->name('notifications.markAsread');
+    Route::get('/admin/notifikasi/read-all', function () {
+        // AMAN MAKI ABANG MK INSTELENS TOK
+        auth()->user()->unreadNotifications->markAsRead();
+        return redirect()->back();
+    })->name('notifikasi.read.all');
 
     Route::get('/admin', [AdminDashboardController::class, 'index'])->name('dashboard-admin');
     Route::get('/admin/umum', [AdminDashboardController::class, 'viewUmum'])->name('umum');
@@ -97,5 +100,5 @@ Route::middleware(['cache_verify', 'auth_admin'])->group(function () {
     Route::get('/admin/{id}/decline', [AdminDashboardController::class, 'decline'])->name('admin.decline');
     Route::get('/admin/detail', [AdminDashboardController::class, 'detail'])->name('admin.detail');
 
-    Route::get('/logout', [AuthController::class, 'logout'])->name('logout-admin');
+    Route::get('/admin/logout', [AuthController::class, 'logout'])->name('logout-admin');
 });

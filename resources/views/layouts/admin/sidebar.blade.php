@@ -11,7 +11,7 @@
         <li class="nav-item">
             <a class="nav-link {{ request()->routeIs('dashboard-admin') ? '' : 'collapsed' }}"
                 href="{{ route('dashboard-admin') }}">
-                <i class="bi bi-grid"></i>
+                <i class="fas fa-tachometer-alt me-2"></i>
                 <span>Dashboard</span>
             </a>
         </li><!-- End Dashboard Nav -->
@@ -20,7 +20,7 @@
         <li class="nav-item">
             <a class="nav-link {{ $isMasterActive ? '' : 'collapsed' }}" data-bs-target="#master-nav"
                 data-bs-toggle="collapse" href="#">
-                <i class="bi bi-menu-button-wide"></i>
+                <i class="bi bi-collection me-2"></i>
                 <span>Master Data</span>
                 <i class="bi bi-chevron-down ms-auto"></i>
             </a>
@@ -28,28 +28,28 @@
                 data-bs-parent="#sidebar-nav">
                 <li>
                     <a href="{{ route('umum') }}" class="{{ request()->routeIs('umum') ? 'active' : '' }}">
-                        <i class="bi bi-circle"></i><span>Jalur Umum</span>
+                        <i class="fas fa-users me-2"></i><span>Jalur Umum</span>
                     </a>
                 </li>
                 <li>
                     <a href="{{ route('afirmasi') }}" class="{{ request()->routeIs('afirmasi') ? 'active' : '' }}">
-                        <i class="bi bi-circle"></i><span>Jalur Afirmasi</span>
+                        <i class="fas fa-hand-holding-heart me-2"></i><span>Jalur Afirmasi</span>
                     </a>
                 </li>
                 <li>
                     <a href="{{ route('pindah.tugas') }}"
                         class="{{ request()->routeIs('pindah.tugas') ? 'active' : '' }}">
-                        <i class="bi bi-circle"></i><span>Jalur Pindah Tugas</span>
+                        <i class="fas fa-briefcase me-2"></i><span>Jalur Pindah Tugas</span>
                     </a>
                 </li>
                 <li>
                     <a href="{{ route('tahfidz') }}" class="{{ request()->routeIs('tahfidz') ? 'active' : '' }}">
-                        <i class="bi bi-circle"></i><span>Jalur Lomba/Tahfidz</span>
+                        <i class="fas fa-trophy me-2"></i><span>Jalur Lomba/Tahfidz</span>
                     </a>
                 </li>
                 <li>
                     <a href="{{ route('prestasi') }}" class="{{ request()->routeIs('prestasi') ? 'active' : '' }}">
-                        <i class="bi bi-circle"></i><span>Jalur Prestasi</span>
+                        <i class="fas fa-medal me-2"></i><span>Jalur Prestasi Raport</span>
                     </a>
                 </li>
             </ul>

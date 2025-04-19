@@ -40,11 +40,18 @@ window.Echo.private("admin-channel").listen("SiswaBaruMendaftar", (e) => {
         newItem.classList.add("notification-item");
         newItem.innerHTML = `
             <i class="bi bi-person-plus text-success"></i>
-            <div>
-                <h4>${e.siswa?.register?.siswa?.nama || "Siswa Baru"}</h4>
-                <p>No. Register: ${e.siswa?.register?.no_register || "-"}</p>
-                <p class="text-muted small">Baru saja</p>
-            </div>
+            <a href='#'>
+                <div>
+                    <h4>${e.siswa?.register?.siswa?.nama || "Siswa Baru"}</h4>
+                    <p>No. Register : ${
+                        e.siswa?.register?.no_register || "-"
+                    }</p>
+                    <p>Jalur : ${
+                        e.siswa?.register?.jalur?.nama_jalur || "-"
+                    }</p>
+                    <p class="text-muted small">Baru saja</p>
+                </div>
+            </a>
         `;
 
         const divider = document.createElement("li");
@@ -55,7 +62,7 @@ window.Echo.private("admin-channel").listen("SiswaBaruMendaftar", (e) => {
         if (header && header.parentNode) {
             header.innerHTML = `You have ${parseInt(
                 notifCount.innerText
-            )} new notifications <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>`;
+            )} new notifications <a href="/admin/notifikasi/read-all"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>`;
             header.parentNode.insertBefore(divider, header.nextSibling);
             header.parentNode.insertBefore(newItem, divider);
         }
