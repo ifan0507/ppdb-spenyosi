@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Pendaftaran;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -11,30 +12,40 @@ class DashboardController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+    protected $data;
+
+    public function __construct()
+    {
+        $this->data =  Auth::guard('web')->user();;
+    }
+
     public function index()
     {
-        $data = Auth::guard('web')->user();
-        return view('admin.dashboard', ['data' => $data]);
+        return view('admin.dashboard', ['data' => $this->data]);
     }
     public function viewUmum()
     {
-        return view('admin.umum');
+        return view('admin.umum', ['data' => $this->data]);
     }
     public function viewAfirmasi()
     {
-        return view('admin.afirmasi');
+        return view('admin.afirmasi', ['data' => $this->data]);
     }
     public function viewpindahTugas()
     {
-        return view('admin.pindahTugas');
+        return view('admin.pindahTugas', ['data' => $this->data]);
     }
     public function viewTahfidz()
     {
-        return view('admin.tahfidz');
+        return view('admin.tahfidz', ['data' => $this->data]);
     }
     public function viewPrestasi()
     {
-        return view('admin.prestasi');
+        $prestasis = Pendaftaran::with('register')->whereHas('register', function ($query) {
+            $query->where('id_jalur', '5');
+        })->get();
+        return view('admin.prestasi', ['data' => $this->data, 'prestasis' => $prestasis]);
     }
 
 

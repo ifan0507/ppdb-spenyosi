@@ -29,8 +29,8 @@ class SiswaBaruDaftar extends Notification
         return [
             'id' => $this->pendaftaran->register->id,
             'title' => $this->pendaftaran->register->siswa->nama,
-            'body' => 'No Register: ' . $this->pendaftaran->register->no_register,
-            'no_register' => $this->pendaftaran->register->no_register,
+            'body' => 'No Register : ' . $this->pendaftaran->register->no_register,
+            'jalur' => 'Jalur       : ' . $this->pendaftaran->register->jalur->nama_jalur,
         ];
     }
 }

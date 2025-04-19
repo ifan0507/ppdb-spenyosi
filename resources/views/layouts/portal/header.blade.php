@@ -17,7 +17,7 @@
             <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
         </nav> --}}
 
-        <a class="btn-getstarted" href="{{ route('login') }}">Masuk</a>
+        <a class="btn-getstarted" href="{{ route('siswa-login') }}">Masuk</a>
 
     </div>
 </header>

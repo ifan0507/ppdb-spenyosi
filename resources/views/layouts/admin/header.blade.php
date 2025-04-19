@@ -22,36 +22,59 @@
                      id="notification-container">
                      <li class="dropdown-header">
                          You have {{ auth()->user()->unreadNotifications->count() }} new notifications
-                         <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+                         <a href="{{ route('notifikasi.read.all') }}"><span
+                                 class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
                      </li>
 
                      <li>
                          <hr class="dropdown-divider">
                      </li>
 
-                     @forelse(auth()->user()->unreadNotifications as $notification)
+                     @foreach (auth()->user()->unreadNotifications as $notification)
                          <li class="notification-item">
                              <i class="bi bi-person-plus text-success"></i>
-                             <div>
-                                 <h4>{{ $notification->data['title'] ?? 'Notifikasi Baru' }}</h4>
-                                 <p>{{ $notification->data['body'] ?? '-' }}</p>
-                                 <p class="text-muted small">
-                                     {{ $notification->created_at->diffForHumans() }}
-                                 </p>
-                             </div>
+                             <a href="">
+                                 <div>
+                                     <h4 style="color: black">{{ $notification->data['title'] ?? 'Notifikasi Baru' }}
+                                     </h4>
+                                     <p>{{ $notification->data['body'] ?? '-' }}</p>
+                                     <p>{{ $notification->data['jalur'] ?? '-' }}</p>
+                                     <p class="text-muted small">
+                                         {{ $notification->created_at->diffForHumans() }}
+                                     </p>
+                                 </div>
+                             </a>
                          </li>
                          <li>
                              <hr class="dropdown-divider">
                          </li>
-                     @empty
-                         <li class="notification-item text-center text-muted">
-                             <p>Tidak ada notifikasi baru</p>
-                         </li>
-                     @endforelse
+                     @endforeach
 
                      <li class="dropdown-footer">
-                         <a href="#">Show all notifications</a>
+                         <a href="" class="show-notif" data-bs-toggle="collapse" data-bs-target="#faqsTwo-1"
+                             id="all-notif">Show all notifications</a>
+
+                         <div id="faqsTwo-1" class="accordion-collapse collapse mt-3" data-bs-parent="#faq-group-2">
+                             <div class="accordion-body px-2" style="max-height: 300px; overflow-y: auto;">
+                                 @forelse (auth()->user()->notifications as $notif)
+                                     <div class="border-bottom mb-2 pb-2">
+                                         <div class="d-flex flex-column text-start">
+                                             <div>
+                                                 <strong>{{ $notif->data['title'] ?? 'Notifikasi' }}</strong><br>
+                                                 <small class="text-muted">{{ $notif->data['body'] ?? '-' }}</small>
+                                             </div>
+                                             <small class="text-muted">
+                                                 {{ $notif->data['jalur'] }}
+                                             </small>
+                                         </div>
+                                     </div>
+                                 @empty
+                                     <p class="text-muted text-center">Tidak ada notifikasi.</p>
+                                 @endforelse
+                             </div>
+                         </div>
                      </li>
+
                  </ul><!-- End Notification Dropdown Items -->
              </li><!-- End Notification Nav -->
 
@@ -61,14 +84,14 @@
 
                  <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#"
                      data-bs-toggle="dropdown">
-                     <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
-                     <span class="d-none d-md-block dropdown-toggle ps-2">K. Anderson</span>
+                     <img src="{{ asset('assets/img/default_siswa.png') }}" alt="Profile" class="rounded-circle">
+                     <span class="d-none d-md-block dropdown-toggle ps-2">{{ $data->name }}</span>
                  </a><!-- End Profile Iamge Icon -->
 
                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                      <li class="dropdown-header">
-                         <h6>Kevin Anderson</h6>
-                         <span>Web Designer</span>
+                         <h6>{{ $data->name }}</h6>
+                         <span>{{ $data->role }}</span>
                      </li>
                      <li>
                          <hr class="dropdown-divider">
@@ -118,3 +141,30 @@
      </nav><!-- End Icons Navigation -->
 
  </header><!-- End Header -->
+ <script>
+     $(document).ready(function() {
+         $('.dropdown-header a').on('click', function(e) {
+             e.preventDefault();
+             let href = $(this).attr('href');
+
+             $.get(href, function() {
+
+                 $('#notification-count').text('0');
+
+                 $('.dropdown-header').html('You have 0 new notifications');
+
+                 $('#notification-container .notification-item').remove();
+
+                 $('#notification-container').append(`
+                    <li class="notification-item text-center text-muted">
+                        <p>Tidak ada notifikasi baru</p>
+                    </li>
+                `);
+             });
+         });
+
+         $('.dropdown-footer .show-notif, .dropdown-footer .accordion-body').on('click', function(e) {
+             e.stopPropagation();
+         });
+     });
+ </script>

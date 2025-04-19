@@ -49,6 +49,7 @@ class Pendaftaran extends Controller
         $dataSiswa = ModelsPendaftaran::create([
             'tanggal_daftar' => Carbon::now(),
             'id_register' => $data->id,
+            'status' => 'Pending'
         ]);
 
         $admin = User::where('role', 'admin')->get();

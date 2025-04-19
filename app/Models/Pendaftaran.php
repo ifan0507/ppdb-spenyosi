@@ -14,7 +14,7 @@ class Pendaftaran extends Model
     public $incrementing = false;
     protected $keyType = 'string';
     protected $with = ['register', 'user'];
-    protected $fillable = ['tanggal_daftar', 'confirmations', 'decline', 'id_register', 'id_user'];
+    protected $fillable = ['tanggal_daftar', 'confirmations', 'decline', 'id_register', 'id_user', 'status'];
 
     public function register(): BelongsTo
     {
