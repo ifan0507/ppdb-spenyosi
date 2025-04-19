@@ -13,10 +13,10 @@
                             <tr>
                                 <th scope="col">#</th>
                                 <th scope="col">No Register</th>
-                                <th scope="col">Tanggal Daftar</th>
                                 <th scope="col">Nama</th>
-                                <th scope="col">Status</th>
-                                <th scope="col">Action</th>
+                                <th scope="col">Tanggal Daftar</th>
+                                <th scope="col" class="text-center">Status</th>
+                                <th scope="col" class="text-center">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -27,9 +27,9 @@
                                 <tr>
                                     <th>{{ $no++ }}</th>
                                     <td>{{ $prestasi->register->no_register }}</td>
-                                    <td>{{ $prestasi->created_at?->format('d-m-Y') ?? '-' }}</td>
                                     <td>{{ $prestasi->register->siswa->nama }}</td>
-                                    <td>
+                                    <td>{{ $prestasi->created_at?->format('d-m-Y') ?? '-' }}</td>
+                                    <td class="text-center">
                                         @if ($prestasi->decline == '1')
                                             <span class="badge bg-danger"><i class="bi bi-exclamation-octagon me-1"></i>
                                                 {{ $prestasi->status }}</span>
@@ -42,8 +42,8 @@
                                                 {{ $prestasi->status }}</span>
                                         @endif
                                     </td>
-                                    <td>
-                                        <div class="d-flex gap-2">
+                                    <td class="align-middle">
+                                        <div class="d-flex gap-2 justify-content-center">
                                             <button type="button" class="btn btn-success btn-sm""><i
                                                     class="bi bi-check-circle"></i></button>
                                             <button type="button" class="btn btn-danger btn-sm"><i
@@ -65,11 +65,11 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th scope="col">Action</th>
+                                <th scope="col" class="text-center">Action</th>
                                 <th scope="col">No Register</th>
-                                <th scope="col">Tanggal Daftar</th>
                                 <th scope="col">Nama</th>
-                                <th scope="col">Status</th>
+                                <th scope="col" class="text-nowrap">Tanggal Daftar</th>
+                                <th scope="col" class="text-center">Status</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -79,7 +79,7 @@
                             @foreach ($prestasis as $prestasi)
                                 <tr>
                                     <td>
-                                        <div class="d-flex gap-2">
+                                        <div class="d-flex gap-2 justify-content-center">
                                             <button type="button" class="btn btn-success btn-sm""><i
                                                     class="bi bi-check-circle"></i></button>
                                             <button type="button" class="btn btn-danger btn-sm"><i
@@ -89,8 +89,8 @@
                                         </div>
                                     </td>
                                     <td>{{ $prestasi->register->no_register }}</td>
-                                    <td>{{ $prestasi->created_at?->format('d-m-Y') ?? '-' }}</td>
                                     <td>{{ $prestasi->register->siswa->nama }}</td>
+                                    <td class="text-nowrap">{{ $prestasi->created_at?->format('d-m-Y') ?? '-' }}</td>
                                     <td>
                                         @if ($prestasi->decline == '1')
                                             <span class="badge bg-danger"><i class="bi bi-exclamation-octagon me-1"></i>
