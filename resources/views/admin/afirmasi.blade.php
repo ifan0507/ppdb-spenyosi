@@ -59,8 +59,8 @@
 
                                             </td>
                                             <td>
-                                                <a href="{{ route('admin.detail') }}" class="btn btn-info btn-sm"><i
-                                                        class="bi bi-info-circle"></i></a>
+                                                <a href="{{ route('admin.detail', ['id' => $pendaftaran->id]) }}"
+                                                    class="btn btn-info btn-sm"><i class="bi bi-info-circle"></i></a>
                                             </td>
                                         </tr>
                                     @empty

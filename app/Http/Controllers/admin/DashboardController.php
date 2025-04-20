@@ -64,9 +64,10 @@ class DashboardController extends Controller
         return view('admin.prestasi', ['data' => $this->data, 'prestasis' => $prestasis]);
     }
 
-    public function detail()
+    public function detail($id)
     {
-        return view('admin.detail');
+        $pendaftarans = Pendaftaran::with(['register', 'siswa'])->findOrFail($id);
+        return view('admin.detail', ['data' => $this->data, 'pendaftarans' => $pendaftarans]);
     }
 
 
