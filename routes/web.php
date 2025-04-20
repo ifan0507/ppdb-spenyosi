@@ -97,8 +97,8 @@ Route::middleware(['cache_verify', 'auth_admin'])->group(function () {
     Route::get('/admin/tahfidz', [AdminDashboardController::class, 'viewTahfidz'])->name('tahfidz');
     Route::get('/admin/prestasi', [AdminDashboardController::class, 'viewPrestasi'])->name('prestasi');
     Route::get('/admin/{id}/confirm', [AdminDashboardController::class, 'confirm'])->name('admin.confirm');
-    Route::get('/admin/{id}/decline', [AdminDashboardController::class, 'decline'])->name('admin.decline');
-    Route::get('/admin/detail/{id}', [AdminDashboardController::class, 'detail'])->name('admin.detail');
+    Route::post('/admin/{id}/decline', [AdminDashboardController::class, 'decline'])->name('admin.decline');
+    Route::get('/admin/{id}/detail', [AdminDashboardController::class, 'detail'])->name('admin.detail');
 
     Route::get('/admin/logout', [AuthController::class, 'logout'])->name('logout-admin');
 });

@@ -1,19 +1,16 @@
 <div class="pagetitle">
-    <h1>{{ $title ?? '' }}</h1>
     <nav>
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ route('dashboard-admin') }}">Home</a></li>
-
-
-            @if (isset($breadcrumb))
-                @foreach ($breadcrumb as $key => $link)
-                    @if ($loop->last)
-                        <li class="breadcrumb-item active" aria-current="page">{{ $key }}</li>
+            @foreach ($breadcrumb as $key => $link)
+                @foreach ($breadcrumb->list as $key => $value)
+                    @if ($key == count($breadcrumb->list) - 1)
+                        <li class="breadcrumb-item active">{{ $value }}</li>
                     @else
-                        <li class="breadcrumb-item"><a href="{{ $link }}">{{ $key }}</a></li>
+                        <li class="breadcrumb-item ">{{ $value }}</li>
                     @endif
                 @endforeach
-            @endif
+            @endforeach
+
         </ol>
     </nav>
 </div>

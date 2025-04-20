@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Mail\DeclineMail;
 use App\Models\Pendaftaran;
+use App\Models\Register;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class DashboardController extends Controller
 {
@@ -22,51 +25,72 @@ class DashboardController extends Controller
 
     public function index()
     {
-        return view('admin.dashboard', ['data' => $this->data]);
+        $breadcrumb = (object) [
+            'list' => ['Dashboard', '']
+        ];
+        return view('admin.dashboard', ['data' => $this->data, 'breadcrumb' => $breadcrumb]);
     }
     public function viewUmum()
     {
+        $breadcrumb = (object) [
+            'list' => ['Master Data', 'Jalur Umum']
+        ];
+
         $pendaftarans = Pendaftaran::with('register')
             ->whereHas('register', function ($query) {
                 $query->where('id_jalur', '1');
             })->get();
-        return view('admin.umum', ['pendaftarans' => $pendaftarans, 'data' => $this->data]);
+        return view('admin.dataPendaftaran', ['pendaftarans' => $pendaftarans, 'data' => $this->data, 'breadcrumb' => $breadcrumb]);
     }
     public function viewAfirmasi()
     {
+        $breadcrumb = (object) [
+            'list' => ['Master Data', 'Jalur Afirmasi']
+        ];
         $pendaftarans = Pendaftaran::with('register')
             ->whereHas('register', function ($query) {
                 $query->where('id_jalur', '2');
             })->get();
-        return view('admin.afirmasi', ['pendaftarans' => $pendaftarans, 'data' => $this->data]);
+        return view('admin.dataPendaftaran', ['pendaftarans' => $pendaftarans, 'data' => $this->data, 'breadcrumb' => $breadcrumb]);
     }
     public function viewpindahTugas()
     {
+        $breadcrumb = (object) [
+            'list' => ['Master Data', 'Jalur Pindah Tugas']
+        ];
         $pendaftarans = Pendaftaran::with('register')
             ->whereHas('register', function ($query) {
                 $query->where('id_jalur', '3');
             })->get();
-        return view('admin.pindahTugas', ['pendaftarans' => $pendaftarans, 'data' => $this->data]);
+        return view('admin.dataPendaftaran', ['pendaftarans' => $pendaftarans, 'data' => $this->data, 'breadcrumb' => $breadcrumb]);
     }
     public function viewTahfidz()
     {
+        $breadcrumb = (object) [
+            'list' => ['Master Data', 'Jalur Tahfidz']
+        ];
         $pendaftarans = Pendaftaran::with('register')
             ->whereHas('register', function ($query) {
                 $query->where('id_jalur', '4');
             })->get();
-        return view('admin.tahfidz', ['pendaftarans' => $pendaftarans, 'data' => $this->data]);
+        return view('admin.dataPendaftaran', ['pendaftarans' => $pendaftarans, 'data' => $this->data, 'breadcrumb' => $breadcrumb]);
     }
     public function viewPrestasi()
     {
-        $prestasis = Pendaftaran::with('register')->whereHas('register', function ($query) {
+        $breadcrumb = (object) [
+            'list' => ['Master Data', 'Jalur Prestasi Raport']
+        ];
+        $pendaftarans = Pendaftaran::with('register.raport.mapel')->whereHas('register', function ($query) {
             $query->where('id_jalur', '5');
         })->get();
-        return view('admin.prestasi', ['data' => $this->data, 'prestasis' => $prestasis]);
+
+
+        return view('admin.dataPendaftaran', ['data' => $this->data, 'pendaftarans' => $pendaftarans, 'breadcrumb' => $breadcrumb]);
     }
 
     public function detail($id)
     {
-        $pendaftarans = Pendaftaran::with(['register', 'siswa'])->findOrFail($id);
+        $pendaftarans = Pendaftaran::where('id', $id)->first();
         return view('admin.detail', ['data' => $this->data, 'pendaftarans' => $pendaftarans]);
     }
 
@@ -88,13 +112,23 @@ class DashboardController extends Controller
         return redirect('/admin/umum');
     }
 
-    public function decline(string $id)
+    public function decline(string $id, Request $request)
     {
-        Pendaftaran::where('id', $id)->update([
-            'decline' => '1',
-            'status' => 'invalid',
-            'id_user' => $this->data->id,
-        ]);
+        $pendaftaran = Pendaftaran::where('id', $id)->first();
+
+        if ($pendaftaran) {
+            $pendaftaran->update([
+                'decline' => '1',
+                'status' => 'invalid',
+                'id_user' => $this->data->id,
+            ]);
+
+            Register::where('id', $pendaftaran->id_register)->update([
+                'submit' => "0"
+            ]);
+
+            Mail::to($pendaftaran->register->email)->send(new DeclineMail($request->message, $pendaftaran->register->siswa->nama));
+        }
 
         return response()->json(['success' => true]);
     }

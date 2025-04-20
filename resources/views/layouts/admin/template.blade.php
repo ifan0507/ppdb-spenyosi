@@ -7,9 +7,11 @@
     <title>Master Admin</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Favicons -->
     <link href="{{ asset('assets/img/logo.png') }}" rel="icon">
     <link href="{{ asset('NiceAdmin/assets/img/apple-touch-icon.png') }}" rel="apple-touch-icon">
+
     @vite(['resources/js/app.js'])
     <!-- Google Fonts -->
     <link href="https://fonts.gstatic.com" rel="preconnect">
@@ -37,9 +39,46 @@
   * Author: BootstrapMade.com
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
-
     <script src="{{ asset('assets/js/jquery-3.7.1.js') }}"></script>
+    <script src="{{ asset('assets/js/sweetalert2.all.min.js') }}"></script>
 
+    <style>
+        /* Haluskan popup */
+        .swal2-custom-popup {
+            border-radius: 12px;
+            padding: 30px;
+        }
+
+        /* Border textarea lebih tipis */
+        .swal2-custom-input {
+            border: 1px solid #ccc !important;
+            border-radius: 8px;
+            box-shadow: none !important;
+            padding: 10px;
+            font-size: 14px;
+        }
+
+        /* Tombol lebih soft */
+        .swal2-custom-confirm {
+            background-color: #ca2a06 !important;
+            color: #fff !important;
+            border-radius: 6px !important;
+            padding: 8px 20px !important;
+            font-weight: 600;
+        }
+
+        .swal2-custom-cancel {
+            background-color: #6c757d !important;
+            color: #fff !important;
+            border-radius: 6px !important;
+            padding: 8px 20px !important;
+            font-weight: 600;
+        }
+
+        button[disabled] {
+            cursor: not-allowed !important;
+        }
+    </style>
 </head>
 
 <body>
@@ -67,8 +106,7 @@
 
     <!-- Template Main JS File -->
     <script src="{{ asset('NiceAdmin/assets/js/main.js') }}"></script>
-    <script src="{{ asset('assets/js/jquery-3.7.1.js') }}"></script> <!-- Hanya jika kamu memang membutuhkan jQuery -->
-    <script src="{{ asset('assets/js/sweetalert2.all.min.js') }}"></script> <!-- SweetAlert2 -->
+    <script src="{{ asset('assets/js/custom.js') }}"></script>
 </body>
 
 </html>

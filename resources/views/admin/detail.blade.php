@@ -1,13 +1,6 @@
 @extends('layouts.admin.template')
 
 @section('content')
-    @include('layouts.admin.breadcrumb', [
-        'title' => 'Detail',
-        'breadcrumb' => [
-            'Master Data' => '',
-            'Detail' => '',
-        ],
-    ])
     <section class="section profile">
         <div class="row">
             <div class="col-xl-4">
@@ -15,8 +8,9 @@
                 <div class="card">
                     <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
-                        <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
-                        <h2>Kevin Anderson</h2>
+                        <img src="{{ asset('storage/' . $pendaftarans->register->siswa->foto_siswa) }}" alt="Profile"
+                            class="rounded-circle">
+                        <h2>{{ $pendaftarans->register->siswa->nama }}</h2>
                     </div>
                 </div>
 
@@ -38,11 +32,12 @@
                                 <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">
                                     Orang Tua</button>
                             </li>
-
-                            <li class="nav-item">
-                                <button class="nav-link" data-bs-toggle="tab"
-                                    data-bs-target="#profile-settings">Raport</button>
-                            </li>
+                            @if ($pendaftarans->register->jalur->id == '5')
+                                <li class="nav-item">
+                                    <button class="nav-link" data-bs-toggle="tab"
+                                        data-bs-target="#profile-settings">Raport</button>
+                                </li>
+                            @endif
 
                         </ul>
                         <div class="tab-content pt-2">
@@ -52,129 +47,148 @@
 
                                 <div class="row">
                                     <div class="col-lg-3 col-md-4 label">NISN</div>
-                                    <div class="col-lg-9 col-md-8"></div>
+                                    <div class="col-lg-9 col-md-8">{{ $pendaftarans->register->siswa->nisn }}</div>
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-3 col-md-4 label">Nama Lengkap</div>
-                                    <div class="col-lg-9 col-md-8"></div>
+                                    <div class="col-lg-9 col-md-8">{{ $pendaftarans->register->siswa->nama }}</div>
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-3 col-md-4 label">NIK</div>
-                                    <div class="col-lg-9 col-md-8"></div>
+                                    <div class="col-lg-9 col-md-8">{{ $pendaftarans->register->siswa->nik }}</div>
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-3 col-md-4 label">Jenis Kelamin</div>
-                                    <div class="col-lg-9 col-md-8"></div>
+                                    <div class="col-lg-9 col-md-8">{{ $pendaftarans->register->siswa->jenis_kelamin }}</div>
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-3 col-md-4 label">Tempat, Tanggal Lahir</div>
-                                    <div class="col-lg-9 col-md-8">
-                                        /
+                                    <div class="col-lg-9 col-md-8">{{ $pendaftarans->register->siswa->tempat_lahir }}
+                                        , {{ $pendaftarans->register->siswa->tanggal_lahir }}
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-3 col-md-4 label">Asal Sekolah</div>
-                                    <div class="col-lg-9 col-md-8"></div>
+                                    <div class="col-lg-9 col-md-8">{{ $pendaftarans->register->siswa->asal_sekolah }}</div>
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-3 col-md-4 label">Kabupaten</div>
-                                    <div class="col-lg-9 col-md-8"></div>
+                                    <div class="col-lg-9 col-md-8">{{ $pendaftarans->register->siswa->kabupaten }}</div>
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-3 col-md-4 label">Kecamatan</div>
-                                    <div class="col-lg-9 col-md-8"></div>
+                                    <div class="col-lg-9 col-md-8">{{ $pendaftarans->register->siswa->kecamatan }}</div>
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-3 col-md-4 label">Desa</div>
-                                    <div class="col-lg-9 col-md-8"></div>
+                                    <div class="col-lg-9 col-md-8">{{ $pendaftarans->register->siswa->desa }}</div>
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-3 col-md-4 label">Alamat</div>
-                                    <div class="col-lg-9 col-md-8"></div>
+                                    <div class="col-lg-9 col-md-8">{{ $pendaftarans->register->siswa->alamat }}</div>
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-3 col-md-4 label">No. HP</div>
-                                    <div class="col-lg-9 col-md-8"></div>
+                                    <div class="col-lg-9 col-md-8">{{ $pendaftarans->register->siswa->no_hp }}</div>
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-3 col-md-4 label">Email</div>
-                                    <div class="col-lg-9 col-md-8"></div>
+                                    <div class="col-lg-9 col-md-8">{{ $pendaftarans->register->siswa->email }}</div>
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-3 col-md-4 label">Titik Koordinat</div>
-                                    <div class="col-lg-9 col-md-8">,
+                                    <div class="col-lg-9 col-md-8">{{ $pendaftarans->register->siswa->lokasi }}
                                     </div>
                                 </div>
 
                                 <div class="row">
                                     <div class="col-lg-3 col-md-4 label">Foto KK</div>
                                     <div class="col-lg-9 col-md-8">
-                                        <img src="" alt="Foto KK" class="img-fluid">
+                                        <img src="{{ asset('storage/' . $pendaftarans->register->siswa->foto_kk) }}"
+                                            alt="Foto KK" class="img-fluid">
                                     </div>
                                 </div>
 
                                 <div class="row">
                                     <div class="col-lg-3 col-md-4 label">Foto Akte</div>
                                     <div class="col-lg-9 col-md-8">
-                                        <img src="" alt="Foto Akte" class="img-fluid">
+                                        <img src="{{ asset('storage/' . $pendaftarans->register->siswa->foto_akte) }}"
+                                            alt="Foto Akte" class="img-fluid">
                                     </div>
                                 </div>
 
-                                <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">KIP/KIS/PIP/PKH/SKTM</div>
-                                    <div class="col-lg-9 col-md-8">
-                                        <img src="" alt="Dokumen KIP/KIS" class="img-fluid">
+                                @if (
+                                    $pendaftarans->register->jalur->id == '2' ||
+                                        $pendaftarans->register->jalur->id == '3' ||
+                                        $pendaftarans->register->jalur->id == '4')
+                                    <div class="row">
+                                        @if ($pendaftarans->register->jalur->id == '2')
+                                            <div class="col-lg-3 col-md-4 label">KIP/KIS/PIP/PKH/SKTM</div>
+                                        @elseif ($pendaftarans->register->jalur->id == '3')
+                                            <div class="col-lg-3 col-md-4 label">Surat Pindah Tugas</div>
+                                        @elseif ($pendaftarans->register->jalur->id == '4')
+                                            <div class="col-lg-3 col-md-4 label">Piagam Prestasi</div>
+                                        @endif
+                                        <div class="col-lg-9 col-md-8">
+                                            <img src="{{ asset('storage/' . $pendaftarans->register->document->document) }}"
+                                                alt="" class="img-fluid">
+                                        </div>
                                     </div>
-                                </div>
+                                @endif
+
                             </div>
 
 
                             <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
                                 <h5 class="card-title">Data Orang Tua</h5>
 
-                                <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Nama Ayah / Wali</div>
-                                    <div class="col-lg-9 col-md-8"></div>
+                                <div class="row mb-3">
+                                    <label for="fullName" class="col-md-4 col-lg-3">Nama Ayah / Wali</label>
+                                    <div class="col-lg-9 col-md-8">{{ $pendaftarans->register->siswa->ortu->ayah }}</div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Status Ayah / Wali</div>
-                                    <div class="col-lg-9 col-md-8">
+                                <div class="row mb-3">
+                                    <label for="fullName" class="col-md-4 col-lg-3">Status Ayah / Wali</label>
+                                    <div class="col-lg-9 col-md-8">{{ $pendaftarans->register->siswa->ortu->status_ayah }}
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Pendidikan Ayah / Wali</div>
+                                <div class="row mb-3">
+                                    <label for="fullName" class="col-md-4 col-lg-3">Pendidikan Ayah / Wali</label>
                                     <div class="col-lg-9 col-md-8">
+                                        {{ $pendaftarans->register->siswa->ortu->pendidikan_ayah }}
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Pekerjaan Ayah / Wali</div>
+                                <div class="row mb-3">
+                                    <label for="fullName" class="col-md-4 col-lg-3">Pekerjaan Ayah / Wali</label>
                                     <div class="col-lg-9 col-md-8">
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Nama Ibu</div>
-                                    <div class="col-lg-9 col-md-8"></div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Status Ibu</div>
-                                    <div class="col-lg-9 col-md-8">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Pendidikan Ibu</div>
-                                    <div class="col-lg-9 col-md-8">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Pekerjaan Ibu</div>
-                                    <div class="col-lg-9 col-md-8">
+                                        {{ $pendaftarans->register->siswa->ortu->pekerjaan_ayah }}
                                     </div>
                                 </div>
 
-                                <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Nomor Telepon Orang Tua</div>
+                                <div class="row mb-3">
+                                    <label for="fullName" class="col-md-4 col-lg-3">Nama Ibu</label>
+                                    <div class="col-lg-9 col-md-8">{{ $pendaftarans->register->siswa->ortu->ibu }}</div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label for="fullName" class="col-md-4 col-lg-3">Status Ibu</label>
+                                    <div class="col-lg-9 col-md-8">{{ $pendaftarans->register->siswa->ortu->status_ibu }}
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label for="fullName" class="col-md-4 col-lg-3">Pendidikan Ibu</label>
                                     <div class="col-lg-9 col-md-8">
+                                        {{ $pendaftarans->register->siswa->ortu->pendidikan_ibu }}
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label for="fullName" class="col-md-4 col-lg-3">Pekerjaan Ibu</label>
+                                    <div class="col-lg-9 col-md-8">
+                                        {{ $pendaftarans->register->siswa->ortu->pekerjaan_ibu }}
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="fullName" class="col-md-4 col-lg-3">Nomer Telp Orang Tua</label>
+                                    <div class="col-lg-9 col-md-8">{{ $pendaftarans->register->siswa->ortu->no_hp }}
                                     </div>
                                 </div>
                             </div>
@@ -182,45 +196,70 @@
 
                             <div class="tab-pane fade pt-3" id="profile-settings">
 
-                                <!-- Settings Form -->
-                                <form>
+                                <div class="card-header">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th rowspan="2" class="align-middle text-center">No</th>
+                                                    <th rowspan="2" class="align-middle text-center">Mata
+                                                        Pelajaran</th>
+                                                    <th colspan="2" class="align-middle text-center">Rapor
+                                                        Kelas 4</th>
+                                                    <th colspan="2" class="align-middle text-center">Rapor
+                                                        Kelas 5</th>
+                                                    <th class="align-middle text-center">Rapor Kelas 6</th>
 
-                                    <div class="row mb-3">
-                                        <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Email
-                                            Notifications</label>
-                                        <div class="col-md-8 col-lg-9">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" id="changesMade" checked>
-                                                <label class="form-check-label" for="changesMade">
-                                                    Changes made to your account
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" id="newProducts" checked>
-                                                <label class="form-check-label" for="newProducts">
-                                                    Information on new products and services
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" id="proOffers">
-                                                <label class="form-check-label" for="proOffers">
-                                                    Marketing and promo offers
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" id="securityNotify"
-                                                    checked disabled>
-                                                <label class="form-check-label" for="securityNotify">
-                                                    Security alerts
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
+                                                </tr>
+                                                <tr>
+                                                    <th class="align-middle text-center">Semester 1</th>
+                                                    <th class="align-middle text-center">Semester 2</th>
+                                                    <th class="align-middle text-center">Semester 1</th>
+                                                    <th class="align-middle text-center">Semester 2</th>
+                                                    <th class="align-middle text-center">Semester 1</th>
+                                            </thead>
 
-                                    <div class="text-center">
-                                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                                            <tbody>
+                                                @foreach ($pendaftarans as $pendaftaran)
+                                                    @php $no = 1; @endphp
+
+                                                    @if (optional($pendaftaran->register)->raport)
+                                                        @foreach ($pendaftaran->register->raport as $raport)
+                                                            <tr>
+                                                                <td>{{ $no++ }}</td>
+                                                                <td>{{ optional($raport->mapel)->nama_matapelajaran ?? 'N/A' }}
+                                                                </td>
+                                                                <td>{{ $raport->kelas4_1 }}</td>
+                                                                <td>{{ $raport->kelas4_2 }}</td>
+                                                                <td>{{ $raport->kelas5_1 }}</td>
+                                                                <td>{{ $raport->kelas5_2 }}</td>
+                                                                <td>{{ $raport->kelas6_1 }}</td>
+                                                            </tr>
+                                                        @endforeach
+                                                    @else
+                                                        <tr>
+                                                            <td colspan="7" class="text-center">Data raport tidak
+                                                                ditemukan</td>
+                                                        </tr>
+                                                    @endif
+                                                @endforeach
+
+
+                                                @if (!$raports->isEmpty())
+                                                    <tr>
+                                                        <td colspan="2"><strong>Rata-rata Nilai</strong></td>
+                                                        <td>{{ $raports->avg('kelas4_1') }}</td>
+                                                        <td>{{ $raports->avg('kelas4_2') }}</td>
+                                                        <td>{{ $raports->avg('kelas5_1') }}</td>
+                                                        <td>{{ $raports->avg('kelas5_2') }}</td>
+                                                        <td>{{ $raports->avg('kelas6_1') }}</td>
+                                                    </tr>
+                                                @endif
+                                            </tbody>
+
+                                        </table>
                                     </div>
-                                </form><!-- End settings Form -->
+                                </div>
 
                             </div>
 

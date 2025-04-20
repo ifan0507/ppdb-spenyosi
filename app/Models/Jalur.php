@@ -12,7 +12,7 @@ class Jalur extends Model
     use HasFactory;
 
     protected $table = 'jalurs';
-    protected $fillable = ['nama_jalur'];
+    protected $fillable = ['nama_jalur', 'keterangan'];
 
     public function register(): HasMany
     {
