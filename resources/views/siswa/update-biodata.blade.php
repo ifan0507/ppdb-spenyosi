@@ -141,7 +141,7 @@
                                 </div>
                                 <div class="form-group  mb-3">
                                     <label class="form-label">Asal Sekolah</label>
-                                    <input type="text" class="form-control" name="asal_sekolah"
+                                    <input type="text" class="form-control" name="asal_sekolah" id="asal-sekolah"
                                         value="{{ old('asal_sekolah', $data->siswa->asal_sekolah) }}">
                                 </div>
                                 <div class="row">
@@ -573,7 +573,7 @@
                 }
             });
 
-            $("#tempat_lahir, #tanggal_lahir, #alamat, #coordinates").on("input", function() {
+            $("#tempat_lahir, #tanggal_lahir, #alamat, #coordinates, #asal-sekolah").on("input", function() {
                 if ($(this).val().trim() === "") {
                     $(this).addClass("is-invalid");
                 } else {
@@ -646,6 +646,12 @@
                         icon: "error",
                         title: "Oops...",
                         text: "Koordinate rumah wajib diisi!",
+                    })
+                } else if ($("#asal-sekolah").val() == "" || $("#asal-sekolah").val() === "_") {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "Asal Sekolah wajib diisi!",
                     })
                 } else {
                     $("#btnSubmit").attr("disabled", true);
