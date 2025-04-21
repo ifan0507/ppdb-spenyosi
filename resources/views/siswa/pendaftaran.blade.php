@@ -100,7 +100,7 @@
                                                                                     belum dikonfirmasi admin
                                                                                     <span class="badge bg-warning"><i
                                                                                             class="fa-solid fa-clock"></i>
-                                                                                        {{ $data->pendaftaran->status }}
+                                                                                        pending
                                                                                     </span>
                                                                                 @endif
                                                                             @else

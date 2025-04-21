@@ -75,6 +75,16 @@
             font-weight: 600;
         }
 
+        .delete-all-link {
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .delete-all-link:hover {
+            color: red !important;
+            cursor: pointer;
+        }
+
         button[disabled] {
             cursor: not-allowed !important;
         }

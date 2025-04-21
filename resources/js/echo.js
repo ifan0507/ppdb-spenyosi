@@ -40,7 +40,7 @@ window.Echo.private("admin-channel").listen("SiswaBaruMendaftar", (e) => {
         newItem.classList.add("notification-item");
         newItem.innerHTML = `
             <i class="bi bi-person-plus text-success"></i>
-            <a href='#'>
+            <a href='/admin/${e.siswa.id}/detail'>
                 <div>
                     <h4>${e.siswa?.register?.siswa?.nama || "Siswa Baru"}</h4>
                     <p>No. Register : ${
@@ -49,7 +49,7 @@ window.Echo.private("admin-channel").listen("SiswaBaruMendaftar", (e) => {
                     <p>Jalur : ${
                         e.siswa?.register?.jalur?.nama_jalur || "-"
                     }</p>
-                    <p class="text-muted small">Baru saja</p>
+                    <p class="text-muted small">Baru saja ${e.status}</p>
                 </div>
             </a>
         `;

@@ -5,10 +5,12 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Mail\Confirmation;
 use App\Mail\DeclineMail;
+use App\Models\DataRaport;
 use App\Models\Pendaftaran;
 use App\Models\Register;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
 class DashboardController extends Controller
@@ -81,15 +83,25 @@ class DashboardController extends Controller
         $breadcrumb = (object) [
             'list' => ['Master Data', 'Jalur Prestasi Raport']
         ];
-        $pendaftarans = Pendaftaran::with('register')->whereHas('register', function ($query) {
+        $pendaftarans = Pendaftaran::with('register.raport.mapel')->whereHas('register', function ($query) {
             $query->where('id_jalur', '5');
         })->get();
+
+
         return view('admin.dataPendaftaran', ['data' => $this->data, 'pendaftarans' => $pendaftarans, 'breadcrumb' => $breadcrumb]);
     }
 
-    public function detail()
+    public function detail(string $id)
     {
-        return view('admin.detail');
+        $pendaftarans = Pendaftaran::where('id', $id)->first();
+        $raports = collect();
+        if ($pendaftarans) {
+            if ($pendaftarans->register->jalur->id == "5") {
+                $raports = DataRaport::where('id_register', $pendaftarans->register->id)->get();
+            }
+        }
+
+        return view('admin.detail', ['data' => $this->data, 'pendaftarans' => $pendaftarans, 'raports' => $raports]);
     }
 
 
@@ -131,6 +143,18 @@ class DashboardController extends Controller
             Mail::to($pendaftaran->register->email)->send(new DeclineMail($request->message, $pendaftaran->register->siswa->nama));
         }
 
+        return response()->json(['success' => true]);
+    }
+
+    public function notifDeleteById($id)
+    {
+        DB::table('notifications')->where('id', $id)->delete();
+        return response()->json(['success' => true]);
+    }
+
+    public function notifDeleteAll()
+    {
+        auth()->user()->notifications()->delete();
         return response()->json(['success' => true]);
     }
 }

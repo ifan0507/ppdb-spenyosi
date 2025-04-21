@@ -21,9 +21,11 @@ class SiswaBaruMendaftar implements ShouldBroadcast
      */
 
     public $siswa;
-    public function __construct($siswa)
+    public $status;
+    public function __construct($siswa, $status)
     {
         $this->siswa = $siswa;
+        $this->status = $status;
     }
 
     /**

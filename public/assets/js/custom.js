@@ -71,33 +71,46 @@ $(document).ready(function () {
         const id = $(this).data("id");
 
         Swal.fire({
-            title: "Memverifikasi...",
-            text: "Mohon tunggu sebentar",
-            allowOutsideClick: false,
-            didOpen: () => {
-                Swal.showLoading();
-            },
-        });
-
-        $.ajax({
-            url: `/admin/${id}/confirm`,
-            method: "GET",
-            success: function (response) {
-                Swal.fire(
-                    "Berhasil!",
-                    "Data telah diverifikasi",
-                    "success"
-                ).then(() => {
-                    location.reload();
+            title: "Yakin?",
+            text: "Data dikonfirmasi!",
+            icon: "warning",
+            showCancelButton: true,
+            reverseButtons: true,
+            confirmButtonColor: "#18a342",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    title: "Memverifikasi...",
+                    text: "Mohon tunggu sebentar",
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    },
                 });
-            },
-            error: function () {
-                Swal.fire(
-                    "Gagal!",
-                    "Terjadi kesalahan saat memverifikasi data",
-                    "error"
-                );
-            },
+
+                $.ajax({
+                    url: `/admin/${id}/confirm`,
+                    method: "GET",
+                    success: function (response) {
+                        Swal.fire(
+                            "Berhasil!",
+                            "Data telah diverifikasi",
+                            "success"
+                        ).then(() => {
+                            location.reload();
+                        });
+                    },
+                    error: function () {
+                        Swal.fire(
+                            "Gagal!",
+                            "Terjadi kesalahan saat memverifikasi data",
+                            "error"
+                        );
+                    },
+                });
+            }
         });
     });
 });
