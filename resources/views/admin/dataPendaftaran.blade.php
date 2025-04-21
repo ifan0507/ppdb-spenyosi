@@ -23,7 +23,7 @@
                             @php
                                 $no = 1;
                             @endphp
-                            @foreach ($pendaftarans as $pendaftaran)
+                            @forelse ($pendaftarans as $pendaftaran)
                                 <tr>
                                     <th>{{ $no++ }}</th>
                                     <td>{{ $pendaftaran->register->no_register }}</td>
@@ -44,16 +44,20 @@
                                     </td>
                                     <td class="align-middle">
                                         <div class="d-flex gap-2 justify-content-center">
-                                            <button type="button" class="btn btn-success btn-sm""><i
-                                                    class="bi bi-check-circle"></i></button>
-                                            <button type="button" class="btn btn-danger btn-sm btn-decline"
-                                                data-id="{{ $pendaftaran->id }}"><i class="bi bi-x-circle"></i></button>
                                             <button type="button" class="btn btn-info btn-sm""><i
                                                     class="bi bi-info-circle"></i></button>
+                                            <button type="button" class="btn btn-success btn-sm btn-confirm"
+                                                data-id="{{ $pendaftaran->id }}"><i class="bi bi-check-circle"></i></button>
+                                            <button type="button" class="btn btn-danger btn-sm btn-decline"
+                                                data-id="{{ $pendaftaran->id }}"><i class="bi bi-x-circle"></i></button>
                                         </div>
                                     </td>
                                 </tr>
-                            @endforeach
+                            @empty
+                                <tr>
+                                    <td colspan="6" class="text-center">Tidak ada data</td>
+                                </tr>
+                            @endforelse
                         </tbody>
                     </table>
                 </div>
@@ -80,12 +84,12 @@
                                 <tr>
                                     <td>
                                         <div class="d-flex gap-2 justify-content-center">
-                                            <button type="button" class="btn btn-success btn-sm""><i
-                                                    class="bi bi-check-circle"></i></button>
+                                            <button type="button" class="btn btn-info btn-sm"><i
+                                                    class="bi bi-info-circle"></i></button>
+                                            <button type="button" class="btn btn-success btn-sm btn-confirm"
+                                                data-id="{{ $pendaftaran->id }}"><i class="bi bi-check-circle"></i></button>
                                             <button type="button" class="btn btn-danger btn-sm btn-decline"
                                                 data-id="{{ $pendaftaran->id }}"><i class="bi bi-x-circle"></i></button>
-                                            <button type="button" class="btn btn-info btn-sm""><i
-                                                    class="bi bi-info-circle"></i></button>
                                         </div>
                                     </td>
                                     <td>{{ $pendaftaran->register->no_register }}</td>

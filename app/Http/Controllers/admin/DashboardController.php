@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Mail\Confirmation;
 use App\Mail\DeclineMail;
 use App\Models\Pendaftaran;
 use App\Models\Register;
@@ -97,16 +98,19 @@ class DashboardController extends Controller
      */
     public function confirm(string $id)
     {
+        $pendaftaran = Pendaftaran::where('id', $id)->first();
 
-        $data = Auth::guard('web')->user();
+        if ($pendaftaran) {
+            $pendaftaran->update([
+                'confirmations' => '1',
+                'status' => 'valid',
+                'id_user' => $this->data->id
+            ]);
 
-        Pendaftaran::where('id', $id)->update([
-            'confirmations' => '1',
-            'status' => 'valid',
-            'id_user' => $data->id
-        ]);
+            Mail::to($pendaftaran->register->email)->send(new Confirmation($pendaftaran->register->siswa->nama));
+        };
 
-        return redirect('/admin/umum');
+        return response()->json(['success' => true]);
     }
 
     public function decline(string $id, Request $request)

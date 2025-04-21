@@ -64,4 +64,40 @@ $(document).ready(function () {
             }
         });
     });
+
+    $(".btn-confirm").on("click", function (e) {
+        e.preventDefault();
+
+        const id = $(this).data("id");
+
+        Swal.fire({
+            title: "Memverifikasi...",
+            text: "Mohon tunggu sebentar",
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            },
+        });
+
+        $.ajax({
+            url: `/admin/${id}/confirm`,
+            method: "GET",
+            success: function (response) {
+                Swal.fire(
+                    "Berhasil!",
+                    "Data telah diverifikasi",
+                    "success"
+                ).then(() => {
+                    location.reload();
+                });
+            },
+            error: function () {
+                Swal.fire(
+                    "Gagal!",
+                    "Terjadi kesalahan saat memverifikasi data",
+                    "error"
+                );
+            },
+        });
+    });
 });

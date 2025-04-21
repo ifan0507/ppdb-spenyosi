@@ -90,10 +90,12 @@
                                                                             @if ($data->pendaftaran)
                                                                                 @if ($data->pendaftaran->confirmations == '1')
                                                                                     <span class="badge bg-success"><i
-                                                                                            class="fa-solid fa-circle-check"></i>{{ $data->pendaftaran->status }}</span>
+                                                                                            class="fa-solid fa-circle-check"></i>
+                                                                                        {{ $data->pendaftaran->status }}</span>
                                                                                 @elseif ($data->pendaftaran->decline == '1')
                                                                                     <span class="badge bg-danger"><i
-                                                                                            class="fa-solid fa-triangle-exclamation"></i>{{ $data->pendaftaran->status }}</span>
+                                                                                            class="fa-solid fa-triangle-exclamation"></i>
+                                                                                        {{ $data->pendaftaran->status }}</span>
                                                                                 @else
                                                                                     belum dikonfirmasi admin
                                                                                     <span class="badge bg-warning"><i

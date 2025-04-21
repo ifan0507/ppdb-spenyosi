@@ -39,7 +39,7 @@ class VerificationMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            markdown: 'emails.verification',
+            markdown: 'mail.verification',
         );
     }
 
@@ -55,7 +55,7 @@ class VerificationMail extends Mailable
 
     public function build()
     {
-        return $this->markdown('emails.verification')
+        return $this->markdown('mail.verification')
             ->subject('Kode Verifikasi Anda')
             ->with([
                 'otp' => '**' . $this->otp . '**'
