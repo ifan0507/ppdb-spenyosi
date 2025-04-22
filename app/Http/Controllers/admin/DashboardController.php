@@ -22,7 +22,7 @@ class DashboardController extends Controller
     {
         $this->data =  Auth::guard('web')->user();;
     }
-
+    //dashboard
     public function index()
     {
         $breadcrumb = (object) [
