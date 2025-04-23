@@ -11,7 +11,7 @@
         <li class="nav-item">
             <a class="nav-link {{ request()->routeIs('dashboard-admin') ? '' : 'collapsed' }}"
                 href="{{ route('dashboard-admin') }}">
-                <i class="fas fa-tachometer-alt me-2"></i>
+                <i class="bi bi-grid"></i>
                 <span>Dashboard</span>
             </a>
         </li><!-- End Dashboard Nav -->
@@ -57,10 +57,10 @@
 
         <!-- Manajemen Berita -->
         <li class="nav-item">
-            <a class="nav-link {{ request()->routeIs('dashboard-admin') ? '' : 'collapsed' }}"
-                href="{{ route('dashboard-admin') }}">
-                <i class="fas fa-tachometer-alt me-2"></i>
-                <span>Dashboard</span>
+            <a class="nav-link {{ request()->routeIs('admin.berita') ? '' : 'collapsed' }}"
+                href="{{ route('admin.berita') }}">
+                <i class="bi bi-journal-text"></i>
+                <span>Manajemen Info</span>
             </a>
         </li><!-- End Dashboard Nav -->
 

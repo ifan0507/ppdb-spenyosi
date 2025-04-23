@@ -220,41 +220,47 @@
                                             </thead>
 
                                             <tbody>
-                                                @foreach ($pendaftarans as $pendaftaran)
-                                                    @php $no = 1; @endphp
-
-                                                    @if (optional($pendaftaran->register)->raport)
-                                                        @foreach ($pendaftaran->register->raport as $raport)
-                                                            <tr>
-                                                                <td>{{ $no++ }}</td>
-                                                                <td>{{ optional($raport->mapel)->nama_matapelajaran ?? 'N/A' }}
-                                                                </td>
-                                                                <td>{{ $raport->kelas4_1 }}</td>
-                                                                <td>{{ $raport->kelas4_2 }}</td>
-                                                                <td>{{ $raport->kelas5_1 }}</td>
-                                                                <td>{{ $raport->kelas5_2 }}</td>
-                                                                <td>{{ $raport->kelas6_1 }}</td>
-                                                            </tr>
-                                                        @endforeach
-                                                    @else
-                                                        <tr>
-                                                            <td colspan="7" class="text-center">Data raport tidak
-                                                                ditemukan</td>
-                                                        </tr>
-                                                    @endif
-                                                @endforeach
-
-
+                                                @php $no = 1; @endphp
+                                                @forelse ($raports as $raport)
+                                                    <tr>
+                                                        <td>{{ $no++ }}</td>
+                                                        <td>
+                                                            {{ $raport->mapel->nama_matapelajaran }}
+                                                        </td>
+                                                        <td>
+                                                            {{ $raport->kelas4_1 }}
+                                                        </td>
+                                                        <td>
+                                                            {{ $raport->kelas4_2 }}
+                                                        </td>
+                                                        <td>
+                                                            {{ $raport->kelas5_1 }}
+                                                        </td>
+                                                        <td>
+                                                            {{ $raport->kelas5_2 }}
+                                                        </td>
+                                                        <td>
+                                                            {{ $raport->kelas6_1 }}
+                                                        </td>
+                                                    </tr>
+                                                @empty
+                                                    <tr>
+                                                        <td colspan="8" class="text-center">
+                                                            <p>Tidak ada data</p>
+                                                        </td>
+                                                    </tr>
+                                                @endforelse
                                                 @if (!$raports->isEmpty())
                                                     <tr>
                                                         <td colspan="2"><strong>Rata-rata Nilai</strong></td>
-                                                        <td>{{ $raports->avg('kelas4_1') }}</td>
-                                                        <td>{{ $raports->avg('kelas4_2') }}</td>
-                                                        <td>{{ $raports->avg('kelas5_1') }}</td>
-                                                        <td>{{ $raports->avg('kelas5_2') }}</td>
-                                                        <td>{{ $raports->avg('kelas6_1') }}</td>
+                                                        <td>{{ $raports->avg('rata_kelas4_sem1') }}</td>
+                                                        <td>{{ $raports->avg('rata_kelas4_sem2') }}</td>
+                                                        <td>{{ $raports->avg('rata_kelas5_sem1') }}</td>
+                                                        <td>{{ $raports->avg('rata_kelas5_sem2') }}</td>
+                                                        <td>{{ $raports->avg('rata_kelas6_sem1') }}</td>
                                                     </tr>
                                                 @endif
+
                                             </tbody>
 
                                         </table>

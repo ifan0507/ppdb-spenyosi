@@ -9,7 +9,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class DeclineMail extends Mailable
+class Confirmation extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -17,11 +17,9 @@ class DeclineMail extends Mailable
      * Create a new message instance.
      */
 
-    public $message;
     public $nama;
-    public function __construct($message, $nama)
+    public function __construct($nama)
     {
-        $this->message = $message;
         $this->nama = $nama;
     }
 
@@ -31,7 +29,7 @@ class DeclineMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Invalid Data Pendaftaran',
+            subject: 'Confirmation',
         );
     }
 
@@ -41,7 +39,7 @@ class DeclineMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'mail.decline',
+            markdown: 'mail.confirmation',
         );
     }
 
@@ -57,11 +55,8 @@ class DeclineMail extends Mailable
 
     public function build()
     {
-        return $this->markdown('mail.decline')
-            ->subject('Invalid Data Pendaftaran')
-            ->with([
-                'message' => '**' . $this->message . '**',
-                'nama' => $this->nama
-            ]);
+        $this->markdown('emails.verification')->subject('Konfirmasi Pendaftaran')->with([
+            'nama' => $this->nama
+        ]);
     }
 }

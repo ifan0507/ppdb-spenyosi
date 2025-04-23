@@ -96,9 +96,16 @@ Route::middleware(['cache_verify', 'auth_admin'])->group(function () {
     Route::get('/admin/pindah-tugas', [AdminDashboardController::class, 'viewpindahTugas'])->name('pindah.tugas');
     Route::get('/admin/tahfidz', [AdminDashboardController::class, 'viewTahfidz'])->name('tahfidz');
     Route::get('/admin/prestasi', [AdminDashboardController::class, 'viewPrestasi'])->name('prestasi');
+
     Route::get('/admin/{id}/confirm', [AdminDashboardController::class, 'confirm'])->name('admin.confirm');
     Route::post('/admin/{id}/decline', [AdminDashboardController::class, 'decline'])->name('admin.decline');
     Route::get('/admin/{id}/detail', [AdminDashboardController::class, 'detail'])->name('admin.detail');
+
+    Route::delete('/admin/notif/{id}/delete', [AdminDashboardController::class, 'notifDeleteById'])->name('delete-notif-byId');
+    Route::delete('/admin/notif/delete-all', [AdminDashboardController::class, 'notifDeleteAll'])->name('delete-all-notif');
+
+    Route::get('/admin/menejemen-info', [AdminDashboardController::class, 'info'])->name('admin.berita');
+    Route::get('/admin/info/form-info', [AdminDashboardController::class, 'formInfo'])->name('admin.berita.form');
 
     Route::get('/admin/logout', [AuthController::class, 'logout'])->name('logout-admin');
 });

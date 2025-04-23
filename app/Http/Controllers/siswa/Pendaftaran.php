@@ -46,22 +46,33 @@ class Pendaftaran extends Controller
                 return response()->json(['errors' => ['Raport belum lengkap!']], 422);
         }
 
-        $dataSiswa = ModelsPendaftaran::create([
-            'tanggal_daftar' => Carbon::now(),
-            'id_register' => $data->id,
-            'status' => 'Pending'
-        ]);
-
         $admin = User::where('role', 'admin')->get();
-        Notification::send($admin, new SiswaBaruDaftar($dataSiswa));
 
-        event(new SiswaBaruMendaftar($dataSiswa));
+        $cekData =  ModelsPendaftaran::where('id_register', $data->id)->first();
+        if ($cekData) {
+            $cekData->update([
+                'status' => 'Diperbarui',
+                'decline' => "0",
+            ]);
 
-        Register::where('id', $id)->update([
-            "submit" => "1"
-        ]);
+            Notification::send($admin, new SiswaBaruDaftar($cekData, 'diperbarui'));
+            event(new SiswaBaruMendaftar($cekData, 'diperbarui'));
+            Register::where('id', $id)->update([
+                "submit" => "1"
+            ]);
+        } else {
+            $dataSiswa = ModelsPendaftaran::create([
+                'tanggal_daftar' => Carbon::now(),
+                'id_register' => $data->id,
+                'status' => 'Pending'
+            ]);
 
-
+            Notification::send($admin, new SiswaBaruDaftar($dataSiswa, 'mendaftar'));
+            event(new SiswaBaruMendaftar($dataSiswa, 'mendaftar'));
+            Register::where('id', $id)->update([
+                "submit" => "1"
+            ]);
+        }
         return response()->json(['redirect' => route('pendaftaran')]);
     }
 }

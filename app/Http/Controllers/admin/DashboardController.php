@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Mail\Confirmation;
 use App\Mail\DeclineMail;
+use App\Models\DataRaport;
 use App\Models\Pendaftaran;
 use App\Models\Register;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
 class DashboardController extends Controller
@@ -88,28 +91,52 @@ class DashboardController extends Controller
         return view('admin.dataPendaftaran', ['data' => $this->data, 'pendaftarans' => $pendaftarans, 'breadcrumb' => $breadcrumb]);
     }
 
-    public function detail($id)
+    public function detail(string $id)
     {
         $pendaftarans = Pendaftaran::where('id', $id)->first();
-        return view('admin.detail', ['data' => $this->data, 'pendaftarans' => $pendaftarans]);
+        $raports = collect();
+        if ($pendaftarans) {
+            if ($pendaftarans->register->jalur->id == "5") {
+                $raports = DataRaport::where('id_register', $pendaftarans->register->id)->get();
+            }
+        }
+
+        return view('admin.detail', ['data' => $this->data, 'pendaftarans' => $pendaftarans, 'raports' => $raports]);
     }
 
+    public function info()
+    {
+        $breadcrumb = (object) [
+            'list' => ['Manajemen Info', '']
+        ];
+        return view('admin.berita', ['data' => $this->data, 'breadcrumb' => $breadcrumb]);
+    }
+
+    public function formInfo(){
+        $breadcrumb = (object) [
+            'list' => ['Manajemen Info', 'Form Info']
+        ];
+        return view('admin.form-berita', ['data' => $this->data, 'breadcrumb' => $breadcrumb]);
+    }
 
     /**
      * Show the form for creating a new resource.
      */
     public function confirm(string $id)
     {
+        $pendaftaran = Pendaftaran::where('id', $id)->first();
 
-        $data = Auth::guard('web')->user();
+        if ($pendaftaran) {
+            $pendaftaran->update([
+                'confirmations' => '1',
+                'status' => 'valid',
+                'id_user' => $this->data->id
+            ]);
 
-        Pendaftaran::where('id', $id)->update([
-            'confirmations' => '1',
-            'status' => 'valid',
-            'id_user' => $data->id
-        ]);
+            Mail::to($pendaftaran->register->email)->send(new Confirmation($pendaftaran->register->siswa->nama));
+        };
 
-        return redirect('/admin/umum');
+        return response()->json(['success' => true]);
     }
 
     public function decline(string $id, Request $request)
@@ -130,6 +157,18 @@ class DashboardController extends Controller
             Mail::to($pendaftaran->register->email)->send(new DeclineMail($request->message, $pendaftaran->register->siswa->nama));
         }
 
+        return response()->json(['success' => true]);
+    }
+
+    public function notifDeleteById($id)
+    {
+        DB::table('notifications')->where('id', $id)->delete();
+        return response()->json(['success' => true]);
+    }
+
+    public function notifDeleteAll()
+    {
+        auth()->user()->notifications()->delete();
         return response()->json(['success' => true]);
     }
 }
