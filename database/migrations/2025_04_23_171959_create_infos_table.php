@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('infos', function (Blueprint $table) {
             $table->ulid('id')->primary();
             $table->string('judul');
-            $table->string('file');
-            $table->text('deskripsi');
+            $table->string('file')->nullable();
+            $table->text('deskripsi')->nullable();
             $table->timestamps();
         });
     }
