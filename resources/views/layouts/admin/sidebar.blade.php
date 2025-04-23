@@ -59,10 +59,19 @@
         <li class="nav-item">
             <a class="nav-link {{ request()->routeIs('admin.berita') ? '' : 'collapsed' }}"
                 href="{{ route('admin.berita') }}">
-                <i class="bi bi-journal-text"></i>
+                <i class='bx bxs-news'></i>
                 <span>Manajemen Info</span>
             </a>
-        </li><!-- End Dashboard Nav -->
+        </li><!-- End Manajemen Berita Nav -->
+
+        <!-- Manajemen Berita -->
+        <li class="nav-item">
+            <a class="nav-link {{ request()->routeIs('admin.unduhan') ? '' : 'collapsed' }}"
+                href="{{ route('admin.unduhan') }}">
+                <i class='bx bx-upload'></i>
+                <span>Manajemen Unduhan</span>
+            </a>
+        </li><!-- End Manajemen Berita Nav -->
 
     </ul>
 

@@ -103,7 +103,7 @@ class DashboardController extends Controller
 
         return view('admin.detail', ['data' => $this->data, 'pendaftarans' => $pendaftarans, 'raports' => $raports]);
     }
-
+    //Info
     public function info()
     {
         $breadcrumb = (object) [
@@ -112,11 +112,20 @@ class DashboardController extends Controller
         return view('admin.berita', ['data' => $this->data, 'breadcrumb' => $breadcrumb]);
     }
 
-    public function formInfo(){
+    public function formInfo()
+    {
         $breadcrumb = (object) [
             'list' => ['Manajemen Info', 'Form Info']
         ];
         return view('admin.form-berita', ['data' => $this->data, 'breadcrumb' => $breadcrumb]);
+    }
+    //unduhan
+    public function unduhan()
+    {
+        $breadcrumb = (object) [
+            'list' => ['Manajemen Unduhan', '']
+        ];
+        return view('admin.unduhan', ['data' => $this->data, 'breadcrumb' => $breadcrumb]);
     }
 
     /**

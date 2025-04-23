@@ -104,8 +104,10 @@ Route::middleware(['cache_verify', 'auth_admin'])->group(function () {
     Route::delete('/admin/notif/{id}/delete', [AdminDashboardController::class, 'notifDeleteById'])->name('delete-notif-byId');
     Route::delete('/admin/notif/delete-all', [AdminDashboardController::class, 'notifDeleteAll'])->name('delete-all-notif');
 
-    Route::get('/admin/menejemen-info', [AdminDashboardController::class, 'info'])->name('admin.berita');
+    Route::get('/admin/manajemen-info', [AdminDashboardController::class, 'info'])->name('admin.berita');
     Route::get('/admin/info/form-info', [AdminDashboardController::class, 'formInfo'])->name('admin.berita.form');
+
+    Route::get('/admin/manajemen-unduhan', [AdminDashboardController::class, 'unduhan'])->name('admin.unduhan');
 
     Route::get('/admin/logout', [AuthController::class, 'logout'])->name('logout-admin');
 });
