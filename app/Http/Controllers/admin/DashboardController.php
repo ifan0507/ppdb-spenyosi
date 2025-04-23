@@ -119,14 +119,6 @@ class DashboardController extends Controller
         ];
         return view('admin.form-berita', ['data' => $this->data, 'breadcrumb' => $breadcrumb]);
     }
-    //unduhan
-    public function unduhan()
-    {
-        $breadcrumb = (object) [
-            'list' => ['Manajemen Unduhan', '']
-        ];
-        return view('admin.unduhan', ['data' => $this->data, 'breadcrumb' => $breadcrumb]);
-    }
 
     /**
      * Show the form for creating a new resource.

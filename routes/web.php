@@ -107,7 +107,5 @@ Route::middleware(['cache_verify', 'auth_admin'])->group(function () {
     Route::get('/admin/manajemen-info', [AdminDashboardController::class, 'info'])->name('admin.berita');
     Route::get('/admin/info/form-info', [AdminDashboardController::class, 'formInfo'])->name('admin.berita.form');
 
-    Route::get('/admin/manajemen-unduhan', [AdminDashboardController::class, 'unduhan'])->name('admin.unduhan');
-
     Route::get('/admin/logout', [AuthController::class, 'logout'])->name('logout-admin');
 });

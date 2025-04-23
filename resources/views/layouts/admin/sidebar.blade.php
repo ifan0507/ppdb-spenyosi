@@ -64,15 +64,6 @@
             </a>
         </li><!-- End Manajemen Berita Nav -->
 
-        <!-- Manajemen Berita -->
-        <li class="nav-item">
-            <a class="nav-link {{ request()->routeIs('admin.unduhan') ? '' : 'collapsed' }}"
-                href="{{ route('admin.unduhan') }}">
-                <i class='bx bx-upload'></i>
-                <span>Manajemen Unduhan</span>
-            </a>
-        </li><!-- End Manajemen Berita Nav -->
-
     </ul>
 
 
