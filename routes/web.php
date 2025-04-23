@@ -7,6 +7,7 @@ use App\Http\Controllers\client\BerandaController;
 use App\Http\Controllers\client\LoginController;
 use App\Http\Controllers\client\PortalController;
 use App\Http\Controllers\client\RegisterController;
+use App\Http\Controllers\InfoController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\siswa\DashboardController;
 use App\Http\Controllers\siswa\OrtuController;
@@ -104,5 +105,9 @@ Route::middleware(['cache_verify', 'auth_admin'])->group(function () {
     Route::delete('/admin/notif/{id}/delete', [AdminDashboardController::class, 'notifDeleteById'])->name('delete-notif-byId');
     Route::delete('/admin/notif/delete-all', [AdminDashboardController::class, 'notifDeleteAll'])->name('delete-all-notif');
 
+
+    Route::post('/admin/info', [InfoController::class, 'store'])->name('info.post');
+    Route::put('/admin/info/{id}/update', [InfoController::class, 'update'])->name('info.update');
+    Route::delete('/admin/info{id}/delete', [InfoController::class, 'destroy'])->name('info.delete');
     Route::get('/admin/logout', [AuthController::class, 'logout'])->name('logout-admin');
 });

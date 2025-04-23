@@ -12,6 +12,22 @@ use Illuminate\Support\Facades\Storage;
 
 class DashboardController extends Controller
 {
+    // Function untuk mengihitung jarak titik rumah ke smp
+    private function hitungJarak($lat1, $lon1, $lat2, $lon2)
+    {
+        $earthRadius = 6371; // km
+
+        $dLat = deg2rad($lat2 - $lat1);
+        $dLon = deg2rad($lon2 - $lon1);
+
+        $a = sin($dLat / 2) * sin($dLat / 2) +
+            cos(deg2rad($lat1)) * cos(deg2rad($lat2)) *
+            sin($dLon / 2) * sin($dLon / 2);
+        $c = 2 * atan2(sqrt($a), sqrt(1 - $a));
+
+        return $earthRadius * $c;
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -135,6 +151,17 @@ class DashboardController extends Controller
             $fotoAktePath = $akun->siswa->foto_akte;
         }
 
+        $lokasi = explode(',', $request->lokasi);
+        $latSiswa = floatval(trim($lokasi[0]));
+        $lngSiswa = floatval(trim($lokasi[1]));
+
+        // Koordinat SMP
+        $latSMP = -8.234165;
+        $lngSMP = 113.310387;
+
+        $jarak = $this->hitungJarak($latSiswa, $lngSiswa, $latSMP, $lngSMP);
+
+
         $update = SiswaBaru::where("id", $akun->siswa->id)->update([
             "foto_siswa" => $fotoSiswaPath,
             "nik" => $request->nik,
@@ -151,6 +178,7 @@ class DashboardController extends Controller
             "alamat" => $request->alamat,
             "no_hp" => $request->no_hp,
             "lokasi" => $request->lokasi,
+            'jarak_sekolah' => round($jarak, 2),
             "foto_kk" => $fotoKKPath,
             "foto_akte" => $fotoAktePath,
             "status_berkas" => "1"

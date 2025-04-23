@@ -37,6 +37,7 @@ class SiswaBaru extends Model
         'no_hp',
         'email',
         'lokasi',
+        'jarak_sekolah',
         'foto_kk',
         'foto_siswa',
         'foto_akte',

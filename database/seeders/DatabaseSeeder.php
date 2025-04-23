@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Jalur;
+use App\Models\Info;
 use App\Models\MataPelajaran;
 use App\Models\OrtuSiswa;
 use App\Models\Register;
@@ -10,6 +11,8 @@ use App\Models\SiswaBaru;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class DatabaseSeeder extends Seeder
 {
@@ -107,6 +110,19 @@ class DatabaseSeeder extends Seeder
             "pendidikan_ibu" => "_",
             "no_hp" => "_",
             "status_berkas" => "1"
+        ]);
+
+
+        $sourcePath = public_path('assets/SOAL.pdf');
+
+        $destinationPath = 'admin/info-files/SOAL.pdf';
+
+        // Copy ke storage
+        Storage::put($destinationPath, File::get($sourcePath));
+        Info::create([
+            'judul' => 'testing blabalana',
+            'file' =>  $destinationPath,
+            'deskripsi' => 'nvsklg;nga gwggwr gjgbergjergegvngenvjbfjbviebvibe'
         ]);
     }
 }

@@ -45,44 +45,30 @@
         </div>
 
 
-        <div class="row gy-4 mt-5">
-            <div class="col-md-6 col-lg-3" data-aos="zoom-out" data-aos-delay="100">
-                <div class="icon-box">
-                    <div class="icon"><i class="bi bi-easel"></i></div>
-                    <h4 class="title"><a href="">Lorem Ipsum</a></h4>
-                    <p class="description">Voluptatum deleniti atque corrupti quos dolores et quas molestias
-                        excepturi</p>
-                </div>
-            </div><!--End Icon Box -->
+        @foreach ($infos as $info)
+            <div class="row gy-4 mt-5">
+                <div class="col-md-6 col-lg-3" data-aos="zoom-out" data-aos-delay="100">
+                    <div class="icon-box">
+                        @php
+                            $ext = pathinfo($info->file, PATHINFO_EXTENSION);
+                            $url = Storage::url($info->file);
+                        @endphp
+                        <div class="icon">
+                            @if (in_array($ext, ['jpg', 'jpeg', 'png', 'gif', 'webp']))
+                                <img src="{{ $url }}" class="img-fluid" alt="Preview Info">
+                            @elseif ($ext === 'pdf')
+                                <iframe src="{{ $url }}" width="100%" height="600px" frameborder="0"></iframe>
+                            @else
+                                <p><a href="{{ $url }}" target="_blank">Download file</a></p>
+                            @endif
+                        </div>
+                        <h4 class="title"><a href="">{{ $info->judul }}</a></h4>
+                        <p class="description">{{ $info->deskripsi }}</p>
+                    </div>
+                </div><!--End Icon Box -->
 
-            <div class="col-md-6 col-lg-3" data-aos="zoom-out" data-aos-delay="200">
-                <div class="icon-box">
-                    <div class="icon"><i class="bi bi-gem"></i></div>
-                    <h4 class="title"><a href="">Sed ut perspiciatis</a></h4>
-                    <p class="description">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-                        dolore</p>
-                </div>
-            </div><!--End Icon Box -->
-
-            <div class="col-md-6 col-lg-3" data-aos="zoom-out" data-aos-delay="300">
-                <div class="icon-box">
-                    <div class="icon"><i class="bi bi-geo-alt"></i></div>
-                    <h4 class="title"><a href="">Magni Dolores</a></h4>
-                    <p class="description">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
-                        officia</p>
-                </div>
-            </div><!--End Icon Box -->
-
-            <div class="col-md-6 col-lg-3" data-aos="zoom-out" data-aos-delay="400">
-                <div class="icon-box">
-                    <div class="icon"><i class="bi bi-command"></i></div>
-                    <h4 class="title"><a href="">Nemo Enim</a></h4>
-                    <p class="description">At vero eos et accusamus et iusto odio dignissimos ducimus qui
-                        blanditiis</p>
-                </div>
-            </div><!--End Icon Box -->
-
-        </div>
+            </div>
+        @endforeach
     </div>
 
     {{-- </section><!-- /Hero Section --> --}}

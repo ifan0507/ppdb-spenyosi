@@ -256,36 +256,55 @@
     <script>
         let map;
         let marker;
-        let inputKoordinat = document.getElementById("coordinates");
+        let line;
+        const inputKoordinat = document.getElementById("coordinates");
+
+        // Koordinat SMP NEGERI 1 YOSO
+        const smpLat = -8.234165;
+        const smpLng = 113.310387;
+
         document.getElementById('mapModal').addEventListener('shown.bs.modal', function() {
             if (!map) {
-                map = L.map('map').setView([-8.2341388, 113.3041141], 13);
+                map = L.map('map').setView([smpLat, smpLng], 15);
 
                 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                     attribution: '&copy; OpenStreetMap contributors'
                 }).addTo(map);
 
-                marker = L.marker([-8.2341388, 113.3041141], {
-                        draggable: true
-                    }).addTo(map)
+                // Marker SMP
+                L.marker([smpLat, smpLng]).addTo(map)
                     .bindPopup('SMP NEGERI 1 YOSOWILANGUN').openPopup();
 
+                // Marker Rumah (yang akan digeser)
+                marker = L.marker([smpLat, smpLng], {
+                    draggable: true
+                }).addTo(map);
+
                 map.on('click', function(e) {
-                    let lat = e.latlng.lat;
-                    let lng = e.latlng.lng;
+                    const lat = e.latlng.lat;
+                    const lng = e.latlng.lng;
 
                     marker.setLatLng([lat, lng])
-                        .bindPopup(`Lokasi: ${lat.toFixed(5)}, ${lng.toFixed(5)}`)
+                        .bindPopup(`Lokasi rumah: ${lat.toFixed(5)}, ${lng.toFixed(5)}`)
                         .openPopup();
-                    inputKoordinat.value = `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
-                });
 
+                    inputKoordinat.value = `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
+
+                    if (line) map.removeLayer(line);
+                    line = L.polyline([
+                        [smpLat, smpLng],
+                        [lat, lng]
+                    ], {
+                        color: 'blue'
+                    }).addTo(map);
+                });
             } else {
                 setTimeout(() => {
                     map.invalidateSize();
                 }, 200);
             }
         });
+
 
         // scrip jquery dan ajax untuk kabupaten
         document.addEventListener("DOMContentLoaded", function() {

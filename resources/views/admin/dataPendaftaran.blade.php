@@ -14,6 +14,7 @@
                                 <th scope="col">#</th>
                                 <th scope="col">No Register</th>
                                 <th scope="col">Nama</th>
+                                <th scope="col">Jarak dari sekolah</th>
                                 <th scope="col">Tanggal Daftar</th>
                                 <th scope="col" class="text-center">Status</th>
                                 <th scope="col" class="text-center">Action</th>
@@ -28,6 +29,7 @@
                                     <th>{{ $no++ }}</th>
                                     <td>{{ $pendaftaran->register->no_register }}</td>
                                     <td>{{ $pendaftaran->register->siswa->nama }}</td>
+                                    <td>{{ $pendaftaran->register->siswa->jarak_sekolah }} km</td>
                                     <td>{{ $pendaftaran->created_at?->format('d/m/Y') ?? '-' }}</td>
                                     <td class="text-center">
                                         @if ($pendaftaran->decline == '1')
@@ -74,6 +76,7 @@
                                 <th scope="col">Action</th>
                                 <th scope="col">No Register</th>
                                 <th scope="col">Nama</th>
+                                <th scope="col" class="text-nowrap">Jarak dari sekolah</th>
                                 <th scope="col" class="text-nowrap">Tanggal Daftar</th>
                                 <th scope="col" class="text-center">Status</th>
                             </tr>
@@ -99,6 +102,7 @@
                                     </td>
                                     <td>{{ $pendaftaran->register->no_register }}</td>
                                     <td class="text-nowrap">{{ $pendaftaran->register->siswa->nama }}</td>
+                                    <td>{{ $pendaftaran->register->siswa->jarak_sekolah }} km</td>
                                     <td class="text-nowrap">{{ $pendaftaran->created_at?->format('d/m/Y') ?? '-' }}</td>
                                     <td>
                                         @if ($pendaftaran->decline == '1')

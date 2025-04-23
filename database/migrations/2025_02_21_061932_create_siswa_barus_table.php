@@ -30,6 +30,7 @@ return new class extends Migration
             $table->string('no_hp')->nullable();
             $table->string('email')->nullable();
             $table->string('lokasi')->nullable();
+            $table->decimal('jarak_sekolah', 8, 2)->nullable();
             $table->string('foto_kk')->nullable();
             $table->string('foto_siswa')->nullable();
             $table->string('foto_akte')->nullable();
