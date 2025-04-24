@@ -95,9 +95,14 @@
                                     <div class="col-lg-3 col-md-4 label">Email</div>
                                     <div class="col-lg-9 col-md-8">{{ $pendaftarans->register->siswa->email }}</div>
                                 </div>
+
                                 <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Titik Koordinat</div>
-                                    <div class="col-lg-9 col-md-8">{{ $pendaftarans->register->siswa->lokasi }}
+                                    <div class="col-lg-3 col-md-4 label">Titik Koordinat Rumah</div>
+                                    <div class="col-lg-9 col-md-8"> <a style="text-decoration: underline"
+                                            href="https://www.google.com/maps?q={{ $pendaftarans->register->siswa->lokasi }}"
+                                            target="_blank">
+                                            {{ $pendaftarans->register->siswa->lokasi }}
+                                        </a>
                                     </div>
                                 </div>
 

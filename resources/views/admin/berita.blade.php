@@ -10,7 +10,7 @@
                     onclick="openModal()">Tambah Berita</button>
 
                 <div class="table-responsive">
-                    <table class="table datatable">
+                    {{-- <table class="table datatable">
                         <thead>
                             <tr>
                                 <th>No</th>
@@ -21,30 +21,26 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {{-- @foreach ($infos as $info) --}}
+                            @foreach ($infos as $info)
                             <tr>
-                                <td></td>
-                                {{-- {{ $loop->iteration }} --}}
-                                <td></td>
-                                {{-- {{ $info->judul }} --}}
-                                <td></td>
-                                {{-- {{ $info->created_at->format('d M Y') }} --}}
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $info->judul }}</td>
+                                <td>{{ $info->created_at->format('d M Y') }}</td>
                                 <td>
-                                    {{-- @if ($info->gambar) --}}
-                                    <img src="" width="80" {{-- {{ asset('storage/info/' . $info->gambar) }} --}} alt="thumb">
-                                    {{-- @else --}}
+                                    @if ($info->gambar)
+                                    <img src="{{ asset('storage/info/' . $info->gambar) }}" width="80" alt="thumb">
+                                    @else
                                     <span class="text-muted">Tidak ada</span>
-                                    {{-- @endif --}}
+                                    @endif
                                 </td>
                                 <td>
                                     <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal"
-                                        data-bs-target="#infoModal" onclick="#">
-                                        {{-- openModal({{ $info }}) --}}
+                                        data-bs-target="#infoModal" onclick="openModal({{ $info }})">
                                         <i class="bi bi-pencil"></i>
                                     </button>
 
-                                    <form action="#" method="POST" {{-- {{ route('admin.info.destroy', $info->id) }} --}} class="d-inline">
-                                        {{-- @csrf @method('DELETE') --}}
+                                    <form action="{{ route('info.delete', $info->id) }}" method="POST" class="d-inline">
+                                        @csrf @method('DELETE')
                                         <button type="submit" class="btn btn-danger btn-sm"
                                             onclick="return confirm('Yakin hapus berita ini?')">
                                             <i class="bi bi-trash"></i>
@@ -52,17 +48,18 @@
                                     </form>
                                 </td>
                             </tr>
-                            {{-- @endforeach --}}
+                            @endforeach
                         </tbody>
-                    </table>
+                    </table> --}}
                 </div>
 
                 {{-- Modal --}}
                 <div class="modal fade" id="infoModal" tabindex="-1">
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
-                            <form id="formBerita" method="POST" enctype="multipart/form-data">
-                                {{-- @csrf --}}
+                            <form id="formBerita" method="POST" enctype="multipart/form-data"
+                                action="{{ route('info.post') }}">
+                                @csrf
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="modalTitle">Tambah Berita</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
@@ -86,7 +83,7 @@
 
                                     <div class="mb-3">
                                         <label for="gambar" class="form-label">Gambar / Dokumen</label>
-                                        <input type="file" class="form-control" name="gambar" id="gambar"
+                                        <input type="file" class="form-control" name="file" id="gambar"
                                             accept=".jpg,.jpeg,.png,.pdf,.doc,.docx">
                                         <div class="invalid-feedback" id="gambarError">File tidak valid</div>
                                     </div>
@@ -105,7 +102,7 @@
         </div>
     </section>
 
-    {{-- <script>
+    <script>
         $(document).ready(function() {
             // Validasi sebelum submit
             $('#formBerita').on('submit', function(e) {
@@ -117,7 +114,22 @@
                     e.preventDefault();
                     alert('Judul dan Deskripsi wajib diisi!');
                 }
+
+                $.(ajax() {
+                    url: $('#formBerita').attr('action'),
+                    type: 'POST',
+                    data: $('#formBerita').serialize(),
+                    success: function(response) {
+                        alert('berhasil')
+                    },
+
+                    error: function() {
+                        alert('error')
+                    }
+
+                })
             });
+
         });
 
         function openModal(info = null) {
@@ -131,7 +143,7 @@
 
             if (info) {
                 $modalTitle.text('Edit Berita');
-                $form.attr('action', `/admin/info/${info.id}`);
+                $form.attr('action', `/admin/info/${id}/update`);
                 $methodField.val('PUT');
 
                 $('#beritaId').val(info.id);
@@ -139,11 +151,11 @@
                 quill.root.innerHTML = info.deskripsi;
             } else {
                 $modalTitle.text('Tambah Berita');
-                $form.attr('action', '{{ route('admin.info.store') }}');
+                $form.attr('action', '{{ route('info.post') }}');
                 $methodField.val('POST');
             }
 
             $modal.modal('show');
         }
-    </script> --}}
+    </script>
 @endsection

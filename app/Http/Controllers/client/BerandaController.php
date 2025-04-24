@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\client;
 
 use App\Http\Controllers\Controller;
+use App\Models\Info;
 use Illuminate\Http\Request;
 
 class BerandaController extends Controller
@@ -12,7 +13,8 @@ class BerandaController extends Controller
      */
     public function index()
     {
-        return view('clients.beranda');
+        $infos = Info::all();
+        return view('clients.beranda', ['infos' => $infos]);
     }
 
     /**
