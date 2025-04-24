@@ -1,19 +1,24 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Info;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class InfoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
+
     public function index()
     {
-        return view('admin.info');
+        $data = Auth::guard('web')->user();
+        $breadcrumb = (object) [
+            'list' => ['Manajemen Info', '']
+        ];
+        return view('admin.info', ['data' => $data, 'breadcrumb' => $breadcrumb]);
     }
 
     /**
@@ -32,18 +37,26 @@ class InfoController extends Controller
             'file.mimes' => 'File yang diunggah harus berupa PDF atau gambar (jpg, jpeg, png, gif, webp).',
         ]);
 
+
+
+
         if ($request->hasFile('file')) {
-            $file = $request->file('file');
-            $path = $file->store('admin/info-files');
+            $path = $request->file('file')->store('admin/info-files');
 
             Info::create([
                 'judul' => $request->judul,
                 'file' => $path,
                 'deskripsi' => $request->deskripsi
             ]);
+        } else {
+            Info::create([
+                'judul' => $request->judul,
+                'deskripsi' => $request->deskripsi
+            ]);
         }
 
-        return response()->json(['success' => true]);
+
+        return response()->json(['redirect' => route('admin.info')]);
     }
 
     /**

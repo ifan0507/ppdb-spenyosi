@@ -48,11 +48,17 @@
         @foreach ($infos as $info)
             <div class="row gy-4 mt-5">
                 <div class="col-md-6 col-lg-3" data-aos="zoom-out" data-aos-delay="100">
-
+                    @php
+                        $ext = pathinfo($info->file, PATHINFO_EXTENSION);
+                        $url = Storage::url($info->fileh);
+                    @endphp
                     <h4 class="title"><a href="">{{ $info->judul }}</a></h4>
-                    @if ($info->file != null)
-                        <iframe src="{{ asset('storage/' . $info->file) }}" width="100%" height="600px"
-                            frameborder="0"></iframe>
+                    @if (in_array($ext, ['jpg', 'jpeg', 'png', 'gif', 'webp']))
+                        <img src="{{ $url }}" class="img-fluid" alt="Preview Info">
+                    @elseif ($ext === 'pdf')
+                        <iframe src="{{ $url }}" width="100%" height="600px" frameborder="0"></iframe>
+                    @else
+                        <p><a href="{{ $url }}" target="_blank">Download file</a></p>
                     @endif
                     <p class="description">{{ $info->deskripsi }}</p>
                 </div>

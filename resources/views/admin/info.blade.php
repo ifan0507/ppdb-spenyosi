@@ -6,8 +6,8 @@
     <section class="section">
         <div class="card">
             <div class="card-body pt-3">
-                <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#infoModal"
-                    onclick="openModal()">Tambah Berita</button>
+                <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#infoModal">Tambah
+                    Berita</button>
 
                 <div class="table-responsive">
                     {{-- <table class="table datatable">
@@ -72,13 +72,13 @@
 
                                     <div class="mb-3">
                                         <label for="judul" class="form-label">Judul</label>
-                                        <input type="text" class="form-control" name="judul" id="judul" required>
+                                        <input type="text" class="form-control" name="judul" id="judul">
                                     </div>
 
                                     <div class="mb-3">
                                         <label class="form-label">Deskripsi</label>
-                                        <div class="quill-editor-full"></div>
-                                        <input type="hidden" name="deskripsi" id="deskripsi">
+                                        <div class="quill-editor-full" id="quill-deskripsi"></div>
+                                        <input type="hidden" name="deskripsi" id="deskripsi-input">
                                     </div>
 
                                     <div class="mb-3">
@@ -104,58 +104,56 @@
 
     <script>
         $(document).ready(function() {
-            // Validasi sebelum submit
-            $('#formBerita').on('submit', function(e) {
-                let judul = $('#judul').val().trim();
-                let deskripsi = quill.root.innerHTML.trim();
-                $('#deskripsi').val(deskripsi);
-
-                if (judul === '' || deskripsi === '<p><br></p>') {
-                    e.preventDefault();
-                    alert('Judul dan Deskripsi wajib diisi!');
-                }
-
-                $.(ajax() {
-                    url: $('#formBerita').attr('action'),
-                    type: 'POST',
-                    data: $('#formBerita').serialize(),
-                    success: function(response) {
-                        alert('berhasil')
-                    },
-
-                    error: function() {
-                        alert('error')
-                    }
-
-                })
+            const quill = new Quill('#quill-deskripsi', {
+                theme: 'snow'
             });
 
+            const $hidden = $('#deskripsi-input');
+
+            quill.on('text-change', function() {
+                let plain = quill.getText();
+                plain = plain.replace(/\n$/, '');
+
+                $hidden.val(plain);
+            });
+
+            // Validasi sebelum submit
+            $('#formBerita').on('submit', function(e) {
+                e.preventDefault();
+                const formData = new FormData(this);
+                if ($("#judul").val() == "") {
+                    Swal.fire({
+                        icon: "error",
+                        text: "Judul Wajib Diisi",
+                        title: "Opps.."
+                    })
+                    return;
+                }
+
+                $.ajax({
+                    url: $('#formBerita').attr('action'),
+                    type: 'POST',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function(response) {
+                        Swal.fire({
+                            icon: "success",
+                            text: "ditambahkan",
+                            title: "Berhasil"
+                        }).then(() => {
+                            window.location.href = response.redirect
+                        })
+                    },
+                    error: function(xhr) {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Gagal",
+                            text: xhr.responseJSON?.message || 'Terjadi kesalahan!'
+                        });
+                    }
+                })
+            });
         });
-
-        function openModal(info = null) {
-            const $form = $('#formBerita');
-            const $modal = $('#modalBerita');
-            const $modalTitle = $('#modalTitle');
-            const $methodField = $('#formMethod');
-
-            $form.trigger("reset");
-            quill.setContents([]);
-
-            if (info) {
-                $modalTitle.text('Edit Berita');
-                $form.attr('action', `/admin/info/${id}/update`);
-                $methodField.val('PUT');
-
-                $('#beritaId').val(info.id);
-                $('#judul').val(info.judul);
-                quill.root.innerHTML = info.deskripsi;
-            } else {
-                $modalTitle.text('Tambah Berita');
-                $form.attr('action', '{{ route('info.post') }}');
-                $methodField.val('POST');
-            }
-
-            $modal.modal('show');
-        }
     </script>
 @endsection

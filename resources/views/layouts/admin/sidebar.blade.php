@@ -57,8 +57,8 @@
 
         <!-- Manajemen Berita -->
         <li class="nav-item">
-            <a class="nav-link {{ request()->routeIs('admin.berita') ? '' : 'collapsed' }}"
-                href="{{ route('admin.berita') }}">
+            <a class="nav-link {{ request()->routeIs('admin.info') ? '' : 'collapsed' }}"
+                href="{{ route('admin.info') }}">
                 <i class='bx bxs-news'></i>
                 <span>Manajemen Info</span>
             </a>
