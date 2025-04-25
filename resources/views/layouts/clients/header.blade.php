@@ -11,8 +11,7 @@
             <ul>
                 <li><a href="{{ route('beranda') }}" class="active">Beranda<br></a></li>
                 <li><a href="{{ route('portal') }}">Portal</a></li>
-                <li><a href="#jadwal">Jadwal</a></li>
-                <li><a href="#unduhan">Unduhan</a></li>
+                <li><a href="{{ route('info.lengkap') }}">Info Terkini</a></li>
             </ul>
             <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
         </nav>

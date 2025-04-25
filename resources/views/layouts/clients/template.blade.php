@@ -31,6 +31,8 @@
     {{-- custom css file --}}
     <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/all.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/info.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/paginate.css') }}">
     {{-- custom js --}}
     <script src="{{ asset('assets/js/jquery-3.7.1.js') }}"></script>
     <script src="{{ asset('assets/js/sweetalert2.all.min.js') }}"></script>

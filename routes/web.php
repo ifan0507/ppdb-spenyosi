@@ -4,6 +4,7 @@ use App\Http\Controllers\admin\AuthController;
 use App\Http\Controllers\admin\BroadcastingController;
 use App\Http\Controllers\admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\admin\InfoController;
+use App\Http\Controllers\client\InfoController as ClientInfoController;
 use App\Http\Controllers\client\BerandaController;
 use App\Http\Controllers\client\LoginController;
 use App\Http\Controllers\client\PortalController;
@@ -22,6 +23,9 @@ use Illuminate\Support\Facades\Request;
 
 // Beranda
 Route::get('/', [BerandaController::class, 'index'])->name('beranda');
+
+// Info Terkini
+Route::get('/info-terkini', [ClientInfoController::class, 'index'])->name('info.lengkap');
 
 // Portal
 Route::get('/portal', [PortalController::class, 'index'])->name('portal');

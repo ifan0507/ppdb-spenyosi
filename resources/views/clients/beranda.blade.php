@@ -39,33 +39,54 @@
             </div>
         </div>
 
-        <div class="text-center mt-4">
+        <div class="text-center mt-4 mb-8">
             <h2 class="fw-bold custom-title">Info Terkini</h2>
             <p class="custom-title">Tetap terhubung dengan berita terbaru dan pengumuman penting dari kami!</p>
         </div>
 
+        @php
+            $maxDisplay = 4;
+        @endphp
 
-        @foreach ($infos as $info)
-            <div class="row gy-4 mt-5">
-                <div class="col-md-6 col-lg-3" data-aos="zoom-out" data-aos-delay="100">
-                    @php
-                        $ext = pathinfo($info->file, PATHINFO_EXTENSION);
-                        $url = Storage::url($info->fileh);
-                    @endphp
-                    <h4 class="title"><a href="">{{ $info->judul }}</a></h4>
-                    @if (in_array($ext, ['jpg', 'jpeg', 'png', 'gif', 'webp']))
-                        <img src="{{ $url }}" class="img-fluid" alt="Preview Info">
-                    @elseif ($ext === 'pdf')
-                        <iframe src="{{ $url }}" width="100%" height="600px" frameborder="0"></iframe>
-                    @else
-                        <p><a href="{{ $url }}" target="_blank">Download file</a></p>
-                    @endif
-                    <p class="description">{{ $info->deskripsi }}</p>
-                </div>
-            </div><!--End Icon Box -->
-
-    </div>
-    @endforeach
+        <div class="icon-box-wrapper">
+            <div class="row gy-4 mt-5 justify-content-center">
+                @foreach ($infos->take($maxDisplay) as $info)
+                    <div class="col-md-12 col-lg-9" data-aos="zoom-out" data-aos-delay="100">
+                        @php
+                            $ext = pathinfo($info->file, PATHINFO_EXTENSION);
+                            $url = asset('storage/' . $info->file);
+                        @endphp
+                        <div class="icon-box horizontal-box">
+                            <div class="icon-box-img">
+                                @if (in_array($ext, ['jpg', 'jpeg', 'png', 'gif', 'webp']))
+                                    <img src="{{ $url }}" alt="Preview Info">
+                                @elseif ($ext === 'pdf')
+                                    <img src="{{ asset('assets/img/icons/pdf.png') }}" alt="PDF File">
+                                @elseif (in_array($ext, ['doc', 'docx']))
+                                    <img src="{{ asset('img/icons/word-icon.png') }}" alt="Word File">
+                                @else
+                                    <img src="{{ asset('img/icons/file-icon.png') }}" alt="File">
+                                @endif
+                            </div>
+                            <div class="icon-box-content">
+                                <h4 class="title"><a href="#">{{ $info->judul }}</a></h4>
+                                <p class="mb-1 text-muted">Diunggah pada
+                                    {{ \Carbon\Carbon::parse($info->created_at)->translatedFormat('d F Y') }}</p>
+                                <p class="description">{!! \Illuminate\Support\Str::limit(strip_tags($info->deskripsi), 200) !!}</p>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+                @if ($infos->count() > $maxDisplay)
+                    <div class="col-12">
+                        <a href="{{ route('info.lengkap') }}">
+                            <h5 style="text-align:right; margin-right: 20px; margin-top: 20px; font-style:poppins">Info
+                                Selengkapnya....</h5>
+                        </a>
+                    </div>
+                @endif
+            </div>
+        </div>
     </div>
 
     {{-- </section><!-- /Hero Section --> --}}
