@@ -43,7 +43,7 @@ class DashboardController extends Controller
             ->whereHas('register', function ($query) {
                 $query->where('id_jalur', '1');
             })->get();
-        return view('admin.dataPendaftaran', ['pendaftarans' => $pendaftarans, 'data' => $this->data, 'breadcrumb' => $breadcrumb]);
+        return view('admin.dataPendaftaran', ['pendaftarans' => $pendaftarans, 'data' => $this->data, 'breadcrumb' => $breadcrumb, 'jalur' => 'Jalur Umum']);
     }
     public function viewAfirmasi()
     {
@@ -54,7 +54,7 @@ class DashboardController extends Controller
             ->whereHas('register', function ($query) {
                 $query->where('id_jalur', '2');
             })->get();
-        return view('admin.dataPendaftaran', ['pendaftarans' => $pendaftarans, 'data' => $this->data, 'breadcrumb' => $breadcrumb]);
+        return view('admin.dataPendaftaran', ['pendaftarans' => $pendaftarans, 'data' => $this->data, 'breadcrumb' => $breadcrumb, 'jalur' => 'Jalur Afirmasi']);
     }
     public function viewpindahTugas()
     {
@@ -65,7 +65,7 @@ class DashboardController extends Controller
             ->whereHas('register', function ($query) {
                 $query->where('id_jalur', '3');
             })->get();
-        return view('admin.dataPendaftaran', ['pendaftarans' => $pendaftarans, 'data' => $this->data, 'breadcrumb' => $breadcrumb]);
+        return view('admin.dataPendaftaran', ['pendaftarans' => $pendaftarans, 'data' => $this->data, 'breadcrumb' => $breadcrumb, 'jalur' => 'Jalur Pindah Tugas']);
     }
     public function viewTahfidz()
     {
@@ -76,7 +76,7 @@ class DashboardController extends Controller
             ->whereHas('register', function ($query) {
                 $query->where('id_jalur', '4');
             })->get();
-        return view('admin.dataPendaftaran', ['pendaftarans' => $pendaftarans, 'data' => $this->data, 'breadcrumb' => $breadcrumb]);
+        return view('admin.dataPendaftaran', ['pendaftarans' => $pendaftarans, 'data' => $this->data, 'breadcrumb' => $breadcrumb, 'jalur' => 'Jalur Tahfidz']);
     }
     public function viewPrestasi()
     {
@@ -88,7 +88,7 @@ class DashboardController extends Controller
         })->get();
 
 
-        return view('admin.dataPendaftaran', ['data' => $this->data, 'pendaftarans' => $pendaftarans, 'breadcrumb' => $breadcrumb]);
+        return view('admin.dataPendaftaran', ['data' => $this->data, 'pendaftarans' => $pendaftarans, 'breadcrumb' => $breadcrumb, 'jalur' => 'Jalur Prestasi Raport']);
     }
 
     public function detail(string $id)

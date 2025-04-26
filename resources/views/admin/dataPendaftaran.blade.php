@@ -5,14 +5,30 @@
         @include('layouts.admin.breadcrumb')
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">Jalur Umum</h5>
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="card-title mb-0">Jalur Pindah Tugas</h5>
+                    {{-- Dectop --}}
+                    <div class="d-none d-md-block">
+                        <div class="input-group" style="width:300px;">
+                            <span class="input-group-text"><i class="bi bi-search"></i></span>
+                            <input id="searchInputDesktop" class="form-control" placeholder="Cari…">
+                        </div>
+                    </div>
+                </div>
+                {{-- Mobile --}}
+                <div class="d-block d-md-none mb-3">
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-search"></i></span>
+                        <input id="searchInputMobile" class="form-control" placeholder="Cari…">
+                    </div>
+                </div>
                 <!-- Default Table -->
                 <div class="table-responsive">
-                    <table class="table d-none d-md-table">
+                    <table class="table d-none d-md-table tblPendaftaran">
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">No Register</th>
+                                <th scope="col" class="text-nowrap">No Register</th>
                                 <th scope="col">Nama</th>
                                 <th scope="col">Jarak dari sekolah</th>
                                 <th scope="col">Tanggal Daftar</th>
@@ -59,7 +75,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="6" class="text-center">Tidak ada data</td>
+                                    <td colspan="7" class="text-center">Tidak ada data</td>
                                 </tr>
                             @endforelse
                         </tbody>
@@ -70,11 +86,11 @@
 
                 {{-- Mobile --}}
                 <div class="table-responsive d-md-none">
-                    <table class="table">
+                    <table class="table tblPendaftaran">
                         <thead>
                             <tr>
                                 <th scope="col">Action</th>
-                                <th scope="col">No Register</th>
+                                <th scope="col" class="text-nowrap">No Register</th>
                                 <th scope="col">Nama</th>
                                 <th scope="col" class="text-nowrap">Jarak dari sekolah</th>
                                 <th scope="col" class="text-nowrap">Tanggal Daftar</th>
@@ -132,4 +148,28 @@
         </div>
 
     </section>
+    <script>
+        $(document).ready(function() {
+            const $rows = $('.tblPendaftaran tbody tr');
+
+            ['#searchInputDesktop', '#searchInputMobile'].forEach(sel => {
+                const $input = $(sel);
+                if (!$input.length) return;
+
+                $input.on('keyup', function() {
+                    const filter = $(this).val().toLowerCase();
+
+                    $rows.each(function() {
+                        const $row = $(this);
+
+                        if ($row.children().length === 1) return;
+
+                        const rowText = $row.text().toLowerCase();
+                        $row.toggle(rowText.includes(
+                            filter));
+                    });
+                });
+            });
+        });
+    </script>
 @endsection

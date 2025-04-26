@@ -7,50 +7,57 @@
         <div class="card">
             <div class="card-body pt-3">
                 <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#infoModal">Tambah
-                    Berita</button>
+                    Info</button>
 
                 <div class="table-responsive">
-                    {{-- <table class="table datatable">
+                    <table class="table datatable">
                         <thead>
                             <tr>
                                 <th>No</th>
                                 <th>Judul</th>
-                                <th>Tanggal</th>
-                                <th>Thumbnail</th>
+                                <th>Deskripsi</th>
+                                <th>File/Image</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($infos as $info)
-                            <tr>
-                                <td>{{ $loop->iteration }}</td>
-                                <td>{{ $info->judul }}</td>
-                                <td>{{ $info->created_at->format('d M Y') }}</td>
-                                <td>
-                                    @if ($info->gambar)
-                                    <img src="{{ asset('storage/info/' . $info->gambar) }}" width="80" alt="thumb">
-                                    @else
-                                    <span class="text-muted">Tidak ada</span>
-                                    @endif
-                                </td>
-                                <td>
-                                    <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal"
-                                        data-bs-target="#infoModal" onclick="openModal({{ $info }})">
-                                        <i class="bi bi-pencil"></i>
-                                    </button>
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $info->judul }}</td>
+                                    <td>{{ $info->deskripsi }}</td>
+                                    <td>
+                                        @php
+                                            $ext = pathinfo($info->file, PATHINFO_EXTENSION);
+                                            $url = Storage::url($info->file);
+                                        @endphp
+                                        @if (in_array($ext, ['jpg', 'jpeg', 'png', 'gif', 'webp']))
+                                            <img src="{{ $url }}" class="img-fluid" alt="Preview Info">
+                                        @elseif ($ext === 'pdf')
+                                            <iframe src="{{ $url }}" width="70%" height="400px"
+                                                frameborder="0"></iframe>
+                                        @endif
+                                    </td>
 
-                                    <form action="{{ route('info.delete', $info->id) }}" method="POST" class="d-inline">
-                                        @csrf @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm"
-                                            onclick="return confirm('Yakin hapus berita ini?')">
-                                            <i class="bi bi-trash"></i>
+                                    <td>
+                                        <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal"
+                                            data-bs-target="#infoModal" onclick="openModal({{ $info }})">
+                                            <i class="bi bi-pencil"></i>
                                         </button>
-                                    </form>
-                                </td>
-                            </tr>
+
+                                        <form action="{{ route('info.delete', $info->id) }}" method="POST"
+                                            class="d-inline">
+                                            @csrf @method('DELETE')
+                                            <button type="submit" class="btn btn-danger btn-sm"
+                                                onclick="return confirm('Yakin hapus berita ini?')">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
                             @endforeach
                         </tbody>
-                    </table> --}}
+                    </table>
                 </div>
 
                 {{-- Modal --}}
@@ -72,7 +79,7 @@
 
                                     <div class="mb-3">
                                         <label for="judul" class="form-label">Judul</label>
-                                        <input type="text" class="form-control" name="judul" id="judul">
+                                        <textarea name="judul" id="judul" cols="30" rows="4" class="form-control"></textarea>
                                     </div>
 
                                     <div class="mb-3">
