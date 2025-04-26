@@ -8,20 +8,20 @@
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <h5 class="card-title mb-0">Jalur Pindah Tugas</h5>
                     {{-- Dectop --}}
-                    <div class="d-none d-md-block">
-                        <div class="input-group" style="width:300px;">
-                            <span class="input-group-text"><i class="bi bi-search"></i></span>
-                            <input id="searchInputDesktop" class="form-control" placeholder="Cari…">
-                        </div>
+                    <div class="d-none d-md-block position-relative" style="width:300px;">
+                        <input id="searchInputDesktop" class="form-control ps-4" placeholder="Search"
+                            style="padding-right: 2.5rem;">
+                        <i class="bi bi-search position-absolute top-50 end-0 translate-middle-y me-3"></i>
                     </div>
+
                 </div>
                 {{-- Mobile --}}
-                <div class="d-block d-md-none mb-3">
-                    <div class="input-group">
-                        <span class="input-group-text"><i class="bi bi-search"></i></span>
-                        <input id="searchInputMobile" class="form-control" placeholder="Cari…">
-                    </div>
+                <div class="d-block d-md-none mb-3 position-relative">
+                    <input id="searchInputDesktop" class="form-control ps-4" placeholder="Search"
+                        style="padding-right: 2.5rem;">
+                    <i class="bi bi-search position-absolute top-50 end-0 translate-middle-y me-3"></i>
                 </div>
+
                 <!-- Default Table -->
                 <div class="table-responsive">
                     <table class="table d-none d-md-table tblPendaftaran">
@@ -30,7 +30,11 @@
                                 <th scope="col">#</th>
                                 <th scope="col" class="text-nowrap">No Register</th>
                                 <th scope="col">Nama</th>
-                                <th scope="col">Jarak dari sekolah</th>
+                                @if ($jalur == 'Jalur Prestasi Raport')
+                                    <th scope="col" class="text-center">Peringkat Raport</th>
+                                @elseif ($jalur == 'Jalur Umum')
+                                    <th scope="col">Peringkat Zonasi</th>
+                                @endif
                                 <th scope="col">Tanggal Daftar</th>
                                 <th scope="col" class="text-center">Status</th>
                                 <th scope="col" class="text-center">Action</th>
@@ -45,7 +49,19 @@
                                     <th>{{ $no++ }}</th>
                                     <td>{{ $pendaftaran->register->no_register }}</td>
                                     <td>{{ $pendaftaran->register->siswa->nama }}</td>
-                                    <td>{{ $pendaftaran->register->siswa->jarak_sekolah }} km</td>
+
+                                    @if ($pendaftaran->register->id_jalur == 5)
+                                        <td class="text-center">
+                                            <strong>{{ $pendaftaran->peringkat_raport ?? '-' }}</strong>
+                                            ({{ $pendaftaran->register->raport->total_rata_rata }})
+                                        </td>
+                                    @elseif ($pendaftaran->register->id_jalur == 1)
+                                        <td>
+                                            <strong>{{ $pendaftaran->peringkat_zonasi ?? '-' }}</strong>
+                                            ({{ $pendaftaran->register->siswa->jarak_sekolah }} km)
+                                        </td>
+                                    @endif
+                                    </td>
                                     <td>{{ $pendaftaran->created_at?->format('d/m/Y') ?? '-' }}</td>
                                     <td class="text-center">
                                         @if ($pendaftaran->decline == '1')
@@ -60,6 +76,7 @@
                                                 {{ $pendaftaran->status }}</span>
                                         @endif
                                     </td>
+
                                     <td class="align-middle">
                                         <div class="d-flex gap-2 justify-content-center">
                                             <a href="{{ route('admin.detail', $pendaftaran->id) }}"
@@ -67,7 +84,8 @@
                                                 <i class="bi bi-info-circle"></i>
                                             </a>
                                             <button type="button" class="btn btn-success btn-sm btn-confirm"
-                                                data-id="{{ $pendaftaran->id }}"><i class="bi bi-check-circle"></i></button>
+                                                data-id="{{ $pendaftaran->id }}"><i
+                                                    class="bi bi-check-circle"></i></button>
                                             <button type="button" class="btn btn-danger btn-sm btn-decline"
                                                 data-id="{{ $pendaftaran->id }}"><i class="bi bi-x-circle"></i></button>
                                         </div>
@@ -80,6 +98,7 @@
                             @endforelse
                         </tbody>
                     </table>
+                    {{ $pendaftarans->links() }}
                 </div>
                 <!-- End Default Table Example -->
 
@@ -92,7 +111,11 @@
                                 <th scope="col">Action</th>
                                 <th scope="col" class="text-nowrap">No Register</th>
                                 <th scope="col">Nama</th>
-                                <th scope="col" class="text-nowrap">Jarak dari sekolah</th>
+                                @if ($jalur == 'Jalur Prestasi Raport')
+                                    <th scope="col" class="text-center text-nowrap">Peringkat Raport</th>
+                                @elseif ($jalur == 'Jalur Umum')
+                                    <th scope="col" class="text-center text-nowrap">Peringkat Zonasi</th>
+                                @endif
                                 <th scope="col" class="text-nowrap">Tanggal Daftar</th>
                                 <th scope="col" class="text-center">Status</th>
                             </tr>
@@ -118,7 +141,16 @@
                                     </td>
                                     <td>{{ $pendaftaran->register->no_register }}</td>
                                     <td class="text-nowrap">{{ $pendaftaran->register->siswa->nama }}</td>
-                                    <td>{{ $pendaftaran->register->siswa->jarak_sekolah }} km</td>
+
+                                    <td>
+                                        @if ($pendaftaran->register->id_jalur == 5)
+                                            <strong>{{ $pendaftaran->peringkat_raport ?? '-' }}</strong>
+                                            ({{ $pendaftaran->register->raport->total_rata_rata }})
+                                        @elseif ($pendaftaran->register->id_jalur == 1)
+                                            <strong>{{ $pendaftaran->peringkat_zonasi ?? '-' }}</strong>
+                                            ({{ $pendaftaran->register->siswa->jarak_sekolah }} km)
+                                        @endif
+                                    </td>
                                     <td class="text-nowrap">{{ $pendaftaran->created_at?->format('d/m/Y') ?? '-' }}</td>
                                     <td>
                                         @if ($pendaftaran->decline == '1')

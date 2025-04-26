@@ -3,19 +3,19 @@
 namespace App\Http\Controllers\client;
 
 use App\Http\Controllers\Controller;
-use App\Models\Info;
 use Illuminate\Http\Request;
+use App\Models\Info;
 
-class BerandaController extends Controller
+class InfoController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $infos = Info::all();
-        $active = 'beranda';
-        return view('clients.beranda', ['infos' => $infos, 'active' => $active]);
+        $active = 'info';
+        $infos = Info::latest()->paginate(3);
+        return view('clients.info', ['infos' => $infos, 'active' => $active]);
     }
 
     /**

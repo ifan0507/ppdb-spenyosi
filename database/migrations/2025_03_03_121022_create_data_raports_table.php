@@ -25,6 +25,7 @@ return new class extends Migration
             $table->decimal('rata_kelas5_sem1', 5, 2)->nullable();
             $table->decimal('rata_kelas5_sem2', 5, 2)->nullable();
             $table->decimal('rata_kelas6_sem1', 5, 2)->nullable();
+            $table->decimal('total_rata_rata', 5, 2)->nullable();
             $table->enum('status', ['0', '1'])->default('0');
             $table->timestamps();
         });

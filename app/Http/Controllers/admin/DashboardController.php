@@ -39,10 +39,20 @@ class DashboardController extends Controller
             'list' => ['Master Data', 'Jalur Umum']
         ];
 
-        $pendaftarans = Pendaftaran::with('register')
+        $pendaftarans = Pendaftaran::with('register', 'register.siswa.ortu')
             ->whereHas('register', function ($query) {
                 $query->where('id_jalur', '1');
-            })->get();
+            })->join('registers', 'pendaftarans.id_register', '=', 'registers.id')
+            ->join('siswa_barus', 'registers.id', '=', 'siswa_barus.id_register_siswa')
+            ->orderBy('siswa_barus.jarak_sekolah')
+            ->select('pendaftarans.*')
+            ->paginate(2);
+
+
+        foreach ($pendaftarans as $index => $pendaftaran) {
+            $pendaftaran->peringkat_zonasi = $index + 1;
+        }
+
         return view('admin.dataPendaftaran', ['pendaftarans' => $pendaftarans, 'data' => $this->data, 'breadcrumb' => $breadcrumb, 'jalur' => 'Jalur Umum']);
     }
     public function viewAfirmasi()
@@ -50,10 +60,10 @@ class DashboardController extends Controller
         $breadcrumb = (object) [
             'list' => ['Master Data', 'Jalur Afirmasi']
         ];
-        $pendaftarans = Pendaftaran::with('register')
+        $pendaftarans = Pendaftaran::with('register', 'register.siswa.ortu')
             ->whereHas('register', function ($query) {
                 $query->where('id_jalur', '2');
-            })->get();
+            })->paginate(10);
         return view('admin.dataPendaftaran', ['pendaftarans' => $pendaftarans, 'data' => $this->data, 'breadcrumb' => $breadcrumb, 'jalur' => 'Jalur Afirmasi']);
     }
     public function viewpindahTugas()
@@ -61,10 +71,10 @@ class DashboardController extends Controller
         $breadcrumb = (object) [
             'list' => ['Master Data', 'Jalur Pindah Tugas']
         ];
-        $pendaftarans = Pendaftaran::with('register')
+        $pendaftarans = Pendaftaran::with('register', 'register.siswa.ortu')
             ->whereHas('register', function ($query) {
                 $query->where('id_jalur', '3');
-            })->get();
+            })->paginate(10);
         return view('admin.dataPendaftaran', ['pendaftarans' => $pendaftarans, 'data' => $this->data, 'breadcrumb' => $breadcrumb, 'jalur' => 'Jalur Pindah Tugas']);
     }
     public function viewTahfidz()
@@ -72,10 +82,10 @@ class DashboardController extends Controller
         $breadcrumb = (object) [
             'list' => ['Master Data', 'Jalur Tahfidz']
         ];
-        $pendaftarans = Pendaftaran::with('register')
+        $pendaftarans = Pendaftaran::with('register', 'register.siswa.ortu')
             ->whereHas('register', function ($query) {
                 $query->where('id_jalur', '4');
-            })->get();
+            })->paginate(10);
         return view('admin.dataPendaftaran', ['pendaftarans' => $pendaftarans, 'data' => $this->data, 'breadcrumb' => $breadcrumb, 'jalur' => 'Jalur Tahfidz']);
     }
     public function viewPrestasi()
@@ -83,10 +93,17 @@ class DashboardController extends Controller
         $breadcrumb = (object) [
             'list' => ['Master Data', 'Jalur Prestasi Raport']
         ];
-        $pendaftarans = Pendaftaran::with('register.raport.mapel')->whereHas('register', function ($query) {
+        $pendaftarans = Pendaftaran::with('register.raport.mapel', 'register.siswa.ortu')->whereHas('register', function ($query) {
             $query->where('id_jalur', '5');
-        })->get();
+        })->join('registers', 'pendaftarans.id_register', '=', 'registers.id')
+            ->join('data_raports', 'registers.id', '=', 'data_raports.id_register')
+            ->orderByDesc('data_raports.total_rata_rata')
+            ->select('pendaftarans.*')->distinct('pendaftarans.id')
+            ->paginate(10);
 
+        foreach ($pendaftarans as $index => $pendaftaran) {
+            $pendaftaran->peringkat_raport = $index + 1;
+        }
 
         return view('admin.dataPendaftaran', ['data' => $this->data, 'pendaftarans' => $pendaftarans, 'breadcrumb' => $breadcrumb, 'jalur' => 'Jalur Prestasi Raport']);
     }

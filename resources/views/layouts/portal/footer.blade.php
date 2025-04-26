@@ -20,8 +20,7 @@
                 <ul>
                     <li><a href="{{ route('beranda') }}">Beranda</a></li>
                     <li><a href="{{ route('portal') }}">Portal</a></li>
-                    <li><a href="#">jadwal</a></li>
-                    <li><a href="#">Unduhan</a></li>
+                    <li><a href="{{ route('info.lengkap') }}">Info Terkini</a></li>
                 </ul>
             </div>
 
