@@ -71,18 +71,18 @@ class DatabaseSeeder extends Seeder
 
 
         $akun = Register::create([
-            'nisn' => '1234566358',
+            'nisn' => '1234566233',
             "no_register" => "202504180004",
-            'email' => 'ifan@gmail.com',
+            'email' => 'farhan@gmail.com',
             'password' => '123',
-            'id_jalur' => '1',
+            'id_jalur' => '5',
             'email_verified_at' => now(),
             'verification_code' => null,
         ]);
 
         $siswa = SiswaBaru::create([
             'id_register_siswa' => $akun->id,
-            'nama' => 'ifan',
+            'nama' => 'farhan',
             'nisn' => $akun->nisn,
             'email' => $akun->email,
             'nik' => "_",
@@ -94,7 +94,7 @@ class DatabaseSeeder extends Seeder
             "alamat" => "_",
             "no_hp" => "_",
             "lokasi" => "_",
-            "jarak_sekolah" => '5.5',
+            "jarak_sekolah" => '5.0',
             "foto_kk" => 'default_document.png',
             "foto_siswa" => 'default_siswa.png',
             "foto_akte" => 'default_document.png',

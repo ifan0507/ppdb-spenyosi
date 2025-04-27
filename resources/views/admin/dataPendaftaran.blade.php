@@ -4,27 +4,69 @@
     <section class="section">
         @include('layouts.admin.breadcrumb')
         <div class="card">
-            <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h5 class="card-title mb-0">Jalur Pindah Tugas</h5>
-                    {{-- Dectop --}}
-                    <div class="d-none d-md-block position-relative" style="width:300px;">
-                        <input id="searchInputDesktop" class="form-control ps-4" placeholder="Search"
-                            style="padding-right: 2.5rem;">
-                        <i class="bi bi-search position-absolute top-50 end-0 translate-middle-y me-3"></i>
+            <div class="card-header">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5 class="card-title mb-0">{{ $jalur }}</h5>
+                    <div class="accordion accordion-flush " id="accordionFlushExample">
+                        <div class="accordion-item">
+                            <h5 class="accordion-header" id="flush-headingOne" data-bs-toggle="collapse"
+                                data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                <button class="btn btn-outline-secondary btn-small dropdown-toggle" type="button"
+                                    id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-sliders"></i> Opsi
+                                </button>
+                            </h5>
+                        </div>
                     </div>
-
                 </div>
-                {{-- Mobile --}}
-                <div class="d-block d-md-none mb-3 position-relative">
-                    <input id="searchInputDesktop" class="form-control ps-4" placeholder="Search"
-                        style="padding-right: 2.5rem;">
-                    <i class="bi bi-search position-absolute top-50 end-0 translate-middle-y me-3"></i>
-                </div>
+            </div>
 
-                <!-- Default Table -->
+
+            <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
+                data-bs-parent="#accordionFlushExample">
+                <div class="card-body mt-3">
+                    <div class="row mb-3 g-2">
+                        <!-- Export buttons (Excel, PDF) -->
+                        <div class="col-12 col-md-6">
+                            <div class="d-grid gap-2 d-md-flex">
+                                <button class="btn btn-success btn-export" id="export-excel">
+                                    <i class="bi bi-file-earmark-excel me-2"></i> Export Excel
+                                </button>
+                                <button class="btn btn-danger btn-export" id="export-pdf">
+                                    <i class="bi bi-file-earmark-pdf me-2"></i> Export PDF
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Dropdown untuk urutkan -->
+                        <div class="col-12 col-md-6">
+                            <div class="d-flex justify-content-md-end">
+                                <form action="{{ route('umum') }}">
+                                    <select class="form-select select-filter" id="urutkan"
+                                        aria-label="Urutkan berdasarkan" style="width: 280px" name="sort"
+                                        onchange="this.form.submit()">
+                                        <option value="">--- Pilih kriteria urutan ---</option>
+                                        @if ($jalur == 'Jalur Umum')
+                                            <option value="peringkat_zonasi"
+                                                {{ $sort == 'peringkat_zonasi' ? 'selected' : '' }}>Peringkat Zonasi
+                                            </option>
+                                        @endif
+                                        @if ($jalur == 'Jalur Prestasi Raport')
+                                            <option value="peringkat_raport"
+                                                {{ $sort == 'peringkat_raport' ? 'selected' : '' }}>Peringkat Raport
+                                            </option>
+                                        @endif
+                                    </select>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table d-none d-md-table tblPendaftaran">
+                    <table class="table d-none d-md-table tblPendaftaran datatable">
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
@@ -98,7 +140,7 @@
                             @endforelse
                         </tbody>
                     </table>
-                    {{ $pendaftarans->links() }}
+
                 </div>
                 <!-- End Default Table Example -->
 
@@ -121,9 +163,6 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @php
-                                $no = 1;
-                            @endphp
                             @forelse ($pendaftarans as $pendaftaran)
                                 <tr>
                                     <td>
@@ -174,7 +213,9 @@
                             @endforelse
                         </tbody>
                     </table>
+
                 </div>
+                {{-- {{ $pendaftarans->links('pagination::bootstrap-5') }} --}}
 
             </div>
         </div>
@@ -182,26 +223,12 @@
     </section>
     <script>
         $(document).ready(function() {
-            const $rows = $('.tblPendaftaran tbody tr');
-
-            ['#searchInputDesktop', '#searchInputMobile'].forEach(sel => {
-                const $input = $(sel);
-                if (!$input.length) return;
-
-                $input.on('keyup', function() {
-                    const filter = $(this).val().toLowerCase();
-
-                    $rows.each(function() {
-                        const $row = $(this);
-
-                        if ($row.children().length === 1) return;
-
-                        const rowText = $row.text().toLowerCase();
-                        $row.toggle(rowText.includes(
-                            filter));
-                    });
-                });
-            });
+            $("#urutkan").on("change", function(e) {
+                const selected = $(this).val();
+                const url = new URL(window.location.href);
+                url.searchParams.set('sort', selected);
+                window.location.href = url.toString();
+            })
         });
     </script>
 @endsection

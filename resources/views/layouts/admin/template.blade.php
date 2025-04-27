@@ -31,7 +31,7 @@
 
     <!-- Template Main CSS File -->
     <link href="{{ asset('NiceAdmin/assets/css/style.css') }}" rel="stylesheet">
-
+    <link rel="stylesheet" href="{{ asset('assets/css/admin.css') }}">
     <!-- =======================================================
   * Template Name: NiceAdmin
   * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
@@ -42,53 +42,6 @@
     <script src="{{ asset('assets/js/jquery-3.7.1.js') }}"></script>
     <script src="{{ asset('assets/js/sweetalert2.all.min.js') }}"></script>
 
-    <style>
-        /* Haluskan popup */
-        .swal2-custom-popup {
-            border-radius: 12px;
-            padding: 30px;
-        }
-
-        /* Border textarea lebih tipis */
-        .swal2-custom-input {
-            border: 1px solid #ccc !important;
-            border-radius: 8px;
-            box-shadow: none !important;
-            padding: 10px;
-            font-size: 14px;
-        }
-
-        /* Tombol lebih soft */
-        .swal2-custom-confirm {
-            background-color: #ca2a06 !important;
-            color: #fff !important;
-            border-radius: 6px !important;
-            padding: 8px 20px !important;
-            font-weight: 600;
-        }
-
-        .swal2-custom-cancel {
-            background-color: #6c757d !important;
-            color: #fff !important;
-            border-radius: 6px !important;
-            padding: 8px 20px !important;
-            font-weight: 600;
-        }
-
-        .delete-all-link {
-            text-decoration: none;
-            transition: color 0.2s;
-        }
-
-        .delete-all-link:hover {
-            color: red !important;
-            cursor: pointer;
-        }
-
-        button[disabled] {
-            cursor: not-allowed !important;
-        }
-    </style>
 </head>
 
 <body>
