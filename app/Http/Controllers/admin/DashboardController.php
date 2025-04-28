@@ -47,6 +47,12 @@ class DashboardController extends Controller
             $q->where('id_jalur', '1');
         });
 
+        if ($sort == 'valid') {
+            $query->where('confirmations', '1');
+        } else if ($sort == 'invalid') {
+            $query->where('decline', '1');
+        }
+
         // Jika sorting berdasarkan zonasi, gunakan subquery untuk ordering
         if ($sort == 'peringkat_zonasi') {
             $query->join('registers', 'pendaftarans.id_register', '=', 'registers.id')
@@ -78,38 +84,43 @@ class DashboardController extends Controller
             'sort' => $sort
         ]);
     }
-    public function viewAfirmasi()
+    public function viewAfirmasi(Request $request)
     {
         $breadcrumb = (object) [
             'list' => ['Master Data', 'Jalur Afirmasi']
         ];
+
+        $sort = $request->input('sort');
+
         $pendaftarans = Pendaftaran::with('register', 'register.siswa.ortu')
             ->whereHas('register', function ($query) {
                 $query->where('id_jalur', '2');
             })->paginate(10);
-        return view('admin.dataPendaftaran', ['pendaftarans' => $pendaftarans, 'data' => $this->data, 'breadcrumb' => $breadcrumb, 'jalur' => 'Jalur Afirmasi']);
+        return view('admin.dataPendaftaran', ['pendaftarans' => $pendaftarans, 'data' => $this->data, 'breadcrumb' => $breadcrumb, 'jalur' => 'Jalur Afirmasi', 'sort' => $sort]);
     }
-    public function viewpindahTugas()
+    public function viewpindahTugas(Request $request)
     {
         $breadcrumb = (object) [
             'list' => ['Master Data', 'Jalur Pindah Tugas']
         ];
+        $sort = $request->input('sort');
         $pendaftarans = Pendaftaran::with('register', 'register.siswa.ortu')
             ->whereHas('register', function ($query) {
                 $query->where('id_jalur', '3');
             })->paginate(10);
-        return view('admin.dataPendaftaran', ['pendaftarans' => $pendaftarans, 'data' => $this->data, 'breadcrumb' => $breadcrumb, 'jalur' => 'Jalur Pindah Tugas']);
+        return view('admin.dataPendaftaran', ['pendaftarans' => $pendaftarans, 'data' => $this->data, 'breadcrumb' => $breadcrumb, 'jalur' => 'Jalur Pindah Tugas', 'sort' => $sort]);
     }
-    public function viewTahfidz()
+    public function viewTahfidz(Request $request)
     {
         $breadcrumb = (object) [
             'list' => ['Master Data', 'Jalur Tahfidz']
         ];
+        $sort = $request->input('sort');
         $pendaftarans = Pendaftaran::with('register', 'register.siswa.ortu')
             ->whereHas('register', function ($query) {
                 $query->where('id_jalur', '4');
             })->paginate(10);
-        return view('admin.dataPendaftaran', ['pendaftarans' => $pendaftarans, 'data' => $this->data, 'breadcrumb' => $breadcrumb, 'jalur' => 'Jalur Tahfidz']);
+        return view('admin.dataPendaftaran', ['pendaftarans' => $pendaftarans, 'data' => $this->data, 'breadcrumb' => $breadcrumb, 'jalur' => 'Jalur Tahfidz', 'sort' => $sort]);
     }
     public function viewPrestasi(Request $request)
     {

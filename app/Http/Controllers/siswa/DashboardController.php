@@ -107,22 +107,22 @@ class DashboardController extends Controller
             return response()->json(['errors' => ['foto_akte' => ['Foto Akte tidak boleh kosong!']]], 400);
         }
 
-        if ($akun->jalur->id == "2"  ||  $akun->jalur->id == "3" || $akun->jalur->id == "4") {
+        // if ($akun->jalur->id == "2"  ||  $akun->jalur->id == "3" || $akun->jalur->id == "4") {
 
-            if ($akun->document->document === $defaultDocument && !$request->hasFile('document')) {
-                return response()->json(['errors' => ['document' => ['Dokumen penunjang tidak boleh kosong!']]], 400);
-            }
+        //     if ($akun->document->document === $defaultDocument && !$request->hasFile('document')) {
+        //         return response()->json(['errors' => ['document' => ['Dokumen penunjang tidak boleh kosong!']]], 400);
+        //     }
 
-            if ($request->hasFile('document')) {
-                if ($akun->document->document !== $defaultDocument) {
-                    Storage::delete($akun->document->document);
-                }
-                $documentPath = $request->file('document')->store('siswa/dokumen');
-                Document::where("id_register", $akun->id)->update([
-                    "document" => $documentPath
-                ]);
-            }
-        }
+        //     if ($request->hasFile('document')) {
+        //         if ($akun->document->document !== $defaultDocument) {
+        //             Storage::delete($akun->document->document);
+        //         }
+        //         $documentPath = $request->file('document')->store('siswa/dokumen');
+        //         Document::where("id_register", $akun->id)->update([
+        //             "document" => $documentPath
+        //         ]);
+        //     }
+        // }
 
         if ($request->hasFile('foto_siswa')) {
             if ($akun->siswa->foto_siswa !== $defaultSiswa) {

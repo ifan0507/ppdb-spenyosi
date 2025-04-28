@@ -64,24 +64,40 @@
                                     <p class="text-center small">Enter your username & password to login</p>
                                 </div>
 
+                                @if ($errors->any())
+                                    <div class="alert alert-danger bg-danger text-light border-0 alert-dismissible fade show"
+                                        role="alert">
+                                        @foreach ($errors->all() as $error)
+                                            {{ $error }}<br>
+                                        @endforeach
+                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert"
+                                            aria-label="Close"></button>
+                                    </div>
+                                @endif
+
+
                                 <form class="row g-3 needs-validation" novalidate method="post"
                                     action="{{ route('admin.login.post') }}">
                                     @csrf
                                     <div class="col-12">
-                                        <label for="yourUsername" class="form-label">Username</label>
+                                        <label for="yourUsername" class="form-label">Email</label>
                                         <div class="input-group has-validation">
                                             <span class="input-group-text" id="inputGroupPrepend">@</span>
                                             <input type="email" name="email" class="form-control" id="yourUsername"
                                                 required>
-                                            <div class="invalid-feedback">Please enter your username.</div>
+                                            <div class="invalid-feedback">Please enter your email.</div>
                                         </div>
                                     </div>
 
                                     <div class="col-12">
                                         <label for="yourPassword" class="form-label">Password</label>
-                                        <input type="password" name="password" class="form-control" id="yourPassword"
-                                            required>
-                                        <div class="invalid-feedback">Please enter your password!</div>
+                                        <div class="input-group has-validation">
+                                            <span class="input-group-text" id="inputGroupPrepend"> <i
+                                                    class="bi bi-lock-fill" style="color: gray"></i></span>
+                                            <input type="password" name="password" class="form-control"
+                                                id="yourPassword" required>
+                                            <div class="invalid-feedback">Please enter your password!</div>
+                                        </div>
                                     </div>
 
                                     <div class="col-12">

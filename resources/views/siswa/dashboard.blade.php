@@ -119,23 +119,7 @@
                                                                             alt="Foto Akte"
                                                                             style="width: 130px; height: 130px;"></td>
                                                                 </tr>
-                                                                @if ($data->jalur->id == '2' || $data->jalur->id == '3' || $data->jalur->id == '4')
-                                                                    <tr>
-                                                                        <th>
-                                                                            @if ($data->jalur->id == '2')
-                                                                                KIP/KIS/PIP/PKH/SKTM
-                                                                            @elseif ($data->jalur->id == '3')
-                                                                                Surat Pindah Tugas
-                                                                            @elseif ($data->jalur->id == '4')
-                                                                                Piagam Prestasi
-                                                                            @endif
-                                                                        </th>
-                                                                        <td><img src="{{ asset('storage/' . $data->document->document) }}"
-                                                                                alt=""
-                                                                                style="width: 130px; height: 130px;">
-                                                                        </td>
-                                                                    </tr>
-                                                                @endif
+
                                                             </tbody>
                                                         </table>
                                                     </div>

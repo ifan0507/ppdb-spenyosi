@@ -25,43 +25,83 @@
             <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
                 data-bs-parent="#accordionFlushExample">
                 <div class="card-body mt-3">
-                    <div class="row mb-3 g-2">
-                        <!-- Export buttons (Excel, PDF) -->
-                        <div class="col-12 col-md-6">
-                            <div class="d-grid gap-2 d-md-flex">
-                                <button class="btn btn-success btn-export" id="export-excel">
-                                    <i class="bi bi-file-earmark-excel me-2"></i> Export Excel
-                                </button>
-                                <button class="btn btn-danger btn-export" id="export-pdf">
-                                    <i class="bi bi-file-earmark-pdf me-2"></i> Export PDF
-                                </button>
+                    <div class="alert alert-info alert-blue-outline mb-3">
+                        <div class="row align-items-center">
+                            <div class="col text-center" style="flex: 0 0 5%;">
+                                <i class="fas fa-info-circle fa-2x"></i>
                             </div>
-                        </div>
-
-                        <!-- Dropdown untuk urutkan -->
-                        <div class="col-12 col-md-6">
-                            <div class="d-flex justify-content-md-end">
-                                <form action="{{ route('umum') }}">
-                                    <select class="form-select select-filter" id="urutkan"
-                                        aria-label="Urutkan berdasarkan" style="width: 280px" name="sort"
-                                        onchange="this.form.submit()">
-                                        <option value="">--- Pilih kriteria urutan ---</option>
-                                        @if ($jalur == 'Jalur Umum')
-                                            <option value="peringkat_zonasi"
-                                                {{ $sort == 'peringkat_zonasi' ? 'selected' : '' }}>Peringkat Zonasi
-                                            </option>
-                                        @endif
-                                        @if ($jalur == 'Jalur Prestasi Raport')
-                                            <option value="peringkat_raport"
-                                                {{ $sort == 'peringkat_raport' ? 'selected' : '' }}>Peringkat Raport
-                                            </option>
-                                        @endif
-                                    </select>
-                                </form>
+                            <div class="col">
+                                <small class="mb-0 text-navi">
+                                    Untuk mengekspor data dengan filter tertentu, silakan atur filter atau urutan terlebih
+                                    dahulu.
+                                    Jika ingin mengekspor semua data, langsung klik tombol export tanpa perlu memfilter.
+                                </small>
                             </div>
                         </div>
                     </div>
+                    <div class="row g-3">
+                        <!-- Card Kiri: Semua Filter -->
+                        <div class="col-12 col-md-6">
+                            <div class="card p-3 shadow-sm h-100">
+                                <h6 class="mb-3">Filter No Urut</h6>
+                                <form id="export-form">
+                                    <div class="row g-2 mb-3">
+                                        <div class="col-6">
+                                            <input type="number" id="start_number" name="start_number" class="form-control"
+                                                placeholder="Dari: 1">
+                                        </div>
+                                        <div class="col-6">
+                                            <input type="number" id="end_number" name="end_number" class="form-control"
+                                                placeholder="Sampai: 50">
+                                        </div>
+                                    </div>
+                                </form>
+
+                                <h6 class="mb-3">Urutkan Berdasarkan Kriteria</h6>
+                                <form action="{{ route('umum') }}">
+                                    <div class="mb-3">
+                                        <select class="form-select select-filter" id="urutkan" name="sort"
+                                            onchange="this.form.submit()">
+                                            <option value="">--- Pilih kriteria urutan ---</option>
+                                            @if ($jalur == 'Jalur Umum')
+                                                <option value="peringkat_zonasi"
+                                                    {{ $sort == 'peringkat_zonasi' ? 'selected' : '' }}>
+                                                    Peringkat Zonasi
+                                                </option>
+                                            @endif
+                                            @if ($jalur == 'Jalur Prestasi Raport')
+                                                <option value="peringkat_raport"
+                                                    {{ $sort == 'peringkat_raport' ? 'selected' : '' }}>
+                                                    Peringkat Raport
+                                                </option>
+                                            @endif
+                                            <option value="valid" {{ $sort == 'valid' ? 'selected' : '' }}>Valid</option>
+                                            <option value="invalid" {{ $sort == 'invalid' ? 'selected' : '' }}>Invalid
+                                            </option>
+                                        </select>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- Card Kanan: Tombol Export -->
+                        <div class="col-12 col-md-6">
+                            <div class="card p-3 shadow-sm d-flex flex-column justify-content-between">
+                                <h6 class="mb-3">Export Data</h6>
+                                <div class="d-grid gap-2 d-md-flex ">
+                                    <button class="btn btn-success btn-export" id="export-excel">
+                                        <i class="bi bi-file-earmark-excel me-2"></i> Export Excel
+                                    </button>
+                                    <button class="btn btn-danger btn-export" id="export-pdf">
+                                        <i class="bi bi-file-earmark-pdf me-2"></i> Export PDF
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
+
             </div>
 
             <div class="card-body">
