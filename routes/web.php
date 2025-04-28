@@ -14,6 +14,7 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\siswa\DashboardController;
 use App\Http\Controllers\siswa\OrtuController;
 use App\Http\Controllers\siswa\Pendaftaran;
+use App\Http\Controllers\siswa\PenunjangController;
 use App\Http\Controllers\siswa\RaportController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\VerificationController;
@@ -26,6 +27,7 @@ Route::get('/', [BerandaController::class, 'index'])->name('beranda');
 
 // Info Terkini
 Route::get('/info-terkini', [ClientInfoController::class, 'index'])->name('info.lengkap');
+Route::get('/info-terkini/detail/{id}', [ClientInfoController::class, 'detailInfo'])->name('info.detail');
 
 // Portal
 Route::get('/portal', [PortalController::class, 'index'])->name('portal');
@@ -71,6 +73,8 @@ Route::middleware(['cache_verify', 'auth_siswa'])->group(function () {
     Route::get('/orang-tua', [OrtuController::class, 'index'])->name('ortu');
     Route::get('/orang-tua/{id}/edit', [OrtuController::class, 'edit'])->name('ortu.edit');
     route::put('/ortu/{id}/update', [OrtuController::class, 'update'])->name('ortu.update');
+
+    route::get('/prestasi', [PenunjangController::class, 'viewPrestasi'])->name('siswa.prestasi');
 
     Route::get('/raport', [RaportController::class, 'index'])->name('raport');
     Route::get('/form-raport', [RaportController::class, 'create'])->name('form-raport');

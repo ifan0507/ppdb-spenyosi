@@ -69,7 +69,8 @@
                                 @endif
                             </div>
                             <div class="icon-box-content">
-                                <h4 class="title"><a href="#">{{ $info->judul }}</a></h4>
+                                <h4 class="title"><a href="{{ route('info.detail', $info->id) }}">{{ $info->judul }}</a>
+                                </h4>
                                 <p class="mb-1 text-muted">Diunggah pada
                                     {{ \Carbon\Carbon::parse($info->created_at)->translatedFormat('d F Y') }}</p>
                                 <p class="description">{!! \Illuminate\Support\Str::limit(strip_tags($info->deskripsi), 200) !!}</p>

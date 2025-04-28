@@ -8,10 +8,33 @@
             <a class="nav-link remove-tab-format font-bold {{ $active_tab == 'orang tua' ? 'active' : '' }}"
                 id="biodata-tab" data-toggle="pill" href="{{ route('ortu') }}" role="tab">Orang Tua</a>
         </li>
-        @if ($data->jalur->id == '5')
+        @if ($data->jalur->id == 2)
+            <li class="nav-item">
+                <a class="nav-link remove-tab-format font-bold {{ $active_tab == 'dokumen_afirmasi' ? 'active' : '' }}"
+                    id="dokumen-afirmasi-tab" data-toggle="pill" href="#" role="tab">
+                    Dokumen Afirmasi
+                </a>
+            </li>
+        @elseif ($data->jalur->id == 3)
+            <li class="nav-item">
+                <a class="nav-link remove-tab-format font-bold {{ $active_tab == 'dokumen_mutasi' ? 'active' : '' }}"
+                    id="dokumen-mutasi-tab" data-toggle="pill" href="#" role="tab">
+                    Dokumen Mutasi Orang Tua
+                </a>
+            </li>
+        @elseif ($data->jalur->id == 4)
+            <li class="nav-item">
+                <a class="nav-link remove-tab-format font-bold {{ $active_tab == 'dokumen_prestasi' ? 'active' : '' }}"
+                    id="dokumen-prestasi-tab" data-toggle="pill" href="{{ route('siswa.prestasi') }}" role="tab">
+                    Dokumen Prestasi
+                </a>
+            </li>
+        @elseif ($data->jalur->id == 5)
             <li class="nav-item">
                 <a class="nav-link remove-tab-format font-bold {{ $active_tab == 'raport' ? 'active' : '' }}"
-                    id="keluarga-tab" data-toggle="pill" href="{{ route('raport') }}" role="tab">Raport</a>
+                    id="raport-tab" data-toggle="pill" href="{{ route('raport') }}" role="tab">
+                    Raport
+                </a>
             </li>
         @endif
         <li class="nav-item">

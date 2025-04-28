@@ -17,6 +17,12 @@ class InfoController extends Controller
         return view('clients.info', compact('infos'));
     }
 
+    public function detailInfo($id)
+    {
+        $infos = Info::findOrfail($id);
+        return view('clients.info-detail', compact('infos'));
+    }
+
     /**
      * Show the form for creating a new resource.
      */
