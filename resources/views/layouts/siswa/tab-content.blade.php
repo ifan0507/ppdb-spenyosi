@@ -18,8 +18,8 @@
         @elseif ($data->jalur->id == 3)
             <li class="nav-item">
                 <a class="nav-link remove-tab-format font-bold {{ $active_tab == 'dokumen_mutasi' ? 'active' : '' }}"
-                    id="dokumen-mutasi-tab" data-toggle="pill" href="#" role="tab">
-                    Dokumen Mutasi Orang Tua
+                    id="dokumen-mutasi-tab" data-toggle="pill" href="{{ route('siswa.mutasi') }}" role="tab">
+                    Dokumen Pindah-tugas
                 </a>
             </li>
         @elseif ($data->jalur->id == 4)

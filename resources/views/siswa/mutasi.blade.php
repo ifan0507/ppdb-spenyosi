@@ -30,9 +30,10 @@
                                 <div class="accordion" id="accordionExample">
                                     <div class="card card-primary card-outline">
                                         <div class="card-header d-flex justify-content-between align-items-center">
-                                            <h4>Prestasi</h4>
-                                            <a href="{{ route('prestasi.edit', ['id' => $data->id]) }}" class="btn btn-primary ms-auto">
-                                                <i class="fa-solid fa-square-plus"></i> Perbarui Prestasi
+                                            <h4>Dokumen Pindah Tugas</h4>
+                                            <a href="{{ route('mutasi.edit', ['id' => $data->id]) }}"
+                                                class="btn btn-primary ms-auto">
+                                                <i class="fa-solid fa-square-plus"></i> Perbarui Dokumen Pindah Tugas
                                             </a>
                                         </div>
                                         <div class="card-body">
@@ -47,24 +48,12 @@
                                                         <table class="table table-striped table-bordered align-middle">
                                                             <tbody class="table-light">
                                                                 <tr>
-                                                                    <th width="30%">Nama Prestasi</th>
-                                                                    <td>{{ $data->siswa->nama_prestasi }}</td>
+                                                                    <th width="30%">Asal Tugas</th>
+                                                                    <td>{{ $data->siswa->asal_tugas }}</td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <th>Jenis Prestasi</th>
-                                                                    <td>{{ $data->siswa->jenis_prestasi }}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <th>Tingkat Prestasi</th>
-                                                                    <td>{{ $data->siswa->tingkat_prestasi }}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <th>Tahun Perolehan</th>
-                                                                    <td>{{ $data->siswa->thn_perolehan }}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <th>Perolehan</th>
-                                                                    <td>{{ $data->siswa->perolehan }}</td>
+                                                                    <th>Tahun Pindah</th>
+                                                                    <td>{{ $data->siswa->thn_pindah }}</td>
                                                                 </tr>
                                                             </tbody>
                                                         </table>

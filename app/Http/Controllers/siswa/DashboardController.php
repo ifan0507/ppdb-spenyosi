@@ -83,7 +83,6 @@ class DashboardController extends Controller
             'foto_siswa' => 'file|image',
             'foto_kk' => 'file|image',
             'foto_akte' => 'file|image',
-            'document' => 'file|image'
         ], [
             'foto_siswa.file' => 'Foto pribadi harus berupa file!',
             'foto_siswa.image' => 'Foto pribadi harus berupa gambar!',
@@ -91,8 +90,6 @@ class DashboardController extends Controller
             'foto_kk.image' => 'Foto kk harus berupa gambar!',
             'foto_akte.file' => 'Foto akte harus berupa file!',
             'foto_akte.image' => 'Foto akte harus berupa gambar!',
-            'document.file' => 'Document harus berupa file!',
-            'document.image' => 'Document harus berupa gambar!'
         ]);
 
         $akun = Auth::guard('siswa')->user();

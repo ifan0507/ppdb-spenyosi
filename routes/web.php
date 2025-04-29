@@ -75,12 +75,23 @@ Route::middleware(['cache_verify', 'auth_siswa'])->group(function () {
     route::put('/ortu/{id}/update', [OrtuController::class, 'update'])->name('ortu.update');
 
     route::get('/prestasi', [PenunjangController::class, 'viewPrestasi'])->name('siswa.prestasi');
+    Route::get('/prestasi/{id}/edit', [PenunjangController::class, 'editPrestasiLomba'])->name('prestasi.edit');
+    Route::put('/prestasi/{id}/update', [PenunjangController::class, 'updatePrestasiLomba'])->name('prestasi.update');
 
+    // Raport
     Route::get('/raport', [RaportController::class, 'index'])->name('raport');
     Route::get('/form-raport', [RaportController::class, 'create'])->name('form-raport');
     Route::post('/form-raport', [RaportController::class, 'store'])->name('form-raport.post');
     Route::get('/raport/{id}', [RaportController::class, 'edit'])->name('edit-raport');
     Route::put('/raport/{id}', [RaportController::class, 'update'])->name('update-raport');
+
+    // Afirmasi
+    Route::put('/afirmasi/{id}/update', [PenunjangController::class, 'updateAfirmasi'])->name('afirmasi.update');
+
+    //PindahTugas
+    Route::get('/mutasi', [PenunjangController::class, 'viewMutasi'])->name('siswa.mutasi');
+    Route::get('/mutasi/{id}/edit', [PenunjangController::class, 'editMutasi'])->name('mutasi.edit');
+    Route::put('/mutasi/{id}/update', [PenunjangController::class, 'updateMutasi'])->name('mutasi.update');
 
     // Pendaftaran
     Route::get('/pendaftaran', [Pendaftaran::class, 'index'])->name('pendaftaran');
@@ -104,8 +115,8 @@ Route::middleware(['cache_verify', 'auth_admin'])->group(function () {
     Route::get('/admin/umum', [AdminDashboardController::class, 'viewUmum'])->name('umum');
     Route::get('/admin/afirmasi', [AdminDashboardController::class, 'viewAfirmasi'])->name('afirmasi');
     Route::get('/admin/pindah-tugas', [AdminDashboardController::class, 'viewpindahTugas'])->name('pindah.tugas');
-    Route::get('/admin/tahfidz', [AdminDashboardController::class, 'viewTahfidz'])->name('tahfidz');
-    Route::get('/admin/prestasi', [AdminDashboardController::class, 'viewPrestasi'])->name('prestasi');
+    Route::get('/admin/prestasi', [AdminDashboardController::class, 'viewTahfidz'])->name('tahfidz');
+    Route::get('/admin/raport', [AdminDashboardController::class, 'viewPrestasi'])->name('prestasi');
 
     Route::get('/admin/{id}/confirm', [AdminDashboardController::class, 'confirm'])->name('admin.confirm');
     Route::post('/admin/{id}/decline', [AdminDashboardController::class, 'decline'])->name('admin.decline');
