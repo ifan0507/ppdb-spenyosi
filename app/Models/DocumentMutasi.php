@@ -13,7 +13,7 @@ class DocumentMutasi extends Model
     public $incrementing = false;
     protected $keyType = 'string';
     protected $table = 'document_mutasis';
-    protected $fillable = ['id_register', 'image', 'asal_tugas', 'thn_pindah'];
+    protected $fillable = ['id_register', 'image', 'asal_tugas', 'thn_pindah', 'status_berkas'];
 
     public function register(): BelongsTo
     {
