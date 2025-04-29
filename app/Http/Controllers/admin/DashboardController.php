@@ -33,62 +33,137 @@ class DashboardController extends Controller
         ];
         return view('admin.dashboard', ['data' => $this->data, 'breadcrumb' => $breadcrumb]);
     }
-    public function viewUmum()
+    public function viewUmum(Request $request)
     {
         $breadcrumb = (object) [
             'list' => ['Master Data', 'Jalur Umum']
         ];
 
-        $pendaftarans = Pendaftaran::with('register')
-            ->whereHas('register', function ($query) {
-                $query->where('id_jalur', '1');
-            })->get();
-        return view('admin.dataPendaftaran', ['pendaftarans' => $pendaftarans, 'data' => $this->data, 'breadcrumb' => $breadcrumb]);
+        $sort = $request->input('sort');
+        // query builder dasar
+        $query = Pendaftaran::query();
+        $query->with(['register', 'register.siswa.ortu']);
+        $query->whereHas('register', function ($q) {
+            $q->where('id_jalur', '1');
+        });
+
+        if ($sort == 'valid') {
+            $query->where('confirmations', '1');
+        } else if ($sort == 'invalid') {
+            $query->where('decline', '1');
+        }
+
+        // Jika sorting berdasarkan zonasi, gunakan subquery untuk ordering
+        if ($sort == 'peringkat_zonasi') {
+            $query->join('registers', 'pendaftarans.id_register', '=', 'registers.id')
+                ->join('siswa_barus', 'registers.id', '=', 'siswa_barus.id_register_siswa')
+                ->orderBy('siswa_barus.jarak_sekolah', 'asc')
+                ->select('pendaftarans.*');
+        } else {
+            $query->latest();
+        }
+        $pendaftarans = $query->get();
+
+        // peringkat zonasi
+        $tempPendaftarans = $pendaftarans->sortBy(function ($pendaftaran) {
+            return $pendaftaran->register->siswa->jarak_sekolah ?? PHP_INT_MAX;
+        })->values();
+
+        foreach ($tempPendaftarans as $index => $pendaftaran) {
+            $original = $pendaftarans->firstWhere('id', $pendaftaran->id);
+            if ($original) {
+                $original->peringkat_zonasi = $index + 1;
+            }
+        }
+
+        return view('admin.dataPendaftaran', [
+            'pendaftarans' => $pendaftarans,
+            'data' => $this->data,
+            'breadcrumb' => $breadcrumb,
+            'jalur' => 'Jalur Umum',
+            'sort' => $sort
+        ]);
     }
-    public function viewAfirmasi()
+    public function viewAfirmasi(Request $request)
     {
         $breadcrumb = (object) [
             'list' => ['Master Data', 'Jalur Afirmasi']
         ];
-        $pendaftarans = Pendaftaran::with('register')
+
+        $sort = $request->input('sort');
+
+        $pendaftarans = Pendaftaran::with('register', 'register.siswa.ortu')
             ->whereHas('register', function ($query) {
                 $query->where('id_jalur', '2');
-            })->get();
-        return view('admin.dataPendaftaran', ['pendaftarans' => $pendaftarans, 'data' => $this->data, 'breadcrumb' => $breadcrumb]);
+            })->paginate(10);
+        return view('admin.dataPendaftaran', ['pendaftarans' => $pendaftarans, 'data' => $this->data, 'breadcrumb' => $breadcrumb, 'jalur' => 'Jalur Afirmasi', 'sort' => $sort]);
     }
-    public function viewpindahTugas()
+    public function viewpindahTugas(Request $request)
     {
         $breadcrumb = (object) [
             'list' => ['Master Data', 'Jalur Pindah Tugas']
         ];
-        $pendaftarans = Pendaftaran::with('register')
+        $sort = $request->input('sort');
+        $pendaftarans = Pendaftaran::with('register', 'register.siswa.ortu')
             ->whereHas('register', function ($query) {
                 $query->where('id_jalur', '3');
-            })->get();
-        return view('admin.dataPendaftaran', ['pendaftarans' => $pendaftarans, 'data' => $this->data, 'breadcrumb' => $breadcrumb]);
+            })->paginate(10);
+        return view('admin.dataPendaftaran', ['pendaftarans' => $pendaftarans, 'data' => $this->data, 'breadcrumb' => $breadcrumb, 'jalur' => 'Jalur Pindah Tugas', 'sort' => $sort]);
     }
-    public function viewTahfidz()
+    public function viewTahfidz(Request $request)
     {
         $breadcrumb = (object) [
             'list' => ['Master Data', 'Jalur Tahfidz']
         ];
-        $pendaftarans = Pendaftaran::with('register')
+        $sort = $request->input('sort');
+        $pendaftarans = Pendaftaran::with('register', 'register.siswa.ortu')
             ->whereHas('register', function ($query) {
                 $query->where('id_jalur', '4');
-            })->get();
-        return view('admin.dataPendaftaran', ['pendaftarans' => $pendaftarans, 'data' => $this->data, 'breadcrumb' => $breadcrumb]);
+            })->paginate(10);
+        return view('admin.dataPendaftaran', ['pendaftarans' => $pendaftarans, 'data' => $this->data, 'breadcrumb' => $breadcrumb, 'jalur' => 'Jalur Tahfidz', 'sort' => $sort]);
     }
-    public function viewPrestasi()
+    public function viewPrestasi(Request $request)
     {
         $breadcrumb = (object) [
             'list' => ['Master Data', 'Jalur Prestasi Raport']
         ];
-        $pendaftarans = Pendaftaran::with('register.raport.mapel')->whereHas('register', function ($query) {
-            $query->where('id_jalur', '5');
-        })->get();
 
+        $sort = $request->input('sort');
+        $query = Pendaftaran::query();
+        $query->with(['register', 'register.siswa.ortu', 'register.raport.mapel']);
+        $query->whereHas('register', function ($q) {
+            $q->where('id_jalur', '5');
+        });
 
-        return view('admin.dataPendaftaran', ['data' => $this->data, 'pendaftarans' => $pendaftarans, 'breadcrumb' => $breadcrumb]);
+        if ($sort == 'peringkat_raport') {
+            $query->join('registers', 'pendaftarans.id_register', '=', 'registers.id')
+                ->join('data_raports', 'registers.id', '=', 'data_raports.id_register')
+                ->orderByDesc('data_raports.total_rata_rata')
+                ->select('pendaftarans.*')->distinct('pendaftarans.id');
+        } else {
+            $query->latest();
+        }
+
+        $pendaftarans = $query->get();
+
+        $tempPendaftarans = $pendaftarans->sortByDesc(function ($pendaftaran) {
+            return $pendaftaran->register->raport->total_rata_rata ?? -1; // Nilai default -1 untuk yang tidak memiliki nilai
+        })->values();
+
+        foreach ($tempPendaftarans as $index => $pendaftaran) {
+            $original = $pendaftarans->firstWhere('id', $pendaftaran->id);
+            if ($original) {
+                $original->peringkat_raport = $index + 1;
+            }
+        }
+
+        return view('admin.dataPendaftaran', [
+            'data' => $this->data,
+            'pendaftarans' => $pendaftarans,
+            'breadcrumb' => $breadcrumb,
+            'jalur' => 'Jalur Prestasi Raport',
+            'sort' => $sort
+        ]);
     }
 
     public function detail(string $id)

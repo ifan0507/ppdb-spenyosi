@@ -27,6 +27,7 @@ class DataRaport extends Model
         'rata_kelas5_sem1',
         'rata_kelas5_sem2',
         'rata_kelas6_sem1',
+        'total_rata_rata',
         'status'
     ];
 

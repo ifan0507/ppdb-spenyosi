@@ -14,7 +14,8 @@ class BerandaController extends Controller
     public function index()
     {
         $infos = Info::all();
-        return view('clients.beranda', ['infos' => $infos]);
+        $active = 'beranda';
+        return view('clients.beranda', ['infos' => $infos, 'active' => $active]);
     }
 
     /**

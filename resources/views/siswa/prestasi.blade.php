@@ -38,7 +38,8 @@
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="col-md-3 text-center">
-                                                    <img src="#" alt="" class="img-fluid img-thumbnail mb-3">
+                                                    <img src="{{ asset('storage/' . $data->siswa->image) }}"
+                                                        alt="Foto Prestasi" class="img-fluid img-thumbnail mb-3">
                                                 </div>
 
                                                 <div class="col-md-9">
@@ -46,7 +47,24 @@
                                                         <table class="table table-striped table-bordered align-middle">
                                                             <tbody class="table-light">
                                                                 <tr>
-                                                                    <th></th>
+                                                                    <th width="30%">Nama Prestasi</th>
+                                                                    <td>{{ $data->siswa->nama_prestasi }}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th>Jenis Prestasi</th>
+                                                                    <td>{{ $data->siswa->jenis_prestasi }}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th>Tingkat Prestasi</th>
+                                                                    <td>{{ $data->siswa->tingkat_prestasi }}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th>Tahun Perolehan</th>
+                                                                    <td>{{ $data->siswa->thn_perolehan }}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th>Perolehan</th>
+                                                                    <td>{{ $data->siswa->perolehan }}</td>
                                                                 </tr>
                                                             </tbody>
                                                         </table>

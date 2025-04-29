@@ -183,37 +183,6 @@
 
                                         </div>
                                     </div>
-                                    @if ($data->jalur->id == '2' || $data->jalur->id == '3' || $data->jalur->id == '4')
-                                        <div class="col-md-4">
-                                            <div class="border m-3 py-1 px-2 text-center">
-                                                <label for="foto_lainnya" class="form-label">
-                                                    @if ($data->jalur->id == '2')
-                                                        KIP/KIS/PIP/PKH/SKTM
-                                                    @elseif ($data->jalur->id == '3')
-                                                        Surat Pindah Tugas
-                                                    @elseif ($data->jalur->id == '4')
-                                                        Piagam Prestasi
-                                                    @endif
-                                                    <span style="color:#e3342f">*</span><br />
-                                                    <b>(format: JPG/JPEG maks. 1MB)</b>
-                                                </label>
-
-                                                <img id="img-foto_lainnya"
-                                                    src="{{ asset('storage/' . $data->document->document) }}"
-                                                    class="img-fluid rounded border mb-2"
-                                                    style="max-width: 80%; height: auto;">
-                                                <label for="foto_lainnya" class="btn btn-primary w-100">
-                                                    <i class="fas fa-folder-open"></i> Pilih Foto
-                                                </label>
-                                                <input type="file" id="foto_lainnya" name="document" class="d-none"
-                                                    accept="image/jpeg">
-                                                <div id="info-document_blob" class="text-muted mt-2"
-                                                    style="display:none;">
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    @endif
                                 </div>
 
                             </div>

@@ -13,8 +13,9 @@ class InfoController extends Controller
      */
     public function index()
     {
+        $active = 'info';
         $infos = Info::latest()->paginate(3);
-        return view('clients.info', compact('infos'));
+        return view('clients.info', ['infos' => $infos, 'active' => $active]);
     }
 
     public function detailInfo($id)

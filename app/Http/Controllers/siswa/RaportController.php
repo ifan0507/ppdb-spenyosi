@@ -65,12 +65,21 @@ class RaportController extends Controller
             ]);
         }
 
+        $totalRata = (
+            $request->rata_kelas4_sem1 +
+            $request->rata_kelas4_sem2 +
+            $request->rata_kelas5_sem1 +
+            $request->rata_kelas5_sem2 +
+            $request->rata_kelas6_sem1
+        ) / 4;
+
         DataRaport::where('id_register', $request->id_register)->update([
             'rata_kelas4_sem1' => $request->rata_kelas4_sem1,
             'rata_kelas4_sem2' => $request->rata_kelas4_sem2,
             'rata_kelas5_sem1' => $request->rata_kelas5_sem1,
             'rata_kelas5_sem2' => $request->rata_kelas5_sem2,
             'rata_kelas6_sem1' => $request->rata_kelas6_sem1,
+            'total_rata_rata' => $totalRata,
             'status' => '1'
         ]);
 
@@ -128,6 +137,13 @@ class RaportController extends Controller
                 ]);
         }
 
+        $totalRata = (
+            $request->rata_kelas4_sem1 +
+            $request->rata_kelas4_sem2 +
+            $request->rata_kelas5_sem1 +
+            $request->rata_kelas5_sem2 +
+            $request->rata_kelas6_sem1
+        ) / 4;
 
         DataRaport::where('id_register', $id)->update([
             'rata_kelas4_sem1' => $request->rata_kelas4_sem1,
@@ -135,6 +151,7 @@ class RaportController extends Controller
             'rata_kelas5_sem1' => $request->rata_kelas5_sem1,
             'rata_kelas5_sem2' => $request->rata_kelas5_sem2,
             'rata_kelas6_sem1' => $request->rata_kelas6_sem1,
+            'total_rata_rata' => $totalRata,
             'status' => '1'
         ]);
 

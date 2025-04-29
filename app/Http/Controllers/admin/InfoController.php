@@ -18,7 +18,9 @@ class InfoController extends Controller
         $breadcrumb = (object) [
             'list' => ['Manajemen Info', '']
         ];
-        return view('admin.info', ['data' => $data, 'breadcrumb' => $breadcrumb]);
+
+        $infos = Info::all();
+        return view('admin.info', ['data' => $data, 'breadcrumb' => $breadcrumb, 'infos' => $infos]);
     }
 
     /**
@@ -36,8 +38,6 @@ class InfoController extends Controller
         ], [
             'file.mimes' => 'File yang diunggah harus berupa PDF atau gambar (jpg, jpeg, png, gif, webp).',
         ]);
-
-
 
 
         if ($request->hasFile('file')) {

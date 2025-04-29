@@ -9,9 +9,11 @@
 
         <nav id="navmenu" class="navmenu">
             <ul>
-                <li><a href="{{ route('beranda') }}" class="active">Beranda<br></a></li>
-                <li><a href="{{ route('portal') }}">Portal</a></li>
-                <li><a href="{{ route('info.lengkap') }}">Info Terkini</a></li>
+                <li><a href="{{ route('beranda') }}" class="{{ $active == 'beranda' ? 'active' : '' }}">Beranda<br></a>
+                </li>
+                <li><a href="{{ route('portal') }}" class="{{ $active == 'portal' ? 'active' : '' }}">Portal</a></li>
+                <li><a href="{{ route('info.lengkap') }}" class="{{ $active == 'info' ? 'active' : '' }}">Info
+                        Terkini</a></li>
             </ul>
             <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
         </nav>

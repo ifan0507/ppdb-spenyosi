@@ -8,6 +8,9 @@ use App\Models\SiswaBaru;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Document;
+use App\Models\DocumentAfirmasi;
+use App\Models\DocumentMutasi;
+use App\Models\DocumentPrestasiLomba;
 use App\Models\OrtuSiswa;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
@@ -114,10 +117,28 @@ class LoginController extends Controller
             "no_hp" => "_",
         ]);
 
-        if (session('jalur_ppdb') !== "1" || session('jalur_ppdb') !== "5") {
-            Document::create([
+        if (session('jalur_ppdb') == "2") {
+            DocumentAfirmasi::create([
                 'id_register' => $akun->id,
-                'document' => 'default_document.png'
+                'jenis_afirmasi' => '_',
+                'image' => 'default_document.png'
+            ]);
+        } else if (session('jalur_ppdb') == "3") {
+            DocumentMutasi::create([
+                'id_register' => $akun->id,
+                'asal_tugas' => "_",
+                'thn_pindah' => "_",
+                'image' => 'default_document.png'
+            ]);
+        } else if (session('jalur_ppdb') == "4") {
+            DocumentPrestasiLomba::create([
+                'id_register' => $akun->id,
+                'nama_prestasi' => "_",
+                "jenis_prestasi" => "_",
+                "tingkat_prestasi" => "_",
+                "thn_perolehan" => "_",
+                "perolehan" => "_",
+                'image' => 'default_document.png'
             ]);
         }
 
