@@ -19,7 +19,6 @@
                                 </div>
                             </div>
                             <div class="card-body">
-
                                 <form method="POST" enctype="multipart/form-data"
                                     action="{{ route('mutasi.update', ['id' => $data->id]) }}" id="main-form">
                                     <input type="hidden" name="_token" value="" autocomplete="off">

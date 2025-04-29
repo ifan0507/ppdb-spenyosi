@@ -86,6 +86,8 @@ Route::middleware(['cache_verify', 'auth_siswa'])->group(function () {
     Route::put('/raport/{id}', [RaportController::class, 'update'])->name('update-raport');
 
     // Afirmasi
+    Route::get('/afirmasi', [PenunjangController::class, 'siswaAfirmasi'])->name('siswa.afirmasi');
+    Route::get('/afirmasi/{id}/edit', [PenunjangController::class, 'editAfirmasi'])->name('afirmasi.edit');
     Route::put('/afirmasi/{id}/update', [PenunjangController::class, 'updateAfirmasi'])->name('afirmasi.update');
 
     //PindahTugas

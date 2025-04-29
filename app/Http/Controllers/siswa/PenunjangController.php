@@ -20,6 +20,23 @@ class PenunjangController extends Controller
         $this->data = Auth::guard('siswa')->user();
     }
 
+    public function siswaAfirmasi()
+    {
+        $active_tab = "dokumen_afirmasi";
+        return view('siswa.afirmasi', ['data' => $this->data, "active_tab" => $active_tab]);
+    }
+
+    public function editAfirmasi()
+    {
+
+        $header = "Perbarui Dokumen Afirmasi";
+
+        return view('siswa.edit-afirmasi', [
+            'data' => $this->data,
+            "header" => $header
+        ]);
+    }
+
     public function updateAfirmasi(Request $request, string $id)
     {
         $defaultDocument = 'default_document.png';

@@ -1,23 +1,33 @@
 <div class="card-header" id="headingOne">
     <h5 class="row justify-content-between">
         <div class="col-8 pt-lg-2">
-            <h4 class="font-weight" style="display: inline-block";>
+            <h4 class="font-weight" style="display: inline-block;">
                 Status Kelengkapan Berkas
             </h4>
-            @if ($data->jalur->id != '5')
-                @if ($data->siswa->status_berkas == '1' && $data->siswa->ortu->status_berkas == '1')
-                    <span class="badge badge-success p-2 ml-2" style="border-radius: 0.5rem";>Lengkap</span>
-                @else
-                    <span class="badge badge-danger p-2 ml-2" style="border-radius: 0.5rem";>Belum Lengkap</span>
-                @endif
+            @if (
+                ($data->jalur->id == '2' &&
+                    $data->siswa->status_berkas == '1' &&
+                    $data->siswa->ortu->status_berkas == '1' &&
+                    $data->afirmasi?->status == '1') ||
+                    ($data->jalur->id == '3' &&
+                        $data->siswa->status_berkas == '1' &&
+                        $data->siswa->ortu->status_berkas == '1' &&
+                        $data->mutasi?->status == '1') ||
+                    ($data->jalur->id == '4' &&
+                        $data->siswa->status_berkas == '1' &&
+                        $data->siswa->ortu->status_berkas == '1' &&
+                        $data->lomba?->status == '1') ||
+                    ($data->jalur->id == '5' &&
+                        $data->siswa->status_berkas == '1' &&
+                        $data->siswa->ortu->status_berkas == '1' &&
+                        $data->raport?->status == '1') ||
+                    (!in_array($data->jalur->id, ['2', '3', '4', '5']) &&
+                        $data->siswa->status_berkas == '1' &&
+                        $data->siswa->ortu->status_berkas == '1'))
+                <span class="badge badge-success p-2 ml-2" style="border-radius: 0.5rem;">Lengkap</span>
             @else
-                @if ($data->siswa->status_berkas == '1' && $data->siswa->ortu->status_berkas == '1' && $data->raport?->status == '1')
-                    <span class="badge badge-success p-2 ml-2" style="border-radius: 0.5rem";>Lengkap</span>
-                @else
-                    <span class="badge badge-danger p-2 ml-2" style="border-radius: 0.5rem";>Belum Lengkap</span>
-                @endif
+                <span class="badge badge-danger p-2 ml-2" style="border-radius: 0.5rem;">Belum Lengkap</span>
             @endif
-
         </div>
         <div class="col-4 text-right">
             <button class="btn btn-sm font-weight-bold" style="background-color: #2d89ef; color: white" type="button"
@@ -30,7 +40,6 @@
 </div>
 
 <div id="collapseOne" class="collapse" aria-labelledby="headingOne">
-
     <div class="card-body">
         <div class="alert alert-info alert-blue-outline mb-3">
             <div class="row align-items-center">
@@ -92,16 +101,60 @@
                         @endif
                     </td>
                 </tr>
+
+                @if ($data->jalur->id == '2')
+                    <tr>
+                        <td>
+                            <p class="font-16 mb-0">Afirmasi<span class="text-red">*</span></p>
+                        </td>
+                        <td class="text-left">
+                            @if ($data->afirmasi?->status == '1')
+                                <i class="far fa-check-circle fa-xl" style="color:#38c172"></i>
+                            @else
+                                <i class="far fa-times-circle fa-xl" style="color:#e3342f"></i>
+                            @endif
+                        </td>
+                    </tr>
+                @endif
+
+                @if ($data->jalur->id == '3')
+                    <tr>
+                        <td>
+                            <p class="font-16 mb-0">Pindah Tugas<span class="text-red">*</span></p>
+                        </td>
+                        <td class="text-left">
+                            @if ($data->pindah?->status == '1')
+                                <i class="far fa-check-circle fa-xl" style="color:#38c172"></i>
+                            @else
+                                <i class="far fa-times-circle fa-xl" style="color:#e3342f"></i>
+                            @endif
+                        </td>
+                    </tr>
+                @endif
+
+                @if ($data->jalur->id == '4')
+                    <tr>
+                        <td>
+                            <p class="font-16 mb-0">Tahfidz<span class="text-red">*</span></p>
+                        </td>
+                        <td class="text-left">
+                            @if ($data->tahfidz?->status == '1')
+                                <i class="far fa-check-circle fa-xl" style="color:#38c172"></i>
+                            @else
+                                <i class="far fa-times-circle fa-xl" style="color:#e3342f"></i>
+                            @endif
+                        </td>
+                    </tr>
+                @endif
+
                 @if ($data->jalur->id == '5')
                     <tr>
                         <td>
-                            <p class="font-16 mb-0">
-                                Raport<span class="text-red">*</span>
-                            </p>
+                            <p class="font-16 mb-0">Raport<span class="text-red">*</span></p>
                         </td>
                         <td class="text-left">
                             @if ($data->raport?->status == '1')
-                                <i class="far fa-check-circle fa-xl fa-xl" style="color:#38c172"></i>
+                                <i class="far fa-check-circle fa-xl" style="color:#38c172"></i>
                             @else
                                 <i class="far fa-times-circle fa-xl" style="color:#e3342f"></i>
                             @endif
