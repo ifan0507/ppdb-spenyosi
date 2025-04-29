@@ -31,14 +31,14 @@
                                     <div class="card card-primary card-outline">
                                         <div class="card-header d-flex justify-content-between align-items-center">
                                             <h4>Prestasi</h4>
-                                            <a href="{{ route('prestasi.edit', ['id' => $data->id]) }}" class="btn btn-primary ms-auto">
-                                                <i class="fa-solid fa-square-plus"></i> Perbarui Prestasi
+                                            <a href="{{ route('prestasi.edit') }}" class="btn btn-primary ms-auto">
+                                                <i class="fas fa-edit"></i> Perbarui Prestasi
                                             </a>
                                         </div>
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="col-md-3 text-center">
-                                                    <img src="{{ asset('storage/' . $data->siswa->image) }}"
+                                                    <img src="{{ asset('storage/' . $data->lomba->image) }}"
                                                         alt="Foto Prestasi" class="img-fluid img-thumbnail mb-3">
                                                 </div>
 
@@ -48,23 +48,23 @@
                                                             <tbody class="table-light">
                                                                 <tr>
                                                                     <th width="30%">Nama Prestasi</th>
-                                                                    <td>{{ $data->siswa->nama_prestasi }}</td>
+                                                                    <td>{{ $data->lomba->nama_prestasi ?? '_' }}</td>
                                                                 </tr>
                                                                 <tr>
                                                                     <th>Jenis Prestasi</th>
-                                                                    <td>{{ $data->siswa->jenis_prestasi }}</td>
+                                                                    <td>{{ $data->lomba->jenis_prestasi ?? '_' }}</td>
                                                                 </tr>
                                                                 <tr>
                                                                     <th>Tingkat Prestasi</th>
-                                                                    <td>{{ $data->siswa->tingkat_prestasi }}</td>
+                                                                    <td>{{ $data->lomba->tingkat_prestasi ?? '_' }}</td>
                                                                 </tr>
                                                                 <tr>
                                                                     <th>Tahun Perolehan</th>
-                                                                    <td>{{ $data->siswa->thn_perolehan }}</td>
+                                                                    <td>{{ $data->lomba->thn_perolehan ?? '_' }}</td>
                                                                 </tr>
                                                                 <tr>
                                                                     <th>Perolehan</th>
-                                                                    <td>{{ $data->siswa->perolehan }}</td>
+                                                                    <td>{{ $data->lomba->perolehan ?? '_' }}</td>
                                                                 </tr>
                                                             </tbody>
                                                         </table>

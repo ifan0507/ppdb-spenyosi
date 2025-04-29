@@ -292,7 +292,7 @@
             $("#pendidikanAyah, #pendidikanIbu, #pekerjaanAyah, #pekerjaanIbu").on("change", function() {
                 if ($(this).val() !== "") {
                     $(this).addClass("is-valid").removeClass("is-invalid");
-                    $(this).next(".invalid-feedback").hide(); // Sembunyikan pesan error
+                    $(this).next(".invalid-feedback").hide();
                 }
             });
 

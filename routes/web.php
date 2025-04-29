@@ -75,7 +75,7 @@ Route::middleware(['cache_verify', 'auth_siswa'])->group(function () {
     route::put('/ortu/{id}/update', [OrtuController::class, 'update'])->name('ortu.update');
 
     route::get('/prestasi', [PenunjangController::class, 'viewPrestasi'])->name('siswa.prestasi');
-    Route::get('/prestasi/{id}/edit', [PenunjangController::class, 'editPrestasiLomba'])->name('prestasi.edit');
+    Route::get('/prestasi/edit', [PenunjangController::class, 'editPrestasiLomba'])->name('prestasi.edit');
     Route::put('/prestasi/{id}/update', [PenunjangController::class, 'updatePrestasiLomba'])->name('prestasi.update');
 
     // Raport

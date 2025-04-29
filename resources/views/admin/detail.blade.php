@@ -24,25 +24,24 @@
                         <ul class="nav nav-tabs nav-tabs-bordered">
 
                             <li class="nav-item">
-                                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">Bio
+                                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#bio">Bio
                                     Data</button>
                             </li>
 
                             <li class="nav-item">
-                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">
+                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#ortu">
                                     Orang Tua</button>
                             </li>
                             @if ($pendaftarans->register->jalur->id == '5')
                                 <li class="nav-item">
-                                    <button class="nav-link" data-bs-toggle="tab"
-                                        data-bs-target="#profile-settings">Raport</button>
+                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#raport">Raport</button>
                                 </li>
                             @endif
 
                         </ul>
                         <div class="tab-content pt-2">
 
-                            <div class="tab-pane fade show active profile-overview" id="profile-overview">
+                            <div class="tab-pane fade show active bio" id="bio">
                                 <h5 class="card-title">Bio Data </h5>
 
                                 <div class="row">
@@ -144,7 +143,7 @@
                             </div>
 
 
-                            <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
+                            <div class="tab-pane fade ortu pt-3" id="ortu">
                                 <h5 class="card-title">Data Orang Tua</h5>
 
                                 <div class="row mb-3">
@@ -199,7 +198,7 @@
                             </div>
 
 
-                            <div class="tab-pane fade pt-3" id="profile-settings">
+                            <div class="tab-pane fade pt-3" id="raport">
 
                                 <div class="card-header">
                                     <div class="table-responsive">

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\DocumentAfirmasi;
 use App\Models\DocumentMutasi;
 use App\Models\DocumentPrestasiLomba;
+use App\Models\Register;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -111,10 +112,9 @@ class PenunjangController extends Controller
         return view('siswa.prestasi', ['data' => $this->data, "active_tab" => $active_tab]);
     }
 
-    public function editPrestasiLomba(string $id)
+    public function editPrestasiLomba()
     {
-        $data = DocumentPrestasiLomba::where("id", $id)->first();
-        $header = "Form Prestasi";
+        $header = "Perbarui Document Prestasi";
 
         return view('siswa.edit-prestasi', [
             'data' => $this->data,
@@ -143,19 +143,22 @@ class PenunjangController extends Controller
             }
             $documentPath = $request->file('image')->store('siswa/lomba');
         } else {
-            $documentPath = $request->file('image')->store('siswa/lomba');
+            $documentPath = $this->data->lomba->image;
         }
 
-        DocumentPrestasiLomba::where('id', $id)->update([
+        $update =  DocumentPrestasiLomba::where('id', $id)->update([
             'nama_prestasi' => $request->nama_prestasi,
-            'jenis_prestasi' => $request->jenis_prestsi,
+            'jenis_prestasi' => $request->jenis_prestasi,
             'tingkat_prestasi' => $request->tingkat_prestasi,
             'thn_perolehan' => $request->thn_perolehan,
             'perolehan' => $request->perolehan,
             'image' => $documentPath,
             'status_berkas' => '1'
         ]);
-
-        return response()->json(['redirect' => route('')]);
+        if ($update) {
+            return response()->json(['redirect' => route('siswa.prestasi')]);
+        } else {
+            return back()->withInput()->withErrors('ERROR CONTROLLER');
+        }
     }
 }

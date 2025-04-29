@@ -133,11 +133,6 @@ class LoginController extends Controller
         } else if (session('jalur_ppdb') == "4") {
             DocumentPrestasiLomba::create([
                 'id_register' => $akun->id,
-                'nama_prestasi' => "_",
-                "jenis_prestasi" => "_",
-                "tingkat_prestasi" => "_",
-                "thn_perolehan" => "_",
-                "perolehan" => "_",
                 'image' => 'default_document.png'
             ]);
         }
