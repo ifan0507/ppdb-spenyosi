@@ -24,14 +24,32 @@
                         <ul class="nav nav-tabs nav-tabs-bordered">
 
                             <li class="nav-item">
-                                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#bio">Bio
+                                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">Bio
                                     Data</button>
                             </li>
 
                             <li class="nav-item">
-                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#ortu">
+                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">
                                     Orang Tua</button>
                             </li>
+                            @if ($pendaftarans->register->jalur->id == '2')
+                                <li class="nav-item">
+                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#afirmasi">Dokumen
+                                        Afirmasi</button>
+                                </li>
+                            @endif
+                            @if ($pendaftarans->register->jalur->id == '3')
+                                <li class="nav-item">
+                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#mutasi">Dokumen Pindah
+                                        Tugas</button>
+                                </li>
+                            @endif
+                            @if ($pendaftarans->register->jalur->id == '4')
+                                <li class="nav-item">
+                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#prestasi">Dokumen
+                                        Prestasi</button>
+                                </li>
+                            @endif
                             @if ($pendaftarans->register->jalur->id == '5')
                                 <li class="nav-item">
                                     <button class="nav-link" data-bs-toggle="tab" data-bs-target="#raport">Raport</button>
@@ -41,7 +59,7 @@
                         </ul>
                         <div class="tab-content pt-2">
 
-                            <div class="tab-pane fade show active profile-overview" id="bio">
+                            <div class="tab-pane fade show active profile-overview" id="profile-overview">
                                 <h5 class="card-title">Bio Data </h5>
 
                                 <div class="row">
@@ -120,27 +138,10 @@
                                             alt="Foto Akte" class="img-fluid">
                                     </div>
                                 </div>
-
-                                {{-- @if ($pendaftarans->register->jalur->id == '2' || $pendaftarans->register->jalur->id == '3' || $pendaftarans->register->jalur->id == '4')
-                                    <div class="row">
-                                        @if ($pendaftarans->register->jalur->id == '2')
-                                            <div class="col-lg-3 col-md-4 label">KIP/KIS/PIP/PKH/SKTM</div>
-                                        @elseif ($pendaftarans->register->jalur->id == '3')
-                                            <div class="col-lg-3 col-md-4 label">Surat Pindah Tugas</div>
-                                        @elseif ($pendaftarans->register->jalur->id == '4')
-                                            <div class="col-lg-3 col-md-4 label">Piagam Prestasi</div>
-                                        @endif
-                                        <div class="col-lg-9 col-md-8">
-                                            <img src="{{ asset('storage/' . $pendaftarans->register->document->document) }}"
-                                                alt="" class="img-fluid">
-                                        </div>
-                                    </div>
-                                @endif --}}
-
                             </div>
 
 
-                            <div class="tab-pane fade ortu pt-3 profile-edit" id="ortu">
+                            <div class="tab-pane fade ortu pt-3 ortu profile-edit" id="profile-edit">
                                 <h5 class="card-title">Data Orang Tua</h5>
 
                                 <div class="row mb-3">
@@ -190,6 +191,88 @@
                                 <div class="row mb-3">
                                     <label for="fullName" class="col-md-4 col-lg-3">Nomer Telp Orang Tua</label>
                                     <div class="col-lg-9 col-md-8">{{ $pendaftarans->register->siswa->ortu->no_hp }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade profile-overview" id="afirmasi">
+                                <h5 class="card-title">Dokumen Afirmasi</h5>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Jenis Afirmasi</div>
+                                    <div class="col-lg-9 col-md-8">
+                                        {{ $pendaftarans->register->afirmasi?->jenis_afirmasi }}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Dokumen Afirmasi</div>
+                                    <div class="col-lg-9 col-md-8">
+                                        <img src="{{ asset('storage/' . $pendaftarans->register->afirmasi?->image) }}"
+                                            alt="Dokumen Afirmasi" class="img-fluid">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade profile-overview" id="mutasi">
+                                <h5 class="card-title">Dokumen Pindah Tugas</h5>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Asal Tugas</div>
+                                    <div class="col-lg-9 col-md-8">
+                                        {{ $pendaftarans->register->mutasi?->asal_tugas }}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Tahun Pindah</div>
+                                    <div class="col-lg-9 col-md-8">
+                                        {{ $pendaftarans->register->mutasi?->thn_pindah }}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Dokumen Pindah Tugas</div>
+                                    <div class="col-lg-9 col-md-8">
+                                        <img src="{{ asset('storage/' . $pendaftarans->register->mutasi?->image) }}"
+                                            alt="Dokumen Mutasi" class="img-fluid">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade profile-overview" id="prestasi">
+                                <h5 class="card-title">Dokumen Prestasi</h5>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Nama Kegiatan</div>
+                                    <div class="col-lg-9 col-md-8">
+                                        {{ $pendaftarans->register->lomba?->nama_prestasi }}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Jenis Prestasi</div>
+                                    <div class="col-lg-9 col-md-8">
+                                        {{ $pendaftarans->register->lomba?->jenis_prestasi }}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Tingkat Prestasi</div>
+                                    <div class="col-lg-9 col-md-8">
+                                        {{ $pendaftarans->register->lomba?->tingkat_prestasi }}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Tahun Perolehan</div>
+                                    <div class="col-lg-9 col-md-8">
+                                        {{ $pendaftarans->register->lomba?->thn_perolehan }}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Perolehan</div>
+                                    <div class="col-lg-9 col-md-8">
+                                        {{ $pendaftarans->register->lomba?->perolehan }}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Dokumen Prestasi</div>
+                                    <div class="col-lg-9 col-md-8">
+                                        <img src="{{ asset('storage/' . $pendaftarans->register->lomba?->image) }}"
+                                            alt="Dokumen Prestasi" class="img-fluid">
                                     </div>
                                 </div>
                             </div>
