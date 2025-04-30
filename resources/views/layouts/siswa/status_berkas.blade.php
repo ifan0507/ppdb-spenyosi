@@ -8,15 +8,15 @@
                 ($data->jalur->id == '2' &&
                     $data->siswa->status_berkas == '1' &&
                     $data->siswa->ortu->status_berkas == '1' &&
-                    $data->afirmasi?->status == '1') ||
+                    $data->afirmasi?->status_berkas == '1') ||
                     ($data->jalur->id == '3' &&
                         $data->siswa->status_berkas == '1' &&
                         $data->siswa->ortu->status_berkas == '1' &&
-                        $data->mutasi?->status == '1') ||
+                        $data->mutasi?->status_berkas == '1') ||
                     ($data->jalur->id == '4' &&
                         $data->siswa->status_berkas == '1' &&
                         $data->siswa->ortu->status_berkas == '1' &&
-                        $data->lomba?->status == '1') ||
+                        $data->lomba?->status_berkas == '1') ||
                     ($data->jalur->id == '5' &&
                         $data->siswa->status_berkas == '1' &&
                         $data->siswa->ortu->status_berkas == '1' &&
@@ -105,10 +105,10 @@
                 @if ($data->jalur->id == '2')
                     <tr>
                         <td>
-                            <p class="font-16 mb-0">Afirmasi<span class="text-red">*</span></p>
+                            <p class="font-16 mb-0">Dokumen Afirmasi<span class="text-red">*</span></p>
                         </td>
                         <td class="text-left">
-                            @if ($data->afirmasi?->status == '1')
+                            @if ($data->afirmasi?->status_berkas == '1')
                                 <i class="far fa-check-circle fa-xl" style="color:#38c172"></i>
                             @else
                                 <i class="far fa-times-circle fa-xl" style="color:#e3342f"></i>
@@ -120,10 +120,10 @@
                 @if ($data->jalur->id == '3')
                     <tr>
                         <td>
-                            <p class="font-16 mb-0">Pindah Tugas<span class="text-red">*</span></p>
+                            <p class="font-16 mb-0">Dokumen Pindah Tugas<span class="text-red">*</span></p>
                         </td>
                         <td class="text-left">
-                            @if ($data->pindah?->status == '1')
+                            @if ($data->mutasi?->status == '1')
                                 <i class="far fa-check-circle fa-xl" style="color:#38c172"></i>
                             @else
                                 <i class="far fa-times-circle fa-xl" style="color:#e3342f"></i>
@@ -135,10 +135,10 @@
                 @if ($data->jalur->id == '4')
                     <tr>
                         <td>
-                            <p class="font-16 mb-0">Tahfidz<span class="text-red">*</span></p>
+                            <p class="font-16 mb-0">Dokumen Prestasi<span class="text-red">*</span></p>
                         </td>
                         <td class="text-left">
-                            @if ($data->tahfidz?->status == '1')
+                            @if ($data->lomba?->status_berkas == '1')
                                 <i class="far fa-check-circle fa-xl" style="color:#38c172"></i>
                             @else
                                 <i class="far fa-times-circle fa-xl" style="color:#e3342f"></i>

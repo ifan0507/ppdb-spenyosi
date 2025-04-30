@@ -69,15 +69,15 @@ class DatabaseSeeder extends Seeder
             'role' => "admin",
         ]);
 
-        $akun = Register::create([
-            'nisn' => '1234567890',
-            "no_register" => "202504180001",
-            'email' => 'ipan.lmj0507@gmail.com',
-            'password' => '123',
-            'id_jalur' => '5',
-            'email_verified_at' => now(),
-            'verification_code' => null,
-        ]);
+        // $akun = Register::create([
+        //     'nisn' => '1234567890',
+        //     "no_register" => "202504180001",
+        //     'email' => 'ipan.lmj0507@gmail.com',
+        //     'password' => '123',
+        //     'id_jalur' => '5',
+        //     'email_verified_at' => now(),
+        //     'verification_code' => null,
+        // ]);
 
         // $akun = Register::create([
         //     'nisn' => '1234566233',
