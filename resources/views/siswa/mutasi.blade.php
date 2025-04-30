@@ -31,15 +31,14 @@
                                     <div class="card card-primary card-outline">
                                         <div class="card-header d-flex justify-content-between align-items-center">
                                             <h4>Dokumen Pindah Tugas</h4>
-                                            <a href="{{ route('mutasi.edit', ['id' => $data->id]) }}"
-                                                class="btn btn-primary ms-auto">
-                                                <i class="fa-solid fa-square-plus"></i> Perbarui Dokumen Pindah Tugas
+                                            <a href="{{ route('mutasi.edit') }}" class="btn btn-primary ms-auto">
+                                                <i class="fas fa-edit"></i> Perbarui Dokumen Pindah Tugas
                                             </a>
                                         </div>
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="col-md-3 text-center">
-                                                    <img src="{{ asset('storage/' . $data->siswa->image) }}"
+                                                    <img src="{{ asset('storage/' . $data->mutasi->image) }}"
                                                         alt="Foto Prestasi" class="img-fluid img-thumbnail mb-3">
                                                 </div>
 
@@ -49,11 +48,11 @@
                                                             <tbody class="table-light">
                                                                 <tr>
                                                                     <th width="30%">Asal Tugas</th>
-                                                                    <td>{{ $data->siswa->asal_tugas }}</td>
+                                                                    <td>{{ $data->mutasi->asal_tugas ?? '_' }}</td>
                                                                 </tr>
                                                                 <tr>
                                                                     <th>Tahun Pindah</th>
-                                                                    <td>{{ $data->siswa->thn_pindah }}</td>
+                                                                    <td>{{ $data->mutasi->thn_pindah ?? '_' }}</td>
                                                                 </tr>
                                                             </tbody>
                                                         </table>

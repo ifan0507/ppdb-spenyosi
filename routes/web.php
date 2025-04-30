@@ -90,7 +90,7 @@ Route::middleware(['cache_verify', 'auth_siswa'])->group(function () {
 
     //PindahTugas
     Route::get('/mutasi', [PenunjangController::class, 'viewMutasi'])->name('siswa.mutasi');
-    Route::get('/mutasi/{id}/edit', [PenunjangController::class, 'editMutasi'])->name('mutasi.edit');
+    Route::get('/mutasi/edit', [PenunjangController::class, 'editMutasi'])->name('mutasi.edit');
     Route::put('/mutasi/{id}/update', [PenunjangController::class, 'updateMutasi'])->name('mutasi.update');
 
     // Pendaftaran

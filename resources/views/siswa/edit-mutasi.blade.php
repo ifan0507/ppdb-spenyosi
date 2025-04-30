@@ -8,81 +8,201 @@
                 'Perbarui Dokumen Pindah Tugas' => '',
             ],
         ])
-        <div class="content">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="card card-primary card-outline">
-                            <div class="card-header">
-                                <div class="d-flex">
-                                    <h5 class="m-0">Tambahkan Dokumen Pindah Tugas</h5>
+
+        <div class="container-fluid">
+            @include('layouts.siswa.header-update')
+            <div class="row justify-conten-center">
+                <div class="card card-primary card-outline card-outline-tabs col-md-12">
+                    <div class="card-body">
+                        <form method="POST" enctype="multipart/form-data"
+                            action="{{ route('mutasi.update', ['id' => $data->mutasi->id]) }}" id="mutasi-form">
+                            @csrf
+                            <div class="row">
+                                <div class="col-sm-8 col-lg-6">
+                                    <div class="form-group required">
+                                        <label class="title">Asal Tugas</label>
+                                        <input type="text" placeholder="Surabaya - Lumajang" class="form-control "
+                                            name="asal_tugas" id="asal_tugas"
+                                            value="{{ old('asal_tugas', $data->mutasi->asal_tugas) }}"">
+                                    </div>
+
+                                    <div class="form-group required">
+                                        <label class="title">Tahun Pindah</label>
+                                        <select class="form-control" id="thn_pindah" name="thn_pindah">
+                                            <option value="" disabled selected>-- Pilih Tahun Pindah Tugas
+                                                --</option>
+                                            <option value="2020"
+                                                {{ $data->mutasi->thn_pindah == '2020' ? 'selected' : '' }}>2020
+                                            </option>
+                                            <option value="2021"
+                                                {{ $data->mutasi->thn_pindah == '2021' ? 'selected' : '' }}>2021
+                                            </option>
+                                            <option value="2022"
+                                                {{ $data->mutasi->thn_pindah == '2022' ? 'selected' : '' }}>2022
+                                            </option>
+                                            <option value="2023"
+                                                {{ $data->mutasi->thn_pindah == '2023' ? 'selected' : '' }}>2023
+                                            </option>
+                                            <option value="2024"
+                                                {{ $data->mutasi->thn_pindah == '2024' ? 'selected' : '' }}>2024
+                                            </option>
+                                            <option value="2025"
+                                                {{ $data->mutasi->thn_pindah == '2025' ? 'selected' : '' }}>2025
+                                            </option>
+                                        </select>
+                                        <label id="tahun-error" class="error" for="tahun" style="display: none">This
+                                            field is required.</label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-8 col-lg-4">
+                                    <div class="border m-3 py-1 px-2 text-center" id="photo-box">
+                                        <label for="mutasi_blob" class="form-label">
+                                            Dokumen Pendukung <span style="color:#e3342f">*</span><br />
+                                            <b>(format: JPG/JPEG maks. 1MB)</b>
+                                        </label>
+
+                                        <img id="img-mutasi_blob" src="{{ asset('storage/' . $data->mutasi->image) }}"
+                                            class="img-fluid rounded border mb-2" style="max-width: 100%;">
+                                        <label for="mutasi_blob" class="btn btn-primary w-100">
+                                            <i class="fas fa-folder-open"></i> Pilih Foto
+                                        </label>
+                                        <input type="file" id="mutasi_blob" name="image" class="d-none"
+                                            accept="image/jpeg">
+                                        <div id="info-mutasi_blob" class="text-muted mt-2" style="display:none;">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="card-body">
-
-                                <form method="POST" enctype="multipart/form-data"
-                                    action="{{ route('mutasi.update', ['id' => $data->id]) }}" id="main-form">
-                                    <input type="hidden" name="_token" value="" autocomplete="off">
-                                    <div class="row">
-                                        <div class="col-sm-8 col-lg-6">
-                                            <div class="form-group required">
-                                                <label class="title">Asal Tugas</label>
-                                                <input type="text" placeholder="Surabaya - Lumajang"
-                                                    class="form-control " name="asal_tugas" id="asal_tugas" value=""
-                                                    required="">
-                                            </div>
-
-                                            <div class="form-group required">
-                                                <label class="title">Tahun Pindah</label>
-                                                <select class="form-control" id="tahun" required=""
-                                                    name="thn_pindah">
-                                                    <option value="" selected="selected">-- Pilih Tahun Pindah Tugas
-                                                        --</option>
-                                                    <option value="2020">2020</option>
-                                                    <option value="2021">2021</option>
-                                                    <option value="2022">2022</option>
-                                                    <option value="2023">2023</option>
-                                                    <option value="2024">2024</option>
-                                                    <option value="2025">2025</option>
-                                                </select>
-                                                <label id="tahun-error" class="error" for="tahun"
-                                                    style="display: none">This field is required.</label>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-8 col-lg-4">
-                                            <div class="border m-3 py-1 px-2 text-center" id="photo-box">
-                                                <label for="prestasu_blob" class="form-label">
-                                                    Documen Pendukung <span style="color:#e3342f">*</span><br />
-                                                    <b>(format: JPG/JPEG maks. 1MB)</b>
-                                                </label>
-
-                                                <img id="img-prestasi_blob"
-                                                    src="{{ asset('storage/' . $data->siswa->image) }}"
-                                                    class="img-fluid rounded border mb-2" style="max-width: 100%;">
-                                                <label for="prestasi_blob" class="btn btn-primary w-100">
-                                                    <i class="fas fa-folder-open"></i> Pilih Foto
-                                                </label>
-                                                <input type="file" id="prestasi_blob" name="image" class="d-none"
-                                                    accept="image/jpeg">
-                                                <div id="info-prestasi_blob" class="text-muted mt-2" style="display:none;">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row justify-content-center">
-                                        <div class="col-sm-8 col-lg-6">
-                                            <button type="submit" class="btn btn-block btn-primary">
-                                                <i class="fas fa-plus-circle"></i>
-                                                Tambahkan Dokumen
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
+                            <div class="row justify-content-center">
+                                <div class="col-sm-8 col-lg-6">
+                                    <button type="submit" class="btn btn-primary btn-block" id="btnMutasi"><i
+                                            class="fas fa-save" id="icon_mutasi"></i>
+                                        <span id="textMutasi"> Perbarui Biodata</span>
+                                        <span id="loadingMutasi" class="spinner-border spinner-border-sm d-none"
+                                            role="status" aria-hidden="true"></span>
+                                    </button>
+                                </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <script>
+        $(document).ready(function() {
+            $("#asal_tugas").on("input", function() {
+                if ($(this).val().trim() === "") {
+                    $(this).addClass('is-invalid');
+                } else {
+                    $(this).removeClass('is-invalid').addClass('is-valid')
+                }
+            })
+
+            $("#mutasi_blob").on("change", function() {
+                const input = this;
+                const imagePreview = $("#img-mutasi_blob");
+                const infoBox = $("#info-mutasi_blob");
+
+                if (input.files && input.files[0]) {
+                    const file = input.files[0];
+                    if (file.size > 1 * 1024 * 1024) {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Oops...",
+                            text: "Ukuran file dokumen terlalu besar! Maksimal 1MB!",
+                        })
+
+                        $(this).val("");
+                        imagePreview.attr("src", "{{ asset('storage/' . $data->mutasi->image) }}");
+                        infoBox.hide();
+                        return;
+                    }
+                    infoBox.text(`File: ${file.name} (${(file.size / 1024).toFixed(2)} KB)`).show();
+
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        imagePreview.attr("src", e.target.result);
+                    };
+                    reader.readAsDataUrl(file);
+                }
+            })
+
+            $("#thn_pindah").on("change", function() {
+                if ($(this).val() !== "" || $(this.val() !== "")) {
+                    $(this).addClass("is-valid").removeClass("is-invalid");
+                }
+            })
+
+            $("#mutasi-form").on("submit", function(e) {
+                e.preventDefault();
+                const formData = new FormData(this);
+                formData.append("_method", "PUT");
+
+                if ($("#asal_tugas").val() === "") {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "Asal tugas harus diisi!"
+                    })
+                    $("#asal_tugas").addClass("is-invalid");
+                } else if ($("#thn_pindah").val() == null) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "Pindah tugas harus diisi!"
+                    })
+                    $("#thn_pindah").addClass("is-invalid");
+                } else {
+                    $("#btnMutasi").attr("disabled", true);
+                    $("#textMutasi").addClass("d-none");
+                    $("#icon_mutasi").addClass("d-none");
+                    $("#loadingMutasi").removeClass("d-none");
+                    $.ajax({
+                        type: "POST",
+                        url: $(this).attr("action"),
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function(response) {
+                            $("#btnMutasi").attr("disabled", false);
+                            $("#textMutasi").removeClass("d-none");
+                            $("#icon_mutasi").removeClass("d-none");
+                            $("#loadingMutasi").addClass("d-none");
+                            Swal.fire({
+                                title: "Berhasil",
+                                icon: "success",
+                                text: "diperbarui!",
+                                confirmButtonText: "OK",
+                                confirmButtonColor: "#18a342",
+                            }).then(() => {
+                                window.location.href = response.redirect;
+                            })
+                        },
+                        error: function(xhr) {
+                            $("#btnMutasi").attr("disabled", false);
+                            $("#textMutasi").removeClass("d-none");
+                            $("#icon_mutasi").removeClass("d-none");
+                            $("#loadingMutasi").addClass("d-none");
+                            var errorString = "";
+                            if (xhr.responseJSON && xhr.responseJSON.errors) {
+                                $.each(xhr.responseJSON.errors, function(key, messages) {
+                                    errorString += messages[0] + "\n";
+                                });
+                            } else if (xhr.responseJSON && xhr.responseJSON.error) {
+                                errorString += xhr.responseJSON.error;
+                            } else {
+                                errorString += "Terjadi kesalahan. silahkan coba lagi!";
+                            }
+                            Swal.fire({
+                                icon: "error",
+                                title: "Oops...",
+                                text: errorString
+                            })
+                        }
+                    });
+                }
+            })
+        })
+    </script>
 @endsection

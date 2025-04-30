@@ -50,11 +50,11 @@
                                                             <tbody class="table-light">
                                                                 <tr>
                                                                     <th width="30%">NISN</th>
-                                                                    <td>{{ $data->siswa->nisn }}</td>
+                                                                    <td>{{ $data->siswa->nisn ?? '_' }}</td>
                                                                 </tr>
                                                                 <tr>
                                                                     <th>Nama Lengkap</th>
-                                                                    <td>{{ $data->siswa->nama }}</td>
+                                                                    <td>{{ $data->siswa->nama ?? '_' }}</td>
                                                                 </tr>
                                                                 <tr>
                                                                     <th>NIK</th>
@@ -67,7 +67,7 @@
                                                                 <tr>
                                                                     <th>Tempat, Tanggal Lahir</th>
                                                                     @if ($data->siswa->tanggal_lahir == '')
-                                                                        <td>{{ $data->siswa->tempat_lahir }}</td>
+                                                                        <td>_</td>
                                                                     @else
                                                                         <td>{{ $data->siswa->tempat_lahir }},
                                                                             {{ $data->siswa->tanggal_lahir }}</td>
@@ -75,37 +75,37 @@
                                                                 </tr>
                                                                 <tr>
                                                                     <th>Asal sekolah</th>
-                                                                    <td>{{ $data->siswa->asal_sekolah }}</td>
+                                                                    <td>{{ $data->siswa->asal_sekolah ?? '_' }}</td>
                                                                 </tr>
                                                                 <tr>
                                                                     <th>Kabupaten</th>
-                                                                    <td>{{ $data->siswa->kabupaten }}</td>
+                                                                    <td>{{ $data->siswa->kabupaten ?? '_' }}</td>
                                                                 </tr>
                                                                 <tr>
                                                                     <th>Kecamatan</th>
-                                                                    <td>{{ $data->siswa->kecamatan }}</td>
+                                                                    <td>{{ $data->siswa->kecamatan ?? '_' }}</td>
                                                                 </tr>
                                                                 <tr>
                                                                     <th>Desa</th>
-                                                                    <td>{{ $data->siswa->desa }}</td>
+                                                                    <td>{{ $data->siswa->desa ?? '_' }}</td>
                                                                 </tr>
                                                                 <tr>
                                                                     <th>Alamat</th>
                                                                     <td>
-                                                                        {{ $data->siswa->alamat }}
+                                                                        {{ $data->siswa->alamat ?? '_' }}
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
                                                                     <th>No. HP</th>
-                                                                    <td>{{ $data->siswa->no_hp }}</td>
+                                                                    <td>{{ $data->siswa->no_hp ?? '_' }}</td>
                                                                 </tr>
                                                                 <tr>
                                                                     <th>Email</th>
-                                                                    <td>{{ $data->siswa->email }}</td>
+                                                                    <td>{{ $data->siswa->email ?? '_' }}</td>
                                                                 </tr>
                                                                 <tr>
                                                                     <th>Titik Koordinat</th>
-                                                                    <td>{{ $data->siswa->lokasi }}</td>
+                                                                    <td>{{ $data->siswa->lokasi ?? '_' }}</td>
                                                                 </tr>
                                                                 <tr>
                                                                     <th>Foto KK</th>

@@ -41,7 +41,7 @@
                         </ul>
                         <div class="tab-content pt-2">
 
-                            <div class="tab-pane fade show active bio" id="bio">
+                            <div class="tab-pane fade show active profile-overview" id="bio">
                                 <h5 class="card-title">Bio Data </h5>
 
                                 <div class="row">
@@ -121,10 +121,7 @@
                                     </div>
                                 </div>
 
-                                @if (
-                                    $pendaftarans->register->jalur->id == '2' ||
-                                        $pendaftarans->register->jalur->id == '3' ||
-                                        $pendaftarans->register->jalur->id == '4')
+                                {{-- @if ($pendaftarans->register->jalur->id == '2' || $pendaftarans->register->jalur->id == '3' || $pendaftarans->register->jalur->id == '4')
                                     <div class="row">
                                         @if ($pendaftarans->register->jalur->id == '2')
                                             <div class="col-lg-3 col-md-4 label">KIP/KIS/PIP/PKH/SKTM</div>
@@ -138,12 +135,12 @@
                                                 alt="" class="img-fluid">
                                         </div>
                                     </div>
-                                @endif
+                                @endif --}}
 
                             </div>
 
 
-                            <div class="tab-pane fade ortu pt-3" id="ortu">
+                            <div class="tab-pane fade ortu pt-3 profile-edit" id="ortu">
                                 <h5 class="card-title">Data Orang Tua</h5>
 
                                 <div class="row mb-3">
