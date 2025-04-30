@@ -4,69 +4,53 @@
     <div class="misc-content pt-4">
         @include('layouts.siswa.breadcrumb', [
             'breadcrumb' => [
-                'Documen Pindah Tugas' => route('siswa.mutasi'),
-                'Perbarui Dokumen Pindah Tugas' => '',
+                'Dokumen Afirmasi' => route('siswa.afirmasi'),
+                'Perbarui Dokumen Afirmasi' => '',
             ],
         ])
-
-        <div class="container-fluid">
+        <div class="container">
             @include('layouts.siswa.header-update')
-            <div class="row justify-conten-center">
+            <div class="row justify-content-center">
                 <div class="card card-primary card-outline card-outline-tabs col-md-12">
                     <div class="card-body">
                         <form method="POST" enctype="multipart/form-data"
-                            action="{{ route('mutasi.update', ['id' => $data->mutasi->id]) }}" id="mutasi-form">
-                            @method('PUT')
+                            action="{{ route('afirmasi.update', ['id' => $data->afirmasi->id]) }}" id="main-form">
+                            @method('put')
                             @csrf
                             <div class="row">
                                 <div class="col-sm-8 col-lg-6">
                                     <div class="form-group required">
-                                        <label class="title">Asal Tugas</label>
-                                        <input type="text" placeholder="Surabaya - Lumajang" class="form-control "
-                                            name="asal_tugas" id="asal_tugas" value="">
-                                    </div>
-
-                                    <div class="form-group required">
-                                        <label class="title">Tahun Pindah</label>
-                                        <select class="form-control" id="thn_pindah" name="thn_pindah">
-                                            <option value="" disabled selected>-- Pilih Tahun Pindah Tugas
+                                        <label class="title">Jenis Afirmasi</label>
+                                        <select class="form-control" id="jenis_afirmasi" name="jenis_afirmasi">
+                                            <option value="" disabled selected>-- Pilih Jenis Afirmasi
                                                 --</option>
-                                            <option value="2020"
-                                                {{ $data->mutasi->thn_pindah == '2020' ? 'selected' : '' }}>2020
+                                            <option value="KIP"
+                                                {{ $data->afirmasi->jenis_afirmasi == 'KIP' ? 'selected' : '' }}>KIP
                                             </option>
-                                            <option value="2021"
-                                                {{ $data->mutasi->thn_pindah == '2021' ? 'selected' : '' }}>2021
+                                            <option value="KKS"
+                                                {{ $data->afirmasi->jenis_afirmasi == 'KKS' ? 'selected' : '' }}>KKS
                                             </option>
-                                            <option value="2022"
-                                                {{ $data->mutasi->thn_pindah == '2022' ? 'selected' : '' }}>2022
-                                            </option>
-                                            <option value="2023"
-                                                {{ $data->mutasi->thn_pindah == '2023' ? 'selected' : '' }}>2023
-                                            </option>
-                                            <option value="2024"
-                                                {{ $data->mutasi->thn_pindah == '2024' ? 'selected' : '' }}>2024
-                                            </option>
-                                            <option value="2025"
-                                                {{ $data->mutasi->thn_pindah == '2025' ? 'selected' : '' }}>2025
+                                            <option value="PKH"
+                                                {{ $data->afirmasi->jenis_afirmasi == 'PKH' ? 'selected' : '' }}>PKH
                                             </option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-sm-8 col-lg-4">
                                     <div class="border m-3 py-1 px-2 text-center" id="photo-box">
-                                        <label for="mutasi_blob" class="form-label">
+                                        <label for="afirmasi_blob" class="form-label">
                                             Documen Pendukung <span style="color:#e3342f">*</span><br />
                                             <b>(format: JPG/JPEG maks. 1MB)</b>
                                         </label>
 
-                                        <img id="img-mutasi_blob" src="{{ asset('storage/' . $data->mutasi->image) }}"
+                                        <img id="img-afirmasi_blob" src="{{ asset('storage/' . $data->afirmasi->image) }}"
                                             class="img-fluid rounded border mb-2" style="max-width: 100%;">
-                                        <label for="mutasi_blob" class="btn btn-primary w-100">
+                                        <label for="afirmasi_blob" class="btn btn-primary w-100">
                                             <i class="fas fa-folder-open"></i> Pilih Foto
                                         </label>
-                                        <input type="file" id="mutasi_blob" name="image" class="d-none"
+                                        <input type="file" id="afirmasi_blob" name="image" class="d-none"
                                             accept="image/jpeg">
-                                        <div id="info-mutasi_blob" class="text-muted mt-2" style="display:none;">
+                                        <div id="info-afirmasi_blob" class="text-muted mt-2" style="display:none;">
                                         </div>
                                     </div>
                                 </div>
@@ -75,33 +59,25 @@
                                 <div class="col-sm-8 col-lg-6">
                                     <button type="submit" class="btn btn-primary btn-block" id="btnKirim"><i
                                             class="fas fa-save" id="icon_kirim"></i>
-                                        <span id="textBtn"> Perbarui Dokumen Pindah Tugas</span>
+                                        <span id="textBtn"> Perbarui Dokumen Afirmasi</span>
                                         <span id="loadingBtn" class="spinner-border spinner-border-sm d-none" role="status"
                                             aria-hidden="true"></span>
                                     </button>
                                 </div>
                             </div>
                         </form>
-
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
     <script>
         $(document).ready(function() {
-            $("#asal_tugas").on("input", function() {
-                if ($(this).val().trim() === "") {
-                    $(this).addClass('is-invalid');
-                } else {
-                    $(this).removeClass('is-invalid').addClass('is-valid')
-                }
-            })
-
-            $("#mutasi_blob").on("change", function() {
+            $("#afirmasi_blob").on("change", function() {
                 const input = this;
-                const imgPreview = $("#img-mutasi_blob");
-                const infoBox = $("#info-mutasi_blob");
+                const imgPreview = $("#img-afirmasi_blob");
+                const infoBox = $("#info-afirmasi_blob");
 
                 if (input.files && input.files[0]) {
                     const file = input.files[0];
@@ -113,7 +89,7 @@
                         })
                         $(this).val("");
                         imgPreview.attr("src",
-                            "{{ asset('storage/' . $data->mutasi->image) }}"
+                            "{{ asset('storage/' . $data->afirmasi->image) }}"
                         );
                         infoBox.hide();
                         return;
@@ -129,47 +105,39 @@
                 }
             });
 
-            $("#thn_pindah").on("change", function() {
-                if ($(this).val() !== "" || $(this.val() !== "")) {
+            $("#jenis_afirmasi").on("change", function() {
+                if ($(this).val() !== "") {
                     $(this).addClass("is-valid").removeClass("is-invalid");
                 }
             })
 
-            $("#mutasi-form").on("submit", function(e) {
+            $("#main-form").on("submit", function(e) {
                 e.preventDefault();
                 const formData = new FormData(this);
                 formData.append("_method", "PUT");
 
-                if ($("#asal_tugas").val() === "") {
+                if ($("#jenis_afirmasi").val() == null) {
                     Swal.fire({
                         icon: "error",
                         title: "Oops...",
-                        text: "Asal tugas harus diisi!"
+                        text: "Jenis Afirmasi Harus Dipilih!"
                     })
-                    $("#asal_tugas").addClass("is-invalid");
-                } else if ($("#thn_pindah").val() == null) {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Oops...",
-                        text: "Pindah tugas harus diisi!"
-                    })
-                    $("#thn_pindah").addClass("is-invalid");
                 } else {
-                    $("#btnMutasi").attr("disabled", true);
-                    $("#textMutasi").addClass("d-none");
-                    $("#icon_mutasi").addClass("d-none");
-                    $("#loadingMutasi").removeClass("d-none");
+                    $("#btnKirim").attr("disabled", true);
+                    $("#textBtn").addClass("d-none");
+                    $("#icon_kirim").addClass("d-none");
+                    $("#loadingBtn").removeClass("d-none");
                     $.ajax({
-                        type: "POST",
                         url: $(this).attr("action"),
+                        type: "POST",
                         data: formData,
                         processData: false,
                         contentType: false,
-                        success: function(response) {
-                            $("#btnMutasi").attr("disabled", false);
-                            $("#textMutasi").removeClass("d-none");
-                            $("#icon_mutasi").removeClass("d-none");
-                            $("#loadingMutasi").addClass("d-none");
+                        success: function(res) {
+                            $("#btnKirim").attr("disabled", false);
+                            $("#textBtn").removeClass("d-none");
+                            $("#icon_kirim").removeClass("d-none");
+                            $("#loadingBtn").addClass("d-none");
                             Swal.fire({
                                 title: "Berhasil",
                                 icon: "success",
@@ -177,15 +145,15 @@
                                 confirmButtonText: "OK",
                                 confirmButtonColor: "#18a342",
                             }).then(() => {
-                                window.location.href = response.redirect;
-                            })
+                                window.location.href = res.redirect;
+                            });
                         },
                         error: function(xhr) {
-                            $("#btnMutasi").attr("disabled", false);
-                            $("#textMutasi").removeClass("d-none");
-                            $("#icon_mutasi").removeClass("d-none");
-                            $("#loadingMutasi").addClass("d-none");
                             var errorString = "";
+                            $("#btnKirim").attr("disabled", false);
+                            $("#textBtn").removeClass("d-none");
+                            $("#icon_kirim").removeClass("d-none");
+                            $("#loadingBtn").addClass("d-none");
                             if (xhr.responseJSON && xhr.responseJSON.errors) {
                                 $.each(xhr.responseJSON.errors, function(key, messages) {
                                     errorString += messages[0] + "\n";
@@ -193,17 +161,20 @@
                             } else if (xhr.responseJSON && xhr.responseJSON.error) {
                                 errorString += xhr.responseJSON.error;
                             } else {
-                                errorString += "Terjadi kesalahan. silahkan coba lagi!";
+                                errorString += "Kesalahan tidak diketahui.";
                             }
+
                             Swal.fire({
                                 icon: "error",
                                 title: "Oops...",
-                                text: errorString
-                            })
+                                text: errorString,
+                            });
                         }
-                    });
+                    })
+
                 }
             })
+
         })
     </script>
 @endsection

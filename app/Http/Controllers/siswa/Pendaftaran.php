@@ -12,6 +12,8 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Notification;
 
+use function Pest\Laravel\json;
+
 class Pendaftaran extends Controller
 {
     /**
@@ -41,9 +43,20 @@ class Pendaftaran extends Controller
             return response()->json(['errors' => ['Data Orang Tua belum lengkap!']], 422);
         }
 
-        if ($data->jalur->id == "5") {
-            if ($data->raport?->status != "1" || $data->raport?->status == "0")
-                return response()->json(['errors' => ['Raport belum lengkap!']], 422);
+        if ($data->jalur->id == 2 && $data->afirmasi->status_berkas == "0") {
+            return response()->json(['errors' => ['Dokumen afirmasi belum lengkap!']], 422);
+        }
+
+        if ($data->jalur->id == 3 && $data->mutasi->status_berkas == "0") {
+            return response()->json(['errors' => ['Dokumen mutasi belum lengkap!']], 422);
+        }
+
+        if ($data->jalur->id == 4 && $data->lomba->status_berkas == "0") {
+            return response()->json(['errors' => ['Dokumen prestasi belum lengkap!']], 422);
+        }
+
+        if ($data->jalur->id == "5" && $data->raport?->status == "0") {
+            return response()->json(['errors' => ['Raport belum lengkap!']], 422);
         }
 
         $admin = User::where('role', 'admin')->get();

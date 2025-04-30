@@ -21,6 +21,23 @@ class PenunjangController extends Controller
         $this->data = Auth::guard('siswa')->user();
     }
 
+    public function siswaAfirmasi()
+    {
+        $active_tab = "dokumen_afirmasi";
+        return view('siswa.afirmasi', ['data' => $this->data, "active_tab" => $active_tab]);
+    }
+
+    public function editAfirmasi()
+    {
+
+        $header = "Perbarui Dokumen Afirmasi";
+
+        return view('siswa.edit-afirmasi', [
+            'data' => $this->data,
+            "header" => $header
+        ]);
+    }
+
     public function updateAfirmasi(Request $request, string $id)
     {
         $defaultDocument = 'default_document.png';
@@ -44,13 +61,16 @@ class PenunjangController extends Controller
             $documentPath = $request->file('image')->store('siswa/afirmasi');
         }
 
-        DocumentAfirmasi::where('id', $id)->update([
+        $update = DocumentAfirmasi::where('id', $id)->update([
             'jenis_afirmasi' => $request->jenis_afirmasi,
             'image' => $documentPath,
             'status_berkas' => '1'
         ]);
-
-        return response()->json(['redirect' => route('')]);
+        if ($update) {
+            return response()->json(['redirect' => route('siswa.afirmasi')]);
+        } else {
+            return back()->withInput()->withErrors('ERROR CONTROLLER');
+        }
     }
 
     //Pindah Tugas
@@ -63,7 +83,7 @@ class PenunjangController extends Controller
 
     public function editMutasi()
     {
-        $header = "Form mutasi";
+        $header = "Perbarui dokumen mutasi";
         return view('siswa.edit-mutasi', [
             'data' => $this->data,
             "header" => $header

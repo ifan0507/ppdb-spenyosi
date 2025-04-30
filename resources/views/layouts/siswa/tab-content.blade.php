@@ -11,7 +11,7 @@
         @if ($data->jalur->id == 2)
             <li class="nav-item">
                 <a class="nav-link remove-tab-format font-bold {{ $active_tab == 'dokumen_afirmasi' ? 'active' : '' }}"
-                    id="dokumen-afirmasi-tab" data-toggle="pill" href="#" role="tab">
+                    id="dokumen-afirmasi-tab" data-toggle="pill" href="{{ route('siswa.afirmasi') }}" role="tab">
                     Dokumen Afirmasi
                 </a>
             </li>

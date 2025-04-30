@@ -27,7 +27,7 @@
                                             <div class="form-group required">
                                                 <label class="form-label">Nama Ayah</label>
                                                 <input type="text" class="form-control " name="ayah" id="nama_ayah"
-                                                    value="{{ old('ayah', $data->ayah) }}">
+                                                    value="{{ old('ayah', $data->ayah) }}" placeholder="Nama lengkap ayah">
                                             </div>
                                             <div class="form-group required">
                                                 <label class="form-label">Status Ayah</label><br>
@@ -49,7 +49,7 @@
                                             <div class="form-group required">
                                                 <label class="form-label">Pendidikan Ayah</label>
                                                 <select class="form-control" name="pendidikan_ayah" id="pendidikanAyah">
-                                                    <option value="">-- Pilih Pendidikan --</option>
+                                                    <option value="" disabled selected>-- Pilih Pendidikan --</option>
                                                     <option value="Tidak Sekolah"
                                                         {{ old('pendidikan_ayah', $data->pendidikan_ayah) == 'Tidak Sekolah' ? 'selected' : '' }}>
                                                         Tidak Sekolah</option>
@@ -88,7 +88,7 @@
                                             <div class="form-group required">
                                                 <label class="form-label">Pekerjaan Ayah</label>
                                                 <select class="form-control" name="pekerjaan_ayah" id="pekerjaanAyah">
-                                                    <option value="">-- Pilih Pekerjaan --</option>
+                                                    <option value="" disabled selected>-- Pilih Pekerjaan --</option>
                                                     <option value="PNS"
                                                         {{ old('pekerjaan_ayah', $data->pekerjaan_ayah) == 'PNS' ? 'selected' : '' }}>
                                                         PNS</option>
@@ -132,7 +132,7 @@
                                             <div class="form-group required">
                                                 <label class="form-label">Nama Ibu</label>
                                                 <input type="text" class="form-control " name="ibu" id="nama_ibu"
-                                                    value="{{ old('ibu', $data->ibu) }}">
+                                                    value="{{ old('ibu', $data->ibu) }}" placeholder="Nama lengkap ibu">
                                             </div>
                                             <div class="form-group required">
                                                 <label class="form-label">Status Ibu</label><br>
@@ -154,7 +154,8 @@
                                             <div class="form-group required">
                                                 <label class="title">Pendidikan Ibu</label>
                                                 <select class="form-control" name="pendidikan_ibu" id="pendidikanIbu">
-                                                    <option value="">-- Pilih Pendidikan --</option>
+                                                    <option value="" disabled selected>-- Pilih Pendidikan --
+                                                    </option>
                                                     <option value="Tidak Sekolah"
                                                         {{ old('pendidikan_ibu', $data->pendidikan_ibu) == 'Tidak Sekolah' ? 'selected' : '' }}>
                                                         Tidak Sekolah</option>
@@ -193,7 +194,7 @@
                                             <div class="form-group required">
                                                 <label class="title">Pekerjaan Ibu</label>
                                                 <select class="form-control" name="pekerjaan_ibu" id="pekerjaanIbu">
-                                                    <option value="">-- Pilih Pekerjaan --</option>
+                                                    <option value="" disabled selected>-- Pilih Pekerjaan --</option>
                                                     <option value="PNS"
                                                         {{ old('pekerjaan_ibu', $data->pekerjaan_ibu) == 'PNS' ? 'selected' : '' }}>
                                                         PNS</option>
@@ -237,7 +238,7 @@
                                             <div class="form-group required">
                                                 <label class="form-label">No HP</label>
                                                 <input type="text" class="form-control" name="no_hp" id="no_hp"
-                                                    value="{{ old('no_hp', $data->no_hp) }}">
+                                                    value="{{ old('no_hp', $data->no_hp) }}" placeholder="No yang aktif">
                                                 <div id="validasiNoHp" class="invalid-feedback"></div>
                                             </div>
 
@@ -245,10 +246,10 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row justify-content-start">
-                                <div class="col-sm-8 col-lg-8">
-                                    <button type="submit" class="btn btn-primary" id="btnSave"><i class="fas fa-save"
-                                            id="fa_save"></i> <span id="textBtn"> Perbarui
+                            <div class="row justify-content-center">
+                                <div class="col-sm-8 col-lg-6">
+                                    <button type="submit" class="btn btn-primary btn-block" id="btnSave"><i
+                                            class="fas fa-save" id="fa_save"></i> <span id="textBtn"> Perbarui
                                             Data</span>
                                         <span id="loadingBtn" class="spinner-border spinner-border-sm d-none"
                                             role="status" aria-hidden="true"></span>
@@ -269,7 +270,7 @@
             $("#nama_ayah, #nama_ibu").on("input", function() {
                 let value = $(this).val().trim();
 
-                if (value === "" || value === "_") {
+                if (value === "") {
                     $(this).addClass("is-invalid").removeClass("is-valid");
                 } else {
                     $(this).addClass("is-valid").removeClass("is-invalid");
@@ -280,7 +281,7 @@
                 let no = $(this).val();
                 let noRegex = /^[0-9]{12}$/;
 
-                if (!noRegex.test(no) || no === "_") {
+                if (!noRegex.test(no)) {
                     $("#validasiNoHp").text("Nomor HP harus terdiri dari 12 digit angka!").show();
                     $(this).addClass("is-invalid").removeClass("is-valid");
                 } else {
@@ -299,64 +300,85 @@
             $("#form-ortu").on("submit", function(e) {
                 e.preventDefault();
                 let isValid = true;
-                $("#nama_ayah, #nama_ibu").each(function() {
-                    if ($(this).val().trim() === "" || $(this).val().trim() === "_") {
-                        $(this).addClass("is-invalid").removeClass("is-valid");
-                        isValid = false;
-                    }
-                });
-
                 let noHp = $("[name='no_hp']").val();
-                if (!/^[0-9]{12}$/.test(noHp) || noHp === "_") {
-                    $("[name='no_hp']").addClass("is-invalid").removeClass("is-valid");
-                    isValid = false;
-                }
-
                 let checkedStatusAyah = $("input[name='status_ayah']:checked").length > 0;
                 let checkedStatusIbu = $("input[name='status_ibu']:checked").length > 0;
 
-                if ($("#pendidikanAyah").val() === "") {
+                if ($("#nama_ayah").val() == "") {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "Nama ayah harus diisi!"
+                    })
+                    $("#nama_ayah").addClass("is-invalid").removeClass("is-valid");
+                    isValid = false;
+                } else if ($("#nama_ibu").val() == "") {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "Nama ibu harus diisi!"
+                    })
+                    $("#nama_ibu").addClass("is-invalid").removeClass("is-valid");
+                    isValid = false;
+                } else if ($("#pendidikanAyah").val() === "") {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "Pendidikan ayah harus diisi!"
+                    })
                     $("#pendidikanAyah").addClass("is-invalid").removeClass("is-valid");
                     $("#validasiPendidikanAyah").text("Pilih Pendidikan Ayah").show();
                     isValid = false;
-                }
-
-                if ($("#pendidikanIbu").val() === "") {
+                } else if ($("#pendidikanIbu").val() === "") {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "Pendidikan ibu harus diisi!"
+                    })
                     $("#pendidikanIbu").addClass("is-invalid").removeClass("is-valid");
                     $("#validasiPendidikanIbu").text("Pilih Pendidikan Ibu").show();
                     isValid = false;
-                }
-
-                if ($("#pekerjaanAyah").val() === "") {
+                } else if ($("#pekerjaanAyah").val() === "") {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "Pekerjaan ayah harus diisi!"
+                    })
                     $("#pekerjaanAyah").addClass("is-invalid").removeClass("is-valid");
                     $("#validasiPekerjaanAyah").text("Pilih Pekerjaan Ayah").show();
                     isValid = false;
-                }
-
-                if ($("#pekerjaanIbu").val() === "") {
+                } else if ($("#pekerjaanIbu").val() === "") {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "Pekerjaan ibu harus diisi!"
+                    })
                     $("#pekerjaanIbu").addClass("is-invalid").removeClass("is-valid");
                     $("#validasiPekerjaanIbu").text("Pilih Pekerjaan Ibu").show();
                     isValid = false;
-                }
-
-                if (!checkedStatusAyah) {
+                } else if (!checkedStatusAyah) {
                     Swal.fire({
                         icon: "error",
                         title: "Oops...",
                         text: "Jenis status ayah wajib dipilih!",
                     });
                     return false;
-                }
-
-                if (!checkedStatusIbu) {
+                } else if (!checkedStatusIbu) {
                     Swal.fire({
                         icon: "error",
                         title: "Oops...",
                         text: "Jenis status ibu wajib dipilih!",
                     });
                     return false;
+                } else if (!/^[0-9]{12}$/.test(noHp) || noHp === "") {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "No hp harus diisi!"
+                    })
+                    $("[name='no_hp']").addClass("is-invalid").removeClass("is-valid");
+                    isValid = false;
                 }
-
                 if (isValid) {
                     $("#btnSave").attr("disabled", true);
                     $("#fa_save").addClass("d-none");
