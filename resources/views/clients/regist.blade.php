@@ -11,10 +11,10 @@
                     <div class="box-icon p-4 text-center">
                         <img src="{{ asset('assets/img/illustration.png') }}" alt="Siswa" class="img-fluid mb-3"
                             width="150">
-                        <h4 class="fw-bold text-dark">Jalur Umum</h4>
+                        <h4 class="fw-bold text-dark">Jalur Domisili Zonasi</h4>
                         <p class="text-muted">Jalur seleksi reguler bagi calon peserta didik berdasarkan peringkat nilai dan
                             daya tampung sekolah.</p>
-                        <button class="btn btn-primary">Daftar Akun Umum</button>
+                        <button class="btn btn-primary">Daftar Akun Zonasi</button>
                     </div>
                 </a>
             </div>
@@ -26,8 +26,9 @@
                         <img src="{{ asset('assets/img/illustration.png') }}" alt="Sekolah" class="img-fluid mb-3"
                             width="150">
                         <h4 class="fw-bold text-dark">Jalur Khusus</h4>
-                        <p class="text-muted">Jalur pendaftaran dengan kriteria tertentu, meliputi: Afirmasi, Prestasi,
-                            Tahfidz, Pindah Tugas Orang Tua.</p>
+                        <p class="text-muted">Jalur pendaftaran dengan kriteria tertentu, meliputi: Afirmasi, Prestasi
+                            Akadmik,
+                            Prestasi Non Akademik, Pindah Tugas Orang Tua, Prestasi Raport.</p>
                         <button class="btn btn-primary">Daftar Akun Khusus</button>
                     </div>
                 </a>

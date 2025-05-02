@@ -36,6 +36,7 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (Auth::guard('web')->attempt($credentials)) {
+
             $request->session()->regenerate();
             return redirect()->intended('/admin');
         }

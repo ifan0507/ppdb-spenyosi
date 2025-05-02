@@ -2,7 +2,7 @@
 <aside id="sidebar" class="sidebar">
 
     @php
-        $isMasterActive = request()->routeIs('umum', 'afirmasi', 'pindah.tugas', 'tahfidz', 'prestasi');
+        $isMasterActive = request()->routeIs('zonasi', 'afirmasi', 'pindah.tugas', 'akademik', 'raport');
     @endphp
 
     <ul class="sidebar-nav" id="sidebar-nav">
@@ -27,8 +27,8 @@
             <ul id="master-nav" class="nav-content collapse {{ $isMasterActive ? 'show' : '' }}"
                 data-bs-parent="#sidebar-nav">
                 <li>
-                    <a href="{{ route('umum') }}" class="{{ request()->routeIs('umum') ? 'active' : '' }}">
-                        <i class="fas fa-users me-2"></i><span>Jalur Umum</span>
+                    <a href="{{ route('zonasi') }}" class="{{ request()->routeIs('zonasi') ? 'active' : '' }}">
+                        <i class="fas fa-users me-2"></i><span>Jalur Domisili Zonasi</span>
                     </a>
                 </li>
                 <li>
@@ -43,12 +43,12 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('tahfidz') }}" class="{{ request()->routeIs('tahfidz') ? 'active' : '' }}">
-                        <i class="fas fa-trophy me-2"></i><span>Jalur Lomba/Tahfidz</span>
+                    <a href="{{ route('akademik') }}" class="{{ request()->routeIs('akademik') ? 'active' : '' }}">
+                        <i class="fas fa-trophy me-2"></i><span>Jalur Prestasi Akademik</span>
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('prestasi') }}" class="{{ request()->routeIs('prestasi') ? 'active' : '' }}">
+                    <a href="{{ route('raport') }}" class="{{ request()->routeIs('raport') ? 'active' : '' }}">
                         <i class="fas fa-medal me-2"></i><span>Jalur Prestasi Raport</span>
                     </a>
                 </li>

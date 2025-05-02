@@ -43,31 +43,22 @@
                         <!-- Card Kiri: Semua Filter -->
                         <div class="col-12 col-md-6">
                             <div class="card p-3 shadow-sm h-100">
-                                <h6 class="mb-3">Filter No Urut</h6>
-                                <form id="export-form">
-                                    <div class="row g-2 mb-3">
-                                        <div class="col-6">
-                                            <input type="number" id="start_number" name="start_number" class="form-control"
-                                                placeholder="Dari: 1">
-                                        </div>
-                                        <div class="col-6">
-                                            <input type="number" id="end_number" name="end_number" class="form-control"
-                                                placeholder="Sampai: 50">
-                                        </div>
-                                    </div>
-                                </form>
 
                                 <h6 class="mb-3">Urutkan Berdasarkan Kriteria</h6>
-                                <form action="{{ route('umum') }}">
+                                <form action="" id="keriteria">
                                     <div class="mb-3">
-                                        <select class="form-select select-filter" id="urutkan" name="sort"
-                                            onchange="this.form.submit()">
+                                        <select class="form-select select-filter" id="urutkan" name="sort">
                                             <option value="">--- Pilih kriteria urutan ---</option>
-                                            @if ($jalur == 'Jalur Umum')
+                                            @if ($jalur == 'Jalur Zonasi')
                                                 <option value="peringkat_zonasi"
                                                     {{ $sort == 'peringkat_zonasi' ? 'selected' : '' }}>
                                                     Peringkat Zonasi
                                                 </option>
+                                            @endif
+                                            @if ($jalur == 'Jalur Afirmasi')
+                                                <option value="KIP">Afirmasi KIP</option>
+                                                <option value="KKS">Afirmasi KKS</option>
+                                                <option value="PKH">Afirmasi PKH</option>
                                             @endif
                                             @if ($jalur == 'Jalur Prestasi Raport')
                                                 <option value="peringkat_raport"
@@ -75,12 +66,64 @@
                                                     Peringkat Raport
                                                 </option>
                                             @endif
+                                            @if ($jalur == 'Jalur Prestasi Akademik')
+                                                <option value="">Peringkat 1 (Provinsi)</option>
+                                                <option value="">Peringkat 2 (Provinsi)</option>
+                                                <option value="">Peringkat 3 (Provinsi)</option>
+                                                <option value="">Peringkat 1 (Kabupaten)</option>
+                                                <option value="">Peringkat 2 (Kabupaten)</option>
+                                                <option value="">Peringkat 3 (Kabupaten)</option>
+                                            @endif
                                             <option value="valid" {{ $sort == 'valid' ? 'selected' : '' }}>Valid</option>
                                             <option value="invalid" {{ $sort == 'invalid' ? 'selected' : '' }}>Invalid
                                             </option>
                                         </select>
                                     </div>
                                 </form>
+
+                                <div class="row g-2 mb-3">
+                                    <div class="col-md-6">
+                                        <style>
+                                            .gray-hover:hover {
+                                                background-color: rgb(180, 180, 180);
+                                            }
+                                        </style>
+                                        <form action="" method="GET" id="filter_no">
+
+                                            <label class="form-label">Filter No Urut (Dari - Sampai)</label>
+                                            <div class="input-group">
+                                                <input type="number" name="start_rank" class="form-control"
+                                                    placeholder="Dari" id="start_rank"
+                                                    value="{{ old('start_rank', $start_rank) }}">
+                                                <input type="number" name="end_rank" class="form-control"
+                                                    placeholder="Sampai" id="end_rank"
+                                                    value="{{ old('end_rank', $end_rank) }}">
+                                                <span class="input-group-text p-0">
+                                                    <button class="btn gray-hover" type="submit" name="filter">
+                                                        <i class="bi bi-funnel"></i>
+                                                    </button>
+                                                </span>
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                    @if ($jalur == 'Jalur Prestasi Raport' || $jalur == 'Jalur Zonasi')
+                                        <div class="col-md-6">
+                                            <form action="" method="GET">
+                                                <label for="top_n" class="form-label">Top Berapa Besar</label>
+                                                <div class="input-group">
+                                                    <input type="number" id="top_n" name="top_n" class="form-control"
+                                                        placeholder="Misalnya: 10" value="{{ old('top_n', $top_n) }}">
+                                                    <span class="input-group-text p-0">
+                                                        <button class="btn gray-hover" type="submit">
+                                                            <i class="bi bi-funnel"></i>
+                                                        </button>
+                                                    </span>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    @endif
+                                </div>
                             </div>
                         </div>
 
@@ -89,7 +132,7 @@
                             <div class="card p-3 shadow-sm d-flex flex-column justify-content-between">
                                 <h6 class="mb-3">Export Data</h6>
                                 <div class="d-grid gap-2 d-md-flex ">
-                                    <button class="btn btn-success btn-export" id="export-excel">
+                                    <button id="exportExcel" class="btn btn-success btn-export" id="export-excel">
                                         <i class="bi bi-file-earmark-excel me-2"></i> Export Excel
                                     </button>
                                     <button class="btn btn-danger btn-export" id="export-pdf">
@@ -114,8 +157,10 @@
                                 <th scope="col">Nama</th>
                                 @if ($jalur == 'Jalur Prestasi Raport')
                                     <th scope="col" class="text-center">Peringkat Raport</th>
-                                @elseif ($jalur == 'Jalur Umum')
+                                @elseif ($jalur == 'Jalur Zonasi')
                                     <th scope="col">Peringkat Zonasi</th>
+                                @elseif ($jalur == 'Jalur Afirmasi')
+                                    <th scope="col" class="text-nowrap">Jenis Afirmasi</th>
                                 @endif
                                 <th scope="col">Tanggal Daftar</th>
                                 <th scope="col" class="text-center">Status</th>
@@ -124,7 +169,7 @@
                         </thead>
                         <tbody>
                             @php
-                                $no = 1;
+                                $no = request('start_rank') ? (int) request('start_rank') : 1;
                             @endphp
                             @forelse ($pendaftarans as $pendaftaran)
                                 <tr>
@@ -135,12 +180,16 @@
                                     @if ($pendaftaran->register->id_jalur == 5)
                                         <td class="text-center">
                                             <strong>{{ $pendaftaran->peringkat_raport ?? '-' }}</strong>
-                                            ({{ $pendaftaran->register->raport->total_rata_rata }})
+                                            ({{ $pendaftaran->register->rata_rata_raport->total_rata_rata }})
                                         </td>
                                     @elseif ($pendaftaran->register->id_jalur == 1)
                                         <td>
                                             <strong>{{ $pendaftaran->peringkat_zonasi ?? '-' }}</strong>
                                             ({{ $pendaftaran->register->siswa->jarak_sekolah }} km)
+                                        </td>
+                                    @elseif ($pendaftaran->register->id_jalur == 2)
+                                        <td>
+                                            {{ $pendaftaran->register->afirmasi->jenis_afirmasi }}
                                         </td>
                                     @endif
                                     </td>
@@ -195,7 +244,7 @@
                                 <th scope="col">Nama</th>
                                 @if ($jalur == 'Jalur Prestasi Raport')
                                     <th scope="col" class="text-center text-nowrap">Peringkat Raport</th>
-                                @elseif ($jalur == 'Jalur Umum')
+                                @elseif ($jalur == 'Jalur Zonasi')
                                     <th scope="col" class="text-center text-nowrap">Peringkat Zonasi</th>
                                 @endif
                                 <th scope="col" class="text-nowrap">Tanggal Daftar</th>
@@ -268,7 +317,133 @@
                 const url = new URL(window.location.href);
                 url.searchParams.set('sort', selected);
                 window.location.href = url.toString();
+                Swal.fire({
+                    title: 'Memuat data...',
+                    text: 'Mohon tunggu sebentar',
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    showConfirmButton: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
+                $("#keriteria").submit();
+
             })
+
+
+            $("#start_rank, #end_rank").on("input", function() {
+                const startVal = parseInt($("#start_rank").val());
+                const endVal = parseInt($("#end_rank").val());
+
+                if (!startVal || startVal <= 0) {
+                    $("#start_rank").addClass("is-invalid").removeClass("is-valid");
+                } else {
+                    $("#start_rank").removeClass("is-invalid").addClass("is-valid");
+                }
+
+                if (!endVal || endVal <= 0) {
+                    $("#end_rank").addClass("is-invalid").removeClass("is-valid");
+                } else {
+                    $("#end_rank").removeClass("is-invalid").addClass("is-valid");
+                }
+
+                if (startVal > 0 && endVal > 0 && endVal < startVal) {
+                    $("#end_rank").addClass("is-invalid").removeClass("is-valid");
+                }
+            });
+
+
+            $("#filter_no").submit(function(e) {
+                e.preventDefault();
+
+                const startRank = parseInt($("#start_rank").val());
+                const endRank = parseInt($("#end_rank").val());
+
+                if (!startRank) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "No urut dari tidak boleh kosong"
+                    });
+                    $("#start_rank").addClass("is-invalid");
+                    return;
+                }
+
+                if (!endRank) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "No urut sampai tidak boleh kosong"
+                    });
+                    $("#end_rank").addClass("is-invalid");
+                    return;
+                }
+
+                if (startRank <= 0) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "No urut dari harus lebih dari 0"
+                    });
+                    $("#start_rank").addClass("is-invalid");
+                    return;
+                }
+
+                if (endRank <= 0) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "No urut sampai harus lebih dari 0"
+                    });
+                    $("#end_rank").addClass("is-invalid");
+                    return;
+                }
+
+                if (endRank < startRank) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "No urut sampai tidak boleh lebih kecil dari no urut dari"
+                    });
+                    $("#end_rank").addClass("is-invalid");
+                    return;
+                }
+
+                Swal.fire({
+                    title: 'Memuat data...',
+                    text: 'Mohon tunggu sebentar',
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    showConfirmButton: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
+
+                this.submit();
+            });
+
+            $('#exportExcel').on('click', function(e) {
+                e.preventDefault();
+
+                let sort = $('#urutkan').val();
+                let start_rank = $('#start_rank').val();
+                let end_rank = $('#end_rank').val();
+                let top_n = $('#top_n').val();
+
+                // Build query string
+                let queryParams = $.param({
+                    sort: sort,
+                    start_rank: start_rank,
+                    end_rank: end_rank,
+                    top_n: top_n
+                });
+
+                window.location.href = `/admin/export/zonasi?${queryParams}`;
+            });
+
+
         });
     </script>
 @endsection
