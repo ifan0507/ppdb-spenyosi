@@ -86,6 +86,16 @@
                                                             <td>{{ $data->siswa->ortu->status_ayah ?? '_' }}</td>
                                                         </tr>
                                                         <tr>
+                                                            <th>Status Hubungan</th>
+                                                            <td>{{ $data->siswa->ortu->status_hubungan ?? '_' }}</td>
+                                                        </tr>
+                                                        @if ($data->siswa->ortu->status_hubungan === 'Wali')
+                                                            <tr>
+                                                                <th>Hubungan Wali</th>
+                                                                <td>{{ $data->siswa->ortu->hubungan_wali ?? '-' }}</td>
+                                                            </tr>
+                                                        @endif
+                                                        <tr>
                                                             <th>Pendidikan Ayah / Wali</th>
                                                             <td>{{ $data->siswa->ortu->pendidikan_ayah ?? '_' }}</td>
                                                         </tr>

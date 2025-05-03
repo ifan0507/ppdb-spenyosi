@@ -25,12 +25,12 @@
                                         </div>
                                         <div class="card-body">
                                             <div class="form-group required">
-                                                <label class="form-label">Nama Ayah</label>
+                                                <label class="form-label">Nama Ayah/Wali</label>
                                                 <input type="text" class="form-control " name="ayah" id="nama_ayah"
                                                     value="{{ old('ayah', $data->ayah) }}">
                                             </div>
                                             <div class="form-group required">
-                                                <label class="form-label">Status Ayah</label><br>
+                                                <label class="form-label">Status Ayah/Wali</label><br>
                                                 <div class="d-block">
                                                     <div class="form-check mr-2">
                                                         <input class="form-check-input status_ayah" type="radio"
@@ -43,6 +43,57 @@
                                                             name="status_ayah" id="status_ayah_2" value="Wafat"
                                                             {{ $data->status_ayah == 'Wafat' ? 'checked' : '' }}>
                                                         <label class="form-check-label" for="status_ayah_2">Wafat</label>
+                                                    </div>
+                                                    <div class="form-check mr-2">
+                                                        <input class="form-check-input status_ayah" type="radio"
+                                                            name="status_ayah" id="status_ayah_3" value="Bercerai"
+                                                            {{ $data->status_ayah == 'Bercerai' ? 'checked' : '' }}>
+                                                        <label class="form-check-label" for="status_ayah_3">Bercerai</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group required">
+                                                <label class="form-label">Status Hubungan</label>
+                                                <select class="form-control" name="status_hubungan" id="statusHubungan">
+                                                    <option value="">-- Pilih Status Hubungan --</option>
+                                                    <option value="Ayah Kandung"
+                                                        {{ old('status_hubungan', $data->status_hubungan) == 'Ayah Kandung' ? 'selected' : '' }}>
+                                                        Ayah Kandung</option>
+                                                    <option value="Ayah Tiri"
+                                                        {{ old('status_hubungan', $data->status_hubungan) == 'Ayah Tiri' ? 'selected' : '' }}>
+                                                        Ayah Tiri</option>
+                                                    <option value="Wali"
+                                                        {{ old('status_hubungan', $data->status_hubungan) == 'Wali' ? 'selected' : '' }}>
+                                                        Wali</option>
+                                                </select>
+                                                <div class="invalid-feedback" id="validasiStatusHubungan">
+                                                    Harap pilih Status Hubungan
+                                                </div>
+                                            </div>
+                                            <div class="form-group required" id="hubunganWaliWrapper" style="display: none">
+                                                <label class="form-label">Hubungan Wali</label><br>
+                                                <div class="d-block">
+                                                    <div class="form-check mr-2">
+                                                        <input class="form-check-input hubungan_wali" type="radio"
+                                                            name="hubungan_wali" id="hubungan_wali_1"
+                                                            value="Keluarga Ayah/Ibu"
+                                                            {{ $data->hubungan_wali == 'Keluarga Ayah/Ibu' ? 'checked' : '' }}>
+                                                        <label class="form-check-label" for="hubungan_wali_1">Keluarga
+                                                            Ayah/Ibu</label>
+                                                    </div>
+                                                    <div class="form-check mr-2">
+                                                        <input class="form-check-input hubungan_wali" type="radio"
+                                                            name="hubungan_wali" id="hubungan_wali_2" value="Kerabat"
+                                                            {{ $data->hubungan_wali == 'Kerabat' ? 'checked' : '' }}>
+                                                        <label class="form-check-label"
+                                                            for="hubungan_wali_2">Kerabat</label>
+                                                    </div>
+                                                    <div class="form-check mr-2">
+                                                        <input class="form-check-input hubungan_wali" type="radio"
+                                                            name="hubungan_wali" id="hubungan_wali_3" value="Lainnya"
+                                                            {{ $data->hubungan_wali == 'Lainnya' ? 'checked' : '' }}>
+                                                        <label class="form-check-label"
+                                                            for="hubungan_wali_3">Lainnya</label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -131,8 +182,8 @@
                                         <div class="card-body">
                                             <div class="form-group required">
                                                 <label class="form-label">Nama Ibu</label>
-                                                <input type="text" class="form-control " name="ibu" id="nama_ibu"
-                                                    value="{{ old('ibu', $data->ibu) }}">
+                                                <input type="text" class="form-control " name="ibu"
+                                                    id="nama_ibu" value="{{ old('ibu', $data->ibu) }}">
                                             </div>
                                             <div class="form-group required">
                                                 <label class="form-label">Status Ibu</label><br>
@@ -266,6 +317,20 @@
 
     <script>
         $(document).ready(function() {
+            function toggleHubunganWali() {
+                if ($('#statusHubungan').val() === 'Wali') {
+                    $('#hubunganWaliWrapper').slideDown();
+                } else {
+                    $('#hubunganWaliWrapper').slideUp();
+                    $('input[name="hubungan_wali"]').prop('checked', false);
+                    $('#hubunganWaliWrapper .is-invalid').removeClass('is-invalid');
+                }
+            }
+
+            toggleHubunganWali();
+
+            $('#statusHubungan').on('change', toggleHubunganWali);
+
             $("#nama_ayah, #nama_ibu").on("input", function() {
                 let value = $(this).val().trim();
 
@@ -289,12 +354,13 @@
                 }
             });
 
-            $("#pendidikanAyah, #pendidikanIbu, #pekerjaanAyah, #pekerjaanIbu").on("change", function() {
-                if ($(this).val() !== "") {
-                    $(this).addClass("is-valid").removeClass("is-invalid");
-                    $(this).next(".invalid-feedback").hide();
-                }
-            });
+            $("#pendidikanAyah, #pendidikanIbu, #pekerjaanAyah, #pekerjaanIbu, #statusHubungan").on("change",
+                function() {
+                    if ($(this).val() !== "") {
+                        $(this).addClass("is-valid").removeClass("is-invalid");
+                        $(this).next(".invalid-feedback").hide();
+                    }
+                });
 
             $("#form-ortu").on("submit", function(e) {
                 e.preventDefault();
@@ -313,11 +379,18 @@
                 }
 
                 let checkedStatusAyah = $("input[name='status_ayah']:checked").length > 0;
+                let checkedHubunganWali = $("input[name='hubungan_wali']:checked").length > 0;
                 let checkedStatusIbu = $("input[name='status_ibu']:checked").length > 0;
 
                 if ($("#pendidikanAyah").val() === "") {
                     $("#pendidikanAyah").addClass("is-invalid").removeClass("is-valid");
                     $("#validasiPendidikanAyah").text("Pilih Pendidikan Ayah").show();
+                    isValid = false;
+                }
+
+                if ($("#statusHubungan").val() === "") {
+                    $("#statusHubungan").addClass("is-invalid").removeClass("is-valid");
+                    $("#validasiStatusHubungan").text("Pilih Status Hubungan").show();
                     isValid = false;
                 }
 
@@ -344,6 +417,15 @@
                         icon: "error",
                         title: "Oops...",
                         text: "Jenis status ayah wajib dipilih!",
+                    });
+                    return false;
+                }
+
+                if ($("#statusHubungan").val() === "Wali" && !checkedHubunganWali) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "Jenis hubungan wali wajib dipilih!",
                     });
                     return false;
                 }

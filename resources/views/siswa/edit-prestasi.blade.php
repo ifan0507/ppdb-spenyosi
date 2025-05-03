@@ -27,24 +27,23 @@
                                             class="form-control " name="nama_prestasi" id="nama_kegiatan"
                                             value="{{ old('nama_prestasi', $data->lomba->nama_prestasi) }}">
                                     </div>
+
                                     <div class="form-group required">
-                                        <label class="title" for="jenis">Jenis Kegiatan</label>
-                                        <div class="d-block">
-                                            <div class="custom-control custom-radio d-inline-block mr-2">
-                                                <input type="radio" class="custom-control-input" id="jenis_individual"
-                                                    name="jenis_prestasi" value="Individual"
-                                                    {{ $data->lomba->jenis_prestasi == 'Individual' ? 'checked' : '' }}>
-                                                <label class="custom-control-label"
-                                                    for="jenis_individual">Individual</label>
-                                            </div>
-                                            <div class="custom-control custom-radio d-inline-block">
-                                                <input type="radio" class="custom-control-input" id="jenis_grup"
-                                                    name="jenis_prestasi" value="Kelompok/Tim"
-                                                    {{ $data->lomba->jenis_prestasi == 'Kelompok/Tim' ? 'checked' : '' }}>
-                                                <label class="custom-control-label" for="jenis_grup">Kelompok/Tim</label>
-                                            </div>
-                                        </div>
+                                        <label class="title">Kategori Lomba</label>
+                                        <select class="form-control" id="kategori" name="kategori">
+                                            <option value="" disabled selected>-- Pilih Kategori
+                                                --</option>
+                                            <option value="Akademik"
+                                                {{ $data->lomba->kategori == 'Akademik' ? 'selected' : '' }}>Akademik
+                                            </option>
+                                            <option value="Non-akademik"
+                                                {{ $data->lomba->kategori == 'Non-akademik' ? 'selected' : '' }}>
+                                                Non-akademik</option>
+                                        </select>
+                                        <label id="kategori-error" class="error" for="kategori" style="display: none">This
+                                            field is required.</label>
                                     </div>
+
 
                                     <div class="form-group required">
                                         <label class="title" for="tingkat">Tingkat</label>
@@ -200,7 +199,7 @@
                 }
             })
 
-            $("#thn_perolehan ,#perolehan").on("change", function() {
+            $("#thn_perolehan ,#kategori ,#perolehan").on("change", function() {
                 if ($(this).val() !== "") {
                     $(this).addClass("is-valid").removeClass("is-invalid");
                 }
@@ -210,7 +209,6 @@
                 e.preventDefault();
                 const formData = new FormData(this);
                 formData.append("_method", "PUT");
-                let checkedJenisKegiatan = $("input[name='jenis_prestasi']:checked").length > 0;
                 let checkedTingkat = $("input[name='tingkat_prestasi']:checked").length > 0;
 
                 if ($("#nama_kegiatan").val() === "") {
@@ -219,18 +217,21 @@
                         title: "Oops...",
                         text: "Nama kegiatan harus diisi!"
                     })
-                } else if (!checkedJenisKegiatan) {
+
+                } else if ($("#kategori").val() == null) {
                     Swal.fire({
                         icon: "error",
                         title: "Oops...",
-                        text: "Jenis kegiatan harus dipilih!"
+                        text: "Kategori harus dipilih!"
                     })
+
                 } else if (!checkedTingkat) {
                     Swal.fire({
                         icon: "error",
                         title: "Oops...",
                         text: "Tingkat kegiatan harus dipilih!"
                     })
+
                 } else if ($("#thn_perolehan").val() == null) {
                     Swal.fire({
                         icon: "error",
