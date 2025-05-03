@@ -5,6 +5,7 @@ namespace App\Http\Controllers\siswa;
 use App\Http\Controllers\Controller;
 use App\Models\DataRaport;
 use App\Models\MataPelajaran;
+use App\Models\RataRataRaport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -73,13 +74,17 @@ class RaportController extends Controller
             $request->rata_kelas6_sem1
         ) / 4;
 
+        RataRataRaport::create([
+            'id_register' => $request->id_register,
+            'total_rata_rata' => $totalRata,
+        ]);
+
         DataRaport::where('id_register', $request->id_register)->update([
             'rata_kelas4_sem1' => $request->rata_kelas4_sem1,
             'rata_kelas4_sem2' => $request->rata_kelas4_sem2,
             'rata_kelas5_sem1' => $request->rata_kelas5_sem1,
             'rata_kelas5_sem2' => $request->rata_kelas5_sem2,
             'rata_kelas6_sem1' => $request->rata_kelas6_sem1,
-            'total_rata_rata' => $totalRata,
             'status' => '1'
         ]);
 
@@ -145,13 +150,16 @@ class RaportController extends Controller
             $request->rata_kelas6_sem1
         ) / 4;
 
+        RataRataRaport::where('id_register', $id)->update([
+            'total_rata_rata' => $totalRata
+        ]);
+
         DataRaport::where('id_register', $id)->update([
             'rata_kelas4_sem1' => $request->rata_kelas4_sem1,
             'rata_kelas4_sem2' => $request->rata_kelas4_sem2,
             'rata_kelas5_sem1' => $request->rata_kelas5_sem1,
             'rata_kelas5_sem2' => $request->rata_kelas5_sem2,
             'rata_kelas6_sem1' => $request->rata_kelas6_sem1,
-            'total_rata_rata' => $totalRata,
             'status' => '1'
         ]);
 

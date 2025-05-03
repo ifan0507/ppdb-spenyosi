@@ -92,7 +92,7 @@ Route::middleware(['cache_verify', 'auth_siswa'])->group(function () {
 
     //PindahTugas
     Route::get('/mutasi', [PenunjangController::class, 'viewMutasi'])->name('siswa.mutasi');
-    Route::get('/mutasi/{id}/edit', [PenunjangController::class, 'editMutasi'])->name('mutasi.edit');
+    Route::get('/mutasi/edit', [PenunjangController::class, 'editMutasi'])->name('mutasi.edit');
     Route::put('/mutasi/{id}/update', [PenunjangController::class, 'updateMutasi'])->name('mutasi.update');
 
     // Pendaftaran
@@ -114,11 +114,11 @@ Route::middleware(['cache_verify', 'auth_admin'])->group(function () {
     })->name('notifikasi.read.all');
 
     Route::get('/admin', [AdminDashboardController::class, 'index'])->name('dashboard-admin');
-    Route::get('/admin/umum', [AdminDashboardController::class, 'viewUmum'])->name('umum');
+    Route::get('/admin/zonasi', [AdminDashboardController::class, 'viewZonasi'])->name('zonasi');
     Route::get('/admin/afirmasi', [AdminDashboardController::class, 'viewAfirmasi'])->name('afirmasi');
     Route::get('/admin/pindah-tugas', [AdminDashboardController::class, 'viewpindahTugas'])->name('pindah.tugas');
-    Route::get('/admin/prestasi', [AdminDashboardController::class, 'viewTahfidz'])->name('tahfidz');
-    Route::get('/admin/raport', [AdminDashboardController::class, 'viewPrestasi'])->name('prestasi');
+    Route::get('/admin/prestasi-akademik', [AdminDashboardController::class, 'viewAkademik'])->name('akademik');
+    Route::get('/admin/raport', [AdminDashboardController::class, 'viewRaport'])->name('raport');
 
     Route::get('/admin/{id}/confirm', [AdminDashboardController::class, 'confirm'])->name('admin.confirm');
     Route::post('/admin/{id}/decline', [AdminDashboardController::class, 'decline'])->name('admin.decline');
@@ -126,6 +126,10 @@ Route::middleware(['cache_verify', 'auth_admin'])->group(function () {
 
     Route::delete('/admin/notif/{id}/delete', [AdminDashboardController::class, 'notifDeleteById'])->name('delete-notif-byId');
     Route::delete('/admin/notif/delete-all', [AdminDashboardController::class, 'notifDeleteAll'])->name('delete-all-notif');
+
+    Route::get('/admin/export/zonasi', [AdminDashboardController::class, 'exportZonasi'])->name('export.zonasi');
+
+
 
     Route::get('/admin/manajemen-info', [InfoController::class, 'index'])->name('admin.info');
     Route::post('/admin/info', [InfoController::class, 'store'])->name('info.post');

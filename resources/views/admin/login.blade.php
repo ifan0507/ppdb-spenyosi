@@ -75,7 +75,7 @@
                                 @endif
 
 
-                                <form class="row g-3 needs-validation" novalidate method="post"
+                                <form class="row g-3 needs-validation" method="post"
                                     action="{{ route('admin.login.post') }}">
                                     @csrf
                                     <div class="col-12">

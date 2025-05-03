@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\admin;
 
+use App\Exports\PendaftaranExport;
 use App\Http\Controllers\Controller;
 use App\Mail\Confirmation;
 use App\Mail\DeclineMail;
@@ -12,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Maatwebsite\Excel\Facades\Excel;
 
 class DashboardController extends Controller
 {
@@ -20,10 +22,17 @@ class DashboardController extends Controller
      */
 
     protected $data;
+    protected $sort, $start, $end, $top_n;
+    protected $query;
 
-    public function __construct()
+    public function __construct(Request $request)
     {
-        $this->data =  Auth::guard('web')->user();;
+        $this->data =  Auth::guard('web')->user();
+        $this->sort = $request->input('sort');
+        $this->start = $request->input('start_rank');
+        $this->end = $request->input('end_rank');
+        $this->top_n = $request->input('top_n');
+        $this->query = Pendaftaran::query();
     }
     //dashboard
     public function index()
@@ -33,38 +42,29 @@ class DashboardController extends Controller
         ];
         return view('admin.dashboard', ['data' => $this->data, 'breadcrumb' => $breadcrumb]);
     }
-    public function viewUmum(Request $request)
+    public function viewZonasi()
     {
         $breadcrumb = (object) [
-            'list' => ['Master Data', 'Jalur Umum']
+            'list' => ['Master Data', 'Jalur Zonasi']
         ];
 
-        $sort = $request->input('sort');
-        // query builder dasar
-        $query = Pendaftaran::query();
-        $query->with(['register', 'register.siswa.ortu']);
-        $query->whereHas('register', function ($q) {
+        $this->query->whereHas('register', function ($q) {
             $q->where('id_jalur', '1');
         });
 
-        if ($sort == 'valid') {
-            $query->where('confirmations', '1');
-        } else if ($sort == 'invalid') {
-            $query->where('decline', '1');
-        }
+        $this->sortStatusPendaftaran($this->sort);
 
-        // Jika sorting berdasarkan zonasi, gunakan subquery untuk ordering
-        if ($sort == 'peringkat_zonasi') {
-            $query->join('registers', 'pendaftarans.id_register', '=', 'registers.id')
+        if ($this->sort == 'peringkat_zonasi') {
+            $this->query->join('registers', 'pendaftarans.id_register', '=', 'registers.id')
                 ->join('siswa_barus', 'registers.id', '=', 'siswa_barus.id_register_siswa')
                 ->orderBy('siswa_barus.jarak_sekolah', 'asc')
                 ->select('pendaftarans.*');
         } else {
-            $query->latest();
+            $this->query->latest();
         }
-        $pendaftarans = $query->get();
 
-        // peringkat zonasi
+        $pendaftarans = $this->query->get();
+
         $tempPendaftarans = $pendaftarans->sortBy(function ($pendaftaran) {
             return $pendaftaran->register->siswa->jarak_sekolah ?? PHP_INT_MAX;
         })->values();
@@ -76,85 +76,157 @@ class DashboardController extends Controller
             }
         }
 
+        if ($this->top_n) {
+            $pendaftarans = $tempPendaftarans->take($this->top_n);
+        }
+
+        if ($this->start && $this->end) {
+            $limit = $this->end - ($this->start - 1);
+            $pendaftarans = $pendaftarans->slice($this->start - 1, $limit)->values();
+        }
+
         return view('admin.dataPendaftaran', [
             'pendaftarans' => $pendaftarans,
             'data' => $this->data,
             'breadcrumb' => $breadcrumb,
-            'jalur' => 'Jalur Umum',
-            'sort' => $sort
+            'jalur' => 'Jalur Zonasi',
+            'sort' => $this->sort,
+            'start_rank' => $this->start,
+            'end_rank' => $this->end,
+            'top_n' => $this->top_n
         ]);
     }
-    public function viewAfirmasi(Request $request)
+
+    public function viewAfirmasi()
     {
         $breadcrumb = (object) [
             'list' => ['Master Data', 'Jalur Afirmasi']
         ];
 
-        $sort = $request->input('sort');
+        $this->query->whereHas('register', function ($q) {
+            $q->where('id_jalur', '2');
+        });
 
-        $pendaftarans = Pendaftaran::with('register', 'register.siswa.ortu')
-            ->whereHas('register', function ($query) {
-                $query->where('id_jalur', '2');
-            })->paginate(10);
-        return view('admin.dataPendaftaran', ['pendaftarans' => $pendaftarans, 'data' => $this->data, 'breadcrumb' => $breadcrumb, 'jalur' => 'Jalur Afirmasi', 'sort' => $sort]);
+        $this->sortStatusPendaftaran($this->sort);
+
+        if ($this->sort == 'KIP') {
+            $this->query->join('registers', 'pendaftarans.id_register', '=', 'registers.id')
+                ->join('document_afirmasis', 'registers.id', '=', 'document_afirmasis.id_register')
+                ->where('document_afirmasis.jenis_afirmasi', '=', 'kip')
+                ->select('pendaftarans.*');
+        } else  if ($this->sort == 'KKS') {
+            $this->query->join('registers', 'pendaftarans.id_register', '=', 'registers.id')
+                ->join('document_afirmasis', 'registers.id', '=', 'document_afirmasis.id_register')
+                ->where('document_afirmasis.jenis_afirmasi', '=', 'kks')
+                ->select('pendaftarans.*');
+        } else  if ($this->sort == 'PKH') {
+            $this->query->join('registers', 'pendaftarans.id_register', '=', 'registers.id')
+                ->join('document_afirmasis', 'registers.id', '=', 'document_afirmasis.id_register')
+                ->where('document_afirmasis.jenis_afirmasi', '=', 'pkh')
+                ->select('pendaftarans.*');
+        } {
+            $this->query->latest();
+        }
+
+        $pendaftarans = $this->query->get();
+
+        if ($this->start && $this->end) {
+            $limit = $this->end - ($this->start - 1);
+            $pendaftarans = $pendaftarans->slice($this->start - 1, $limit)->values();
+        }
+
+        return view('admin.dataPendaftaran', [
+            'pendaftarans' => $pendaftarans,
+            'data' => $this->data,
+            'breadcrumb' => $breadcrumb,
+            'jalur' => 'Jalur Afirmasi',
+            'sort' => $this->sort,
+            'start_rank' => $this->start,
+            'end_rank' => $this->end,
+        ]);
     }
-    public function viewpindahTugas(Request $request)
+    public function viewpindahTugas()
     {
         $breadcrumb = (object) [
             'list' => ['Master Data', 'Jalur Pindah Tugas']
         ];
-        $sort = $request->input('sort');
-        $pendaftarans = Pendaftaran::with('register', 'register.siswa.ortu')
-            ->whereHas('register', function ($query) {
-                $query->where('id_jalur', '3');
-            })->paginate(10);
-        return view('admin.dataPendaftaran', ['pendaftarans' => $pendaftarans, 'data' => $this->data, 'breadcrumb' => $breadcrumb, 'jalur' => 'Jalur Pindah Tugas', 'sort' => $sort]);
+
+        $this->query->whereHas('register', function ($q) {
+            $q->where('id_jalur', '3');
+        });
+
+        $this->sortStatusPendaftaran($this->sort);
+
+        $pendaftarans = $this->query->get();
+
+        if ($this->start && $this->end) {
+            $limit = $this->end - ($this->start - 1);
+            $pendaftarans = $pendaftarans->slice($this->start - 1, $limit)->values();
+        }
+        return view('admin.dataPendaftaran', [
+            'pendaftarans' => $pendaftarans,
+            'data' => $this->data,
+            'breadcrumb' => $breadcrumb,
+            'jalur' => 'Jalur Pindah Tugas',
+            'sort' => $this->sort,
+            'start_rank' => $this->start,
+            'end_rank' => $this->end,
+        ]);
     }
-    public function viewTahfidz(Request $request)
+    public function viewAkademik(Request $request)
     {
         $breadcrumb = (object) [
-            'list' => ['Master Data', 'Jalur Tahfidz']
+            'list' => ['Master Data', 'Jalur Prestasi Akademik']
         ];
         $sort = $request->input('sort');
         $pendaftarans = Pendaftaran::with('register', 'register.siswa.ortu')
             ->whereHas('register', function ($query) {
                 $query->where('id_jalur', '4');
             })->paginate(10);
-        return view('admin.dataPendaftaran', ['pendaftarans' => $pendaftarans, 'data' => $this->data, 'breadcrumb' => $breadcrumb, 'jalur' => 'Jalur Tahfidz', 'sort' => $sort]);
+        return view('admin.dataPendaftaran', ['pendaftarans' => $pendaftarans, 'data' => $this->data, 'breadcrumb' => $breadcrumb, 'jalur' => 'Jalur Prestasi Akademik', 'sort' => $sort]);
     }
-    public function viewPrestasi(Request $request)
+    public function viewRaport()
     {
         $breadcrumb = (object) [
             'list' => ['Master Data', 'Jalur Prestasi Raport']
         ];
 
-        $sort = $request->input('sort');
-        $query = Pendaftaran::query();
-        $query->with(['register', 'register.siswa.ortu', 'register.raport.mapel']);
-        $query->whereHas('register', function ($q) {
+        $this->query->whereHas('register', function ($q) {
             $q->where('id_jalur', '5');
         });
 
-        if ($sort == 'peringkat_raport') {
-            $query->join('registers', 'pendaftarans.id_register', '=', 'registers.id')
-                ->join('data_raports', 'registers.id', '=', 'data_raports.id_register')
-                ->orderByDesc('data_raports.total_rata_rata')
-                ->select('pendaftarans.*')->distinct('pendaftarans.id');
+        $this->sortStatusPendaftaran($this->sort);
+
+        $applyRanking = false;
+
+        if ($this->sort == 'peringkat_raport') {
+            $this->query
+                ->join('registers', 'pendaftarans.id_register', '=', 'registers.id')
+                ->join('rata_rata_raports', 'registers.id', '=', 'rata_rata_raports.id_register')
+                ->orderByDesc('rata_rata_raports.total_rata_rata')
+                ->select('pendaftarans.*');
+
+            $applyRanking = true;
         } else {
-            $query->latest();
+            $this->query->latest('pendaftarans.created_at');
         }
 
-        $pendaftarans = $query->get();
+        $pendaftarans = $this->query->get();
 
         $tempPendaftarans = $pendaftarans->sortByDesc(function ($pendaftaran) {
-            return $pendaftaran->register->raport->total_rata_rata ?? -1; // Nilai default -1 untuk yang tidak memiliki nilai
+            return optional($pendaftaran->register->rata_rata_raport)->total_rata_rata ?? -1;
         })->values();
 
         foreach ($tempPendaftarans as $index => $pendaftaran) {
-            $original = $pendaftarans->firstWhere('id', $pendaftaran->id);
-            if ($original) {
-                $original->peringkat_raport = $index + 1;
-            }
+            $pendaftaran->peringkat_raport = $index + 1;
+        }
+
+        if ($this->top_n) {
+            $pendaftarans = $tempPendaftarans->take($this->top_n);
+        }
+
+        if ($this->start && $this->end) {
+            $pendaftarans = $pendaftarans->slice($this->start - 1, $this->end - $this->start + 1)->values();
         }
 
         return view('admin.dataPendaftaran', [
@@ -162,7 +234,10 @@ class DashboardController extends Controller
             'pendaftarans' => $pendaftarans,
             'breadcrumb' => $breadcrumb,
             'jalur' => 'Jalur Prestasi Raport',
-            'sort' => $sort
+            'sort' => $this->sort,
+            'start_rank' => $this->start,
+            'end_rank' => $this->end,
+            'top_n' => $this->top_n
         ]);
     }
 
@@ -231,5 +306,24 @@ class DashboardController extends Controller
     {
         auth()->user()->notifications()->delete();
         return response()->json(['success' => true]);
+    }
+
+    public function exportZonasi(Request $request)
+    {
+        $sort = $request->sort;
+        $start = $request->start_rank;
+        $end = $request->end_rank;
+        $top_n = $request->top_n;
+
+        return Excel::download(new PendaftaranExport($sort, $start, $end, $top_n), 'pendaftaran_zonasi.xlsx');
+    }
+
+    private function sortStatusPendaftaran($sort)
+    {
+        if ($sort == 'valid') {
+            $this->query->where('confirmations', '1');
+        } else if ($sort == 'invalid') {
+            $this->query->where('decline', '1');
+        }
     }
 }

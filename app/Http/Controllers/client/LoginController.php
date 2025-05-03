@@ -92,15 +92,6 @@ class LoginController extends Controller
             'nama' => $data['nama_lengkap'],
             'nisn' => $data['nisn'],
             'email' => $data['email'],
-            'nik' => "_",
-            "tempat_lahir" => "_",
-            "asal_sekolah" => "_",
-            "kabupaten" => "_",
-            "kecamatan" => "_",
-            "desa" => "_",
-            "alamat" => "_",
-            "no_hp" => "_",
-            "lokasi" => "_",
             "foto_kk" => 'default_document.png',
             "foto_siswa" => 'default_siswa.png',
             "foto_akte" => 'default_document.png',
@@ -108,26 +99,16 @@ class LoginController extends Controller
 
         OrtuSiswa::create([
             'id_siswa' => $siswa->id,
-            "ayah" => "_",
-            "pekerjaan_ayah" => "_",
-            "pendidikan_ayah" => "_",
-            "ibu" => "_",
-            "pekerjaan_ibu" => "_",
-            "pendidikan_ibu" => "_",
-            "no_hp" => "_",
         ]);
 
         if (session('jalur_ppdb') == "2") {
             DocumentAfirmasi::create([
                 'id_register' => $akun->id,
-                'jenis_afirmasi' => '_',
                 'image' => 'default_document.png'
             ]);
         } else if (session('jalur_ppdb') == "3") {
             DocumentMutasi::create([
                 'id_register' => $akun->id,
-                'asal_tugas' => "_",
-                'thn_pindah' => "_",
                 'image' => 'default_document.png'
             ]);
         } else if (session('jalur_ppdb') == "4") {

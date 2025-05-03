@@ -5,7 +5,7 @@
         @include('layouts.siswa.breadcrumb', [
             'breadcrumb' => [
                 'Documen Prestasi' => route('siswa.prestasi'),
-                'Perbarui Documen Prestasi' => '',
+                'Perbarui Dokumen Prestasi' => '',
             ],
         ])
 
@@ -124,8 +124,8 @@
                                 </div>
                                 <div class="col-sm-8 col-lg-4">
                                     <div class="border m-3 py-1 px-2 text-center" id="photo-box">
-                                        <label for="prestasi_blob" class="form-label">
-                                            Documen Pendukung <span style="color:#e3342f">*</span><br />
+                                        <label for="prestasu_blob" class="form-label">
+                                            Dokumen Pendukung <span style="color:#e3342f">*</span><br />
                                             <b>(format: JPG/JPEG maks. 1MB)</b>
                                         </label>
 

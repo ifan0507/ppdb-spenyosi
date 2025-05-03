@@ -51,7 +51,7 @@
                                 <div class="form-group  mb-3">
                                     <label class="form-label">NIK <span style="color:#e3342f">*</span></label>
                                     <input type="text" class="form-control" name="nik" id="nik"
-                                        value="{{ old('nik', $data->siswa->nik) }}">
+                                        value="{{ old('nik', $data->siswa->nik) }}" placeholder="Masukan NIK">
                                     <div id="validasiNik" class="invalid-feedback"></div>
                                 </div>
 
@@ -76,7 +76,8 @@
                                 <div class="form-group  mb-3">
                                     <label class="form-label">Tempat Lahir <span style="color:#e3342f">*</span></label>
                                     <input type="text" class="form-control" name="tempat_lahir" id="tempat_lahir"
-                                        value="{{ old('tempat_lahir', $data->siswa->tempat_lahir) }}">
+                                        value="{{ old('tempat_lahir', $data->siswa->tempat_lahir) }}"
+                                        placeholder="Masukan tempat lahir">
                                 </div>
 
                                 <div class="form-group  mb-3">
@@ -120,7 +121,7 @@
                                 <div class="form-group  mb-3">
                                     <label class="form-label">No HP <span style="color:#e3342f">*</span></label>
                                     <input type="text" class="form-control" name="no_hp" id="no_hp"
-                                        value="{{ old('no_hp', $data->siswa->no_hp) }}">
+                                        value="{{ old('no_hp', $data->siswa->no_hp) }}" placeholder="Masukan No Hp">
                                     <div id="validasiNoHp" class="invalid-feedback"></div>
                                 </div>
                                 <div class="form-group  mb-3">
@@ -142,7 +143,8 @@
                                 <div class="form-group  mb-3">
                                     <label class="form-label">Asal Sekolah</label>
                                     <input type="text" class="form-control" name="asal_sekolah" id="asal-sekolah"
-                                        value="{{ old('asal_sekolah', $data->siswa->asal_sekolah) }}">
+                                        value="{{ old('asal_sekolah', $data->siswa->asal_sekolah) }}"
+                                        placeholder="Asal sekolah">
                                 </div>
                                 <div class="row">
                                     <div class="col-md-4">
@@ -258,6 +260,7 @@
                         .openPopup();
 
                     inputKoordinat.value = `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
+                    inputKoordinat.classList.add('is-valid');
 
                     if (line) map.removeLayer(line);
                     line = L.polyline([
@@ -575,30 +578,34 @@
                 const formData = new FormData(this);
                 formData.append("_method", "PUT");
                 let isChecked = $("input[name='jenis_kelamin']:checked").length > 0;
-                if ($("#nik").val() == "" || $("#nik").val() === "_") {
+
+                if ($("#nik").val() == "") {
                     Swal.fire({
                         icon: "error",
                         title: "Oops...",
                         text: "NIK Wajib diisi!",
                     })
+                    $("#nik").addClass("is-invalid");
                 } else if (!isChecked) {
                     Swal.fire({
                         icon: "error",
                         title: "Oops...",
                         text: "Jenis kelamin wajib dipilih!",
                     })
-                } else if ($("#tempat_lahir").val() == "" || $("#tempat_lahir").val() === "_") {
+                } else if ($("#tempat_lahir").val() == "") {
                     Swal.fire({
                         icon: "error",
                         title: "Oops...",
                         text: "Tempat lahir wajib diisi!",
                     })
-                } else if ($("#tanggal_lahir").val() == "" || $("#tanggal_lahir").val() === "_") {
+                    $("#tempat_lahir").addClass("is-invalid");
+                } else if ($("#tanggal_lahir").val() == "") {
                     Swal.fire({
                         icon: "error",
                         title: "Oops...",
                         text: "Tanggal lahir wajib diisi!",
                     })
+                    $("tanggal_lahir").addClass("is-invalid");
                 } else if ($("#kab_name").val() == "") {
                     Swal.fire({
                         icon: "error",
@@ -617,30 +624,34 @@
                         title: "Oops...",
                         text: "Desa wajib dipilih!",
                     })
-                } else if ($("#alamat").val() == "" || $("#alamat").val() === "_") {
+                } else if ($("#alamat").val() == "") {
                     Swal.fire({
                         icon: "error",
                         title: "Oops...",
                         text: "Alamat wajib diisi!",
                     })
-                } else if ($("#no_hp").val() == "" || $("#no_hp").val() === "_") {
+                    $("#alamat").addClass("is-invalid");
+                } else if ($("#no_hp").val() == "") {
                     Swal.fire({
                         icon: "error",
                         title: "Oops...",
                         text: "No HP wajib diisi!",
                     })
-                } else if ($("#coordinates").val() == "" || $("#coordinates").val() === "_") {
+                    $("#no_hp").addClass("is-invalid");
+                } else if ($("#coordinates").val() == "") {
                     Swal.fire({
                         icon: "error",
                         title: "Oops...",
                         text: "Koordinate rumah wajib diisi!",
                     })
-                } else if ($("#asal-sekolah").val() == "" || $("#asal-sekolah").val() === "_") {
+                    $("#coordinates").addClass("is-invalid");
+                } else if ($("#asal-sekolah").val() == "") {
                     Swal.fire({
                         icon: "error",
                         title: "Oops...",
                         text: "Asal Sekolah wajib diisi!",
                     })
+                    $("#asal_sekolah").addClass("is-invalid");
                 } else {
                     $("#btnSubmit").attr("disabled", true);
                     $("#btnText").addClass("d-none");

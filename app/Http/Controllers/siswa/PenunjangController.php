@@ -81,11 +81,9 @@ class PenunjangController extends Controller
         return view('siswa.mutasi', ['data' => $this->data, "active_tab" => $active_tab]);
     }
 
-    public function editMutasi(string $id)
+    public function editMutasi()
     {
-        $data = DocumentMutasi::where("id", $id)->first();
-        $header = "Form mutasi";
-
+        $header = "Perbarui dokumen mutasi";
         return view('siswa.edit-mutasi', [
             'data' => $this->data,
             "header" => $header
@@ -99,11 +97,11 @@ class PenunjangController extends Controller
         $request->validate([
             'image' => 'file|image'
         ], [
-            'image.file' => 'Document harus berupa file!'
+            'image.file' => 'Dokumen harus berupa file!'
         ]);
 
         if ($this->data->mutasi->image === $defaultDocument && !$request->hasFile('image')) {
-            return response()->json(['errors' => ['image' => ['Document tidak boleh kosong!']]], 400);
+            return response()->json(['errors' => ['image' => ['Dokumen tidak boleh kosong!']]], 400);
         }
 
         if ($request->hasFile('image')) {
@@ -112,7 +110,7 @@ class PenunjangController extends Controller
             }
             $documentPath = $request->file('image')->store('siswa/mutasi');
         } else {
-            $documentPath = $request->file('image')->store('siswa/mutasi');
+            $documentPath = $this->data->mutasi->image;
         }
 
         DocumentMutasi::where('id', $id)->update([
@@ -122,7 +120,7 @@ class PenunjangController extends Controller
             'status_berkas' => '1'
         ]);
 
-        return response()->json(['redirect' => route('')]);
+        return response()->json(['redirect' => route('siswa.mutasi')]);
     }
 
     //prestasi
@@ -134,7 +132,7 @@ class PenunjangController extends Controller
 
     public function editPrestasiLomba()
     {
-        $header = "Perbarui Document Prestasi";
+        $header = "Perbarui Dokumen Prestasi";
 
         return view('siswa.edit-prestasi', [
             'data' => $this->data,
@@ -147,142 +145,39 @@ class PenunjangController extends Controller
     {
         $defaultDocument = 'default_document.png';
 
-        // Validasi semua field yang diperlukan
         $request->validate([
-            'nama_prestasi' => 'required|string|max:255',
-            'kategori' => 'required|in:Akademik,Non-akademik',
-            'tingkat_prestasi' => 'required|string',
-            'thn_perolehan' => 'required|numeric|digits:4',
-            'perolehan' => 'required|string',
-            'image' => 'nullable|file|image|max:2048'
+            'image' => 'file|image'
         ], [
-            'nama_prestasi.required' => 'Nama prestasi harus diisi!',
-            'kategori.required' => 'Kategori harus dipilih!',
-            'kategori.in' => 'Kategori harus Akademik atau Non-akademik!',
-            'tingkat_prestasi.required' => 'Tingkat prestasi harus diisi!',
-            'thn_perolehan.required' => 'Tahun perolehan harus diisi!',
-            'thn_perolehan.numeric' => 'Tahun perolehan harus berupa angka!',
-            'thn_perolehan.digits' => 'Tahun perolehan harus 4 digit!',
-            'perolehan.required' => 'Perolehan harus diisi!',
-            'image.file' => 'Document harus berupa file!',
-            'image.image' => 'Document harus berupa gambar!',
-            'image.max' => 'Ukuran document maksimal 2MB!'
+            'image.file' => 'Document harus berupa file!'
         ]);
 
-        try {
-            // Ambil data prestasi yang akan diupdate
-            $prestasiLomba = DocumentPrestasiLomba::findOrFail($id);
-            $pendaftaranId = session('id_register');
-
-            // Verifikasi kepemilikan data (keamanan)
-            if ($prestasiLomba->id_register != $pendaftaranId) {
-                return response()->json([
-                    'status' => 'error',
-                    'message' => 'Anda tidak memiliki akses untuk mengubah data ini!'
-                ], 403);
-            }
-
-            // Cek jumlah prestasi berdasarkan kategori yang sudah diinput
-            // Kecualikan data yang sedang diupdate jika kategori sama
-            $kategori = $request->kategori;
-            $kategoriLama = $prestasiLomba->kategori;
-
-            // Jika kategori berubah, perlu cek kuota kategori baru
-            if ($kategori != $kategoriLama) {
-                $jumlahPrestasiKategori = DocumentPrestasiLomba::where('id_register', $pendaftaranId)
-                    ->where('kategori', $kategori)
-                    ->count();
-
-                if ($jumlahPrestasiKategori >= 3) {
-                    $kategoriLabel = ($kategori == 'Akademik') ? 'Akademik' : 'Non-akademik';
-                    return response()->json([
-                        'status' => 'error',
-                        'message' => "Anda sudah menginput 3 prestasi {$kategoriLabel}. Tidak bisa menambah lagi untuk kategori ini."
-                    ], 400);
-                }
-            }
-
-            // Penanganan file dokumen
-            if ($request->hasFile('image')) {
-                // Jika file sebelumnya bukan default, hapus
-                if ($prestasiLomba->image !== $defaultDocument) {
-                    Storage::delete($prestasiLomba->image);
-                }
-                $documentPath = $request->file('image')->store('siswa/lomba');
-            } else {
-                // Jika tidak ada file baru, tetap pakai file lama
-                // Tapi jika file lama adalah default dan tidak ada file baru, tolak
-                if ($prestasiLomba->image === $defaultDocument) {
-                    return response()->json([
-                        'status' => 'error',
-                        'message' => 'Document tidak boleh kosong!',
-                        'errors' => ['image' => ['Document tidak boleh kosong!']]
-                    ], 400);
-                }
-                $documentPath = $prestasiLomba->image;
-            }
-
-            $prestasiLomba->update([
-                'nama_prestasi' => $request->nama_prestasi,
-                'kategori' => $kategori,
-                'tingkat_prestasi' => $request->tingkat_prestasi,
-                'thn_perolehan' => $request->thn_perolehan,
-                'perolehan' => $request->perolehan,
-                'image' => $documentPath,
-                'status_berkas' => '1'
-            ]);
-
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Data prestasi berhasil diperbarui!',
-                'redirect' => route('siswa.prestasi')
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Terjadi kesalahan saat memperbarui data prestasi!',
-                'error_detail' => env('APP_DEBUG') ? $e->getMessage() : null
-            ], 500);
+        if ($this->data->lomba->image === $defaultDocument && !$request->hasFile('image')) {
+            return response()->json(['errors' => ['image' => ['Document tidak boleh kosong!']]], 400);
         }
-    }
-    public function deletePrestasiLomba(string $id)
-    {
-        try {
-            // Ambil data prestasi yang akan dihapus
-            $prestasiLomba = DocumentPrestasiLomba::findOrFail($id);
-            $pendaftaranId = session('id_register');
 
-            // Verifikasi kepemilikan data (keamanan)
-            if ($prestasiLomba->id_register != $pendaftaranId) {
-                return response()->json([
-                    'status' => 'error',
-                    'message' => 'Anda tidak memiliki akses untuk menghapus data ini!'
-                ], 403);
+        if ($request->hasFile('image')) {
+            if ($this->data->lomba->image !== $defaultDocument) {
+                Storage::delete($this->data->lomba->image);
             }
+            $documentPath = $request->file('image')->store('siswa/lomba');
+        } else {
+            $documentPath = $this->data->lomba->image;
+        }
 
-            $defaultDocument = 'default_document.png';
 
-            // Hapus file jika bukan default
-            if ($prestasiLomba->image !== $defaultDocument) {
-                Storage::delete($prestasiLomba->image);
-            }
-
-            // Hapus data dari database
-            $prestasiLomba->delete();
-
-            // Response sukses
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Data prestasi berhasil dihapus!',
-                'redirect' => route('siswa.prestasi')
-            ]);
-        } catch (\Exception $e) {
-            // Tangani exception/error
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Terjadi kesalahan saat menghapus data prestasi!',
-                'error_detail' => env('APP_DEBUG') ? $e->getMessage() : null
-            ], 500);
+        $update =  DocumentPrestasiLomba::where('id', $id)->update([
+            'nama_prestasi' => $request->nama_prestasi,
+            'kategori' => $request->kategori,
+            'tingkat_prestasi' => $request->tingkat_prestasi,
+            'thn_perolehan' => $request->thn_perolehan,
+            'perolehan' => $request->perolehan,
+            'image' => $documentPath,
+            'status_berkas' => '1'
+        ]);
+        if ($update) {
+            return response()->json(['redirect' => route('siswa.prestasi')]);
+        } else {
+            return back()->withInput()->withErrors('ERROR CONTROLLER');
         }
     }
 }
