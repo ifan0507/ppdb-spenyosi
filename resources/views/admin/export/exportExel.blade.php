@@ -4,11 +4,12 @@
             <th rowspan="2">No</th>
             <th rowspan="2">No Register</th>
             <th colspan="11">BIODATA SISWA</th>
-            @if (optional($pendaftarans->first())->register?->siswa?->ortu?->status_hubungan == 'Wali')
+            {{-- @if (optional($pendaftarans->first())->register?->siswa?->ortu?->status_hubungan == 'Wali')
                 <th colspan="11">ORANG TUA/WALI</th>
             @else
                 <th colspan="10">ORANG TUA/WALI</th>
-            @endif
+            @endif --}}
+            <th colspan="9">ORANG TUA/WALI</th>
         </tr>
         <tr>
             <th>NISN</th>
@@ -31,10 +32,10 @@
 
             <th>Nama Ayah/Wali</th>
             <th>Status Ayah/Wali</th>
-            <th>Status Hubungan</th>
+            {{-- <th>Status Hubungan</th>
             @if (optional($pendaftarans->first())->register?->siswa?->ortu?->status_hubungan == 'Wali')
                 <th>Hubungan Wali</th>
-            @endif
+            @endif --}}
             <th>Pekerjaan Ayah/Wali</th>
             <th>Pendidikan Ayah/Wali</th>
             <th>Nama Ibu</th>
@@ -60,21 +61,34 @@
                 <td>{{ $item->register->siswa->email }}</td>
                 <td>{{ $item->register->siswa->asal_sekolah }}</td>
                 <td>{{ $item->register->siswa->lokasi }}</td>
-                @if ($pendaftaran->register->id_jalur == 5)
+                @if ($item->register->id_jalur == 5)
                     <td>
-                        <strong>{{ $pendaftaran->peringkat_raport ?? '-' }}</strong>
-                        ({{ $pendaftaran->register->rata_rata_raport->total_rata_rata }})
+                        <strong>{{ $item->peringkat_raport ?? '-' }}</strong>
+                        ({{ $item->register->rata_rata_raport->total_rata_rata }})
                     </td>
-                @elseif ($pendaftaran->register->id_jalur == 1)
+                @elseif ($item->register->id_jalur == 1)
                     <td>
-                        <strong>{{ $pendaftaran->peringkat_zonasi ?? '-' }}</strong>
-                        ({{ $pendaftaran->register->siswa->jarak_sekolah }} km)
+                        <strong>{{ $item->peringkat_zonasi ?? '-' }}</strong>
+                        ({{ $item->register->siswa->jarak_sekolah }} km)
                     </td>
-                @elseif ($pendaftaran->register->id_jalur == 2)
+                @elseif ($item->register->id_jalur == 2)
                     <td>
-                        {{ $pendaftaran->register->afirmasi->jenis_afirmasi }}
+                        {{ $item->register->afirmasi->jenis_afirmasi }}
                     </td>
                 @endif
+                <td>{{ $item->register->siswa->ortu->ayah }}</td>
+                <td>{{ $item->register->siswa->ortu->status_ayah }}</td>
+                {{-- <td>{{ $item->register->siswa->ortu->status_hubungan }}</td>
+                @if ($item->register->siswa->ortu->hubungan_wali == 'Wali')
+                    <td>{{ $item->register->siswa->ortu->hubungan_wali }}</td>
+                @endif --}}
+                <td>{{ $item->register->siswa->ortu->pekerjaan_ayah }}</td>
+                <td>{{ $item->register->siswa->ortu->pendidikan_ayah }}</td>
+                <td>{{ $item->register->siswa->ortu->ibu }}</td>
+                <td>{{ $item->register->siswa->ortu->status_ibu }}</td>
+                <td>{{ $item->register->siswa->ortu->pekerjaan_ibu }}</td>
+                <td>{{ $item->register->siswa->ortu->pendidikan_ibu }}</td>
+                <td>{{ $item->register->siswa->ortu->no_hp }}</td>
             </tr>
         @endforeach
     </tbody>

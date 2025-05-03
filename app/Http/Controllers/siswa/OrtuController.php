@@ -61,9 +61,11 @@ class OrtuController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $data = OrtuSiswa::where("id", $id)->update([
+        $data = [
             "ayah" => $request->ayah,
             "status_ayah" => $request->status_ayah,
+            "status_hubungan" => $request->status_hubungan,
+            "hubungan_wali" => $request->status_hubungan === 'Wali' ? $request->hubungan_wali : null,
             "pendidikan_ayah" => $request->pendidikan_ayah,
             "pekerjaan_ayah" => $request->pekerjaan_ayah,
             "ibu" => $request->ibu,
@@ -71,15 +73,14 @@ class OrtuController extends Controller
             "pendidikan_ibu" => $request->pendidikan_ibu,
             "pekerjaan_ibu" => $request->pekerjaan_ibu,
             "no_hp" => $request->no_hp,
-            "status_berkas" => "1"
-        ]);
+            "status_berkas" => "1",
+        ];
 
-        if ($data) {
-            return response()->json(["redirect" => route("ortu")]);
-        } else {
-            return redirect()->back()->withInput();
-        }
+        OrtuSiswa::where("id", $id)->update($data);
+
+        return response()->json(["redirect" => route("ortu")]);
     }
+
 
     /**
      * Remove the specified resource from storage.

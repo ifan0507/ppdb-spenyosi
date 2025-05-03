@@ -457,7 +457,7 @@
                     $('#btnText').removeClass('d-none');
                     $('#btnLoading').addClass('d-none');
                     $('#exportExcel').attr('disabled', false);
-                }, 1000);
+                }, 3000);
             });
 
         });

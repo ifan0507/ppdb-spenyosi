@@ -49,7 +49,7 @@ class PendaftaranExport implements FromView
                 }
 
                 $pendaftarans = $this->applyLimit($pendaftarans, $temp);
-                return view('admin.export.exportExel', compact('pendaftarans'));
+                return view('admin.export.exportExel', ['pendaftarans' => $pendaftarans,  'jalur' => $this->jalur]);
 
             case 'afirmasi':
                 $this->query->whereHas('register', fn($q) => $q->where('id_jalur', 2));
@@ -66,14 +66,14 @@ class PendaftaranExport implements FromView
 
                 $pendaftarans = $this->query->get();
                 $pendaftarans = $this->applyLimit($pendaftarans);
-                return view('admin.export.exportExel', compact('pendaftarans'));
+                return view('admin.export.exportExel', ['pendaftarans' => $pendaftarans,  'jalur' => $this->jalur]);
 
             case 'mutasi':
                 $this->query->whereHas('register', fn($q) => $q->where('id_jalur', 3));
                 $this->sortStatusPendaftaran($this->sort);
                 $pendaftarans = $this->query->get();
                 $pendaftarans = $this->applyLimit($pendaftarans);
-                return view('admin.export.exportExel', compact('pendaftarans'));
+                return view('admin.export.exportExel', ['pendaftarans' => $pendaftarans,  'jalur' => $this->jalur]);
 
             case 'raport':
                 $this->query->whereHas('register', fn($q) => $q->where('id_jalur', 5));
@@ -95,7 +95,7 @@ class PendaftaranExport implements FromView
                 }
 
                 $pendaftarans = $this->applyLimit($pendaftarans, $temp);
-                return view('admin.export.exportExel', compact('pendaftarans'));
+                return view('admin.export.exportExel', ['pendaftarans' => $pendaftarans,  'jalur' => $this->jalur]);
 
             default:
                 return view('admin.export.exportExel', ['pendaftarans' => collect(), 'jalur' => $this->jalur]);

@@ -148,11 +148,11 @@ class PenunjangController extends Controller
         $request->validate([
             'image' => 'file|image'
         ], [
-            'image.file' => 'Dokumen harus berupa file!'
+            'image.file' => 'Document harus berupa file!'
         ]);
 
         if ($this->data->lomba->image === $defaultDocument && !$request->hasFile('image')) {
-            return response()->json(['errors' => ['image' => ['Dokumen tidak boleh kosong!']]], 400);
+            return response()->json(['errors' => ['image' => ['Document tidak boleh kosong!']]], 400);
         }
 
         if ($request->hasFile('image')) {
@@ -164,9 +164,10 @@ class PenunjangController extends Controller
             $documentPath = $this->data->lomba->image;
         }
 
+
         $update =  DocumentPrestasiLomba::where('id', $id)->update([
             'nama_prestasi' => $request->nama_prestasi,
-            'jenis_prestasi' => $request->jenis_prestasi,
+            'kategori' => $request->kategori,
             'tingkat_prestasi' => $request->tingkat_prestasi,
             'thn_perolehan' => $request->thn_perolehan,
             'perolehan' => $request->perolehan,

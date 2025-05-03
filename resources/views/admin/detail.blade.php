@@ -154,6 +154,20 @@
                                     </div>
                                 </div>
                                 <div class="row mb-3">
+                                    <label for="fullName" class="col-md-4 col-lg-3">Status Hubungan</label>
+                                    <div class="col-lg-9 col-md-8">
+                                        {{ $pendaftarans->register->siswa->ortu->status_hubungan }}
+                                    </div>
+                                </div>
+                                @if ($pendaftarans->register->siswa->ortu->status_hubungan === 'Wali')
+                                <div class="row mb-3">
+                                    <label for="fullName" class="col-md-4 col-lg-3">Hubungan Wali</label>
+                                    <div class="col-lg-9 col-md-8">
+                                        {{ $pendaftarans->register->siswa->ortu->hubungan_wali }}
+                                    </div>
+                                </div>     
+                                @endif
+                                <div class="row mb-3">
                                     <label for="fullName" class="col-md-4 col-lg-3">Pendidikan Ayah / Wali</label>
                                     <div class="col-lg-9 col-md-8">
                                         {{ $pendaftarans->register->siswa->ortu->pendidikan_ayah }}

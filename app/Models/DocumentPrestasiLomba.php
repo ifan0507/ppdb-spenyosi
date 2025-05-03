@@ -14,7 +14,7 @@ class DocumentPrestasiLomba extends Model
     public $incrementing = false;
     protected $keyType = 'string';
     protected $table = 'document_prestasi_lombas';
-    protected $fillable = ['id_register', 'nama_prestasi', 'jenis_prestasi', 'tingkat_prestasi', 'thn_perolehan', 'perolehan', 'image', 'status_berkas'];
+    protected $fillable = ['id_register', 'nama_prestasi', 'kategori', 'tingkat_prestasi', 'thn_perolehan', 'perolehan', 'image', 'status_berkas'];
 
     public function register(): BelongsTo
     {

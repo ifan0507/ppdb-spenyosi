@@ -46,6 +46,7 @@ class DatabaseSeeder extends Seeder
         //     ["nama_matapelajaran" => "Pend. Jasmani, Olahraga dan Kesehatan"]
         // ]);
 
+<<<<<<< HEAD
         // Jalur::insert([
         //     [
         //         "nama_jalur" => "Umum",
@@ -68,6 +69,30 @@ class DatabaseSeeder extends Seeder
         //         "keterangan" => "Jalur Prestasi seleksi berdasarkan nilai rapor dari semester sebelumnya. Jalur ini ditujukan bagi calon peserta didik dengan capaian akademik tinggi yang ingin melanjutkan pendidikan di SMP Negeri 1 Yosowilangun."
         //     ],
         // ]);
+=======
+        Jalur::insert([
+            [
+                "nama_jalur" => "Umum",
+                "keterangan" => "Jalur Umum adalah jalur pendaftaran terbuka bagi seluruh calon peserta didik yang ingin melanjutkan pendidikan ke SMP Negeri 1 Yosowilangun tanpa kriteria khusus. Seleksi dilakukan berdasarkan kuota dan waktu pendaftaran."
+            ],
+            [
+                "nama_jalur" => "Afirmasi (Siswa dari keluarga kurang mampu)",
+                "keterangan" => "Jalur Afirmasi diperuntukkan bagi calon peserta didik yang berasal dari keluarga kurang mampu dan ingin bersekolah di SMP Negeri 1 Yosowilangun. Dibutuhkan bukti pendukung seperti KIP, KKS, atau surat keterangan tidak mampu dari pihak berwenang."
+            ],
+            [
+                "nama_jalur" => "Pindah Tugas (Orang tua/wali pindah kerja)",
+                "keterangan" => "Jalur ini dikhususkan untuk calon peserta didik yang mengikuti orang tua/wali yang pindah tugas kerja ke wilayah sekitar SMP Negeri 1 Yosowilangun. Wajib melampirkan surat keterangan resmi dari instansi tempat orang tua/wali bekerja."
+            ],
+            [
+                "nama_jalur" => "Prestasi Lomba (Peraih prestasi di bidang akademik/non-akademik)",
+                "keterangan" => "Jalur ini memberi kesempatan bagi calon peserta didik yang memiliki prestasi lomba di bidang akademik, non-akademik."
+            ],
+            [
+                "nama_jalur" => "Prestasi (Nilai Raport)",
+                "keterangan" => "Jalur Prestasi seleksi berdasarkan nilai rapor dari semester sebelumnya. Jalur ini ditujukan bagi calon peserta didik dengan capaian akademik tinggi yang ingin melanjutkan pendidikan di SMP Negeri 1 Yosowilangun."
+            ],
+        ]);
+>>>>>>> 6fb9772d9109e1f66a16ae526515347fd3e12d18
 
         // User::create([
         //     'email' => "ipan@gmail.com",

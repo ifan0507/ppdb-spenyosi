@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('document_prestasi_lombas', function (Blueprint $table) {
             $table->ulid('id')->primary();
             $table->string('nama_prestasi')->nullable();
-            $table->string('jenis_prestasi')->nullable();
+            $table->enum('kategori', ['Akademik', 'Non-akademik'])->nullable();
             $table->string('tingkat_prestasi')->nullable();
             $table->year('thn_perolehan')->nullable();
             $table->string('perolehan')->nullable();

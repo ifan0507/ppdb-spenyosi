@@ -15,7 +15,9 @@ return new class extends Migration
             $table->ulid('id')->primary();
             $table->foreignUlid('id_siswa')->references('id')->on('siswa_barus')->onDelete('cascade')->onUpdate('cascade');
             $table->string('ayah')->nullable();
-            $table->enum('status_ayah', ['Hidup', 'Wafat'])->nullable();
+            $table->string('status_ayah')->nullable();
+            $table->string('status_hubungan')->nullable();
+            $table->string('hubungan_wali')->nullable();
             $table->string('pekerjaan_ayah')->nullable();
             $table->string('pendidikan_ayah')->nullable();
             $table->string('ibu')->nullable();
