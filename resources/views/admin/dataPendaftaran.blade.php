@@ -56,9 +56,12 @@
                                                 </option>
                                             @endif
                                             @if ($jalur == 'Jalur Afirmasi')
-                                                <option value="KIP">Afirmasi KIP</option>
-                                                <option value="KKS">Afirmasi KKS</option>
-                                                <option value="PKH">Afirmasi PKH</option>
+                                                <option value="KIP" {{ $sort == 'KIP' ? 'selected' : '' }}>Afirmasi KIP
+                                                </option>
+                                                <option value="KKS" {{ $sort == 'KKS' ? 'selected' : '' }}>Afirmasi KKS
+                                                </option>
+                                                <option value="PKH" {{ $sort == 'PKH' ? 'selected' : '' }}>Afirmasi PKH
+                                                </option>
                                             @endif
                                             @if ($jalur == 'Jalur Prestasi Raport')
                                                 <option value="peringkat_raport"
@@ -133,7 +136,10 @@
                                 <h6 class="mb-3">Export Data</h6>
                                 <div class="d-grid gap-2 d-md-flex ">
                                     <button id="exportExcel" class="btn btn-success btn-export" id="export-excel">
-                                        <i class="bi bi-file-earmark-excel me-2"></i> Export Excel
+                                        <i class="bi bi-file-earmark-excel me-2 export"></i> <span id="btnText">Export
+                                            Exel</span>
+                                        <span id="btnLoading" class="spinner-border spinner-border-sm d-none"
+                                            role="status" aria-hidden="true"></span>
                                     </button>
                                     <button class="btn btn-danger btn-export" id="export-pdf">
                                         <i class="bi bi-file-earmark-pdf me-2"></i> Export PDF
@@ -308,7 +314,7 @@
 
             </div>
         </div>
-
+        <input type="hidden" id="jalur_export" value="{{ $jalur_export }}">
     </section>
     <script>
         $(document).ready(function() {
@@ -423,16 +429,20 @@
 
                 this.submit();
             });
-
             $('#exportExcel').on('click', function(e) {
                 e.preventDefault();
+
+                $(".export").addClass('d-none');
+                $('#btnText').addClass('d-none');
+                $('#btnLoading').removeClass('d-none');
+                $('#exportExcel').attr('disabled', true);
 
                 let sort = $('#urutkan').val();
                 let start_rank = $('#start_rank').val();
                 let end_rank = $('#end_rank').val();
                 let top_n = $('#top_n').val();
+                let jalur = $('#jalur_export').val();
 
-                // Build query string
                 let queryParams = $.param({
                     sort: sort,
                     start_rank: start_rank,
@@ -440,9 +450,15 @@
                     top_n: top_n
                 });
 
-                window.location.href = `/admin/export/zonasi?${queryParams}`;
-            });
+                window.location.href = `/admin/export/${jalur}?${queryParams}`;
 
+                setTimeout(function() {
+                    $(".export").removeClass('d-none');
+                    $('#btnText').removeClass('d-none');
+                    $('#btnLoading').addClass('d-none');
+                    $('#exportExcel').attr('disabled', false);
+                }, 1000);
+            });
 
         });
     </script>

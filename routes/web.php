@@ -2,8 +2,8 @@
 
 use App\Http\Controllers\admin\AuthController;
 use App\Http\Controllers\admin\BroadcastingController;
-use App\Http\Controllers\admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\admin\InfoController;
+use App\Http\Controllers\admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\client\InfoController as ClientInfoController;
 use App\Http\Controllers\client\BerandaController;
 use App\Http\Controllers\client\LoginController;
@@ -127,7 +127,7 @@ Route::middleware(['cache_verify', 'auth_admin'])->group(function () {
     Route::delete('/admin/notif/{id}/delete', [AdminDashboardController::class, 'notifDeleteById'])->name('delete-notif-byId');
     Route::delete('/admin/notif/delete-all', [AdminDashboardController::class, 'notifDeleteAll'])->name('delete-all-notif');
 
-    Route::get('/admin/export/zonasi', [AdminDashboardController::class, 'exportZonasi'])->name('export.zonasi');
+    Route::get('/admin/export/{jalur}', [AdminDashboardController::class, 'exportExel']);
 
 
 

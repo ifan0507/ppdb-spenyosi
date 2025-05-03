@@ -35,46 +35,46 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        MataPelajaran::insert([
-            ["nama_matapelajaran" => "Pendidikan Agama"],
-            ["nama_matapelajaran" => "Pendidikan Pancasila & Kewarganegaraan"],
-            ["nama_matapelajaran" => "Bahasa Indonesia"],
-            ["nama_matapelajaran" => "Matematika"],
-            ["nama_matapelajaran" => "Ilmu Pengetahuan Alam (IPA)"],
-            ["nama_matapelajaran" => "Ilmu Pengetahuan Sosial (IPS)"],
-            ["nama_matapelajaran" => "Seni Budaya dan Prakarya"],
-            ["nama_matapelajaran" => "Pend. Jasmani, Olahraga dan Kesehatan"]
-        ]);
+        // MataPelajaran::insert([
+        //     ["nama_matapelajaran" => "Pendidikan Agama"],
+        //     ["nama_matapelajaran" => "Pendidikan Pancasila & Kewarganegaraan"],
+        //     ["nama_matapelajaran" => "Bahasa Indonesia"],
+        //     ["nama_matapelajaran" => "Matematika"],
+        //     ["nama_matapelajaran" => "Ilmu Pengetahuan Alam (IPA)"],
+        //     ["nama_matapelajaran" => "Ilmu Pengetahuan Sosial (IPS)"],
+        //     ["nama_matapelajaran" => "Seni Budaya dan Prakarya"],
+        //     ["nama_matapelajaran" => "Pend. Jasmani, Olahraga dan Kesehatan"]
+        // ]);
 
-        Jalur::insert([
-            [
-                "nama_jalur" => "Umum",
-                "keterangan" => "Jalur Umum adalah jalur pendaftaran terbuka bagi seluruh calon peserta didik yang ingin melanjutkan pendidikan ke SMP Negeri 1 Yosowilangun tanpa kriteria khusus. Seleksi dilakukan berdasarkan kuota dan waktu pendaftaran."
-            ],
-            [
-                "nama_jalur" => "Afirmasi (Siswa dari keluarga kurang mampu)",
-                "keterangan" => "Jalur Afirmasi diperuntukkan bagi calon peserta didik yang berasal dari keluarga kurang mampu dan ingin bersekolah di SMP Negeri 1 Yosowilangun. Dibutuhkan bukti pendukung seperti KIP, KKS, atau surat keterangan tidak mampu dari pihak berwenang."
-            ],
-            [
-                "nama_jalur" => "Pindah Tugas (Orang tua/wali pindah kerja)",
-                "keterangan" => "Jalur ini dikhususkan untuk calon peserta didik yang mengikuti orang tua/wali yang pindah tugas kerja ke wilayah sekitar SMP Negeri 1 Yosowilangun. Wajib melampirkan surat keterangan resmi dari instansi tempat orang tua/wali bekerja."
-            ],
-            [
-                "nama_jalur" => "Lomba/Tahfidz (Peraih prestasi di bidang akademik/non-akademik atau tahfidz Al-Qur'an)",
-                "keterangan" => "Jalur ini memberi kesempatan bagi calon peserta didik yang memiliki prestasi lomba di bidang akademik, non-akademik, atau hafalan Al-Qur'an untuk mendaftar ke SMP Negeri 1 Yosowilangun. Wajib melampirkan bukti prestasi atau surat keterangan tahfidz."
-            ],
-            [
-                "nama_jalur" => "Prestasi (Nilai Raport)",
-                "keterangan" => "Jalur Prestasi seleksi berdasarkan nilai rapor dari semester sebelumnya. Jalur ini ditujukan bagi calon peserta didik dengan capaian akademik tinggi yang ingin melanjutkan pendidikan di SMP Negeri 1 Yosowilangun."
-            ],
-        ]);
+        // Jalur::insert([
+        //     [
+        //         "nama_jalur" => "Umum",
+        //         "keterangan" => "Jalur Umum adalah jalur pendaftaran terbuka bagi seluruh calon peserta didik yang ingin melanjutkan pendidikan ke SMP Negeri 1 Yosowilangun tanpa kriteria khusus. Seleksi dilakukan berdasarkan kuota dan waktu pendaftaran."
+        //     ],
+        //     [
+        //         "nama_jalur" => "Afirmasi (Siswa dari keluarga kurang mampu)",
+        //         "keterangan" => "Jalur Afirmasi diperuntukkan bagi calon peserta didik yang berasal dari keluarga kurang mampu dan ingin bersekolah di SMP Negeri 1 Yosowilangun. Dibutuhkan bukti pendukung seperti KIP, KKS, atau surat keterangan tidak mampu dari pihak berwenang."
+        //     ],
+        //     [
+        //         "nama_jalur" => "Pindah Tugas (Orang tua/wali pindah kerja)",
+        //         "keterangan" => "Jalur ini dikhususkan untuk calon peserta didik yang mengikuti orang tua/wali yang pindah tugas kerja ke wilayah sekitar SMP Negeri 1 Yosowilangun. Wajib melampirkan surat keterangan resmi dari instansi tempat orang tua/wali bekerja."
+        //     ],
+        //     [
+        //         "nama_jalur" => "Lomba/Tahfidz (Peraih prestasi di bidang akademik/non-akademik atau tahfidz Al-Qur'an)",
+        //         "keterangan" => "Jalur ini memberi kesempatan bagi calon peserta didik yang memiliki prestasi lomba di bidang akademik, non-akademik, atau hafalan Al-Qur'an untuk mendaftar ke SMP Negeri 1 Yosowilangun. Wajib melampirkan bukti prestasi atau surat keterangan tahfidz."
+        //     ],
+        //     [
+        //         "nama_jalur" => "Prestasi (Nilai Raport)",
+        //         "keterangan" => "Jalur Prestasi seleksi berdasarkan nilai rapor dari semester sebelumnya. Jalur ini ditujukan bagi calon peserta didik dengan capaian akademik tinggi yang ingin melanjutkan pendidikan di SMP Negeri 1 Yosowilangun."
+        //     ],
+        // ]);
 
-        User::create([
-            'email' => "ipan@gmail.com",
-            'password' => '123',
-            'name' => "ifan",
-            'role' => "admin",
-        ]);
+        // User::create([
+        //     'email' => "ipan@gmail.com",
+        //     'password' => '123',
+        //     'name' => "ifan",
+        //     'role' => "admin",
+        // ]);
 
         // $akun = Register::create([
         //     'nisn' => '1234567890',
@@ -87,20 +87,15 @@ class DatabaseSeeder extends Seeder
         // ]);
 
 
-        // DocumentAfirmasi::create([
-        //     'id_register' => $akun->id,
-        //     'jenis_afirmasi' => Arr::random($jenisAfirmasiList),
-        //     'status_berkas' => '1',
-        //     'image' => 'default_document.png'
-        // ]);
 
+        $jenisAfirmasiList = ['KIP', 'KKS', 'PKH'];
         for ($i = 0; $i < 20; $i++) {
             $akun = Register::create([
                 'nisn' => fake()->unique()->numerify('##########'), // 10 digit angka
                 'no_register' => now()->format('Ymd') . fake()->unique()->numerify('####'),
                 'email' => fake()->unique()->safeEmail(),
                 'password' => '123', // sebaiknya encrypt password
-                'id_jalur' => '5',
+                'id_jalur' => '3',
                 'email_verified_at' => now(),
                 'verification_code' => null,
             ]);
@@ -123,61 +118,68 @@ class DatabaseSeeder extends Seeder
                 'status_berkas' => '1'
             ]);
 
-            $mapelList = MataPelajaran::all(); // Ambil semua 8 mapel
-
-            $kelas4_1_total = 0;
-            $kelas4_2_total = 0;
-            $kelas5_1_total = 0;
-            $kelas5_2_total = 0;
-            $kelas6_1_total = 0;
-
-            foreach ($mapelList as $mapel) {
-                $kelas4_1 = rand(70, 90);
-                $kelas4_2 = rand(70, 90);
-                $kelas5_1 = rand(70, 90);
-                $kelas5_2 = rand(70, 90);
-                $kelas6_1 = rand(70, 90);
-
-                DataRaport::create([
-                    'id_register' => $akun->id,
-                    'id_mapel' => $mapel->id,
-                    'kelas4_1' => $kelas4_1,
-                    'kelas4_2' => $kelas4_2,
-                    'kelas5_1' => $kelas5_1,
-                    'kelas5_2' => $kelas5_2,
-                    'kelas6_1' => $kelas6_1,
-                ]);
-
-                $kelas4_1_total += $kelas4_1;
-                $kelas4_2_total += $kelas4_2;
-                $kelas5_1_total += $kelas5_1;
-                $kelas5_2_total += $kelas5_2;
-                $kelas6_1_total += $kelas6_1;
-            }
-
-            $jumlah_mapel = $mapelList->count();
-
-            $rata_kelas4_1 = $kelas4_1_total / $jumlah_mapel;
-            $rata_kelas4_2 = $kelas4_2_total / $jumlah_mapel;
-            $rata_kelas5_1 = $kelas5_1_total / $jumlah_mapel;
-            $rata_kelas5_2 = $kelas5_2_total / $jumlah_mapel;
-            $rata_kelas6_1 = $kelas6_1_total / $jumlah_mapel;
-
-            // Hitung total rata-rata sesuai controller (dibagi 4)
-            $total_rata = ($rata_kelas4_1 + $rata_kelas4_2 + $rata_kelas5_1 + $rata_kelas5_2 + $rata_kelas6_1) / 4;
-
-            DataRaport::where('id_register', $akun->id)->update([
-                'rata_kelas4_sem1' => $rata_kelas4_1,
-                'rata_kelas4_sem2' => $rata_kelas4_2,
-                'rata_kelas5_sem1' => $rata_kelas5_1,
-                'rata_kelas5_sem2' => $rata_kelas5_2,
-                'rata_kelas6_sem1' => $rata_kelas6_1,
-                'status' => '1',
-            ]);
-            RataRataRaport::create([
+            DocumentMutasi::create([
                 'id_register' => $akun->id,
-                'total_rata_rata' => $total_rata
+                // 'jenis_afirmasi' => Arr::random($jenisAfirmasiList),
+                'status_berkas' => '1',
+                'image' => 'default_document.png'
             ]);
+
+            // $mapelList = MataPelajaran::all(); // Ambil semua 8 mapel
+
+            // $kelas4_1_total = 0;
+            // $kelas4_2_total = 0;
+            // $kelas5_1_total = 0;
+            // $kelas5_2_total = 0;
+            // $kelas6_1_total = 0;
+
+            // foreach ($mapelList as $mapel) {
+            //     $kelas4_1 = rand(70, 90);
+            //     $kelas4_2 = rand(70, 90);
+            //     $kelas5_1 = rand(70, 90);
+            //     $kelas5_2 = rand(70, 90);
+            //     $kelas6_1 = rand(70, 90);
+
+            //     DataRaport::create([
+            //         'id_register' => $akun->id,
+            //         'id_mapel' => $mapel->id,
+            //         'kelas4_1' => $kelas4_1,
+            //         'kelas4_2' => $kelas4_2,
+            //         'kelas5_1' => $kelas5_1,
+            //         'kelas5_2' => $kelas5_2,
+            //         'kelas6_1' => $kelas6_1,
+            //     ]);
+
+            //     $kelas4_1_total += $kelas4_1;
+            //     $kelas4_2_total += $kelas4_2;
+            //     $kelas5_1_total += $kelas5_1;
+            //     $kelas5_2_total += $kelas5_2;
+            //     $kelas6_1_total += $kelas6_1;
+            // }
+
+            // $jumlah_mapel = $mapelList->count();
+
+            // $rata_kelas4_1 = $kelas4_1_total / $jumlah_mapel;
+            // $rata_kelas4_2 = $kelas4_2_total / $jumlah_mapel;
+            // $rata_kelas5_1 = $kelas5_1_total / $jumlah_mapel;
+            // $rata_kelas5_2 = $kelas5_2_total / $jumlah_mapel;
+            // $rata_kelas6_1 = $kelas6_1_total / $jumlah_mapel;
+
+            // // Hitung total rata-rata sesuai controller (dibagi 4)
+            // $total_rata = ($rata_kelas4_1 + $rata_kelas4_2 + $rata_kelas5_1 + $rata_kelas5_2 + $rata_kelas6_1) / 4;
+
+            // DataRaport::where('id_register', $akun->id)->update([
+            //     'rata_kelas4_sem1' => $rata_kelas4_1,
+            //     'rata_kelas4_sem2' => $rata_kelas4_2,
+            //     'rata_kelas5_sem1' => $rata_kelas5_1,
+            //     'rata_kelas5_sem2' => $rata_kelas5_2,
+            //     'rata_kelas6_sem1' => $rata_kelas6_1,
+            //     'status' => '1',
+            // ]);
+            // RataRataRaport::create([
+            //     'id_register' => $akun->id,
+            //     'total_rata_rata' => $total_rata
+            // ]);
 
             Pendaftaran::create([
                 'id_register' => $akun->id,

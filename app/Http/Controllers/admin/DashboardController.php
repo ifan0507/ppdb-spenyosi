@@ -17,13 +17,7 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class DashboardController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-
-    protected $data;
-    protected $sort, $start, $end, $top_n;
-    protected $query;
+    protected $data, $sort, $start, $end, $top_n, $query;
 
     public function __construct(Request $request)
     {
@@ -93,7 +87,8 @@ class DashboardController extends Controller
             'sort' => $this->sort,
             'start_rank' => $this->start,
             'end_rank' => $this->end,
-            'top_n' => $this->top_n
+            'top_n' => $this->top_n,
+            'jalur_export' => 'zonasi'
         ]);
     }
 
@@ -109,22 +104,12 @@ class DashboardController extends Controller
 
         $this->sortStatusPendaftaran($this->sort);
 
-        if ($this->sort == 'KIP') {
+        if (in_array($this->sort, ['KIP', 'KKS', 'PKH'])) {
             $this->query->join('registers', 'pendaftarans.id_register', '=', 'registers.id')
                 ->join('document_afirmasis', 'registers.id', '=', 'document_afirmasis.id_register')
-                ->where('document_afirmasis.jenis_afirmasi', '=', 'kip')
+                ->where('document_afirmasis.jenis_afirmasi', strtolower($this->sort))
                 ->select('pendaftarans.*');
-        } else  if ($this->sort == 'KKS') {
-            $this->query->join('registers', 'pendaftarans.id_register', '=', 'registers.id')
-                ->join('document_afirmasis', 'registers.id', '=', 'document_afirmasis.id_register')
-                ->where('document_afirmasis.jenis_afirmasi', '=', 'kks')
-                ->select('pendaftarans.*');
-        } else  if ($this->sort == 'PKH') {
-            $this->query->join('registers', 'pendaftarans.id_register', '=', 'registers.id')
-                ->join('document_afirmasis', 'registers.id', '=', 'document_afirmasis.id_register')
-                ->where('document_afirmasis.jenis_afirmasi', '=', 'pkh')
-                ->select('pendaftarans.*');
-        } {
+        } else {
             $this->query->latest();
         }
 
@@ -143,6 +128,7 @@ class DashboardController extends Controller
             'sort' => $this->sort,
             'start_rank' => $this->start,
             'end_rank' => $this->end,
+            'jalur_export' => 'afirmasi'
         ]);
     }
     public function viewpindahTugas()
@@ -171,6 +157,7 @@ class DashboardController extends Controller
             'sort' => $this->sort,
             'start_rank' => $this->start,
             'end_rank' => $this->end,
+            'jalur_export' => 'mutasi'
         ]);
     }
     public function viewAkademik(Request $request)
@@ -182,8 +169,8 @@ class DashboardController extends Controller
         $pendaftarans = Pendaftaran::with('register', 'register.siswa.ortu')
             ->whereHas('register', function ($query) {
                 $query->where('id_jalur', '4');
-            })->paginate(10);
-        return view('admin.dataPendaftaran', ['pendaftarans' => $pendaftarans, 'data' => $this->data, 'breadcrumb' => $breadcrumb, 'jalur' => 'Jalur Prestasi Akademik', 'sort' => $sort]);
+            })->get();
+        return view('admin.dataPendaftaran', ['pendaftarans' => $pendaftarans, 'data' => $this->data, 'breadcrumb' => $breadcrumb, 'jalur' => 'Jalur Prestasi Akademik', 'sort' => $sort, 'jalur_export' => 'akademik']);
     }
     public function viewRaport()
     {
@@ -197,16 +184,12 @@ class DashboardController extends Controller
 
         $this->sortStatusPendaftaran($this->sort);
 
-        $applyRanking = false;
-
         if ($this->sort == 'peringkat_raport') {
             $this->query
                 ->join('registers', 'pendaftarans.id_register', '=', 'registers.id')
                 ->join('rata_rata_raports', 'registers.id', '=', 'rata_rata_raports.id_register')
                 ->orderByDesc('rata_rata_raports.total_rata_rata')
                 ->select('pendaftarans.*');
-
-            $applyRanking = true;
         } else {
             $this->query->latest('pendaftarans.created_at');
         }
@@ -237,7 +220,8 @@ class DashboardController extends Controller
             'sort' => $this->sort,
             'start_rank' => $this->start,
             'end_rank' => $this->end,
-            'top_n' => $this->top_n
+            'top_n' => $this->top_n,
+            'jalur_export' => 'raport'
         ]);
     }
 
@@ -308,14 +292,33 @@ class DashboardController extends Controller
         return response()->json(['success' => true]);
     }
 
-    public function exportZonasi(Request $request)
+    public function exportExel(Request $request)
     {
+        $jalur = $request->jalur;
         $sort = $request->sort;
         $start = $request->start_rank;
         $end = $request->end_rank;
         $top_n = $request->top_n;
 
-        return Excel::download(new PendaftaranExport($sort, $start, $end, $top_n), 'pendaftaran_zonasi.xlsx');
+        $filename = "pendaftaran";
+
+        if ($jalur) {
+            $filename .= "_{$jalur}";
+        }
+
+        if ($sort) {
+            $filename .= "_{$sort}";
+        }
+
+        if ($start && $end) {
+            $filename .= "_dari_{$start}_sampai_{$end}";
+        } elseif ($top_n) {
+            $filename .= "_peringkat_{$top_n}_teratas";
+        }
+
+
+        $filename = $filename . (str_ends_with($filename, '.xlsx') ? '' : '.xlsx');
+        return Excel::download(new PendaftaranExport($jalur, $sort, $start, $end, $top_n), $filename);
     }
 
     private function sortStatusPendaftaran($sort)
