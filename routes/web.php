@@ -72,11 +72,21 @@ Route::middleware(['cache_verify', 'auth_siswa'])->group(function () {
 
     Route::get('/orang-tua', [OrtuController::class, 'index'])->name('ortu');
     Route::get('/orang-tua/{id}/edit', [OrtuController::class, 'edit'])->name('ortu.edit');
-    route::put('/ortu/{id}/update', [OrtuController::class, 'update'])->name('ortu.update');
+    Route::put('/ortu/{id}/update', [OrtuController::class, 'update'])->name('ortu.update');
 
-    route::get('/prestasi', [PenunjangController::class, 'viewPrestasi'])->name('siswa.prestasi');
-    Route::get('/prestasi/edit', [PenunjangController::class, 'editPrestasiLomba'])->name('prestasi.edit');
-    Route::put('/prestasi/{id}/update', [PenunjangController::class, 'updatePrestasiLomba'])->name('prestasi.update');
+    // Akademik
+    Route::get('/prestasi-akademik', [PenunjangController::class, 'viewPrestasi'])->name('akademik');
+    Route::get('/prestasi-akademik/create', [PenunjangController::class, 'createAkademik'])->name('akademik.create');
+    Route::post('/prestasi-akademik/store', [PenunjangController::class, 'storeAkademik'])->name('akademik.store');
+    Route::get('/prestasi-akademik/{id}/edit', [PenunjangController::class, 'editPrestasiAkademik'])->name('akademik.edit');
+    Route::put('/prestasi-akademik/{id}/update', [PenunjangController::class, 'updatePrestasiAkademik'])->name('akademik.update');
+    Route::delete('/prestasi-akademik/{id}/delete', [PenunjangController::class, 'deletePrestasiAkademik'])->name('akademik.delete');
+
+    // Non Akademik
+    route::get('/prestasi-non-akademik', [PenunjangController::class, 'viewPrestasi'])->name('non-akademik');
+    Route::get('/prestasi-non-akademik/{id}/edit', [PenunjangController::class, 'editPrestasiNonAkademik'])->name('non-akademik.edit');
+    Route::put('/prestasi-non-akademik/{id}/update', [PenunjangController::class, 'updatePrestasinon-Akademik'])->name('non-akademik.update');
+    Route::delete('/prestasi-non-akademik/{id}/delete', [PenunjangController::class, 'deletePrestasiNonAkademik'])->name('non-akademik.delete');
 
     // Raport
     Route::get('/raport', [RaportController::class, 'index'])->name('raport');

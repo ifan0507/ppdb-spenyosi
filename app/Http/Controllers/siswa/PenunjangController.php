@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\siswa;
 
 use App\Http\Controllers\Controller;
+use App\Models\Akademik;
 use App\Models\DocumentAfirmasi;
 use App\Models\DocumentMutasi;
 use App\Models\DocumentPrestasiLomba;
@@ -126,58 +127,85 @@ class PenunjangController extends Controller
     //prestasi
     public function viewPrestasi()
     {
-        $active_tab = "dokumen_prestasi";
+        $active_tab = "prestasi_lomba";
         return view('siswa.prestasi', ['data' => $this->data, "active_tab" => $active_tab]);
     }
 
-    public function editPrestasiLomba()
+    public function createAkademik()
     {
-        $header = "Perbarui Dokumen Prestasi";
-
-        return view('siswa.edit-prestasi', [
+        $header = "Tambah Dokumen Prestasi Akademik";
+        return view('siswa.create-prestasi', [
             'data' => $this->data,
-            "header" => $header
+            'header' => $header
         ]);
     }
 
-
-    public function updatePrestasiLomba(Request $request, string $id)
+    public function storeAkademik(Request $request)
     {
-        $defaultDocument = 'default_document.png';
-
         $request->validate([
             'image' => 'file|image'
         ], [
             'image.file' => 'Document harus berupa file!'
         ]);
 
-        if ($this->data->lomba->image === $defaultDocument && !$request->hasFile('image')) {
-            return response()->json(['errors' => ['image' => ['Document tidak boleh kosong!']]], 400);
-        }
-
         if ($request->hasFile('image')) {
-            if ($this->data->lomba->image !== $defaultDocument) {
-                Storage::delete($this->data->lomba->image);
-            }
-            $documentPath = $request->file('image')->store('siswa/lomba');
-        } else {
-            $documentPath = $this->data->lomba->image;
+            $documentPath = $request->file('image')->store('siswa/prestasi/akademik');
         }
 
-
-        $update =  DocumentPrestasiLomba::where('id', $id)->update([
+        Akademik::create([
+            'id_register' => $this->data->id,
             'nama_prestasi' => $request->nama_prestasi,
-            'kategori' => $request->kategori,
             'tingkat_prestasi' => $request->tingkat_prestasi,
             'thn_perolehan' => $request->thn_perolehan,
             'perolehan' => $request->perolehan,
             'image' => $documentPath,
             'status_berkas' => '1'
         ]);
-        if ($update) {
-            return response()->json(['redirect' => route('siswa.prestasi')]);
+
+        return response()->json(['redirect' => route('akademik')]);
+    }
+
+    public function editPrestasiAkademik(string $id)
+    {
+        $header = "Perbarui Dokumen Prestasi Akademik";
+        $prestasis = Akademik::find($id);
+
+        return view('siswa.edit-prestasi', [
+            'data' => $this->data,
+            'akademiks' => $prestasis,
+            'header' => $header
+        ]);
+    }
+
+
+    public function updatePrestasiAkademik(Request $request, string $id)
+    {
+        $request->validate([
+            'image' => 'file|image'
+        ], [
+            'image.file' => 'Document harus berupa file!'
+        ]);
+
+        if ($request->hasFile('image')) {
+            Storage::delete($this->data->akademik->image);
+            $documentPath = $request->file('image')->store('siswa/prestasi/akademik');
+
+            Akademik::where('id', $id)->update([
+                'nama_prestasi' => $request->nama_prestasi,
+                'tingkat_prestasi' => $request->tingkat_prestasi,
+                'thn_perolehan' => $request->thn_perolehan,
+                'perolehan' => $request->perolehan,
+                'image' => $documentPath,
+                'status_berkas' => '1'
+            ]);
         } else {
-            return back()->withInput()->withErrors('ERROR CONTROLLER');
+            Akademik::where('id', $id)->update([
+                'nama_prestasi' => $request->nama_prestasi,
+                'tingkat_prestasi' => $request->tingkat_prestasi,
+                'thn_perolehan' => $request->thn_perolehan,
+                'perolehan' => $request->perolehan,
+                'status_berkas' => '1'
+            ]);
         }
     }
 }

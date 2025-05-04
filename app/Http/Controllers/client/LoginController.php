@@ -7,10 +7,12 @@ use App\Models\Register;
 use App\Models\SiswaBaru;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Akademik;
 use App\Models\Document;
 use App\Models\DocumentAfirmasi;
 use App\Models\DocumentMutasi;
 use App\Models\DocumentPrestasiLomba;
+use App\Models\NonAkademik;
 use App\Models\OrtuSiswa;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
@@ -101,18 +103,17 @@ class LoginController extends Controller
             'id_siswa' => $siswa->id,
         ]);
 
-        if (session('jalur_ppdb') == "2") {
-            DocumentAfirmasi::create([
-                'id_register' => $akun->id,
-                'image' => 'default_document.png'
-            ]);
-        } else if (session('jalur_ppdb') == "3") {
-            DocumentMutasi::create([
-                'id_register' => $akun->id,
-                'image' => 'default_document.png'
-            ]);
-        } else if (session('jalur_ppdb') == "4") {
-            DocumentPrestasiLomba::create([
+        $mapping = [
+            "2" => \App\Models\DocumentAfirmasi::class,
+            "3" => \App\Models\DocumentMutasi::class,
+            "4" => \App\Models\Akademik::class,
+            "5" => \App\Models\NonAkademik::class,
+        ];
+
+        $jalur = session('jalur_ppdb');
+
+        if (isset($mapping[$jalur])) {
+            $mapping[$jalur]::create([
                 'id_register' => $akun->id,
                 'image' => 'default_document.png'
             ]);
