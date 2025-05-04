@@ -77,6 +77,9 @@ Route::middleware(['cache_verify', 'auth_siswa'])->group(function () {
     route::get('/prestasi', [PenunjangController::class, 'viewPrestasi'])->name('siswa.prestasi');
     Route::get('/prestasi/edit', [PenunjangController::class, 'editPrestasiLomba'])->name('prestasi.edit');
     Route::put('/prestasi/{id}/update', [PenunjangController::class, 'updatePrestasiLomba'])->name('prestasi.update');
+    Route::get('/prestasi/create', [PenunjangController::class, 'createPrestasiLomba'])->name('prestasi.create');
+    Route::post('/prestasi/store', [PenunjangController::class, 'storePrestasiLomba'])->name('prestasi.store');
+
 
     // Raport
     Route::get('/raport', [RaportController::class, 'index'])->name('raport');

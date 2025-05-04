@@ -65,7 +65,6 @@
                                 @endif
                             @endforeach
                         </select>
-
                         <div id="validasiJalur" class="invalid-feedback">Silakan pilih jalur khusus!</div>
                     </div>
                     <div class="form-check">

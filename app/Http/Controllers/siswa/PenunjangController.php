@@ -127,8 +127,13 @@ class PenunjangController extends Controller
     public function viewPrestasi()
     {
         $active_tab = "dokumen_prestasi";
-        return view('siswa.prestasi', ['data' => $this->data, "active_tab" => $active_tab]);
+
+        return view('siswa.prestasi', [
+            'data' => $this->data,
+            'active_tab' => $active_tab
+        ]);
     }
+
 
     public function editPrestasiLomba()
     {
