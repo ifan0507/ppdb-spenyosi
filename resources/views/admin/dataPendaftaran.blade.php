@@ -183,7 +183,7 @@
                                     <td>{{ $pendaftaran->register->no_register }}</td>
                                     <td>{{ $pendaftaran->register->siswa->nama }}</td>
 
-                                    @if ($pendaftaran->register->id_jalur == 5)
+                                    @if ($pendaftaran->register->id_jalur == 6)
                                         <td class="text-center">
                                             <strong>{{ $pendaftaran->peringkat_raport ?? '-' }}</strong>
                                             ({{ $pendaftaran->register->rata_rata_raport->total_rata_rata }})
@@ -277,7 +277,7 @@
                                     <td class="text-nowrap">{{ $pendaftaran->register->siswa->nama }}</td>
 
                                     <td>
-                                        @if ($pendaftaran->register->id_jalur == 5)
+                                        @if ($pendaftaran->register->id_jalur == 6)
                                             <strong>{{ $pendaftaran->peringkat_raport ?? '-' }}</strong>
                                             ({{ $pendaftaran->register->raport->total_rata_rata }})
                                         @elseif ($pendaftaran->register->id_jalur == 1)

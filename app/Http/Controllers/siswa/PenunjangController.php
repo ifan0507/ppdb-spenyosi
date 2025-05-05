@@ -33,12 +33,15 @@ class PenunjangController extends Controller
 
     public function editAfirmasi()
     {
-
         $header = "Perbarui Dokumen Afirmasi";
+        $breadcrumb = (object) [
+            'list' => ['Afirmasi', 'Perbarui Dokumen Afirmasi']
+        ];
 
         return view('siswa.edit-afirmasi', [
             'data' => $this->data,
-            "header" => $header
+            "header" => $header,
+            'breadcrumb' => $breadcrumb
         ]);
     }
 
@@ -81,6 +84,7 @@ class PenunjangController extends Controller
 
     public function viewMutasi()
     {
+
         $active_tab = "dokumen_mutasi";
         return view('siswa.mutasi', ['data' => $this->data, "active_tab" => $active_tab]);
     }
@@ -88,8 +92,12 @@ class PenunjangController extends Controller
     public function editMutasi()
     {
         $header = "Perbarui dokumen mutasi";
+        $breadcrumb = (object) [
+            'list' => ['Mutasi', 'Perbarui Dokumen Mutasi']
+        ];
         return view('siswa.edit-mutasi', [
             'data' => $this->data,
+            'breadcrumb' => $breadcrumb,
             "header" => $header
         ]);
     }
@@ -136,9 +144,13 @@ class PenunjangController extends Controller
 
     public function createAkademik()
     {
+        $breadcrumb = (object) [
+            'list' => ['Prestasi Akademik', 'Tambah Dokumen Prestasi Akademik']
+        ];
         $header = "Tambah Dokumen Prestasi Akademik";
         return view('siswa.tambah-prestasi', [
             'data' => $this->data,
+            'breadcrumb' => $breadcrumb,
             'header' => $header
         ]);
     }
@@ -170,12 +182,16 @@ class PenunjangController extends Controller
 
     public function editPrestasiAkademik(string $id)
     {
+        $breadcrumb = (object) [
+            'list' => ['Akademik', 'Perbarui Dokumen Prestasi Akademik']
+        ];
         $header = "Perbarui Dokumen Prestasi Akademik";
         $prestasis = Akademik::find($id);
 
         return view('siswa.edit-prestasi', [
             'data' => $this->data,
-            'akademiks' => $prestasis,
+            'breadcrumb' => $breadcrumb,
+            'prestasis' => $prestasis,
             'header' => $header
         ]);
     }
@@ -216,9 +232,13 @@ class PenunjangController extends Controller
     }
     public function createNonAkademik()
     {
+        $breadcrumb = (object) [
+            'list' => ['Prestasi Non Akademik', 'Tambah Dokumen Prestasi Non Akademik']
+        ];
         $header = "Tambah Dokumen Prestasi Non Akademik";
         return view('siswa.tambah-prestasi', [
             'data' => $this->data,
+            'breadcrumb' => $breadcrumb,
             'header' => $header
         ]);
     }
@@ -250,12 +270,16 @@ class PenunjangController extends Controller
 
     public function editPrestasiNonAkademik(string $id)
     {
+        $breadcrumb = (object) [
+            'list' => ['Prestasi Non Akademik', 'Tambah Dokumen Prestasi Non Akademik']
+        ];
         $header = "Perbarui Dokumen Prestasi Non Akademik";
         $prestasis = Akademik::find($id);
 
         return view('siswa.edit-prestasi', [
             'data' => $this->data,
-            'akademiks' => $prestasis,
+            'breadcrumb' => $breadcrumb,
+            'prestasis' => $prestasis,
             'header' => $header
         ]);
     }

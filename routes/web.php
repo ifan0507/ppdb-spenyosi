@@ -130,6 +130,7 @@ Route::middleware(['cache_verify', 'auth_admin'])->group(function () {
     Route::get('/admin/afirmasi', [AdminDashboardController::class, 'viewAfirmasi'])->name('afirmasi');
     Route::get('/admin/pindah-tugas', [AdminDashboardController::class, 'viewpindahTugas'])->name('pindah.tugas');
     Route::get('/admin/prestasi-akademik', [AdminDashboardController::class, 'viewAkademik'])->name('akademik');
+    Route::get('/admin/prestasi-non-akademik', [AdminDashboardController::class, 'viewNonAkademik'])->name('non-akademik');
     Route::get('/admin/raport', [AdminDashboardController::class, 'viewRaport'])->name('raport');
 
     Route::get('/admin/{id}/confirm', [AdminDashboardController::class, 'confirm'])->name('admin.confirm');
