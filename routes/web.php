@@ -75,7 +75,7 @@ Route::middleware(['cache_verify', 'auth_siswa'])->group(function () {
     Route::put('/ortu/{id}/update', [OrtuController::class, 'update'])->name('ortu.update');
 
     // Akademik
-    Route::get('/prestasi-akademik', [PenunjangController::class, 'viewPrestasi'])->name('akademik');
+    Route::get('/prestasi-akademik', [PenunjangController::class, 'viewPrestasi'])->name('siswa.akademik');
     Route::get('/prestasi-akademik/create', [PenunjangController::class, 'createAkademik'])->name('akademik.create');
     Route::post('/prestasi-akademik/store', [PenunjangController::class, 'storeAkademik'])->name('akademik.store');
     Route::get('/prestasi-akademik/{id}/edit', [PenunjangController::class, 'editPrestasiAkademik'])->name('akademik.edit');
@@ -83,9 +83,11 @@ Route::middleware(['cache_verify', 'auth_siswa'])->group(function () {
     Route::delete('/prestasi-akademik/{id}/delete', [PenunjangController::class, 'deletePrestasiAkademik'])->name('akademik.delete');
 
     // Non Akademik
-    route::get('/prestasi-non-akademik', [PenunjangController::class, 'viewPrestasi'])->name('non-akademik');
+    route::get('/prestasi-non-akademik', [PenunjangController::class, 'viewPrestasi'])->name('siswa.non-akademik');
+    Route::get('/prestasi-non-akademik/create', [PenunjangController::class, 'createNonAkademik'])->name('non-akademik.create');
+    Route::post('/prestasi-non-akademik/store', [PenunjangController::class, 'storeNonAkademik'])->name('non-akademik.store');
     Route::get('/prestasi-non-akademik/{id}/edit', [PenunjangController::class, 'editPrestasiNonAkademik'])->name('non-akademik.edit');
-    Route::put('/prestasi-non-akademik/{id}/update', [PenunjangController::class, 'updatePrestasinon-Akademik'])->name('non-akademik.update');
+    Route::put('/prestasi-non-akademik/{id}/update', [PenunjangController::class, 'updatePrestasiNonAkademik'])->name('non-akademik.update');
     Route::delete('/prestasi-non-akademik/{id}/delete', [PenunjangController::class, 'deletePrestasiNonAkademik'])->name('non-akademik.delete');
 
     // Raport

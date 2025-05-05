@@ -106,8 +106,6 @@ class LoginController extends Controller
         $mapping = [
             "2" => \App\Models\DocumentAfirmasi::class,
             "3" => \App\Models\DocumentMutasi::class,
-            "4" => \App\Models\Akademik::class,
-            "5" => \App\Models\NonAkademik::class,
         ];
 
         $jalur = session('jalur_ppdb');

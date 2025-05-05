@@ -2,14 +2,17 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Concerns\HasUlids;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class NonAkademik extends Model
 {
+    use HasFactory, HasUlids;
     public $incrementing = false;
     protected $keyType = 'string';
-    protected $table = 'document_prestasi_lombas';
+    protected $table = 'non_akademiks';
     protected $fillable = ['id_register',  'nama_prestasi', 'tingkat_prestasi', 'thn_perolehan', 'perolehan', 'image', 'status_berkas'];
 
     public function  register(): BelongsTo

@@ -25,14 +25,15 @@
         @elseif ($data->jalur->id == 4)
             <li class="nav-item">
                 <a class="nav-link remove-tab-format font-bold {{ $active_tab == 'prestasi_lomba' ? 'active' : '' }}"
-                    id="dokumen-prestasi-tab" data-toggle="pill" href="{{ route('akademik') }}" role="tab">
+                    id="dokumen-prestasi-tab" data-toggle="pill" href="{{ route('siswa.akademik') }}" role="tab">
                     Dokument Prestasi Akademik
                 </a>
             </li>
         @elseif ($data->jalur->id == 5)
             <li class="nav-item">
                 <a class="nav-link remove-tab-format font-bold {{ $active_tab == 'prestasi_lomba' ? 'active' : '' }}"
-                    id="dokumen-prestasi-tab" data-toggle="pill" href="{{ route('non-akademik') }}" role="tab">
+                    id="dokumen-prestasi-tab" data-toggle="pill" href="{{ route('siswa.non-akademik') }}"
+                    role="tab">
                     Dokument Prestasi Non Akademik
                 </a>
             </li>

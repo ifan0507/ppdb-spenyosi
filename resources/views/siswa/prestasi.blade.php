@@ -31,13 +31,12 @@
                                     <div class="card card-primary card-outline">
                                         <div class="card-header d-flex justify-content-between align-items-center">
                                             <h4>Prestasi</h4>
-                                            @if ($data->jalur->id == 4 || $data->jalur->id == 5)
-                                                <a href="{{ route('akademik.create') }}" class="btn btn-primary ms-auto">
-                                                    <i class="fas fa-edit"></i> Tambah Prestasi
-                                                </a>
-                                            @endif
-
-
+                                            <a @if ($data->jalur->id == 4) href="{{ route('akademik.create') }}"
+                                                @else
+                                                href="{{ route('non-akademik.create') }}" @endif
+                                                class="btn btn-primary ms-auto">
+                                                <i class="fas fa-edit"></i> Tambah Prestasi
+                                            </a>
                                         </div>
                                         <!-- Bagian atas halaman prestasi -->
                                         <div class="card-body">
@@ -79,7 +78,8 @@
                                                                         class="btn btn-sm btn-warning">
                                                                         Edit
                                                                     </a>
-                                                                    <form action="{{ route('akademik.delete', $item->id) }}"
+                                                                    <form
+                                                                        action="{{ route('akademik.delete', $item->id) }}"
                                                                         method="POST" style="display: inline-block;"
                                                                         onsubmit="return confirm('Yakin ingin menghapus prestasi ini?')">
                                                                         @csrf

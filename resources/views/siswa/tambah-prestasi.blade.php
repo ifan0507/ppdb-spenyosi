@@ -4,7 +4,7 @@
     <div class="misc-content pt-4">
         @include('layouts.siswa.breadcrumb', [
             'breadcrumb' => [
-                'Documen Prestasi' => route('siswa.prestasi'),
+                'Documen Prestasi' => route('siswa.akademik'),
                 'Tambah Dokumen Prestasi' => '',
             ],
         ])
@@ -16,7 +16,6 @@
                         <form method="POST" action="{{ route('akademik.store') }}" enctype="multipart/form-data"
                             id="prestasiForm">
                             @csrf
-
                             <div class="form-group row mb-3">
                                 <label for="nama_prestasi" class="col-md-4 col-form-label text-md-right">Nama
                                     Prestasi</label>

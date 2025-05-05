@@ -7,10 +7,13 @@ use App\Models\Akademik;
 use App\Models\DocumentAfirmasi;
 use App\Models\DocumentMutasi;
 use App\Models\DocumentPrestasiLomba;
+use App\Models\NonAkademik;
 use App\Models\Register;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+
+use function Pest\Laravel\json;
 
 class PenunjangController extends Controller
 {
@@ -134,7 +137,7 @@ class PenunjangController extends Controller
     public function createAkademik()
     {
         $header = "Tambah Dokumen Prestasi Akademik";
-        return view('siswa.create-prestasi', [
+        return view('siswa.tambah-prestasi', [
             'data' => $this->data,
             'header' => $header
         ]);
@@ -180,6 +183,7 @@ class PenunjangController extends Controller
 
     public function updatePrestasiAkademik(Request $request, string $id)
     {
+        $dataLama = Akademik::find($id);
         $request->validate([
             'image' => 'file|image'
         ], [
@@ -187,7 +191,7 @@ class PenunjangController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            Storage::delete($this->data->akademik->image);
+            Storage::delete($dataLama->image);
             $documentPath = $request->file('image')->store('siswa/prestasi/akademik');
 
             Akademik::where('id', $id)->update([
@@ -207,5 +211,86 @@ class PenunjangController extends Controller
                 'status_berkas' => '1'
             ]);
         }
+
+        return response()->json(['redirect' => route('akademik')]);
+    }
+    public function createNonAkademik()
+    {
+        $header = "Tambah Dokumen Prestasi Non Akademik";
+        return view('siswa.tambah-prestasi', [
+            'data' => $this->data,
+            'header' => $header
+        ]);
+    }
+
+    public function storeNonAkademik(Request $request)
+    {
+        $request->validate([
+            'image' => 'file|image'
+        ], [
+            'image.file' => 'Document harus berupa file!'
+        ]);
+
+        if ($request->hasFile('image')) {
+            $documentPath = $request->file('image')->store('siswa/prestasi/non-akademik');
+        }
+
+        NonAkademik::create([
+            'id_register' => $this->data->id,
+            'nama_prestasi' => $request->nama_prestasi,
+            'tingkat_prestasi' => $request->tingkat_prestasi,
+            'thn_perolehan' => $request->thn_perolehan,
+            'perolehan' => $request->perolehan,
+            'image' => $documentPath,
+            'status_berkas' => '1'
+        ]);
+
+        return response()->json(['redirect' => route('akademik')]);
+    }
+
+    public function editPrestasiNonAkademik(string $id)
+    {
+        $header = "Perbarui Dokumen Prestasi Non Akademik";
+        $prestasis = Akademik::find($id);
+
+        return view('siswa.edit-prestasi', [
+            'data' => $this->data,
+            'akademiks' => $prestasis,
+            'header' => $header
+        ]);
+    }
+
+
+    public function updatePrestasiNonAkademik(Request $request, string $id)
+    {
+        $request->validate([
+            'image' => 'file|image'
+        ], [
+            'image.file' => 'Document harus berupa file!'
+        ]);
+
+        if ($request->hasFile('image')) {
+            Storage::delete($this->data->akademik->image);
+            $documentPath = $request->file('image')->store('siswa/prestasi/non-akademik');
+
+            NonAkademik::where('id', $id)->update([
+                'nama_prestasi' => $request->nama_prestasi,
+                'tingkat_prestasi' => $request->tingkat_prestasi,
+                'thn_perolehan' => $request->thn_perolehan,
+                'perolehan' => $request->perolehan,
+                'image' => $documentPath,
+                'status_berkas' => '1'
+            ]);
+        } else {
+            NonAkademik::where('id', $id)->update([
+                'nama_prestasi' => $request->nama_prestasi,
+                'tingkat_prestasi' => $request->tingkat_prestasi,
+                'thn_perolehan' => $request->thn_perolehan,
+                'perolehan' => $request->perolehan,
+                'status_berkas' => '1'
+            ]);
+        }
+
+        return response()->json(['redirect' => route('akademik')]);
     }
 }

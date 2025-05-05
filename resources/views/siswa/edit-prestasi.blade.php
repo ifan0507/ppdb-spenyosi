@@ -4,7 +4,7 @@
     <div class="misc-content pt-4">
         @include('layouts.siswa.breadcrumb', [
             'breadcrumb' => [
-                'Documen Prestasi' => route('siswa.prestasi'),
+                'Documen Prestasi' => route('siswa.akademik'),
                 'Perbarui Dokumen Prestasi' => '',
             ],
         ])
@@ -16,7 +16,7 @@
                     <div class="card-body">
 
                         <form method="POST" enctype="multipart/form-data"
-                            action="{{ route('prestasi.update', ['id' => $data->lomba->id]) }}" id="main-form">
+                            action="{{ route('akademik.update', ['id' => $akademiks->id]) }}" id="main-form">
                             @method('PUT')
                             @csrf
                             <div class="row">
@@ -25,23 +25,7 @@
                                         <label class="title">Nama Kegiatan</label>
                                         <input type="text" placeholder="Misal: Lomba Thafidz tingkat Provinsi"
                                             class="form-control " name="nama_prestasi" id="nama_kegiatan"
-                                            value="{{ old('nama_prestasi', $data->lomba->nama_prestasi) }}">
-                                    </div>
-
-                                    <div class="form-group required">
-                                        <label class="title">Kategori Lomba</label>
-                                        <select class="form-control" id="kategori" name="kategori">
-                                            <option value="" disabled selected>-- Pilih Kategori
-                                                --</option>
-                                            <option value="Akademik"
-                                                {{ $data->lomba->kategori == 'Akademik' ? 'selected' : '' }}>Akademik
-                                            </option>
-                                            <option value="Non-akademik"
-                                                {{ $data->lomba->kategori == 'Non-akademik' ? 'selected' : '' }}>
-                                                Non-akademik</option>
-                                        </select>
-                                        <label id="kategori-error" class="error" for="kategori" style="display: none">This
-                                            field is required.</label>
+                                            value="{{ old('nama_prestasi', $akademiks->nama_prestasi) }}">
                                     </div>
 
 
@@ -51,26 +35,26 @@
                                             <div class="custom-control custom-radio d-inline-block mr-2">
                                                 <input type="radio" class="custom-control-input" id="tingkat_kabkota"
                                                     name="tingkat_prestasi" value="Kabupaten/Kota"
-                                                    {{ $data->lomba->tingkat_prestasi == 'Individual' ? 'checked' : '' }}>
+                                                    {{ $akademiks->tingkat_prestasi == 'Individual' ? 'checked' : '' }}>
                                                 <label class="custom-control-label"
                                                     for="tingkat_kabkota">Kabupaten/Kota</label>
                                             </div>
                                             <div class="custom-control custom-radio d-inline-block mr-2">
                                                 <input type="radio" class="custom-control-input" id="tingkat_provinsi"
                                                     name="tingkat_prestasi" value="Provinsi"
-                                                    {{ $data->lomba->tingkat_prestasi == 'Provinsi' ? 'checked' : '' }}>
+                                                    {{ $akademiks->tingkat_prestasi == 'Provinsi' ? 'checked' : '' }}>
                                                 <label class="custom-control-label" for="tingkat_provinsi">Provinsi</label>
                                             </div>
                                             <div class="custom-control custom-radio d-inline-block mr-2">
                                                 <input type="radio" class="custom-control-input" id="tingkat_nasional"
                                                     name="tingkat_prestasi" value="Nasional"
-                                                    {{ $data->lomba->tingkat_prestasi == 'Nasional' ? 'checked' : '' }}>
+                                                    {{ $akademiks->tingkat_prestasi == 'Nasional' ? 'checked' : '' }}>
                                                 <label class="custom-control-label" for="tingkat_nasional">Nasional</label>
                                             </div>
                                             <div class="custom-control custom-radio d-inline-block">
                                                 <input type="radio" class="custom-control-input"
                                                     id="tingkat_internasional" name="tingkat_prestasi" value="Internasional"
-                                                    {{ $data->lomba->tingkat_prestasi == 'Internasional' ? 'checked' : '' }}>>
+                                                    {{ $akademiks->tingkat_prestasi == 'Internasional' ? 'checked' : '' }}>>
                                                 <label class="custom-control-label"
                                                     for="tingkat_internasional">Internasional</label>
                                             </div>
@@ -84,17 +68,17 @@
                                                 Prestasi
                                                 --</option>
                                             <option value="2020"
-                                                {{ $data->lomba->thn_perolehan == '2020' ? 'selected' : '' }}>2020</option>
+                                                {{ $akademiks->thn_perolehan == '2020' ? 'selected' : '' }}>2020</option>
                                             <option value="2021"
-                                                {{ $data->lomba->thn_perolehan == '2021' ? 'selected' : '' }}>2021</option>
+                                                {{ $akademiks->thn_perolehan == '2021' ? 'selected' : '' }}>2021</option>
                                             <option value="2022"
-                                                {{ $data->lomba->thn_perolehan == '2022' ? 'selected' : '' }}>2022</option>
+                                                {{ $akademiks->thn_perolehan == '2022' ? 'selected' : '' }}>2022</option>
                                             <option value="2023"
-                                                {{ $data->lomba->thn_perolehan == '2023' ? 'selected' : '' }}>2023</option>
+                                                {{ $akademiks->thn_perolehan == '2023' ? 'selected' : '' }}>2023</option>
                                             <option value="2024"
-                                                {{ $data->lomba->thn_perolehan == '2024' ? 'selected' : '' }}>2024</option>
+                                                {{ $akademiks->thn_perolehan == '2024' ? 'selected' : '' }}>2024</option>
                                             <option value="2025"
-                                                {{ $data->lomba->thn_perolehan == '2025' ? 'selected' : '' }}>2025</option>
+                                                {{ $akademiks->thn_perolehan == '2025' ? 'selected' : '' }}>2025</option>
                                         </select>
                                         <label id="tahun-error" class="error" for="tahun" style="display: none">This
                                             field is required.</label>
@@ -105,19 +89,19 @@
                                             <option value="" disabled selected>-- Pilih Pencapaian --
                                             </option>
                                             <option value="Juara 1"
-                                                {{ $data->lomba->perolehan == 'Juara 1' ? 'selected' : '' }}>Juara 1
+                                                {{ $akademiks->perolehan == 'Juara 1' ? 'selected' : '' }}>Juara 1
                                             </option>
                                             <option value="Juara 2"
-                                                {{ $data->lomba->perolehan == 'Juara 2' ? 'selected' : '' }}>Juara 2
+                                                {{ $akademiks->perolehan == 'Juara 2' ? 'selected' : '' }}>Juara 2
                                             </option>
                                             <option value="Juara 3"
-                                                {{ $data->lomba->perolehan == 'Juara 3' ? 'selected' : '' }}>Juara 3
+                                                {{ $akademiks->perolehan == 'Juara 3' ? 'selected' : '' }}>Juara 3
                                             </option>
                                             <option value="Finalis"
-                                                {{ $data->lomba->perolehan == 'Finalis' ? 'selected' : '' }}>Finalis
+                                                {{ $akademiks->perolehan == 'Finalis' ? 'selected' : '' }}>Finalis
                                             </option>
                                             <option value="Lainnya"
-                                                {{ $data->lomba->perolehan == 'Lainnya' ? 'selected' : '' }}>Lainnya
+                                                {{ $akademiks->perolehan == 'Lainnya' ? 'selected' : '' }}>Lainnya
                                             </option>
                                         </select>
                                     </div>
@@ -129,7 +113,7 @@
                                             <b>(format: JPG/JPEG maks. 1MB)</b>
                                         </label>
 
-                                        <img id="img-prestasi_blob" src="{{ asset('storage/' . $data->lomba->image) }}"
+                                        <img id="img-prestasi_blob" src="{{ asset('storage/' . $akademiks->image) }}"
                                             class="img-fluid rounded border mb-2" style="max-width: 100%;">
                                         <label for="prestasi_blob" class="btn btn-primary w-100">
                                             <i class="fas fa-folder-open"></i> Pilih Foto
@@ -175,7 +159,7 @@
                         })
                         $(this).val("");
                         imgPreview.attr("src",
-                            "{{ asset('storage/' . $data->lomba->image) }}"
+                            "{{ asset('storage/' . $akademiks->image) }}"
                         );
                         infoBox.hide();
                         return;
@@ -199,102 +183,102 @@
                 }
             })
 
-            $("#thn_perolehan ,#kategori ,#perolehan").on("change", function() {
+            $("#thn_perolehan ,#perolehan").on("change", function() {
                 if ($(this).val() !== "") {
                     $(this).addClass("is-valid").removeClass("is-invalid");
                 }
             })
 
-            $("#main-form").on("submit", function(e) {
-                e.preventDefault();
-                const formData = new FormData(this);
-                formData.append("_method", "PUT");
-                let checkedTingkat = $("input[name='tingkat_prestasi']:checked").length > 0;
+            // $("#main-form").on("submit", function(e) {
+            //     e.preventDefault();
+            //     const formData = new FormData(this);
+            //     formData.append("_method", "PUT");
+            //     let checkedTingkat = $("input[name='tingkat_prestasi']:checked").length > 0;
 
-                if ($("#nama_kegiatan").val() === "") {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Oops...",
-                        text: "Nama kegiatan harus diisi!"
-                    })
+            //     if ($("#nama_kegiatan").val() === "") {
+            //         Swal.fire({
+            //             icon: "error",
+            //             title: "Oops...",
+            //             text: "Nama kegiatan harus diisi!"
+            //         })
 
-                } else if ($("#kategori").val() == null) {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Oops...",
-                        text: "Kategori harus dipilih!"
-                    })
+            //     } else if ($("#kategori").val() == null) {
+            //         Swal.fire({
+            //             icon: "error",
+            //             title: "Oops...",
+            //             text: "Kategori harus dipilih!"
+            //         })
 
-                } else if (!checkedTingkat) {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Oops...",
-                        text: "Tingkat kegiatan harus dipilih!"
-                    })
+            //     } else if (!checkedTingkat) {
+            //         Swal.fire({
+            //             icon: "error",
+            //             title: "Oops...",
+            //             text: "Tingkat kegiatan harus dipilih!"
+            //         })
 
-                } else if ($("#thn_perolehan").val() == null) {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Oops...",
-                        text: "Tahun perolehan harus dipilih!"
-                    })
-                } else if ($("#perolehan").val() == null) {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Oops...",
-                        text: "Pencapain harus dipilih!"
-                    })
-                } else {
-                    $("#btnKirim").attr("disabled", true);
-                    $("#textBtn").addClass("d-none");
-                    $("#icon_kirim").addClass("d-none");
-                    $("#loadingBtn").removeClass("d-none");
-                    $.ajax({
-                        url: $(this).attr("action"),
-                        type: "POST",
-                        data: formData,
-                        processData: false,
-                        contentType: false,
-                        success: function(res) {
-                            $("#btnKirim").attr("disabled", false);
-                            $("#textBtn").removeClass("d-none");
-                            $("#icon_kirim").removeClass("d-none");
-                            $("#loadingBtn").addClass("d-none");
-                            Swal.fire({
-                                title: "Berhasil",
-                                icon: "success",
-                                text: "diperbarui!",
-                                confirmButtonText: "OK",
-                                confirmButtonColor: "#18a342",
-                            }).then(() => {
-                                window.location.href = res.redirect;
-                            });
-                        },
-                        error: function(xhr) {
-                            var errorString = "";
-                            $("#btnKirim").attr("disabled", false);
-                            $("#textBtn").removeClass("d-none");
-                            $("#icon_kirim").removeClass("d-none");
-                            $("#loadingBtn").addClass("d-none");
-                            if (xhr.responseJSON && xhr.responseJSON.errors) {
-                                $.each(xhr.responseJSON.errors, function(key, messages) {
-                                    errorString += messages[0] + "\n";
-                                });
-                            } else if (xhr.responseJSON && xhr.responseJSON.error) {
-                                errorString += xhr.responseJSON.error;
-                            } else {
-                                errorString += "Kesalahan tidak diketahui.";
-                            }
+            //     } else if ($("#thn_perolehan").val() == null) {
+            //         Swal.fire({
+            //             icon: "error",
+            //             title: "Oops...",
+            //             text: "Tahun perolehan harus dipilih!"
+            //         })
+            //     } else if ($("#perolehan").val() == null) {
+            //         Swal.fire({
+            //             icon: "error",
+            //             title: "Oops...",
+            //             text: "Pencapain harus dipilih!"
+            //         })
+            //     } else {
+            //         $("#btnKirim").attr("disabled", true);
+            //         $("#textBtn").addClass("d-none");
+            //         $("#icon_kirim").addClass("d-none");
+            //         $("#loadingBtn").removeClass("d-none");
+            //         $.ajax({
+            //             url: $(this).attr("action"),
+            //             type: "POST",
+            //             data: formData,
+            //             processData: false,
+            //             contentType: false,
+            //             success: function(res) {
+            //                 $("#btnKirim").attr("disabled", false);
+            //                 $("#textBtn").removeClass("d-none");
+            //                 $("#icon_kirim").removeClass("d-none");
+            //                 $("#loadingBtn").addClass("d-none");
+            //                 Swal.fire({
+            //                     title: "Berhasil",
+            //                     icon: "success",
+            //                     text: "diperbarui!",
+            //                     confirmButtonText: "OK",
+            //                     confirmButtonColor: "#18a342",
+            //                 }).then(() => {
+            //                     window.location.href = res.redirect;
+            //                 });
+            //             },
+            //             error: function(xhr) {
+            //                 var errorString = "";
+            //                 $("#btnKirim").attr("disabled", false);
+            //                 $("#textBtn").removeClass("d-none");
+            //                 $("#icon_kirim").removeClass("d-none");
+            //                 $("#loadingBtn").addClass("d-none");
+            //                 if (xhr.responseJSON && xhr.responseJSON.errors) {
+            //                     $.each(xhr.responseJSON.errors, function(key, messages) {
+            //                         errorString += messages[0] + "\n";
+            //                     });
+            //                 } else if (xhr.responseJSON && xhr.responseJSON.error) {
+            //                     errorString += xhr.responseJSON.error;
+            //                 } else {
+            //                     errorString += "Kesalahan tidak diketahui.";
+            //                 }
 
-                            Swal.fire({
-                                icon: "error",
-                                title: "Oops...",
-                                text: errorString,
-                            });
-                        }
-                    })
-                }
-            })
+            //                 Swal.fire({
+            //                     icon: "error",
+            //                     title: "Oops...",
+            //                     text: errorString,
+            //                 });
+            //             }
+            //         })
+            //     }
+            // })
         })
     </script>
 @endsection

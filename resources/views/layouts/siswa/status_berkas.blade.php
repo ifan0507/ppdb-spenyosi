@@ -142,7 +142,7 @@
                             <p class="font-16 mb-0">Dokumen Prestasi Akademik<span class="text-red">*</span></p>
                         </td>
                         <td class="text-left">
-                            @if ($data->akademik?->status_berkas == '1')
+                            @if (optional($data->akademik->first())->status_berkas == '1')
                                 <i class="far fa-check-circle fa-xl" style="color:#38c172"></i>
                             @else
                                 <i class="far fa-times-circle fa-xl" style="color:#e3342f"></i>
@@ -156,7 +156,7 @@
                             <p class="font-16 mb-0">Dokumen Prestasi Non Akademik<span class="text-red">*</span></p>
                         </td>
                         <td class="text-left">
-                            @if ($data->nonAkademik?->status_berkas == '1')
+                            @if (optional($data->nonAkademik->first())->status_berkas == '1')
                                 <i class="far fa-check-circle fa-xl" style="color:#38c172"></i>
                             @else
                                 <i class="far fa-times-circle fa-xl" style="color:#e3342f"></i>
