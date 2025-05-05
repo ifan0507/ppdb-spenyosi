@@ -97,11 +97,9 @@
                                             <option value="Juara 3"
                                                 {{ $akademiks->perolehan == 'Juara 3' ? 'selected' : '' }}>Juara 3
                                             </option>
-                                            <option value="Finalis"
-                                                {{ $akademiks->perolehan == 'Finalis' ? 'selected' : '' }}>Finalis
-                                            </option>
-                                            <option value="Lainnya"
-                                                {{ $akademiks->perolehan == 'Lainnya' ? 'selected' : '' }}>Lainnya
+                                            <option value="Golden Ticket"
+                                                {{ $akademiks->perolehan == 'Golden Ticket' ? 'selected' : '' }}>Golden
+                                                Ticket
                                             </option>
                                         </select>
                                     </div>
