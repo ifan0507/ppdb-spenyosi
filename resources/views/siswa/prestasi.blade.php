@@ -31,19 +31,28 @@
                                     <div class="card card-primary card-outline">
                                         <div class="card-header d-flex justify-content-between align-items-center">
                                             <h4>Prestasi</h4>
-                                            <a @if ($data->jalur->id == 4) href="{{ route('akademik.create') }}"
-                                                @else
-                                                href="{{ route('non-akademik.create') }}" @endif
-                                                class="btn btn-primary ms-auto">
-                                                <i class="fas fa-edit"></i> Tambah Prestasi
-                                            </a>
+                                            @if ($data->jalur->id == 4)
+                                                @if ($data->akademik->count() <= 4)
+                                                    <a href="{{ route('akademik.create') }}"
+                                                        class="btn btn-primary ms-auto">
+                                                        <i class="fas fa-edit"></i> Tambah Prestasi
+                                                    </a>
+                                                @endif
+                                            @else
+                                                @if ($data->nonAkademik->count() <= 4)
+                                                    <a href="{{ route('non-akademik.create') }}"
+                                                        class="btn btn-primary ms-auto">
+                                                        <i class="fas fa-edit"></i> Tambah Prestasi
+                                                    </a>
+                                                @endif
+                                            @endif
                                         </div>
                                         <!-- Bagian atas halaman prestasi -->
                                         <div class="card-body">
                                             <!-- Tampilkan info tentang kuota prestasi -->
                                             <div class="alert alert-info">
                                                 <p class="mb-0">
-                                                    <i class="fas fa-info-circle"></i> Anda dapat menambahkan maksimal 3
+                                                    <i class="fas fa-info-circle"></i> Anda dapat menambahkan maksimal 5
                                                     prestasi
                                                 </p>
                                             </div>
@@ -62,7 +71,7 @@
                                                 </thead>
                                                 <tbody>
                                                     @if ($data->jalur->id == 4)
-                                                        @forelse ($data->akademik as $item)
+                                                        @forelse ($data->akademik?? [] as $item)
                                                             <tr>
                                                                 <td>{{ $loop->iteration }}</td>
                                                                 <td>{{ $item->nama_prestasi }}</td>
@@ -93,13 +102,14 @@
                                                             </tr>
                                                         @empty
                                                             <tr>
-                                                                <td colspan="7">Belum ada data prestasi akademik</td>
+                                                                <td colspan="7" class="align-middle">Belum ada data
+                                                                    prestasi akademik</td>
                                                             </tr>
                                                         @endforelse
                                                     @endif
 
                                                     @if ($data->jalur->id == 5)
-                                                        @forelse ($data->non_akademik as $item)
+                                                        @forelse ($data->non_akademik?? [] as $item)
                                                             <tr>
                                                                 <td>{{ $loop->iteration }}</td>
                                                                 <td>{{ $item->nama_prestasi }}</td>
@@ -130,7 +140,9 @@
                                                             </tr>
                                                         @empty
                                                             <tr>
-                                                                <td colspan="7">Belum ada data prestasi non-akademik</td>
+                                                                <td colspan="7" class="text-center align-middle">Belum
+                                                                    ada data
+                                                                    prestasi non-akademik</td>
                                                             </tr>
                                                         @endforelse
                                                     @endif

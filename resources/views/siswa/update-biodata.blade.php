@@ -2,11 +2,7 @@
 
 @section('content')
     <div class="misc-content pt-4">
-        @include('layouts.siswa.breadcrumb', [
-            'breadcrumb' => [
-                'Perbarui Biodata' => '',
-            ],
-        ])
+        @include('layouts.siswa.breadcrumb')
         <div class="container">
             <div class="card" style="border-top: 3px solid #007bff;">
                 <div class="card-header py-3 d-flex justify-content-between align-items-center">

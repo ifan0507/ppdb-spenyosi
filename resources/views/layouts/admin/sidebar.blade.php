@@ -2,7 +2,14 @@
 <aside id="sidebar" class="sidebar">
 
     @php
-        $isMasterActive = request()->routeIs('zonasi', 'afirmasi', 'pindah.tugas', 'akademik', 'raport');
+        $isMasterActive = request()->routeIs(
+            'zonasi',
+            'afirmasi',
+            'pindah.tugas',
+            'akademik',
+            'non-akademik',
+            'raport',
+        );
     @endphp
 
     <ul class="sidebar-nav" id="sidebar-nav">
@@ -45,6 +52,12 @@
                 <li>
                     <a href="{{ route('akademik') }}" class="{{ request()->routeIs('akademik') ? 'active' : '' }}">
                         <i class="fas fa-trophy me-2"></i><span>Jalur Prestasi Akademik</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('non-akademik') }}"
+                        class="{{ request()->routeIs('non-akademik') ? 'active' : '' }}">
+                        <i class="fas fa-trophy me-2"></i><span>Jalur Prestasi Non Akademik</span>
                     </a>
                 </li>
                 <li>

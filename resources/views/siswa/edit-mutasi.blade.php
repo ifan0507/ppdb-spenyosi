@@ -2,12 +2,7 @@
 
 @section('content')
     <div class="misc-content pt-4">
-        @include('layouts.siswa.breadcrumb', [
-            'breadcrumb' => [
-                'Documen Pindah Tugas' => route('siswa.mutasi'),
-                'Perbarui Dokumen Pindah Tugas' => '',
-            ],
-        ])
+        @include('layouts.siswa.breadcrumb')
 
         <div class="container-fluid">
             @include('layouts.siswa.header-update')

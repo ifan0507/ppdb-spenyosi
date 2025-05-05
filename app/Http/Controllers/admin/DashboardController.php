@@ -172,6 +172,18 @@ class DashboardController extends Controller
             })->get();
         return view('admin.dataPendaftaran', ['pendaftarans' => $pendaftarans, 'data' => $this->data, 'breadcrumb' => $breadcrumb, 'jalur' => 'Jalur Prestasi Akademik', 'sort' => $sort, 'jalur_export' => 'akademik']);
     }
+    public function viewNonAkademik(Request $request)
+    {
+        $breadcrumb = (object) [
+            'list' => ['Master Data', 'Jalur Prestasi Non Akademik']
+        ];
+        $sort = $request->input('sort');
+        $pendaftarans = Pendaftaran::with('register', 'register.siswa.ortu')
+            ->whereHas('register', function ($query) {
+                $query->where('id_jalur', '5');
+            })->get();
+        return view('admin.dataPendaftaran', ['pendaftarans' => $pendaftarans, 'data' => $this->data, 'breadcrumb' => $breadcrumb, 'jalur' => 'Jalur Prestasi Akademik', 'sort' => $sort, 'jalur_export' => 'akademik']);
+    }
     public function viewRaport()
     {
         $breadcrumb = (object) [
@@ -179,7 +191,7 @@ class DashboardController extends Controller
         ];
 
         $this->query->whereHas('register', function ($q) {
-            $q->where('id_jalur', '5');
+            $q->where('id_jalur', '6');
         });
 
         $this->sortStatusPendaftaran($this->sort);

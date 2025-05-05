@@ -2,12 +2,7 @@
 
 @section('content')
     <div class="misc-content pt-4">
-        @include('layouts.siswa.breadcrumb', [
-            'breadcrumb' => [
-                'Dokumen Afirmasi' => route('siswa.afirmasi'),
-                'Perbarui Dokumen Afirmasi' => '',
-            ],
-        ])
+        @include('layouts.siswa.breadcrumb')
         <div class="container">
             @include('layouts.siswa.header-update')
             <div class="row justify-content-center">

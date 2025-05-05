@@ -1,12 +1,7 @@
 @extends('layouts.siswa.template')
 @section('content')
     <div class="misc-content pt-4">
-        @include('layouts.siswa.breadcrumb', [
-            'breadcrumb' => [
-                'Data orang tua' => route('ortu'),
-                'Perbarui data orang tua' => '',
-            ],
-        ])
+        @include('layouts.siswa.breadcrumb')
         <div class="container-fluid">
             @include('layouts.siswa.header-update')
             <div class="row justify-content-center">

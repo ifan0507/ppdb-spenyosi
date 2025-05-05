@@ -27,10 +27,13 @@ class RaportController extends Controller
      */
     public function create()
     {
+        $breadcrumb = (object) [
+            'list' => ['Data Raport', 'Tambah Data Raport']
+        ];
         $data  = Auth::guard('siswa')->user();
         $header = "Form input raport";
         $mapel = MataPelajaran::all();
-        return view('siswa.form-raport', compact('data'), ["mapels" => $mapel, "header" => $header]);
+        return view('siswa.form-raport', compact('data'), ["breadcrumb" => $breadcrumb, "mapels" => $mapel, "header" => $header]);
     }
 
     /**
@@ -104,10 +107,13 @@ class RaportController extends Controller
      */
     public function edit(string $id)
     {
+        $breadcrumb = (object) [
+            'list' => ['Data Raport', 'Edit Data Raport']
+        ];
         $data  = Auth::guard('siswa')->user();
         $raports = DataRaport::where('id_register', $id)->get();
         $header = "Perbarui raport";
-        return view('siswa.edit-raport', compact('raports', 'data'), ["header" => $header]);
+        return view('siswa.edit-raport', compact('raports', 'data'), ["breadcrumb" => $breadcrumb ,"header" => $header]);
     }
 
     /**
