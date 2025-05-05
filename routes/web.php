@@ -2,8 +2,8 @@
 
 use App\Http\Controllers\admin\AuthController;
 use App\Http\Controllers\admin\BroadcastingController;
-use App\Http\Controllers\admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\admin\InfoController;
+use App\Http\Controllers\admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\client\InfoController as ClientInfoController;
 use App\Http\Controllers\client\BerandaController;
 use App\Http\Controllers\client\LoginController;
@@ -72,14 +72,21 @@ Route::middleware(['cache_verify', 'auth_siswa'])->group(function () {
 
     Route::get('/orang-tua', [OrtuController::class, 'index'])->name('ortu');
     Route::get('/orang-tua/{id}/edit', [OrtuController::class, 'edit'])->name('ortu.edit');
-    route::put('/ortu/{id}/update', [OrtuController::class, 'update'])->name('ortu.update');
+    Route::put('/ortu/{id}/update', [OrtuController::class, 'update'])->name('ortu.update');
 
-    route::get('/prestasi', [PenunjangController::class, 'viewPrestasi'])->name('siswa.prestasi');
-    Route::get('/prestasi/edit', [PenunjangController::class, 'editPrestasiLomba'])->name('prestasi.edit');
-    Route::put('/prestasi/{id}/update', [PenunjangController::class, 'updatePrestasiLomba'])->name('prestasi.update');
-    Route::get('/prestasi/create', [PenunjangController::class, 'createPrestasiLomba'])->name('prestasi.create');
-    Route::post('/prestasi/store', [PenunjangController::class, 'storePrestasiLomba'])->name('prestasi.store');
+    // Akademik
+    Route::get('/prestasi-akademik', [PenunjangController::class, 'viewPrestasi'])->name('akademik');
+    Route::get('/prestasi-akademik/create', [PenunjangController::class, 'createAkademik'])->name('akademik.create');
+    Route::post('/prestasi-akademik/store', [PenunjangController::class, 'storeAkademik'])->name('akademik.store');
+    Route::get('/prestasi-akademik/{id}/edit', [PenunjangController::class, 'editPrestasiAkademik'])->name('akademik.edit');
+    Route::put('/prestasi-akademik/{id}/update', [PenunjangController::class, 'updatePrestasiAkademik'])->name('akademik.update');
+    Route::delete('/prestasi-akademik/{id}/delete', [PenunjangController::class, 'deletePrestasiAkademik'])->name('akademik.delete');
 
+    // Non Akademik
+    route::get('/prestasi-non-akademik', [PenunjangController::class, 'viewPrestasi'])->name('non-akademik');
+    Route::get('/prestasi-non-akademik/{id}/edit', [PenunjangController::class, 'editPrestasiNonAkademik'])->name('non-akademik.edit');
+    Route::put('/prestasi-non-akademik/{id}/update', [PenunjangController::class, 'updatePrestasinon-Akademik'])->name('non-akademik.update');
+    Route::delete('/prestasi-non-akademik/{id}/delete', [PenunjangController::class, 'deletePrestasiNonAkademik'])->name('non-akademik.delete');
 
     // Raport
     Route::get('/raport', [RaportController::class, 'index'])->name('raport');
@@ -130,7 +137,7 @@ Route::middleware(['cache_verify', 'auth_admin'])->group(function () {
     Route::delete('/admin/notif/{id}/delete', [AdminDashboardController::class, 'notifDeleteById'])->name('delete-notif-byId');
     Route::delete('/admin/notif/delete-all', [AdminDashboardController::class, 'notifDeleteAll'])->name('delete-all-notif');
 
-    Route::get('/admin/export/zonasi', [AdminDashboardController::class, 'exportZonasi'])->name('export.zonasi');
+    Route::get('/admin/export/{jalur}', [AdminDashboardController::class, 'exportExel']);
 
 
 

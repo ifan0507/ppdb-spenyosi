@@ -31,13 +31,9 @@
                                     <div class="card card-primary card-outline">
                                         <div class="card-header d-flex justify-content-between align-items-center">
                                             <h4>Prestasi</h4>
-                                            @if ($data->jalur->id == 4)
-                                                <a href="" {{-- {{ route('prestasi-akademik-create') }} --}} class="btn btn-primary ms-auto">
-                                                    <i class="fas fa-edit"></i> Tambah Prestasi Akademik
-                                                </a>
-                                            @elseif ($data->jalur->id == 5)
-                                                <a href="" {{-- {{ route('prestasi-non_akademik-create') }} --}} class="btn btn-primary ms-auto">
-                                                    <i class="fas fa-edit"></i> Tambah Prestasi Non-Akademik
+                                            @if ($data->jalur->id == 4 || $data->jalur->id == 5)
+                                                <a href="{{ route('akademik.create') }}" class="btn btn-primary ms-auto">
+                                                    <i class="fas fa-edit"></i> Tambah Prestasi
                                                 </a>
                                             @endif
 
@@ -83,8 +79,7 @@
                                                                         class="btn btn-sm btn-warning">
                                                                         Edit
                                                                     </a>
-                                                                    <form
-                                                                        action="{{ route('akademik.delete', $item->id) }}"
+                                                                    <form action="{{ route('akademik.delete', $item->id) }}"
                                                                         method="POST" style="display: inline-block;"
                                                                         onsubmit="return confirm('Yakin ingin menghapus prestasi ini?')">
                                                                         @csrf
@@ -116,12 +111,12 @@
                                                                         target="_blank">Lihat Dokumen</a>
                                                                 </td>
                                                                 <td>
-                                                                    <a href="{{ route('akademik.edit', $item->id) }}"
+                                                                    <a href="{{ route('non-akademik.edit', $item->id) }}"
                                                                         class="btn btn-sm btn-warning">
                                                                         Edit
                                                                     </a>
                                                                     <form
-                                                                        action="{{ route('akademik.delete', $item->id) }}"
+                                                                        action="{{ route('non-akademik.delete', $item->id) }}"
                                                                         method="POST" style="display: inline-block;"
                                                                         onsubmit="return confirm('Yakin ingin menghapus prestasi ini?')">
                                                                         @csrf

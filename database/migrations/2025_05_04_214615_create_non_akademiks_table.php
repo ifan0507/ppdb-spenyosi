@@ -11,10 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('document_prestasi_lombas', function (Blueprint $table) {
+        Schema::create('non_akademiks', function (Blueprint $table) {
             $table->ulid('id')->primary();
             $table->string('nama_prestasi')->nullable();
-            $table->enum('kategori', ['Akademik', 'Non-akademik'])->nullable();
             $table->string('tingkat_prestasi')->nullable();
             $table->year('thn_perolehan')->nullable();
             $table->string('perolehan')->nullable();
@@ -30,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('document_prestasi_lombas');
+        Schema::dropIfExists('non_akademiks');
     }
 };

@@ -16,12 +16,16 @@
                     ($data->jalur->id == '4' &&
                         $data->siswa->status_berkas == '1' &&
                         $data->siswa->ortu->status_berkas == '1' &&
-                        $data->lomba?->status_berkas == '1') ||
+                        $data->akademik?->status_berkas == '1') ||
                     ($data->jalur->id == '5' &&
                         $data->siswa->status_berkas == '1' &&
                         $data->siswa->ortu->status_berkas == '1' &&
+                        $data->nonAkademik?->status_berkas == '1') ||
+                    ($data->jalur->id == '6' &&
+                        $data->siswa->status_berkas == '1' &&
+                        $data->siswa->ortu->status_berkas == '1' &&
                         $data->raport?->status == '1') ||
-                    (!in_array($data->jalur->id, ['2', '3', '4', '5']) &&
+                    (!in_array($data->jalur->id, ['2', '3', '4', '5', '6']) &&
                         $data->siswa->status_berkas == '1' &&
                         $data->siswa->ortu->status_berkas == '1'))
                 <span class="badge badge-success p-2 ml-2" style="border-radius: 0.5rem;">Lengkap</span>
@@ -135,10 +139,24 @@
                 @if ($data->jalur->id == '4')
                     <tr>
                         <td>
-                            <p class="font-16 mb-0">Dokumen Prestasi<span class="text-red">*</span></p>
+                            <p class="font-16 mb-0">Dokumen Prestasi Akademik<span class="text-red">*</span></p>
                         </td>
                         <td class="text-left">
-                            @if ($data->lomba?->status_berkas == '1')
+                            @if ($data->akademik?->status_berkas == '1')
+                                <i class="far fa-check-circle fa-xl" style="color:#38c172"></i>
+                            @else
+                                <i class="far fa-times-circle fa-xl" style="color:#e3342f"></i>
+                            @endif
+                        </td>
+                    </tr>
+                @endif
+                @if ($data->jalur->id == '5')
+                    <tr>
+                        <td>
+                            <p class="font-16 mb-0">Dokumen Prestasi Non Akademik<span class="text-red">*</span></p>
+                        </td>
+                        <td class="text-left">
+                            @if ($data->nonAkademik?->status_berkas == '1')
                                 <i class="far fa-check-circle fa-xl" style="color:#38c172"></i>
                             @else
                                 <i class="far fa-times-circle fa-xl" style="color:#e3342f"></i>
@@ -147,7 +165,7 @@
                     </tr>
                 @endif
 
-                @if ($data->jalur->id == '5')
+                @if ($data->jalur->id == '6')
                     <tr>
                         <td>
                             <p class="font-16 mb-0">Raport<span class="text-red">*</span></p>
