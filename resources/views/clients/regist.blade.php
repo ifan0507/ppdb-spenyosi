@@ -12,8 +12,7 @@
                         <img src="{{ asset('assets/img/illustration.png') }}" alt="Siswa" class="img-fluid mb-3"
                             width="150">
                         <h4 class="fw-bold text-dark">Jalur Domisili Zonasi</h4>
-                        <p class="text-muted">Jalur seleksi reguler bagi calon peserta didik berdasarkan peringkat nilai dan
-                            daya tampung sekolah.</p>
+                        <p class="text-muted">Jalur seleksi domisili zonasi daya tampung sekitar sekolah.</p>
                         <button class="btn btn-primary">Daftar Akun Zonasi</button>
                     </div>
                 </a>
