@@ -34,7 +34,9 @@ class Pendaftaran extends Controller
     {
 
         $data = Register::where("id", $id)->first();
-
+        $raports = $data->raport;
+        $akademiks = $data->akademik;
+        $nonAkademiks = $data->nonAkademik;
         if ($data->siswa->status_berkas == "0") {
             return response()->json(['errors' => ['Biodata siswa belum lengkap!']], 422);
         }
@@ -51,12 +53,15 @@ class Pendaftaran extends Controller
             return response()->json(['errors' => ['Dokumen mutasi belum lengkap!']], 422);
         }
 
-        if ($data->jalur->id == 4 && $data->lomba->status_berkas == "0") {
-            return response()->json(['errors' => ['Dokumen prestasi belum lengkap!']], 422);
+        if ($data->jalur->id == 4 && ($akademiks->isEmpty() || $akademiks->contains('status_berkas', '0'))) {
+            return response()->json(['errors' => ['Dokumen prestasi akademik belum lengkap!']], 422);
+        }
+        if ($data->jalur->id == 5 && ($nonAkademiks->isEmpty() || $nonAkademiks->contains('status_berkas', '0'))) {
+            return response()->json(['errors' => ['Dokumen prestasi non akademik belum lengkap!']], 422);
         }
 
-        if ($data->jalur->id == "5" && $data->raport?->status == "0") {
-            return response()->json(['errors' => ['Raport belum lengkap!']], 422);
+        if ($data->jalur->id == 6 && ($raports->isEmpty() || $raports->contains('status', '0') || $data->rata_rata_raport?->image === null)) {
+            return response()->json(['errors' => ['Dokumen / Data Raport belum lengkap!']], 422);
         }
 
         $admin = User::where('role', 'admin')->get();

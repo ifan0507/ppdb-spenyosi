@@ -19,7 +19,7 @@ class RegisterController extends Controller
      */
     public function regist()
     {
-        return view('clients.regist');
+        return view('client.regist');
     }
 
     public function registUmum()

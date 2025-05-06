@@ -45,7 +45,8 @@ class DatabaseSeeder extends Seeder
             ["nama_matapelajaran" => "Ilmu Pengetahuan Alam (IPA)"],
             ["nama_matapelajaran" => "Ilmu Pengetahuan Sosial (IPS)"],
             ["nama_matapelajaran" => "Seni Budaya dan Prakarya"],
-            ["nama_matapelajaran" => "Pend. Jasmani, Olahraga dan Kesehatan"]
+            ["nama_matapelajaran" => "Pend. Jasmani, Olahraga dan Kesehatan"],
+            ["nama_matapelajaran" => "Bahasa Jawa"]
         ]);
 
         Jalur::insert([
@@ -96,33 +97,34 @@ class DatabaseSeeder extends Seeder
 
         // $jenisAfirmasiList = ['Akademik', 'Non Akademik'];
         // for ($i = 0; $i < 20; $i++) {
-        //     $akun = Register::create([
-        //         'nisn' => fake()->unique()->numerify('##########'), // 10 digit angka
-        //         'no_register' => now()->format('Ymd') . fake()->unique()->numerify('####'),
-        //         'email' => fake()->unique()->safeEmail(),
-        //         'password' => '123', // sebaiknya encrypt password
-        //         'id_jalur' => '4',
-        //         'email_verified_at' => now(),
-        //         'verification_code' => null,
-        //     ]);
+        $akun = Register::create([
+            'nisn' => fake()->unique()->numerify('##########'), // 10 digit angka
+            'no_register' => now()->format('Ymd') . fake()->unique()->numerify('####'),
+            // 'email' => fake()->unique()->safeEmail(),
+            'email' => 'ifan@gmail.com',
+            'password' => '123',
+            'id_jalur' => '6',
+            'email_verified_at' => now(),
+            'verification_code' => null,
+        ]);
 
-        //     $siswa = SiswaBaru::create([
-        //         'id_register_siswa' => $akun->id,
-        //         'nama' => fake()->name(),
-        //         'nisn' => $akun->nisn,
-        //         'email' => $akun->email,
-        //         'jarak_sekolah' => fake()->randomFloat(2, 0.1, 10), // contoh jarak 0.1 - 10 km
-        //         'foto_kk' => 'default_document.png',
-        //         'foto_siswa' => 'default_siswa.png',
-        //         'foto_akte' => 'default_document.png',
-        //         'status_berkas' => '1'
-        //     ]);
+        $siswa = SiswaBaru::create([
+            'id_register_siswa' => $akun->id,
+            'nama' => fake()->name(),
+            'nisn' => $akun->nisn,
+            'email' => $akun->email,
+            'jarak_sekolah' => fake()->randomFloat(2, 0.1, 10), // contoh jarak 0.1 - 10 km
+            'foto_kk' => 'default_document.png',
+            'foto_siswa' => 'default_siswa.png',
+            'foto_akte' => 'default_document.png',
+            'status_berkas' => '1'
+        ]);
 
 
-        //     OrtuSiswa::create([
-        //         'id_siswa' => $siswa->id,
-        //         'status_berkas' => '1'
-        //     ]);
+        OrtuSiswa::create([
+            'id_siswa' => $siswa->id,
+            'status_berkas' => '1'
+        ]);
 
         //     Akademik::create([
         //         'id_register' => $akun->id,

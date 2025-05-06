@@ -40,7 +40,7 @@
         @elseif ($data->jalur->id == 6)
             <li class="nav-item">
                 <a class="nav-link remove-tab-format font-bold {{ $active_tab == 'raport' ? 'active' : '' }}"
-                    id="raport-tab" data-toggle="pill" href="{{ route('raport') }}" role="tab">
+                    id="raport-tab" data-toggle="pill" href="{{ route('siswa.raport') }}" role="tab">
                     Raport
                 </a>
             </li>

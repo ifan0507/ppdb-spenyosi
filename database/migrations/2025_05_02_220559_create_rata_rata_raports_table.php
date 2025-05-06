@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('rata_rata_raports', function (Blueprint $table) {
             $table->ulid('id')->primary();
             $table->foreignUlid('id_register')->references('id')->on('registers')->onUpdate('cascade')->onDelete('cascade');
+            $table->string('image')->nullable();
             $table->decimal('total_rata_rata', 5, 2)->nullable();
             $table->timestamps();
         });

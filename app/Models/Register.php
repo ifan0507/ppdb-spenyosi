@@ -73,4 +73,37 @@ class Register extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasOne(Pendaftaran::class, 'id_register');
     }
+
+    public function isBerkasLengkap(): bool
+    {
+        $siswaLengkap = $this->siswa->status_berkas === '1';
+        $ortuLengkap = $this->siswa->ortu->status_berkas === '1';
+
+        switch ($this->jalur->id) {
+            case '2':
+                return $siswaLengkap && $ortuLengkap && optional($this->afirmasi)->status_berkas === '1';
+
+            case '3':
+                return $siswaLengkap && $ortuLengkap && optional($this->mutasi)->status_berkas === '1';
+
+            case '4':
+                return $siswaLengkap && $ortuLengkap &&
+                    $this->akademik->isNotEmpty() &&
+                    $this->akademik->every(fn($a) => $a->status_berkas === '1');
+
+            case '5':
+                return $siswaLengkap && $ortuLengkap &&
+                    $this->nonAkademik->isNotEmpty() &&
+                    $this->nonAkademik->every(fn($na) => $na->status_berkas === '1');
+
+            case '6':
+                return $siswaLengkap && $ortuLengkap &&
+                    $this->raport->isNotEmpty() &&
+                    $this->raport->every(fn($r) => $r->status === '1') &&
+                    optional($this->rata_rata_raport)->image !== null;
+
+            default:
+                return $siswaLengkap && $ortuLengkap;
+        }
+    }
 }
