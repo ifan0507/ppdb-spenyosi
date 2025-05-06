@@ -33,6 +33,8 @@ class SiswaBaru extends Model
         'kab_id',
         'kec_id',
         'desa_id',
+        'rt',
+        'rw',
         'alamat',
         'no_hp',
         'email',

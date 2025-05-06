@@ -102,7 +102,8 @@
                                                             </tr>
                                                         @empty
                                                             <tr>
-                                                                <td colspan="7" class="align-middle">Belum ada data
+                                                                <td colspan="7" class="text-center align-middle">Belum
+                                                                    ada data
                                                                     prestasi akademik</td>
                                                             </tr>
                                                         @endforelse

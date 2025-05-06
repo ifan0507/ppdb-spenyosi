@@ -170,7 +170,16 @@ class DashboardController extends Controller
             ->whereHas('register', function ($query) {
                 $query->where('id_jalur', '4');
             })->get();
-        return view('admin.dataPendaftaran', ['pendaftarans' => $pendaftarans, 'data' => $this->data, 'breadcrumb' => $breadcrumb, 'jalur' => 'Jalur Prestasi Akademik', 'sort' => $sort, 'jalur_export' => 'akademik']);
+        return view('admin.dataPendaftaran', [
+            'pendaftarans' => $pendaftarans,
+            'data' => $this->data,
+            'breadcrumb' => $breadcrumb,
+            'jalur' => 'Jalur Prestasi Akademik',
+            'sort' => $sort,
+            'start_rank' => $this->start,
+            'end_rank' => $this->end,
+            'jalur_export' => 'akademik'
+        ]);
     }
     public function viewNonAkademik(Request $request)
     {
@@ -182,7 +191,16 @@ class DashboardController extends Controller
             ->whereHas('register', function ($query) {
                 $query->where('id_jalur', '5');
             })->get();
-        return view('admin.dataPendaftaran', ['pendaftarans' => $pendaftarans, 'data' => $this->data, 'breadcrumb' => $breadcrumb, 'jalur' => 'Jalur Prestasi Akademik', 'sort' => $sort, 'jalur_export' => 'akademik']);
+        return view('admin.dataPendaftaran', [
+            'pendaftarans' => $pendaftarans,
+            'data' => $this->data,
+            'breadcrumb' => $breadcrumb,
+            'jalur' => 'Jalur Prestasi Akademik',
+            'sort' => $sort,
+            'start_rank' => $this->start,
+            'end_rank' => $this->end,
+            'jalur_export' => 'akademik'
+        ]);
     }
     public function viewRaport()
     {

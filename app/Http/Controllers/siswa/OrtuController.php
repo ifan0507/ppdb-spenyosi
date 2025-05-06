@@ -56,7 +56,7 @@ class OrtuController extends Controller
         ];
         $data = OrtuSiswa::where("id", $id)->first();
         $header = "Form Orang Tua";
-        return view('siswa.form-ortu', compact('data', 'header'));
+        return view('siswa.form-ortu', compact('data', 'header'), ["breadcrumb" => $breadcrumb]);
     }
 
     /**

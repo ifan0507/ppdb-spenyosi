@@ -18,7 +18,6 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -90,6 +89,14 @@
                                                                     <td>{{ $data->siswa->desa ?? '_' }}</td>
                                                                 </tr>
                                                                 <tr>
+                                                                    <th>RT</th>
+                                                                    <td>{{ $data->siswa->rt ?? '_' }}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th>RW</th>
+                                                                    <td>{{ $data->siswa->rw ?? '_' }}</td>
+                                                                </tr>
+                                                                <tr>
                                                                     <th>Alamat</th>
                                                                     <td>
                                                                         {{ $data->siswa->alamat ?? '_' }}
@@ -130,7 +137,6 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
