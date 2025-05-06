@@ -69,9 +69,12 @@ class DashboardController extends Controller
      */
     public function edit()
     {
+        $breadcrumb = (object)[
+            'list' => ['Biodata', 'Perbarui Biodata']
+        ];
         $data = Auth::guard('siswa')->user();
         $header = "Perbarui Biodata";
-        return view('siswa.update-biodata', compact('data', 'header'));
+        return view('siswa.update-biodata', compact('data', 'header', 'breadcrumb'));
     }
 
     public function update(Request $request)

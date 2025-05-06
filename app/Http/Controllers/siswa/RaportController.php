@@ -8,18 +8,26 @@ use App\Models\MataPelajaran;
 use App\Models\RataRataRaport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Storage;
 
 class RaportController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+    protected $data;
+    public function __construct()
+    {
+        $this->data = Auth::guard('siswa')->user();
+    }
+
+
     public function index()
     {
-        $data  = Auth::guard('siswa')->user();
-        $raports = DataRaport::where('id_register', $data->id)->get();
+        $raports = DataRaport::where('id_register', $this->data->id)->get();
         $active_tab = "raport";
-        return view('siswa.raport', compact('data', 'raports'), ['active_tab' => $active_tab,]);
+        return view('siswa.raport', ['data' => $this->data, "raports" => $raports, 'active_tab' => $active_tab,]);
     }
 
     /**
@@ -30,10 +38,9 @@ class RaportController extends Controller
         $breadcrumb = (object) [
             'list' => ['Data Raport', 'Tambah Data Raport']
         ];
-        $data  = Auth::guard('siswa')->user();
         $header = "Form input raport";
         $mapel = MataPelajaran::all();
-        return view('siswa.form-raport', compact('data'), ["breadcrumb" => $breadcrumb, "mapels" => $mapel, "header" => $header]);
+        return view('siswa.form-raport',  ['data' => $this->data, "breadcrumb" => $breadcrumb, "mapels" => $mapel, "header" => $header]);
     }
 
     /**
@@ -91,7 +98,7 @@ class RaportController extends Controller
             'status' => '1'
         ]);
 
-        return response()->json(['redirect' => route('raport')]);
+        return response()->json(['redirect' => route('siswa.raport')]);
     }
 
     /**
@@ -110,10 +117,10 @@ class RaportController extends Controller
         $breadcrumb = (object) [
             'list' => ['Data Raport', 'Edit Data Raport']
         ];
-        $data  = Auth::guard('siswa')->user();
+
         $raports = DataRaport::where('id_register', $id)->get();
         $header = "Perbarui raport";
-        return view('siswa.edit-raport', compact('raports', 'data'), ["breadcrumb" => $breadcrumb ,"header" => $header]);
+        return view('siswa.edit-raport',  ['data' => $this->data, "raports" => $raports, "breadcrumb" => $breadcrumb, "header" => $header]);
     }
 
     /**
@@ -169,7 +176,51 @@ class RaportController extends Controller
             'status' => '1'
         ]);
 
-        return response()->json(['redirect' => route('raport')]);
+        return response()->json(['redirect' => route('siswa.raport')]);
+    }
+
+    public function uploadFile(Request $request)
+    {
+        $request->validate([
+            'image' => 'required|mimes:jpg,jpeg|max:1024',
+        ]);
+
+        $cekImage = RataRataRaport::where('id_register', $this->data->id)->first();
+
+        if (!$cekImage) {
+            return response()->json([
+                'message' => 'Data raport belum tersedia. Silakan tambahkan data raport terlebih dahulu.'
+            ], 422);
+        }
+
+        if ($request->hasFile('image')) {
+            $documentPath = $request->file('image')->store('siswa/raport');
+
+            if ($cekImage->image) {
+                Storage::disk('public')->delete($cekImage->image);
+            }
+            $cekImage->update([
+                'image' => $documentPath
+            ]);
+
+            return response()->json([
+                'preview_url' => asset('storage/' . $documentPath),
+            ]);
+        }
+
+        return response()->json([
+            'message' => 'File tidak ditemukan.'
+        ], 422);
+    }
+
+
+
+    public function exportPdf()
+    {
+        $siswa = $this->data;
+        $raports = DataRaport::where('id_register', $this->data->id)->get();
+        $pdf = Pdf::loadView('siswa.raportPdf', compact('raports', 'siswa'));
+        return $pdf->download('data-rapor.pdf');
     }
 
     /**

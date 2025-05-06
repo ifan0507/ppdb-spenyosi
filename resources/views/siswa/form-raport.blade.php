@@ -7,11 +7,28 @@
             <div class="row justify-content-center">
                 <div class="card card-primary card-outline card-outline-tabs col-md-12">
                     <div class="card-body">
+                        <div class="alert  mb-3" style="background-color: #d4eefa; color: #1c759e">
+                            <div class="row align-items-center">
+                                <div class="col text-center" style="flex: 0 0 5%;">
+                                    <i class="fas fa-info-circle fa-2x"></i>
+                                </div>
+                                <div class="col">
+
+                                    <p class="mb-0 text-navi">
+                                        1. Nilai yang dimasukan adalah Nilai Kompetensi Pengetahuan <br>
+                                        2. Siswa dari MI jika Nilai Agama tidak berdiri sendiri, Nilai Pendidikan Agama
+                                        adalah rerata nilai Keagamaan yang diajarkan (misal: Al Quran Hadits, Akidah Akhlaq,
+                                        Fiqih, Sejarah Islam ...dll)
+
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
                         <form action="{{ route('form-raport.post') }}" method="POST" id="raporForm">
                             @csrf
                             <input type="hidden" name="id_register" value="{{ $data->id }}">
                             <div class="table-responsive">
-                                <table class="table table-bordered text-center">
+                                <table class="table table-bordered text-center table-rapor">
                                     <thead>
                                         <tr>
                                             <th rowspan="2" class="align-middle">No</th>
@@ -29,7 +46,12 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($mapels as $index => $mapel)
+                                        <tr>
+                                            <td colspan="8" class="kelompok-header text-left">
+                                                <strong>Kelompok A</strong>
+                                            </td>
+                                        </tr>
+                                        @foreach ($mapels->take(6) as $index => $mapel)
                                             <tr>
                                                 <td>{{ $index + 1 }}</td>
                                                 <td>
@@ -63,6 +85,90 @@
                                                 </td>
                                             </tr>
                                         @endforeach
+
+                                        <tr>
+                                            <td colspan="8" class="kelompok-header text-left">
+                                                <strong>Kelompok B</strong>
+                                            </td>
+                                        </tr>
+
+                                        @foreach ($mapels->skip(6)->take(2) as $index => $mapel)
+                                            <tr>
+                                                <td>{{ $index + 1 }}</td>
+                                                <td>
+                                                    {{ $mapel->nama_matapelajaran }}
+                                                    <input type="hidden" name="id_mapel[]" value="{{ $mapel->id }}">
+                                                </td>
+                                                <td>
+                                                    <input type="text" name="kelas4_1[]"
+                                                        class="form-control text-center nilai">
+                                                    <div class="invalid-feedback">Harus diisi dan berupa angka!</div>
+                                                </td>
+                                                <td>
+                                                    <input type="text" name="kelas4_2[]"
+                                                        class="form-control text-center nilai">
+                                                    <div class="invalid-feedback">Harus diisi dan berupa angka!</div>
+                                                </td>
+                                                <td>
+                                                    <input type="text" name="kelas5_1[]"
+                                                        class="form-control text-center nilai">
+                                                    <div class="invalid-feedback">Harus diisi dan berupa angka!</div>
+                                                </td>
+                                                <td>
+                                                    <input type="text" name="kelas5_2[]"
+                                                        class="form-control text-center nilai">
+                                                    <div class="invalid-feedback">Harus diisi dan berupa angka!</div>
+                                                </td>
+                                                <td>
+                                                    <input type="text" name="kelas6_1[]"
+                                                        class="form-control text-center nilai">
+                                                    <div class="invalid-feedback">Harus diisi dan berupa angka!</div>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+
+                                        @php
+                                            $mapel = $mapels->firstWhere('nama_matapelajaran', 'Bahasa Jawa');
+                                        @endphp
+                                        @if ($mapel)
+                                            <tr>
+                                                <td rowspan="2">9</td>
+                                                <td colspan="7" class="text-left"><b>Muatan
+                                                        Lokal</b></td>
+                                            <tr>
+                                                <td>
+                                                    {{ $mapel->nama_matapelajaran }}
+                                                    <input type="hidden" name="id_mapel[]" value="{{ $mapel->id }}">
+                                                </td>
+                                                <td>
+                                                    <input type="text" name="kelas4_1[]"
+                                                        class="form-control text-center nilai">
+                                                    <div class="invalid-feedback">Harus diisi dan berupa angka!</div>
+                                                </td>
+                                                <td>
+                                                    <input type="text" name="kelas4_2[]"
+                                                        class="form-control text-center nilai">
+                                                    <div class="invalid-feedback">Harus diisi dan berupa angka!</div>
+                                                </td>
+                                                <td>
+                                                    <input type="text" name="kelas5_1[]"
+                                                        class="form-control text-center nilai">
+                                                    <div class="invalid-feedback">Harus diisi dan berupa angka!</div>
+                                                </td>
+                                                <td>
+                                                    <input type="text" name="kelas5_2[]"
+                                                        class="form-control text-center nilai">
+                                                    <div class="invalid-feedback">Harus diisi dan berupa angka!</div>
+                                                </td>
+                                                <td>
+                                                    <input type="text" name="kelas6_1[]"
+                                                        class="form-control text-center nilai">
+                                                    <div class="invalid-feedback">Harus diisi dan berupa angka!</div>
+                                                </td>
+                                            </tr>
+
+                                            </tr>
+                                        @endif
                                         <tr>
                                             <td colspan="2"><strong>Rata-rata Nilai</strong></td>
                                             <td>
@@ -94,9 +200,15 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="d-flex justify-content-betwen align-item-center">
-                                <button type="submit" class="btn btn-primary mt-3 ms-auto"><i class="fa fa-save"></i>
-                                    Simpan</button>
+                            <div class="row justify-content-center">
+                                <div class="col-sm-8 col-lg-6">
+                                    <button type="submit" class="btn btn-primary btn-block" id="btnCreate"><i
+                                            class="fas fa-save" id="fa_create"></i> <span id="textCreate"> Save
+                                            Data</span>
+                                        <span id="loadingCreate" class="spinner-border spinner-border-sm d-none"
+                                            role="status" aria-hidden="true"></span>
+                                    </button>
+                                </div>
                             </div>
                         </form>
 
@@ -109,6 +221,7 @@
 
     <script>
         $(document).ready(function() {
+
             $("#raporForm").submit(function(event) {
                 event.preventDefault();
 
@@ -131,17 +244,20 @@
                 let form = $("#raporForm");
                 let formData = form.serialize();
                 let submitBtn = $("#submitBtn");
-                let originalBtnText = submitBtn.html();
-
-                submitBtn.prop("disabled", true).html(
-                    `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Mengirim...`
-                );
+                $("#btnCreate").attr("disabled", true);
+                $("#fa_create").addClass("d-none");
+                $("#textCreate").addClass("d-none");
+                $("#loadingCreate").removeClass("d-none");
 
                 $.ajax({
                     url: form.attr("action"),
                     method: "POST",
                     data: formData,
                     success: function(response) {
+                        $("#btnCreate").attr("disabled", true);
+                        $("#fa_create").removeClass("d-none");
+                        $("#textCreate").removeClass("d-none");
+                        $("#loadingCreate").addClass("d-none");
                         Swal.fire({
                             icon: "success",
                             title: "Berhasil",
@@ -157,6 +273,10 @@
                         });
                     },
                     error: function(xhr) {
+                        $("#btnCreate").attr("disabled", true);
+                        $("#fa_create").removeClass("d-none");
+                        $("#textCreate").removeClass("d-none");
+                        $("#loadingCreate").addClass("d-none");
                         let errorMessage = "Terjadi kesalahan, coba lagi.";
                         if (xhr.responseJSON && xhr.responseJSON.message) {
                             errorMessage = xhr.responseJSON.message;

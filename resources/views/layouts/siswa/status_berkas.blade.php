@@ -4,34 +4,12 @@
             <h4 class="font-weight" style="display: inline-block;">
                 Status Kelengkapan Berkas
             </h4>
-            @if (
-                ($data->jalur->id == '2' &&
-                    $data->siswa->status_berkas == '1' &&
-                    $data->siswa->ortu->status_berkas == '1' &&
-                    $data->afirmasi?->status_berkas == '1') ||
-                    ($data->jalur->id == '3' &&
-                        $data->siswa->status_berkas == '1' &&
-                        $data->siswa->ortu->status_berkas == '1' &&
-                        $data->mutasi?->status_berkas == '1') ||
-                    ($data->jalur->id == '4' &&
-                        $data->siswa->status_berkas == '1' &&
-                        $data->siswa->ortu->status_berkas == '1' &&
-                        $data->akademik?->status_berkas == '1') ||
-                    ($data->jalur->id == '5' &&
-                        $data->siswa->status_berkas == '1' &&
-                        $data->siswa->ortu->status_berkas == '1' &&
-                        $data->nonAkademik?->status_berkas == '1') ||
-                    ($data->jalur->id == '6' &&
-                        $data->siswa->status_berkas == '1' &&
-                        $data->siswa->ortu->status_berkas == '1' &&
-                        $data->raport?->status == '1') ||
-                    (!in_array($data->jalur->id, ['2', '3', '4', '5', '6']) &&
-                        $data->siswa->status_berkas == '1' &&
-                        $data->siswa->ortu->status_berkas == '1'))
+            @if ($data->isBerkasLengkap())
                 <span class="badge badge-success p-2 ml-2" style="border-radius: 0.5rem;">Lengkap</span>
             @else
                 <span class="badge badge-danger p-2 ml-2" style="border-radius: 0.5rem;">Belum Lengkap</span>
             @endif
+
         </div>
         <div class="col-4 text-right">
             <button class="btn btn-sm font-weight-bold" style="background-color: #2d89ef; color: white" type="button"
@@ -45,7 +23,7 @@
 
 <div id="collapseOne" class="collapse" aria-labelledby="headingOne">
     <div class="card-body">
-        <div class="alert alert-info alert-blue-outline mb-3">
+        <div class="alert  mb-3" style="background-color: #d4eefa; color: #1c759e">
             <div class="row align-items-center">
                 <div class="col text-center" style="flex: 0 0 5%;">
                     <i class="fas fa-info-circle fa-2x"></i>
@@ -142,7 +120,7 @@
                             <p class="font-16 mb-0">Dokumen Prestasi Akademik<span class="text-red">*</span></p>
                         </td>
                         <td class="text-left">
-                            @if (optional($data->akademik->first())->status_berkas == '1')
+                            @if ($data->akademik->isNotEmpty() && optional($data->akademik->first())->status_berkas == '1')
                                 <i class="far fa-check-circle fa-xl" style="color:#38c172"></i>
                             @else
                                 <i class="far fa-times-circle fa-xl" style="color:#e3342f"></i>
@@ -156,7 +134,7 @@
                             <p class="font-16 mb-0">Dokumen Prestasi Non Akademik<span class="text-red">*</span></p>
                         </td>
                         <td class="text-left">
-                            @if (optional($data->nonAkademik->first())->status_berkas == '1')
+                            @if ($data->nonAkademik->isNotEmpty() && optional($data->nonAkademik->first())->status_berkas == '1')
                                 <i class="far fa-check-circle fa-xl" style="color:#38c172"></i>
                             @else
                                 <i class="far fa-times-circle fa-xl" style="color:#e3342f"></i>
@@ -168,10 +146,13 @@
                 @if ($data->jalur->id == '6')
                     <tr>
                         <td>
-                            <p class="font-16 mb-0">Raport<span class="text-red">*</span></p>
+                            <p class="font-16 mb-0">Data Raport & Scan Dokumen<span class="text-red">*</span></p>
                         </td>
                         <td class="text-left">
-                            @if ($data->raport?->status == '1')
+                            @if (
+                                $data->raport->isNotEmpty() &&
+                                    optional($data->raport->first())->status == '1' &&
+                                    $data->rata_rata_raport?->image !== null)
                                 <i class="far fa-check-circle fa-xl" style="color:#38c172"></i>
                             @else
                                 <i class="far fa-times-circle fa-xl" style="color:#e3342f"></i>

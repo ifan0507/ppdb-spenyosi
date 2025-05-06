@@ -52,11 +52,11 @@ class OrtuController extends Controller
     public function edit(string $id)
     {
         $breadcrumb = (object) [
-            'list' => ['Data Orang Tua', 'Tambah Data Orang Tua']
+            'list' => ['Data Orang Tua', 'Perbarui Data Orang Tua']
         ];
         $data = OrtuSiswa::where("id", $id)->first();
         $header = "Form Orang Tua";
-        return view('siswa.form-ortu', compact('data', 'header'));
+        return view('siswa.form-ortu', compact('data', 'header', 'breadcrumb'));
     }
 
     /**

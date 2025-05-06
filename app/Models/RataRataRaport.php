@@ -13,7 +13,7 @@ class RataRataRaport extends Model
     public $incrementing = false;
     protected $keyType = 'string';
     protected $table = 'rata_rata_raports';
-    protected $fillable = ['id_register', 'total_rata_rata'];
+    protected $fillable = ['id_register', 'total_rata_rata', 'image'];
 
     public function register(): BelongsTo
     {

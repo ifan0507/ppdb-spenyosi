@@ -34,7 +34,7 @@
                                         <div class="card-header d-flex justify-content-between align-items-center">
                                             <h4>Biodata {{ $data->siswa->nama }}</h4>
                                             <a href="{{ route('siswa.edit') }}" class="btn btn-primary ms-auto">
-                                                <i class="fa-solid fa-square-plus"></i> Perbarui Biodata
+                                                <i class="fas fa-edit"></i> Perbarui Biodata
                                             </a>
                                         </div>
                                         <div class="card-body">

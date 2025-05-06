@@ -91,11 +91,13 @@ Route::middleware(['cache_verify', 'auth_siswa'])->group(function () {
     Route::delete('/prestasi-non-akademik/{id}/delete', [PenunjangController::class, 'deletePrestasiNonAkademik'])->name('non-akademik.delete');
 
     // Raport
-    Route::get('/raport', [RaportController::class, 'index'])->name('raport');
+    Route::get('/raport', [RaportController::class, 'index'])->name('siswa.raport');
     Route::get('/form-raport', [RaportController::class, 'create'])->name('form-raport');
     Route::post('/form-raport', [RaportController::class, 'store'])->name('form-raport.post');
-    Route::get('/raport/{id}', [RaportController::class, 'edit'])->name('edit-raport');
-    Route::put('/raport/{id}', [RaportController::class, 'update'])->name('update-raport');
+    Route::get('/raport/export-pdf', [RaportController::class, 'exportPdf'])->name('exportPdf');
+    Route::post('/raport/upload-document', [RaportController::class, 'uploadFile']);
+    Route::get('/raport/{id}/edit', [RaportController::class, 'edit'])->name('edit-raport');
+    Route::put('/raport/{id}/update', [RaportController::class, 'update'])->name('update-raport');
 
     // Afirmasi
     Route::get('/afirmasi', [PenunjangController::class, 'siswaAfirmasi'])->name('siswa.afirmasi');

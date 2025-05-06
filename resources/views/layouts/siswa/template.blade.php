@@ -13,8 +13,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css">
 
     <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap">
+
 
     {{-- box icon --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css">
@@ -32,6 +32,12 @@
     <script src="{{ asset('assets/js/jquery-3.7.1.js') }}"></script> <!-- Hanya jika kamu memang membutuhkan jQuery -->
     <script src="{{ asset('assets/js/sweetalert2.all.min.js') }}"></script> <!-- SweetAlert2 -->
     <style>
+        body,
+        html,
+        * {
+            font-family: 'Nunito', sans-serif !important;
+        }
+
         #map {
             height: 500px;
         }
@@ -45,6 +51,25 @@
         .choices__list--dropdown {
             max-height: 200px;
             overflow-y: auto;
+        }
+
+        .table-rapor th,
+        .table-rapor td {
+            font-size: 13px !important;
+            padding: 4px 8px !important;
+            text-align: center;
+            vertical-align: middle !important;
+        }
+
+        .table-rapor th[colspan] {
+            background-color: #f8f9fa;
+            font-weight: bold;
+        }
+
+        .table-rapor .kelompok-header {
+            background-color: #dee2e6;
+            font-weight: bold;
+            text-align: left;
         }
     </style>
 </head>
