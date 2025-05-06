@@ -33,7 +33,7 @@
                                             <h4>Dokumen Afirmasi</h4>
                                             <a href="{{ route('afirmasi.edit', ['id' => $data->id]) }}"
                                                 class="btn btn-primary ms-auto">
-                                                <i class="fa-solid fa-square-plus"></i> Perbarui Dokumen Afirmasi
+                                                <i class="fas fa-edit"></i> Perbarui Dokumen Afirmasi
                                             </a>
                                         </div>
                                         <div class="card-body">
@@ -49,7 +49,7 @@
                                                             <tbody class="table-light">
                                                                 <tr>
                                                                     <th width="30%">Jenis Afirmasi</th>
-                                                                    <td>{{ $data->afirmasi->jenis_afirmasi }}</td>
+                                                                    <td>{{ $data->afirmasi->jenis_afirmasi ?? '_' }}</td>
                                                                 </tr>
                                                             </tbody>
                                                         </table>

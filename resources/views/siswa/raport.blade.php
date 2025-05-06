@@ -273,7 +273,14 @@
                         });
                     },
                     success: function(res) {
-                        Swal.fire('Sukses!', 'Dokumen berhasil diupload.', 'success');
+                        Swal.fire({
+                            title: "Berhasil",
+                            icon: "success",
+                            text: "Dokumen berhasil diupload.",
+                            confirmButtonText: "OK",
+                            confirmButtonColor: "#18a342",
+                        })
+                        // Swal.fire('Sukses!', 'Dokumen berhasil diupload.', 'success');
                         $('#img-raport_blob').attr('src', res.preview_url);
                     },
                     error: function(xhr) {

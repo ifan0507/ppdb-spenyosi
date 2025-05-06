@@ -230,6 +230,17 @@ class PenunjangController extends Controller
 
         return response()->json(['redirect' => route('siswa.akademik')]);
     }
+
+    public function deletePrestasiAkademik(string $id)
+    {
+        $data = Akademik::find($id);
+        if ($data) {
+            Storage::delete($data->image);
+            $data->delete();
+            return response()->json(['redirect' => route('siswa.akademik')]);
+        }
+    }
+
     public function createNonAkademik()
     {
         $breadcrumb = (object) [
@@ -265,7 +276,7 @@ class PenunjangController extends Controller
             'status_berkas' => '1'
         ]);
 
-        return response()->json(['redirect' => route('siswa.akademik')]);
+        return response()->json(['redirect' => route('siswa.non-akademik')]);
     }
 
     public function editPrestasiNonAkademik(string $id)
@@ -274,7 +285,7 @@ class PenunjangController extends Controller
             'list' => ['Prestasi Non Akademik', 'Tambah Dokumen Prestasi Non Akademik']
         ];
         $header = "Perbarui Dokumen Prestasi Non Akademik";
-        $prestasis = Akademik::find($id);
+        $prestasis = NonAkademik::find($id);
 
         return view('siswa.edit-prestasi', [
             'data' => $this->data,
@@ -315,6 +326,16 @@ class PenunjangController extends Controller
             ]);
         }
 
-        return response()->json(['redirect' => route('siswa.akademik')]);
+        return response()->json(['redirect' => route('siswa.non-akademik')]);
+    }
+
+    public function deletePrestasiNonAkademik(string $id)
+    {
+        $data = NonAkademik::find($id);
+        if ($data) {
+            Storage::delete($data->image);
+            $data->delete();
+            return response()->json(['redirect' => route('siswa.non-akademik')]);
+        }
     }
 }

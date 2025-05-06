@@ -18,7 +18,8 @@
                                     <div class="form-group required">
                                         <label class="title">Asal Tugas</label>
                                         <input type="text" placeholder="Surabaya - Lumajang" class="form-control "
-                                            name="asal_tugas" id="asal_tugas" value="">
+                                            name="asal_tugas" id="asal_tugas"
+                                            value="{{ old('asal_tugas', $data->mutasi->asal_tugas) }}">
                                     </div>
 
                                     <div class="form-group required">
@@ -68,11 +69,11 @@
                             </div>
                             <div class="row justify-content-center">
                                 <div class="col-sm-8 col-lg-6">
-                                    <button type="submit" class="btn btn-primary btn-block" id="btnKirim"><i
-                                            class="fas fa-save" id="icon_kirim"></i>
-                                        <span id="textBtn"> Perbarui Dokumen Pindah Tugas</span>
-                                        <span id="loadingBtn" class="spinner-border spinner-border-sm d-none" role="status"
-                                            aria-hidden="true"></span>
+                                    <button type="submit" class="btn btn-primary btn-block" id="btnMutasi"><i
+                                            class="fas fa-save" id="icon_mutasi"></i>
+                                        <span id="textMutasi"> Perbarui Dokumen Pindah Tugas</span>
+                                        <span id="loadingMutasi" class="spinner-border spinner-border-sm d-none"
+                                            role="status" aria-hidden="true"></span>
                                     </button>
                                 </div>
                             </div>

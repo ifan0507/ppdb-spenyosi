@@ -55,7 +55,7 @@ class DatabaseSeeder extends Seeder
                 "keterangan" => "Jalur Umum adalah jalur pendaftaran terbuka bagi seluruh calon peserta didik yang ingin melanjutkan pendidikan ke SMP Negeri 1 Yosowilangun tanpa kriteria khusus. Seleksi dilakukan berdasarkan kuota dan waktu pendaftaran."
             ],
             [
-                "nama_jalur" => "Afirmasi (Siswa dari keluarga kurang mampu)",
+                "nama_jalur" => "Afirmasi (KIP, KKS, PKH)",
                 "keterangan" => "Jalur Afirmasi diperuntukkan bagi calon peserta didik yang berasal dari keluarga kurang mampu dan ingin bersekolah di SMP Negeri 1 Yosowilangun. Dibutuhkan bukti pendukung seperti KIP, KKS, atau surat keterangan tidak mampu dari pihak berwenang."
             ],
             [
@@ -95,106 +95,109 @@ class DatabaseSeeder extends Seeder
 
 
 
-        // $jenisAfirmasiList = ['Akademik', 'Non Akademik'];
-        // for ($i = 0; $i < 20; $i++) {
-        $akun = Register::create([
-            'nisn' => fake()->unique()->numerify('##########'), // 10 digit angka
-            'no_register' => now()->format('Ymd') . fake()->unique()->numerify('####'),
-            // 'email' => fake()->unique()->safeEmail(),
-            'email' => 'ifan@gmail.com',
-            'password' => '123',
-            'id_jalur' => '6',
-            'email_verified_at' => now(),
-            'verification_code' => null,
-        ]);
+        $tingkatPrestasi = ['Kecamatan', 'Kabupaten/Kota', 'Provinsi', 'Nasional'];
+        $jura = ['Juara 1', 'Juara 2', 'Juara 3', 'Lainnya'];
+        for ($i = 0; $i < 20; $i++) {
+            $akun = Register::create([
+                'nisn' => fake()->unique()->numerify('##########'), // 10 digit angka
+                'no_register' => now()->format('Ymd') . fake()->unique()->numerify('####'),
+                'email' => fake()->unique()->safeEmail(),
+                // 'email' => 'ifan@gmail.com',
+                'password' => '123',
+                'id_jalur' => '4',
+                'email_verified_at' => now(),
+                'verification_code' => null,
+            ]);
 
-        $siswa = SiswaBaru::create([
-            'id_register_siswa' => $akun->id,
-            'nama' => fake()->name(),
-            'nisn' => $akun->nisn,
-            'email' => $akun->email,
-            'jarak_sekolah' => fake()->randomFloat(2, 0.1, 10), // contoh jarak 0.1 - 10 km
-            'foto_kk' => 'default_document.png',
-            'foto_siswa' => 'default_siswa.png',
-            'foto_akte' => 'default_document.png',
-            'status_berkas' => '1'
-        ]);
+            $siswa = SiswaBaru::create([
+                'id_register_siswa' => $akun->id,
+                'nama' => fake()->name(),
+                'nisn' => $akun->nisn,
+                'email' => $akun->email,
+                'jarak_sekolah' => fake()->randomFloat(2, 0.1, 10), // contoh jarak 0.1 - 10 km
+                'foto_kk' => 'default_document.png',
+                'foto_siswa' => 'default_siswa.png',
+                'foto_akte' => 'default_document.png',
+                'status_berkas' => '1'
+            ]);
 
 
-        OrtuSiswa::create([
-            'id_siswa' => $siswa->id,
-            'status_berkas' => '1'
-        ]);
+            OrtuSiswa::create([
+                'id_siswa' => $siswa->id,
+                'status_berkas' => '1'
+            ]);
 
-        //     Akademik::create([
-        //         'id_register' => $akun->id,
-        //         // 'kategori' => Arr::random($jenisAfirmasiList),
-        //         'status_berkas' => '1',
-        //         'image' => 'default_document.png'
-        //     ]);
+            Akademik::create([
+                'id_register' => $akun->id,
+                'tingkat_prestasi' => Arr::random($tingkatPrestasi),
+                'perolehan' => Arr::random($jura),
+                // 'kategori' => 
+                'status_berkas' => '1',
+                'image' => 'default_document.png'
+            ]);
 
-        // $mapelList = MataPelajaran::all(); // Ambil semua 8 mapel
+            // $mapelList = MataPelajaran::all(); // Ambil semua 8 mapel
 
-        // $kelas4_1_total = 0;
-        // $kelas4_2_total = 0;
-        // $kelas5_1_total = 0;
-        // $kelas5_2_total = 0;
-        // $kelas6_1_total = 0;
+            // $kelas4_1_total = 0;
+            // $kelas4_2_total = 0;
+            // $kelas5_1_total = 0;
+            // $kelas5_2_total = 0;
+            // $kelas6_1_total = 0;
 
-        // foreach ($mapelList as $mapel) {
-        //     $kelas4_1 = rand(70, 90);
-        //     $kelas4_2 = rand(70, 90);
-        //     $kelas5_1 = rand(70, 90);
-        //     $kelas5_2 = rand(70, 90);
-        //     $kelas6_1 = rand(70, 90);
+            // foreach ($mapelList as $mapel) {
+            //     $kelas4_1 = rand(70, 90);
+            //     $kelas4_2 = rand(70, 90);
+            //     $kelas5_1 = rand(70, 90);
+            //     $kelas5_2 = rand(70, 90);
+            //     $kelas6_1 = rand(70, 90);
 
-        //     DataRaport::create([
-        //         'id_register' => $akun->id,
-        //         'id_mapel' => $mapel->id,
-        //         'kelas4_1' => $kelas4_1,
-        //         'kelas4_2' => $kelas4_2,
-        //         'kelas5_1' => $kelas5_1,
-        //         'kelas5_2' => $kelas5_2,
-        //         'kelas6_1' => $kelas6_1,
-        //     ]);
+            //     DataRaport::create([
+            //         'id_register' => $akun->id,
+            //         'id_mapel' => $mapel->id,
+            //         'kelas4_1' => $kelas4_1,
+            //         'kelas4_2' => $kelas4_2,
+            //         'kelas5_1' => $kelas5_1,
+            //         'kelas5_2' => $kelas5_2,
+            //         'kelas6_1' => $kelas6_1,
+            //     ]);
 
-        //     $kelas4_1_total += $kelas4_1;
-        //     $kelas4_2_total += $kelas4_2;
-        //     $kelas5_1_total += $kelas5_1;
-        //     $kelas5_2_total += $kelas5_2;
-        //     $kelas6_1_total += $kelas6_1;
-        // }
+            //     $kelas4_1_total += $kelas4_1;
+            //     $kelas4_2_total += $kelas4_2;
+            //     $kelas5_1_total += $kelas5_1;
+            //     $kelas5_2_total += $kelas5_2;
+            //     $kelas6_1_total += $kelas6_1;
+            // }
 
-        // $jumlah_mapel = $mapelList->count();
+            // $jumlah_mapel = $mapelList->count();
 
-        // $rata_kelas4_1 = $kelas4_1_total / $jumlah_mapel;
-        // $rata_kelas4_2 = $kelas4_2_total / $jumlah_mapel;
-        // $rata_kelas5_1 = $kelas5_1_total / $jumlah_mapel;
-        // $rata_kelas5_2 = $kelas5_2_total / $jumlah_mapel;
-        // $rata_kelas6_1 = $kelas6_1_total / $jumlah_mapel;
+            // $rata_kelas4_1 = $kelas4_1_total / $jumlah_mapel;
+            // $rata_kelas4_2 = $kelas4_2_total / $jumlah_mapel;
+            // $rata_kelas5_1 = $kelas5_1_total / $jumlah_mapel;
+            // $rata_kelas5_2 = $kelas5_2_total / $jumlah_mapel;
+            // $rata_kelas6_1 = $kelas6_1_total / $jumlah_mapel;
 
-        // // Hitung total rata-rata sesuai controller (dibagi 4)
-        // $total_rata = ($rata_kelas4_1 + $rata_kelas4_2 + $rata_kelas5_1 + $rata_kelas5_2 + $rata_kelas6_1) / 4;
+            // // Hitung total rata-rata sesuai controller (dibagi 4)
+            // $total_rata = ($rata_kelas4_1 + $rata_kelas4_2 + $rata_kelas5_1 + $rata_kelas5_2 + $rata_kelas6_1) / 4;
 
-        // DataRaport::where('id_register', $akun->id)->update([
-        //     'rata_kelas4_sem1' => $rata_kelas4_1,
-        //     'rata_kelas4_sem2' => $rata_kelas4_2,
-        //     'rata_kelas5_sem1' => $rata_kelas5_1,
-        //     'rata_kelas5_sem2' => $rata_kelas5_2,
-        //     'rata_kelas6_sem1' => $rata_kelas6_1,
-        //     'status' => '1',
-        // ]);
-        // RataRataRaport::create([
-        //     'id_register' => $akun->id,
-        //     'total_rata_rata' => $total_rata
-        // ]);
+            // DataRaport::where('id_register', $akun->id)->update([
+            //     'rata_kelas4_sem1' => $rata_kelas4_1,
+            //     'rata_kelas4_sem2' => $rata_kelas4_2,
+            //     'rata_kelas5_sem1' => $rata_kelas5_1,
+            //     'rata_kelas5_sem2' => $rata_kelas5_2,
+            //     'rata_kelas6_sem1' => $rata_kelas6_1,
+            //     'status' => '1',
+            // ]);
+            // RataRataRaport::create([
+            //     'id_register' => $akun->id,
+            //     'total_rata_rata' => $total_rata
+            // ]);
 
-        //     Pendaftaran::create([
-        //         'id_register' => $akun->id,
-        //         'status' => 'Pending',
-        //         'tanggal_daftar' => Carbon::now(),
-        //     ]);
-        // }
+            Pendaftaran::create([
+                'id_register' => $akun->id,
+                'status' => 'Pending',
+                'tanggal_daftar' => Carbon::now(),
+            ]);
+        }
 
 
         // $sourcePath = public_path('assets/SOAL.pdf');

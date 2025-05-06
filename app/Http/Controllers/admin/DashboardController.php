@@ -160,29 +160,87 @@ class DashboardController extends Controller
             'jalur_export' => 'mutasi'
         ]);
     }
-    public function viewAkademik(Request $request)
+    public function viewAkademik()
     {
         $breadcrumb = (object) [
             'list' => ['Master Data', 'Jalur Prestasi Akademik']
         ];
-        $sort = $request->input('sort');
-        $pendaftarans = Pendaftaran::with('register', 'register.siswa.ortu')
-            ->whereHas('register', function ($query) {
-                $query->where('id_jalur', '4');
-            })->get();
-        return view('admin.dataPendaftaran', ['pendaftarans' => $pendaftarans, 'data' => $this->data, 'breadcrumb' => $breadcrumb, 'jalur' => 'Jalur Prestasi Akademik', 'sort' => $sort, 'jalur_export' => 'akademik']);
+
+        $this->query->whereHas('register', function ($q) {
+            $q->where('id_jalur', '4');
+        });
+
+        $this->sortStatusPendaftaran($this->sort);
+
+        $tingkatPrestasi = ['Kecamatan', 'Kabupaten/Kota', 'Provinsi', 'Nasional'];
+        $sortJuaraMap = [
+            'p1_kecamatan' => ['tingkat' => 'Kecamatan', 'juara' => 'juara 1'],
+            'p2_kecamatan' => ['tingkat' => 'Kecamatan', 'juara' => 'juara 2'],
+            'p3_kecamatan' => ['tingkat' => 'Kecamatan', 'juara' => 'juara 3'],
+            'p1_kabupaten' => ['tingkat' => 'Kabupaten/Kota', 'juara' => 'juara 1'],
+            'p2_kabupaten' => ['tingkat' => 'Kabupaten/Kota', 'juara' => 'juara 2'],
+            'p3_kabupaten' => ['tingkat' => 'Kabupaten/Kota', 'juara' => 'juara 3'],
+            'p1_provinsi' => ['tingkat' => 'Provinsi', 'juara' => 'juara 1'],
+            'p2_provinsi' => ['tingkat' => 'Provinsi', 'juara' => 'juara 2'],
+            'p3_provinsi' => ['tingkat' => 'Provinsi', 'juara' => 'juara 3'],
+            'p1_nasional' => ['tingkat' => 'Nasional', 'juara' => 'juara 1'],
+            'p2_nasional' => ['tingkat' => 'Nasional', 'juara' => 'juara 2'],
+            'p3_nasional' => ['tingkat' => 'Nasional', 'juara' => 'juara 3'],
+            'lainnya' => ['tingkat' => null, 'juara' => 'Lainnya'],
+        ];
+
+        if (in_array(strtolower($this->sort), $tingkatPrestasi)) {
+            $this->query->join('registers', 'pendaftarans.id_register', '=', 'registers.id')
+                ->join('akademiks', 'registers.id', '=', 'akademiks.id_register')
+                ->where('akademiks.tingkat_prestasi', strtolower($this->sort))
+                ->select('pendaftarans.*');
+        } elseif (array_key_exists($this->sort, $sortJuaraMap)) {
+            $tingkat = $sortJuaraMap[$this->sort]['tingkat'];
+            $juara = $sortJuaraMap[$this->sort]['juara'];
+
+            $this->query->join('registers', 'pendaftarans.id_register', '=', 'registers.id')
+                ->join('akademiks', 'registers.id', '=', 'akademiks.id_register');
+
+            if ($tingkat !== null) {
+                $this->query->where('akademiks.tingkat_prestasi', strtolower($tingkat));
+            }
+
+            $this->query->where('akademiks.perolehan', strtolower($juara))
+                ->select('pendaftarans.*');
+        } else {
+            $this->query->latest();
+        }
+
+
+        $pendaftarans = $this->query->get();
+
+        if ($this->start && $this->end) {
+            $limit = $this->end - ($this->start - 1);
+            $pendaftarans = $pendaftarans->slice($this->start - 1, $limit)->values();
+        }
+
+        return view('admin.dataPendaftaran', ['pendaftarans' => $pendaftarans, 'data' => $this->data, 'breadcrumb' => $breadcrumb, 'jalur' => 'Jalur Prestasi Akademik', 'sort' => $this->sort, 'start_rank' => $this->start, 'end_rank' => $this->end, 'jalur_export' => 'akademik']);
     }
-    public function viewNonAkademik(Request $request)
+    public function viewNonAkademik()
     {
         $breadcrumb = (object) [
             'list' => ['Master Data', 'Jalur Prestasi Non Akademik']
         ];
-        $sort = $request->input('sort');
-        $pendaftarans = Pendaftaran::with('register', 'register.siswa.ortu')
-            ->whereHas('register', function ($query) {
-                $query->where('id_jalur', '5');
-            })->get();
-        return view('admin.dataPendaftaran', ['pendaftarans' => $pendaftarans, 'data' => $this->data, 'breadcrumb' => $breadcrumb, 'jalur' => 'Jalur Prestasi Akademik', 'sort' => $sort, 'jalur_export' => 'akademik']);
+
+        $this->query->whereHas('register', function ($q) {
+            $q->where('id_jalur', '5');
+        });
+
+        $this->sortStatusPendaftaran($this->sort);
+
+        $pendaftarans = $this->query->get();
+
+        if ($this->start && $this->end) {
+            $limit = $this->end - ($this->start - 1);
+            $pendaftarans = $pendaftarans->slice($this->start - 1, $limit)->values();
+        }
+
+        return view('admin.dataPendaftaran', ['pendaftarans' => $pendaftarans, 'data' => $this->data, 'breadcrumb' => $breadcrumb, 'jalur' => 'Jalur Prestasi Non Akademik', 'sort' => $this->sort, 'start_rank' => $this->start, 'end_rank' => $this->end, 'jalur_export' => 'non-akademik']);
     }
     public function viewRaport()
     {

@@ -11,7 +11,10 @@
                     <div class="card-body">
 
                         <form method="POST" enctype="multipart/form-data"
-                            action="{{ route('akademik.update', ['id' => $prestasis->id]) }}" id="main-form">
+                            @if ($data->jalur->id == 4) action="{{ route('akademik.update', ['id' => $prestasis->id]) }}" 
+                            @else
+                            action="{{ route('non-akademik.update', ['id' => $prestasis->id]) }}" @endif
+                            id="main-form">
                             @method('PUT')
                             @csrf
                             <div class="row">
@@ -28,7 +31,7 @@
                                         <label class="title" for="tingkat">Tingkat</label>
                                         <div class="d-block">
                                             <div class="custom-control custom-radio d-inline-block mr-2">
-                                                <input type="radio" class="custom-control-input" id="tingkat_kabkota"
+                                                <input type="radio" class="custom-control-input" id="tingkat_kecamatan"
                                                     name="tingkat_prestasi" value="Kecamatan"
                                                     {{ $prestasis->tingkat_prestasi == 'Kecamatan' ? 'checked' : '' }}>
                                                 <label class="custom-control-label"
@@ -37,7 +40,7 @@
                                             <div class="custom-control custom-radio d-inline-block mr-2">
                                                 <input type="radio" class="custom-control-input" id="tingkat_kabkota"
                                                     name="tingkat_prestasi" value="Kabupaten/Kota"
-                                                    {{ $prestasis->tingkat_prestasi == 'Individual' ? 'checked' : '' }}>
+                                                    {{ $prestasis->tingkat_prestasi == 'Kabupaten/Kota' ? 'checked' : '' }}>
                                                 <label class="custom-control-label"
                                                     for="tingkat_kabkota">Kabupaten/Kota</label>
                                             </div>
