@@ -47,6 +47,7 @@
                                 <h6 class="mb-3">Urutkan Berdasarkan Kriteria</h6>
                                 <form action="" id="keriteria">
                                     <div class="mb-3">
+
                                         <select class="form-select select-filter" id="urutkan" name="sort">
                                             <option value="">--- Pilih kriteria urutan ---</option>
                                             @if ($jalur == 'Jalur Zonasi')
@@ -69,13 +70,50 @@
                                                     Peringkat Raport
                                                 </option>
                                             @endif
-                                            @if ($jalur == 'Jalur Prestasi Akademik')
-                                                <option value="">Peringkat 1 (Provinsi)</option>
-                                                <option value="">Peringkat 2 (Provinsi)</option>
-                                                <option value="">Peringkat 3 (Provinsi)</option>
-                                                <option value="">Peringkat 1 (Kabupaten)</option>
-                                                <option value="">Peringkat 2 (Kabupaten)</option>
-                                                <option value="">Peringkat 3 (Kabupaten)</option>
+                                            @if ($jalur == 'Jalur Prestasi Akademik' || $jalur == 'Jalur Prestasi Non Akademik')
+                                                <option value="Kecamatan" {{ $sort == 'Kecamatan' ? 'selected' : '' }}>
+                                                    Tingkat Kecamatan
+                                                </option>
+                                                <option value="p1_kecamatan"
+                                                    {{ $sort == 'p1_kecamatan' ? 'selected' : '' }}>Peringkat 1 (Kecamatan)
+                                                </option>
+                                                <option value="p2_kecamatan"
+                                                    {{ $sort == 'p2_kecamatan' ? 'selected' : '' }}>Peringkat 2 (Kecamatan)
+                                                </option>
+                                                <option value="p3_kecamatan"
+                                                    {{ $sort == 'p3_kecamatan' ? 'selected' : '' }}>Peringkat 3 (Kecamatan)
+                                                </option>
+                                                <option value="Kabupaten/Kota"
+                                                    {{ $sort == 'Kabupaten/Kota' ? 'selected' : '' }}>Tingkat
+                                                    Kabupaten/Kota
+                                                </option>
+                                                <option value="p1_kabupaten"
+                                                    {{ $sort == 'p1_kabupaten' ? 'selected' : '' }}>Peringkat 1 (Kabupaten)
+                                                </option>
+                                                <option value="p2_kabupaten"
+                                                    {{ $sort == 'p2_kabupaten' ? 'selected' : '' }}>Peringkat 2 (Kabupaten)
+                                                </option>
+                                                <option value="p3_kabupaten"
+                                                    {{ $sort == 'p3_kabupaten' ? 'selected' : '' }}>Peringkat 3 (Kabupaten)
+                                                </option>
+                                                <option value="Provinsi" {{ $sort == 'Provinsi' ? 'selected' : '' }}>
+                                                    Tingkat Provinsi</option>
+                                                <option value="p1_provinsi" {{ $sort == 'p1_provinsi' ? 'selected' : '' }}>
+                                                    Peringkat 1 (Provinsi)</option>
+                                                <option value="p2_provinsi" {{ $sort == 'p2_provinsi' ? 'selected' : '' }}>
+                                                    Peringkat 2 (Provinsi)</option>
+                                                <option value="p3_provinsi" {{ $sort == 'p3_provinsi' ? 'selected' : '' }}>
+                                                    Peringkat 3 (Provinsi)</option>
+                                                <option value="Nasional" {{ $sort == 'Nasional' ? 'selected' : '' }}>
+                                                    Tingkat Nasional</option>
+                                                <option value="p1_nasional" {{ $sort == 'p1_nasional' ? 'selected' : '' }}>
+                                                    Peringkat 1 (Nasional)</option>
+                                                <option value="p2_nasional" {{ $sort == 'p2_nasional' ? 'selected' : '' }}>
+                                                    Peringkat 2 (Nasional)</option>
+                                                <option value="p3_nasional" {{ $sort == 'p3_nasional' ? 'selected' : '' }}>
+                                                    Peringkat 3 (Nasional)</option>
+                                                <option value="lainnya" {{ $sort == 'lainnya' ? 'selected' : '' }}>Lainnya
+                                                </option>
                                             @endif
                                             <option value="valid" {{ $sort == 'valid' ? 'selected' : '' }}>Valid</option>
                                             <option value="invalid" {{ $sort == 'invalid' ? 'selected' : '' }}>Invalid
@@ -115,8 +153,9 @@
                                             <form action="" method="GET">
                                                 <label for="top_n" class="form-label">Top Berapa Besar</label>
                                                 <div class="input-group">
-                                                    <input type="number" id="top_n" name="top_n" class="form-control"
-                                                        placeholder="Misalnya: 10" value="{{ old('top_n', $top_n) }}">
+                                                    <input type="number" id="top_n" name="top_n"
+                                                        class="form-control" placeholder="Misalnya: 10"
+                                                        value="{{ old('top_n', $top_n) }}">
                                                     <span class="input-group-text p-0">
                                                         <button class="btn gray-hover" type="submit">
                                                             <i class="bi bi-funnel"></i>
@@ -167,6 +206,8 @@
                                     <th scope="col">Peringkat Zonasi</th>
                                 @elseif ($jalur == 'Jalur Afirmasi')
                                     <th scope="col" class="text-nowrap">Jenis Afirmasi</th>
+                                @elseif ($jalur == 'Jalur Prestasi Akademik')
+                                    <th scope="col" class="text-nowrap">Perolehan</th>
                                 @endif
                                 <th scope="col">Tanggal Daftar</th>
                                 <th scope="col" class="text-center">Status</th>
@@ -196,6 +237,12 @@
                                     @elseif ($pendaftaran->register->id_jalur == 2)
                                         <td>
                                             {{ $pendaftaran->register->afirmasi->jenis_afirmasi }}
+                                        </td>
+                                    @elseif ($pendaftaran->register->id_jalur == 4)
+                                        <td>
+                                            @foreach ($pendaftaran->register->akademik as $akademik)
+                                                <div>{{ $akademik->perolehan . ', ' . $akademik->tingkat_prestasi }}</div>
+                                            @endforeach
                                         </td>
                                     @endif
                                     </td>
@@ -318,6 +365,11 @@
     </section>
     <script>
         $(document).ready(function() {
+            $('.select-filter').select2({
+                placeholder: "--- Pilih kriteria urutan ---",
+                allowClear: true,
+                width: '100%'
+            });
             $("#urutkan").on("change", function(e) {
                 const selected = $(this).val();
                 const url = new URL(window.location.href);

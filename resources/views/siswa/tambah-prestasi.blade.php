@@ -18,7 +18,10 @@
                                 <div class="col-sm-8 col-lg-6">
                                     <div class="form-group required">
                                         <label class="title">Nama Kegiatan</label>
-                                        <input type="text" placeholder="Misal: Lomba Thafidz tingkat Provinsi"
+                                        <input type="text"
+                                            @if ($data->jalur->id == 4) placeholder="Misal: Lomba Olimpiade Sains"
+                                            @else
+                                            placeholder="Misal: Lomba Olimpiade Olahraga, Seni, Hafidz Qur'an, Pramuka Garuda" @endif
                                             class="form-control " name="nama_prestasi" id="nama_kegiatan"
                                             value="{{ old('nama_prestasi') }}">
                                     </div>
@@ -88,6 +91,8 @@
                                             </option>
                                             <option value="Golden Ticket">Golden
                                                 Ticket
+                                            </option>
+                                            <option value="Lainnya">Lainnya
                                             </option>
                                         </select>
                                     </div>

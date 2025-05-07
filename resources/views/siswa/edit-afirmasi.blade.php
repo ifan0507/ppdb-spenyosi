@@ -117,6 +117,7 @@
                         title: "Oops...",
                         text: "Jenis Afirmasi Harus Dipilih!"
                     })
+                    $("#jenis_afirmasi").addClass("is-invalid");
                 } else {
                     $("#btnKirim").attr("disabled", true);
                     $("#textBtn").addClass("d-none");

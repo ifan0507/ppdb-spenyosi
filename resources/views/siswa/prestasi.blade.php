@@ -50,7 +50,7 @@
                                         <!-- Bagian atas halaman prestasi -->
                                         <div class="card-body">
                                             <!-- Tampilkan info tentang kuota prestasi -->
-                                            <div class="alert alert-info">
+                                            <div class="alert " style="background-color: #d4eefa; color: #1c759e">
                                                 <p class="mb-0">
                                                     <i class="fas fa-info-circle"></i> Anda dapat menambahkan maksimal 5
                                                     prestasi
@@ -119,7 +119,7 @@
                                                         @endif
 
                                                         @if ($data->jalur->id == 5)
-                                                            @forelse ($data->non_akademik?? [] as $item)
+                                                            @forelse ($data->nonAkademik?? [] as $item)
                                                                 <tr>
                                                                     <td>{{ $loop->iteration }}</td>
                                                                     <td>{{ $item->nama_prestasi }}</td>
@@ -179,4 +179,54 @@
             </div>
         </div>
     </div>
+    <script>
+        $(document).ready(function() {
+            $(".btn-delete").on("click", function(e) {
+                e.preventDefault();
+                Swal.fire({
+                    title: "Apakah anda yakin?",
+                    text: "data dihapus",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#18a342",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Hapus Data!",
+                    reverseButtons: true,
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $(this).closest(".form-delete").submit();
+                    }
+                });
+            });
+
+            $(".form-delete").on("submit", function(e) {
+                e.preventDefault();
+                const form = $(this);
+                $.ajax({
+                    type: "POST",
+                    url: form.attr('action'),
+                    data: form.serialize(),
+                    success: function(response) {
+                        Swal.fire({
+                            confirmButtonColor: "#18a342",
+                            icon: "success",
+                            title: "Berhasil!",
+                            text: "Data berhasil dihapus!",
+                            confirmButtonText: "OK",
+                        }).then((result) => {
+                            window.location.href = response.redirect
+                        });
+                    },
+                    error: function(xhr) {
+                        const mesg = xhr.responseJSON?.message ||
+                            'Terjadi kesalahan, coba lagi!';
+                        Swal.fire('Gagal', mesg, 'error')
+                    }
+                });
+
+
+
+            });
+        });
+    </script>
 @endsection
