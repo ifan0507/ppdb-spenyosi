@@ -76,7 +76,7 @@
                         </p>
                     </td>
                     <td class="text-left">
-                        @if ($data->siswa->ortu->status_berkas == '1')
+                        @if ($data->siswa->ortu?->status_berkas == '1')
                             <i class="far fa-check-circle fa-xl fa-xl" style="color:#38c172"></i>
                         @else
                             <i class="far fa-times-circle fa-xl" style="color:#e3342f"></i>

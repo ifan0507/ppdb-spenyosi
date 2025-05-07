@@ -57,12 +57,12 @@
                 <li>
                     <a href="{{ route('non-akademik') }}"
                         class="{{ request()->routeIs('non-akademik') ? 'active' : '' }}">
-                        <i class="fas fa-trophy me-2"></i><span>Jalur Prestasi Non Akademik</span>
+                        <i class="fas fa-trophy me-2"></i><span>Jalur Prestasi Nonakademik</span>
                     </a>
                 </li>
                 <li>
                     <a href="{{ route('raport') }}" class="{{ request()->routeIs('raport') ? 'active' : '' }}">
-                        <i class="fas fa-medal me-2"></i><span>Jalur Prestasi Raport</span>
+                        <i class="fas fa-medal me-2"></i><span>Jalur Prestasi Rapor</span>
                     </a>
                 </li>
             </ul>

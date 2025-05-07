@@ -127,6 +127,8 @@ class DatabaseSeeder extends Seeder
                 'kab_id' => fake()->numerify('35###'),
                 'kec_id' => fake()->numerify('35###'),
                 'desa_id' => fake()->numerify('35###'),
+                'rt' => fake()->numerify('###'),
+                'rw' => fake()->numerify('###'),
                 'alamat' => fake()->address(),
                 'no_hp' => fake()->phoneNumber(),
                 'email' => fake()->safeEmail(),

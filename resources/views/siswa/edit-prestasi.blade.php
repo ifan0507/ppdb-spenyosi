@@ -9,7 +9,6 @@
             <div class="row justify-content-center">
                 <div class="card card-primary card-outline card-outline-tabs col-md-12">
                     <div class="card-body">
-
                         <form method="POST" enctype="multipart/form-data"
                             @if ($data->jalur->id == 4) action="{{ route('akademik.update', ['id' => $prestasis->id]) }}" 
                             @else

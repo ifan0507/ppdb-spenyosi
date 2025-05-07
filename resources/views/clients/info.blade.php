@@ -10,7 +10,7 @@
                 @php
                     $ext = pathinfo($info->file, PATHINFO_EXTENSION);
                     $url = asset('storage/' . $info->file);
-                @endphp
+                @endphp 
                 <div class="info-box shadow-sm mb-4">
                     <div class="info-image">
                         @if (in_array($ext, ['jpg', 'jpeg', 'png', 'gif', 'webp']))

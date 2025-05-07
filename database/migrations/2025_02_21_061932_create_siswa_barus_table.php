@@ -26,6 +26,8 @@ return new class extends Migration
             $table->char('kab_id')->nullable();
             $table->char('kec_id')->nullable();
             $table->char('desa_id')->nullable();
+            $table->char('rt')->nullable();
+            $table->char('rw')->nullable();
             $table->text('alamat')->nullable();
             $table->string('no_hp')->nullable();
             $table->string('email')->nullable();

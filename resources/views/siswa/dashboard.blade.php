@@ -18,7 +18,6 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -32,7 +31,8 @@
                                 <div class="accordion" id="accordionExample">
                                     <div class="card card-primary card-outline">
                                         <div class="card-header d-flex justify-content-between align-items-center">
-                                            <h4>Biodata {{ $data->siswa->nama }}</h4>
+                                            <h4>Biodata {{ $data->siswa->nama }}
+                                            </h4>
                                             <a href="{{ route('siswa.edit') }}" class="btn btn-primary ms-auto">
                                                 <i class="fas fa-edit"></i> Perbarui Biodata
                                             </a>
@@ -40,8 +40,15 @@
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="col-md-3 text-center">
-                                                    <img src="{{ asset('storage/' . $data->siswa->foto_siswa) }}"
-                                                        class="img-fluid img-thumbnail mb-3" alt="Foto Pribadi">
+                                                    <div class="border p-2">
+                                                        <label for="pribadi_blob" class="form-label">
+                                                            Foto Pribadi
+                                                        </label>
+                                                        <a href="{{ asset('storage/' . $data->siswa->foto_siswa) }}">
+                                                            <img src="{{ asset('storage/' . $data->siswa->foto_siswa) }}"
+                                                                class="img-fluid img-thumbnail mb-3" alt="Foto Pribadi"
+                                                                target="_blank"></a>
+                                                    </div>
                                                 </div>
 
                                                 <div class="col-md-9">
@@ -90,6 +97,14 @@
                                                                     <td>{{ $data->siswa->desa ?? '_' }}</td>
                                                                 </tr>
                                                                 <tr>
+                                                                    <th>RT</th>
+                                                                    <td>{{ $data->siswa->rt ?? '_' }}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th>RW</th>
+                                                                    <td>{{ $data->siswa->rw ?? '_' }}</td>
+                                                                </tr>
+                                                                <tr>
                                                                     <th>Alamat</th>
                                                                     <td>
                                                                         {{ $data->siswa->alamat ?? '_' }}
@@ -109,15 +124,21 @@
                                                                 </tr>
                                                                 <tr>
                                                                     <th>Foto KK</th>
-                                                                    <td><img src="{{ asset('storage/' . $data->siswa->foto_kk) }}"
-                                                                            alt="Foto KK"
-                                                                            style="width: 130px; height: 130px;"></td>
+                                                                    <td><a
+                                                                            href="{{ asset('storage/' . $data->siswa->foto_kk) }}"><img
+                                                                                src="{{ asset('storage/' . $data->siswa->foto_kk) }}"
+                                                                                alt="Foto KK"
+                                                                                style="width: 130px; height: 130px;"
+                                                                                target="_blank"></a></td>
                                                                 </tr>
                                                                 <tr>
                                                                     <th>Foto Akte</th>
-                                                                    <td><img src="{{ asset('storage/' . $data->siswa->foto_akte) }}"
-                                                                            alt="Foto Akte"
-                                                                            style="width: 130px; height: 130px;"></td>
+                                                                    <td><a
+                                                                            href="{{ asset('storage/' . $data->siswa->foto_akte) }}"><img
+                                                                                src="{{ asset('storage/' . $data->siswa->foto_akte) }}"
+                                                                                alt="Foto Akte"
+                                                                                style="width: 130px; height: 130px;"
+                                                                                target="_blank"></a></td>
                                                                 </tr>
                                                             </tbody>
                                                         </table>
@@ -130,7 +151,6 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>

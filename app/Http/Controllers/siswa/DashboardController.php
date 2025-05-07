@@ -73,6 +73,9 @@ class DashboardController extends Controller
             'list' => ['Biodata', 'Perbarui Biodata']
         ];
         $data = Auth::guard('siswa')->user();
+        $breadcrumb = (object) [
+            'list' => ['Biodata', 'Perbarui Biodata']
+        ];
         $header = "Perbarui Biodata";
         return view('siswa.update-biodata', compact('data', 'header', 'breadcrumb'));
     }
@@ -175,6 +178,8 @@ class DashboardController extends Controller
             "kec_id" => $request->kec_id,
             "desa" => $request->desa,
             "desa_id" => $request->desa_id,
+            "rt" => $request->rt,
+            "rw" => $request->rw,
             "alamat" => $request->alamat,
             "no_hp" => $request->no_hp,
             "lokasi" => $request->lokasi,

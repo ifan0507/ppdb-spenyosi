@@ -56,98 +56,118 @@
                                                     prestasi
                                                 </p>
                                             </div>
+                                            <div class="table-responsive">
+                                                <table class="table datatable">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>No</th>
+                                                            <th>Nama Prestasi</th>
+                                                            <th>Tingkat</th>
+                                                            <th>Tahun Perolehan</th>
+                                                            <th>Perolehan</th>
+                                                            <th>Dokumen</th>
+                                                            <th>Aksi</th> {{-- Kolom tambahan --}}
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @if ($data->jalur->id == 4)
+                                                            @forelse ($data->akademik?? [] as $item)
+                                                                <tr>
+                                                                    <td>{{ $loop->iteration }}</td>
+                                                                    <td>{{ $item->nama_prestasi }}</td>
+                                                                    <td>{{ $item->tingkat_prestasi }}</td>
+                                                                    <td>{{ $item->thn_perolehan }}</td>
+                                                                    <td>{{ $item->perolehan }}</td>
+                                                                    <td>
+                                                                        <a href="{{ asset('storage/' . $item->image) }}"
+                                                                            target="_blank"><img
+                                                                                src="{{ asset('storage/' . $item->image) }}"
+                                                                                alt="Dokumen Prestasi" class="img-fluid"
+                                                                                style="max-width: 100px; height: auto;"></a>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="d-inline-flex gap-1">
+                                                                            <a href="{{ route('akademik.edit', $item->id) }}"
+                                                                                class="btn btn-sm btn-warning"
+                                                                                title="Edit">
+                                                                                <i class="fas fa-edit"></i>
+                                                                            </a>
+                                                                            <form
+                                                                                action="{{ route('akademik.delete', $item->id) }}"
+                                                                                method="POST"
+                                                                                style="display: inline-block;"
+                                                                                onsubmit="return confirm('Yakin ingin menghapus prestasi ini?')">
+                                                                                @csrf
+                                                                                @method('DELETE')
+                                                                                <button type="submit"
+                                                                                    class="btn btn-sm btn-danger"
+                                                                                    title="Hapus">
+                                                                                    <i class="fas fa-trash"></i>
+                                                                                </button>
+                                                                            </form>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            @empty
+                                                                <tr>
+                                                                    <td colspan="7" class="text-center align-middle">
+                                                                        Belum
+                                                                        ada data
+                                                                        prestasi akademik</td>
+                                                                </tr>
+                                                            @endforelse
+                                                        @endif
 
-                                            <table class="table table-bordered">
-                                                <thead>
-                                                    <tr>
-                                                        <th>No</th>
-                                                        <th>Nama Prestasi</th>
-                                                        <th>Tingkat</th>
-                                                        <th>Tahun</th>
-                                                        <th>Perolehan</th>
-                                                        <th>Dokumen</th>
-                                                        <th>Aksi</th> {{-- Kolom tambahan --}}
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @if ($data->jalur->id == 4)
-                                                        @forelse ($data->akademik?? [] as $item)
-                                                            <tr>
-                                                                <td>{{ $loop->iteration }}</td>
-                                                                <td>{{ $item->nama_prestasi }}</td>
-                                                                <td>{{ $item->tingkat_prestasi }}</td>
-                                                                <td>{{ $item->thn_perolehan }}</td>
-                                                                <td>{{ $item->perolehan }}</td>
-                                                                <td>
-                                                                    <a href="{{ asset('storage/' . $item->image) }}"
-                                                                        target="_blank">Lihat Dokumen</a>
-                                                                </td>
-                                                                <td>
-                                                                    <a href="{{ route('akademik.edit', $item->id) }}"
-                                                                        class="btn btn-sm btn-warning">
-                                                                        Edit
-                                                                    </a>
-                                                                    <form
-                                                                        action="{{ route('akademik.delete', $item->id) }}"
-                                                                        method="POST" style="display: inline-block;"
-                                                                        class="form-delete">
-                                                                        @csrf
-                                                                        @method('DELETE')
-                                                                        <button type="submit"
-                                                                            class="btn btn-sm btn-danger btn-delete">
-                                                                            Hapus
-                                                                        </button>
-                                                                    </form>
-                                                                </td>
-                                                            </tr>
-                                                        @empty
-                                                            <tr>
-                                                                <td colspan="7" class="text-center">Belum ada data
-                                                                    prestasi akademik</td>
-                                                            </tr>
-                                                        @endforelse
-                                                    @endif
-
-                                                    @if ($data->jalur->id == 5)
-                                                        @forelse ($data->nonAkademik?? [] as $item)
-                                                            <tr>
-                                                                <td>{{ $loop->iteration }}</td>
-                                                                <td>{{ $item->nama_prestasi }}</td>
-                                                                <td>{{ $item->tingkat_prestasi }}</td>
-                                                                <td>{{ $item->thn_perolehan }}</td>
-                                                                <td>{{ $item->perolehan }}</td>
-                                                                <td>
-                                                                    <a href="{{ asset('storage/' . $item->image) }}"
-                                                                        target="_blank">Lihat Dokumen</a>
-                                                                </td>
-                                                                <td>
-                                                                    <a href="{{ route('non-akademik.edit', $item->id) }}"
-                                                                        class="btn btn-sm btn-warning">
-                                                                        Edit
-                                                                    </a>
-                                                                    <form
-                                                                        action="{{ route('non-akademik.delete', $item->id) }}"
-                                                                        method="POST" style="display: inline-block;"
-                                                                        class="form-delete">
-                                                                        @csrf
-                                                                        @method('DELETE')
-                                                                        <button type="submit"
-                                                                            class="btn btn-sm btn-danger btn-delete">
-                                                                            Hapus
-                                                                        </button>
-                                                                    </form>
-                                                                </td>
-                                                            </tr>
-                                                        @empty
-                                                            <tr>
-                                                                <td colspan="7" class="text-center align-middle">Belum
-                                                                    ada data
-                                                                    prestasi non-akademik</td>
-                                                            </tr>
-                                                        @endforelse
-                                                    @endif
-                                                </tbody>
-                                            </table>
+                                                        @if ($data->jalur->id == 5)
+                                                            @forelse ($data->nonAkademik?? [] as $item)
+                                                                <tr>
+                                                                    <td>{{ $loop->iteration }}</td>
+                                                                    <td>{{ $item->nama_prestasi }}</td>
+                                                                    <td>{{ $item->tingkat_prestasi }}</td>
+                                                                    <td>{{ $item->thn_perolehan }}</td>
+                                                                    <td>{{ $item->perolehan }}</td>
+                                                                    <td>
+                                                                        <a href="{{ asset('storage/' . $item->image) }}"
+                                                                            target="_blank"><img
+                                                                                src="{{ asset('storage/' . $item->image) }}"
+                                                                                alt="Dokumen Prestasi" class="img-fluid"
+                                                                                style="max-width: 100px; height: auto;"></a>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="d-inline-flex gap-1">
+                                                                            <a href="{{ route('non-akademik.edit', $item->id) }}"
+                                                                                class="btn btn-sm btn-warning"
+                                                                                title="Edit">
+                                                                                <i class="fas fa-edit"></i>
+                                                                            </a>
+                                                                            <form
+                                                                                action="{{ route('non-akademik.delete', $item->id) }}"
+                                                                                method="POST"
+                                                                                style="display: inline-block;"
+                                                                                onsubmit="return confirm('Yakin ingin menghapus prestasi ini?')">
+                                                                                @csrf
+                                                                                @method('DELETE')
+                                                                                <button type="submit"
+                                                                                    class="btn btn-sm btn-danger"
+                                                                                    title="Hapus">
+                                                                                    <i class="fas fa-trash"></i>
+                                                                                </button>
+                                                                            </form>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            @empty
+                                                                <tr>
+                                                                    <td colspan="7" class="text-center align-middle">
+                                                                        Belum
+                                                                        ada data
+                                                                        prestasi non-akademik</td>
+                                                                </tr>
+                                                            @endforelse
+                                                        @endif
+                                                    </tbody>
+                                                </table>
+                                            </div>
 
                                         </div>
                                     </div>

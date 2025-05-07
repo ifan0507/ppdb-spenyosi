@@ -110,6 +110,18 @@
                                 <input type="hidden" id="selected_desa"
                                     value="{{ old('desa_id', $data->siswa->desa_id ?? '') }}">
                                 <div class="form-group  mb-3">
+                                    <label class="form-label">RT <span style="color:#e3342f">*</span></label>
+                                    <input type="text" class="form-control" name="rt" id="rt"
+                                        value="{{ old('rt', $data->siswa->rt) }}" placeholder="RT">
+                                    <div id="validasiRT" class="invalid-feedback"></div>
+                                </div>
+                                <div class="form-group  mb-3">
+                                    <label class="form-label">RW <span style="color:#e3342f">*</span></label>
+                                    <input type="text" class="form-control" name="rw" id="rw"
+                                        value="{{ old('rw', $data->siswa->rw) }}" placeholder="RW">
+                                    <div id="validasiRW" class="invalid-feedback"></div>
+                                </div>
+                                <div class="form-group  mb-3">
                                     <label for="alamat" class="form-label">Alamat <span
                                             style="color:#e3342f">*</span></label>
                                     <textarea class="form-control" id="alamat" name="alamat" rows="3" placeholder="Alamat tempat tinggal">{{ old('alamat', $data->siswa->alamat) }}</textarea>
@@ -559,6 +571,30 @@
                     $(this).removeClass("is-invalid").addClass("is-valid");
                 }
             });
+            $("[name='rt']").on("input", function() {
+                var no = $(this).val();
+                var noRegex = /^[0-9]{3}$/;
+
+                if (!noRegex.test(no)) {
+                    $("#validasiRT").text("RT harus terdiri dari 3 digit angka!").show();
+                    $(this).addClass("is-invalid");
+                } else {
+                    $("#validasiRT").hide();
+                    $(this).removeClass("is-invalid").addClass("is-valid");
+                }
+            });
+            $("[name='rw']").on("input", function() {
+                var no = $(this).val();
+                var noRegex = /^[0-9]{3}$/;
+
+                if (!noRegex.test(no)) {
+                    $("#validasiRW").text("RW harus terdiri dari 3 digit angka!").show();
+                    $(this).addClass("is-invalid");
+                } else {
+                    $("#validasiRW").hide();
+                    $(this).removeClass("is-invalid").addClass("is-valid");
+                }
+            });
 
             $("#tempat_lahir, #tanggal_lahir, #alamat, #coordinates, #asal-sekolah").on("input", function() {
                 if ($(this).val().trim() === "") {
@@ -634,6 +670,20 @@
                         text: "No HP wajib diisi!",
                     })
                     $("#no_hp").addClass("is-invalid");
+                } else if ($("#rt").val() == "") {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "RT wajib diisi!",
+                    })
+                    $("#rt").addClass("is-invalid");
+                } else if ($("#rw").val() == "") {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "rw wajib diisi!",
+                    })
+                    $("#rw").addClass("is-invalid");
                 } else if ($("#coordinates").val() == "") {
                     Swal.fire({
                         icon: "error",

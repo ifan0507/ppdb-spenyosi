@@ -29,10 +29,11 @@
                                     <td>
                                         @php
                                             $ext = pathinfo($info->file, PATHINFO_EXTENSION);
-                                            $url = Storage::url($info->file);
+                                            $url = asset('storage/' . $info->file);
                                         @endphp
                                         @if (in_array($ext, ['jpg', 'jpeg', 'png', 'gif', 'webp']))
-                                            <img src="{{ $url }}" class="img-fluid" alt="Preview Info">
+                                            <img src="{{ $url }}" class="img-fluid" alt="Preview Info"
+                                                class="img-fluid" style="max-width: 100px; height: auto;">
                                         @elseif ($ext === 'pdf')
                                             <iframe src="{{ $url }}" width="70%" height="400px"
                                                 frameborder="0"></iframe>
@@ -40,19 +41,22 @@
                                     </td>
 
                                     <td>
-                                        <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal"
-                                            data-bs-target="#infoModal" onclick="openModal({{ $info }})">
-                                            <i class="bi bi-pencil"></i>
-                                        </button>
-
-                                        <form action="{{ route('info.delete', $info->id) }}" method="POST"
-                                            class="d-inline">
-                                            @csrf @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-sm"
-                                                onclick="return confirm('Yakin hapus berita ini?')">
-                                                <i class="bi bi-trash"></i>
+                                        <div class="d-inline-flex gap-1">
+                                            <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal"
+                                                data-bs-target="#infoModal" onclick="openModal({{ $info }})"
+                                                title="Edit">
+                                                <i class="bi bi-pencil"></i>
                                             </button>
-                                        </form>
+
+                                            <form action="{{ route('info.delete', $info->id) }}" method="POST"
+                                                class="d-inline">
+                                                @csrf @method('DELETE')
+                                                <button type="submit" class="btn btn-danger btn-sm"
+                                                    onclick="return confirm('Yakin hapus berita ini?')" title="Hapus">
+                                                    <i class="bi bi-trash"></i>
+                                                </button>
+                                            </form>
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach

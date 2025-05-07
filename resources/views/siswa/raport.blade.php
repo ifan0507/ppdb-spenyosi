@@ -33,14 +33,14 @@
                                                 <h4>Raport</h4>
                                                 <a href="{{ route('edit-raport', ['id' => $data->id]) }}"
                                                     class="btn btn-primary ms-auto">
-                                                    <i class="fas fa-edit"></i> Perbarui data raport
+                                                    <i class="fas fa-edit"></i> Perbarui data rapor
                                                 </a>
                                             </div>
                                         @else
                                             <div class="card-header d-flex justify-content-between align-items-center">
                                                 <h4>Raport</h4>
                                                 <a href="{{ route('form-raport') }}" class="btn btn-primary ms-auto">
-                                                    <i class="fa-solid fa-square-plus"></i> Tambah data raport
+                                                    <i class="fa-solid fa-square-plus"></i> Tambah data rapor
                                                 </a>
                                             </div>
                                         @endif

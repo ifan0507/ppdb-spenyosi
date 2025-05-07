@@ -223,7 +223,7 @@ class DashboardController extends Controller
     public function viewNonAkademik()
     {
         $breadcrumb = (object) [
-            'list' => ['Master Data', 'Jalur Prestasi Non Akademik']
+            'list' => ['Master Data', 'Jalur Prestasi Nonakademik']
         ];
 
         $this->query->whereHas('register', function ($q) {
@@ -322,7 +322,7 @@ class DashboardController extends Controller
         $pendaftarans = Pendaftaran::where('id', $id)->first();
         $raports = collect();
         if ($pendaftarans) {
-            if ($pendaftarans->register->jalur->id == "5") {
+            if ($pendaftarans->register->jalur->id == "6") {
                 $raports = DataRaport::where('id_register', $pendaftarans->register->id)->get();
             }
         }
