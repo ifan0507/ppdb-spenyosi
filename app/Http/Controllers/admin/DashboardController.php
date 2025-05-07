@@ -17,7 +17,7 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class DashboardController extends Controller
 {
-    protected $data, $sort, $start, $end, $top_n, $query;
+    protected $data, $sort, $start, $end, $top_n, $query, $tingkatPrestasi, $sortJuaraMap;
 
     public function __construct(Request $request)
     {
@@ -27,6 +27,22 @@ class DashboardController extends Controller
         $this->end = $request->input('end_rank');
         $this->top_n = $request->input('top_n');
         $this->query = Pendaftaran::query();
+        $this->tingkatPrestasi = ['Kecamatan', 'Kabupaten/Kota', 'Provinsi', 'Nasional'];
+        $this->sortJuaraMap = [
+            'p1_kecamatan' => ['tingkat' => 'Kecamatan', 'juara' => 'Peringkat 1'],
+            'p2_kecamatan' => ['tingkat' => 'Kecamatan', 'juara' => 'Peringkat 2'],
+            'p3_kecamatan' => ['tingkat' => 'Kecamatan', 'juara' => 'Peringkat 3'],
+            'p1_kabupaten' => ['tingkat' => 'Kabupaten/Kota', 'juara' => 'Peringkat 1'],
+            'p2_kabupaten' => ['tingkat' => 'Kabupaten/Kota', 'juara' => 'Peringkat 2'],
+            'p3_kabupaten' => ['tingkat' => 'Kabupaten/Kota', 'juara' => 'Peringkat 3'],
+            'p1_provinsi' => ['tingkat' => 'Provinsi', 'juara' => 'Peringkat 1'],
+            'p2_provinsi' => ['tingkat' => 'Provinsi', 'juara' => 'Peringkat 2'],
+            'p3_provinsi' => ['tingkat' => 'Provinsi', 'juara' => 'Peringkat 3'],
+            'p1_nasional' => ['tingkat' => 'Nasional', 'juara' => 'Peringkat 1'],
+            'p2_nasional' => ['tingkat' => 'Nasional', 'juara' => 'Peringkat 2'],
+            'p3_nasional' => ['tingkat' => 'Nasional', 'juara' => 'Peringkat 3'],
+            'lainnya' => ['tingkat' => null, 'juara' => 'Lainnya'],
+        ];
     }
     //dashboard
     public function index()
@@ -172,40 +188,23 @@ class DashboardController extends Controller
 
         $this->sortStatusPendaftaran($this->sort);
 
-        $tingkatPrestasi = ['Kecamatan', 'Kabupaten/Kota', 'Provinsi', 'Nasional'];
-        $sortJuaraMap = [
-            'p1_kecamatan' => ['tingkat' => 'Kecamatan', 'juara' => 'juara 1'],
-            'p2_kecamatan' => ['tingkat' => 'Kecamatan', 'juara' => 'juara 2'],
-            'p3_kecamatan' => ['tingkat' => 'Kecamatan', 'juara' => 'juara 3'],
-            'p1_kabupaten' => ['tingkat' => 'Kabupaten/Kota', 'juara' => 'juara 1'],
-            'p2_kabupaten' => ['tingkat' => 'Kabupaten/Kota', 'juara' => 'juara 2'],
-            'p3_kabupaten' => ['tingkat' => 'Kabupaten/Kota', 'juara' => 'juara 3'],
-            'p1_provinsi' => ['tingkat' => 'Provinsi', 'juara' => 'juara 1'],
-            'p2_provinsi' => ['tingkat' => 'Provinsi', 'juara' => 'juara 2'],
-            'p3_provinsi' => ['tingkat' => 'Provinsi', 'juara' => 'juara 3'],
-            'p1_nasional' => ['tingkat' => 'Nasional', 'juara' => 'juara 1'],
-            'p2_nasional' => ['tingkat' => 'Nasional', 'juara' => 'juara 2'],
-            'p3_nasional' => ['tingkat' => 'Nasional', 'juara' => 'juara 3'],
-            'lainnya' => ['tingkat' => null, 'juara' => 'Lainnya'],
-        ];
-
-        if (in_array(strtolower($this->sort), $tingkatPrestasi)) {
+        if (in_array($this->sort, $this->tingkatPrestasi)) {
             $this->query->join('registers', 'pendaftarans.id_register', '=', 'registers.id')
                 ->join('akademiks', 'registers.id', '=', 'akademiks.id_register')
-                ->where('akademiks.tingkat_prestasi', strtolower($this->sort))
+                ->where('akademiks.tingkat_prestasi', $this->sort)
                 ->select('pendaftarans.*');
-        } elseif (array_key_exists($this->sort, $sortJuaraMap)) {
-            $tingkat = $sortJuaraMap[$this->sort]['tingkat'];
-            $juara = $sortJuaraMap[$this->sort]['juara'];
+        } elseif (array_key_exists($this->sort, $this->sortJuaraMap)) {
+            $tingkat = $this->sortJuaraMap[$this->sort]['tingkat'];
+            $juara = $this->sortJuaraMap[$this->sort]['juara'];
 
             $this->query->join('registers', 'pendaftarans.id_register', '=', 'registers.id')
                 ->join('akademiks', 'registers.id', '=', 'akademiks.id_register');
 
             if ($tingkat !== null) {
-                $this->query->where('akademiks.tingkat_prestasi', strtolower($tingkat));
+                $this->query->where('akademiks.tingkat_prestasi', $tingkat);
             }
 
-            $this->query->where('akademiks.perolehan', strtolower($juara))
+            $this->query->where('akademiks.perolehan', $juara)
                 ->select('pendaftarans.*');
         } else {
             $this->query->latest();
@@ -232,6 +231,29 @@ class DashboardController extends Controller
         });
 
         $this->sortStatusPendaftaran($this->sort);
+
+        if (in_array($this->sort, $this->tingkatPrestasi)) {
+            $this->query->join('registers', 'pendaftarans.id_register', '=', 'registers.id')
+                ->join('non_akademiks', 'registers.id', '=', 'non_akademiks.id_register')
+                ->where('non_akademiks.tingkat_prestasi', $this->sort)
+                ->select('pendaftarans.*');
+        } elseif (array_key_exists($this->sort, $this->sortJuaraMap)) {
+            $tingkat = $this->sortJuaraMap[$this->sort]['tingkat'];
+            $juara = $this->sortJuaraMap[$this->sort]['juara'];
+
+            $this->query->join('registers', 'pendaftarans.id_register', '=', 'registers.id')
+                ->join('non_akademiks', 'registers.id', '=', 'non_akademiks.id_register');
+
+            if ($tingkat !== null) {
+                $this->query->where('non_akademiks.tingkat_prestasi', $tingkat);
+            }
+
+            $this->query->where('non_akademiks.perolehan', $juara)
+                ->select('pendaftarans.*');
+        } else {
+            $this->query->latest();
+        }
+
 
         $pendaftarans = $this->query->get();
 

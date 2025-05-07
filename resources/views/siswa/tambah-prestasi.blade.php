@@ -83,14 +83,11 @@
                                         <select class="form-control" id="perolehan" name="perolehan">
                                             <option value="" disabled selected>-- Pilih Pencapaian --
                                             </option>
-                                            <option value="Juara 1">Juara 1
+                                            <option value="Peringakt 1">Peringkat 1
                                             </option>
-                                            <option value="Juara 2">Juara 2
+                                            <option value="Peringkat 2">Peringkat 2
                                             </option>
-                                            <option value="Juara 3">Juara 3
-                                            </option>
-                                            <option value="Golden Ticket">Golden
-                                                Ticket
+                                            <option value="Peringkat 3">Peringkat 3
                                             </option>
                                             <option value="Lainnya">Lainnya
                                             </option>
