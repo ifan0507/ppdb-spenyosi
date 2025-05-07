@@ -184,7 +184,7 @@ class DashboardController extends Controller
     public function viewNonAkademik(Request $request)
     {
         $breadcrumb = (object) [
-            'list' => ['Master Data', 'Jalur Prestasi Non Akademik']
+            'list' => ['Master Data', 'Jalur Prestasi Nonakademik']
         ];
         $sort = $request->input('sort');
         $pendaftarans = Pendaftaran::with('register', 'register.siswa.ortu')
@@ -195,7 +195,7 @@ class DashboardController extends Controller
             'pendaftarans' => $pendaftarans,
             'data' => $this->data,
             'breadcrumb' => $breadcrumb,
-            'jalur' => 'Jalur Prestasi Akademik',
+            'jalur' => 'Jalur Prestasi Nonakademik',
             'sort' => $sort,
             'start_rank' => $this->start,
             'end_rank' => $this->end,
@@ -260,7 +260,7 @@ class DashboardController extends Controller
         $pendaftarans = Pendaftaran::where('id', $id)->first();
         $raports = collect();
         if ($pendaftarans) {
-            if ($pendaftarans->register->jalur->id == "5") {
+            if ($pendaftarans->register->jalur->id == "6") {
                 $raports = DataRaport::where('id_register', $pendaftarans->register->id)->get();
             }
         }

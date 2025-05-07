@@ -46,13 +46,20 @@
                             @endif
                             @if ($pendaftarans->register->jalur->id == '4')
                                 <li class="nav-item">
-                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#prestasi">Dokumen
-                                        Prestasi</button>
+                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#prestasiAkademik">Dokumen
+                                        Prestasi Akademik</button>
                                 </li>
                             @endif
                             @if ($pendaftarans->register->jalur->id == '5')
                                 <li class="nav-item">
-                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#raport">Raport</button>
+                                    <button class="nav-link" data-bs-toggle="tab"
+                                        data-bs-target="#prestasiNonAkademik">Dokumen
+                                        Prestasi Nonakademik</button>
+                                </li>
+                            @endif
+                            @if ($pendaftarans->register->jalur->id == '6')
+                                <li class="nav-item">
+                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#raport">Rapor</button>
                                 </li>
                             @endif
 
@@ -160,12 +167,12 @@
                                     </div>
                                 </div>
                                 @if ($pendaftarans->register->siswa->ortu->status_hubungan === 'Wali')
-                                <div class="row mb-3">
-                                    <label for="fullName" class="col-md-4 col-lg-3">Hubungan Wali</label>
-                                    <div class="col-lg-9 col-md-8">
-                                        {{ $pendaftarans->register->siswa->ortu->hubungan_wali }}
+                                    <div class="row mb-3">
+                                        <label for="fullName" class="col-md-4 col-lg-3">Hubungan Wali</label>
+                                        <div class="col-lg-9 col-md-8">
+                                            {{ $pendaftarans->register->siswa->ortu->hubungan_wali }}
+                                        </div>
                                     </div>
-                                </div>     
                                 @endif
                                 <div class="row mb-3">
                                     <label for="fullName" class="col-md-4 col-lg-3">Pendidikan Ayah / Wali</label>
@@ -249,130 +256,239 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-pane fade profile-overview" id="prestasi">
-                                <h5 class="card-title">Dokumen Prestasi</h5>
-
-                                <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Nama Kegiatan</div>
-                                    <div class="col-lg-9 col-md-8">
-                                        {{ $pendaftarans->register->lomba?->nama_prestasi }}
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Jenis Prestasi</div>
-                                    <div class="col-lg-9 col-md-8">
-                                        {{ $pendaftarans->register->lomba?->jenis_prestasi }}
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Tingkat Prestasi</div>
-                                    <div class="col-lg-9 col-md-8">
-                                        {{ $pendaftarans->register->lomba?->tingkat_prestasi }}
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Tahun Perolehan</div>
-                                    <div class="col-lg-9 col-md-8">
-                                        {{ $pendaftarans->register->lomba?->thn_perolehan }}
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Perolehan</div>
-                                    <div class="col-lg-9 col-md-8">
-                                        {{ $pendaftarans->register->lomba?->perolehan }}
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Dokumen Prestasi</div>
-                                    <div class="col-lg-9 col-md-8">
-                                        <img src="{{ asset('storage/' . $pendaftarans->register->lomba?->image) }}"
-                                            alt="Dokumen Prestasi" class="img-fluid">
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <div class="tab-pane fade pt-3" id="raport">
-
-                                <div class="card-header">
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered">
-                                            <thead>
-                                                <tr>
-                                                    <th rowspan="2" class="align-middle text-center">No</th>
-                                                    <th rowspan="2" class="align-middle text-center">Mata
-                                                        Pelajaran</th>
-                                                    <th colspan="2" class="align-middle text-center">Rapor
-                                                        Kelas 4</th>
-                                                    <th colspan="2" class="align-middle text-center">Rapor
-                                                        Kelas 5</th>
-                                                    <th class="align-middle text-center">Rapor Kelas 6</th>
-
-                                                </tr>
-                                                <tr>
-                                                    <th class="align-middle text-center">Semester 1</th>
-                                                    <th class="align-middle text-center">Semester 2</th>
-                                                    <th class="align-middle text-center">Semester 1</th>
-                                                    <th class="align-middle text-center">Semester 2</th>
-                                                    <th class="align-middle text-center">Semester 1</th>
-                                            </thead>
-
-                                            <tbody>
-                                                @php $no = 1; @endphp
-                                                @forelse ($raports as $raport)
+                            <div class="tab-pane fade pt-3 profile-overview" id="prestasiAkademik">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Name Kegiatan</th>
+                                                <th scope="col">Tingkat</th>
+                                                <th scope="col">Tahun Perolehan</th>
+                                                <th scope="col">Pencapaian</th>
+                                                <th scope="col">Dokumen Pendukung</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if ($pendaftarans->register->akademik->isNotEmpty())
+                                                @forelse ($pendaftarans->register->akademik as $item)
                                                     <tr>
-                                                        <td>{{ $no++ }}</td>
-                                                        <td>
-                                                            {{ $raport->mapel->nama_matapelajaran }}
-                                                        </td>
-                                                        <td>
-                                                            {{ $raport->kelas4_1 }}
-                                                        </td>
-                                                        <td>
-                                                            {{ $raport->kelas4_2 }}
-                                                        </td>
-                                                        <td>
-                                                            {{ $raport->kelas5_1 }}
-                                                        </td>
-                                                        <td>
-                                                            {{ $raport->kelas5_2 }}
-                                                        </td>
-                                                        <td>
-                                                            {{ $raport->kelas6_1 }}
+                                                        <th scope="row">{{ $loop->iteration }}</th>
+                                                        <td>{{ $item->nama_prestasi }}</td>
+                                                        <td>{{ $item->tingkat_prestasi }}</td>
+                                                        <td>{{ $item->thn_perolehan }}</td>
+                                                        <td>{{ $item->perolehan }}</td>
+                                                        <td><a href="{{ asset('storage/' . $item->image) }}"
+                                                                target="_blank"><img
+                                                                    src="{{ asset('storage/' . $item->image) }}"
+                                                                    alt="Dokumen Prestasi" class="img-fluid">
+                                                            </a>
                                                         </td>
                                                     </tr>
                                                 @empty
                                                     <tr>
-                                                        <td colspan="8" class="text-center">
-                                                            <p>Tidak ada data</p>
-                                                        </td>
+                                                        <td colspan="7" class="text-center align-middle">Belum
+                                                            ada data
+                                                            prestasi akademik</td>
                                                     </tr>
                                                 @endforelse
-                                                @if (!$raports->isEmpty())
-                                                    <tr>
-                                                        <td colspan="2"><strong>Rata-rata Nilai</strong></td>
-                                                        <td>{{ $raports->avg('rata_kelas4_sem1') }}</td>
-                                                        <td>{{ $raports->avg('rata_kelas4_sem2') }}</td>
-                                                        <td>{{ $raports->avg('rata_kelas5_sem1') }}</td>
-                                                        <td>{{ $raports->avg('rata_kelas5_sem2') }}</td>
-                                                        <td>{{ $raports->avg('rata_kelas6_sem1') }}</td>
-                                                    </tr>
-                                                @endif
-
-                                            </tbody>
-
-                                        </table>
-                                    </div>
+                                            @endif
+                                        </tbody>
+                                    </table>
                                 </div>
-
                             </div>
 
-                        </div><!-- End Bordered Tabs -->
+                            <div class="tab-pane fade  profile-overview" id="prestasiNonAkademik">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Name Kegiatan</th>
+                                                <th scope="col">Tingkat</th>
+                                                <th scope="col">Tahun Perolehan</th>
+                                                <th scope="col">Pencapaian</th>
+                                                <th scope="col">Dokumen Pendukung</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if ($pendaftarans->register->nonAkademik->isNotEmpty())
+                                                @forelse ($pendaftarans->register->nonAkademik as $item)
+                                                    <tr>
+                                                        <th scope="row">{{ $loop->iteration }}</th>
+                                                        <td>{{ $item->nama_prestasi }}</td>
+                                                        <td>{{ $item->tingkat_prestasi }}</td>
+                                                        <td>{{ $item->thn_perolehan }}</td>
+                                                        <td>{{ $item->perolehan }}</td>
+                                                        <td><a href="{{ asset('storage/' . $item->image) }}"
+                                                                target="_blank"><img
+                                                                    src="{{ asset('storage/' . $item->image) }}"
+                                                                    alt="Dokumen Prestasi" class="img-fluid">
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                @empty
+                                                    <tr>
+                                                        <td colspan="7" class="text-center align-middle">Belum
+                                                            ada data
+                                                            prestasi nonakademik</td>
+                                                    </tr>
+                                                @endforelse
+                                            @endif
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
 
-                    </div>
+                            <div class="tab-pane fade pt-3" id="raport">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-rapor">
+                                        <thead>
+                                            <tr>
+                                                <th rowspan="2" class="align-middle text-center">No
+                                                </th>
+                                                <th rowspan="2" class="align-middle text-center">Mata
+                                                    Pelajaran</th>
+                                                <th colspan="2" class="align-middle text-center">
+                                                    Rapor
+                                                    Kelas 4</th>
+                                                <th colspan="2" class="align-middle text-center">
+                                                    Rapor
+                                                    Kelas 5</th>
+                                                <th class="align-middle text-center">Rapor Kelas 6</th>
+
+                                            </tr>
+                                            <tr>
+                                                <th class="align-middle text-center">Semester 1</th>
+                                                <th class="align-middle text-center">Semester 2</th>
+                                                <th class="align-middle text-center">Semester 1</th>
+                                                <th class="align-middle text-center">Semester 2</th>
+                                                <th class="align-middle text-center">Semester 1</th>
+                                        </thead>
+
+                                        @if ($raports->isNotEmpty())
+                                            <tbody>
+                                                @php
+                                                    $indexA = 1;
+                                                    $indexB = 7;
+                                                @endphp
+                                                <tr>
+                                                    <td colspan="8" class="kelompok-header">
+                                                        <strong>Kelompok A</strong>
+                                                    </td>
+                                                </tr>
+                                                @foreach ($raports as $raport)
+                                                    @if (in_array($raport->mapel->nama_matapelajaran, [
+                                                            'Pendidikan Agama',
+                                                            'Pendidikan Pancasila & Kewarganegaraan',
+                                                            'Bahasa Indonesia',
+                                                            'Matematika',
+                                                            'Ilmu Pengetahuan Alam (IPA)',
+                                                            'Ilmu Pengetahuan Sosial (IPS)',
+                                                        ]))
+                                                        <tr>
+                                                            <td>{{ $indexA++ }}.</td>
+                                                            <td>{{ $raport->mapel->nama_matapelajaran }}
+                                                            </td>
+                                                            <td>{{ $raport->kelas4_1 }}</td>
+                                                            <td>{{ $raport->kelas4_2 }}</td>
+                                                            <td>{{ $raport->kelas5_1 }}</td>
+                                                            <td>{{ $raport->kelas5_2 }}</td>
+                                                            <td>{{ $raport->kelas6_1 }}</td>
+                                                        </tr>
+                                                    @endif
+                                                @endforeach
+
+                                                <tr>
+                                                    <td colspan="8" class="kelompok-header">
+                                                        <strong>Kelompok B</strong>
+                                                    </td>
+                                                </tr>
+                                                @foreach ($raports as $raport)
+                                                    @if (in_array($raport->mapel->nama_matapelajaran, ['Seni Budaya dan Prakarya', 'Pend. Jasmani, Olahraga dan Kesehatan']))
+                                                        <tr>
+                                                            <td>{{ $indexB++ }}.</td>
+                                                            <td>{{ $raport->mapel->nama_matapelajaran }}
+                                                            </td>
+                                                            <td>{{ $raport->kelas4_1 }}</td>
+                                                            <td>{{ $raport->kelas4_2 }}</td>
+                                                            <td>{{ $raport->kelas5_1 }}</td>
+                                                            <td>{{ $raport->kelas5_2 }}</td>
+                                                            <td>{{ $raport->kelas6_1 }}</td>
+                                                        </tr>
+                                                    @endif
+                                                @endforeach
+
+                                                @php
+                                                    $bahasaJawa = $raports->firstWhere(
+                                                        'mapel.nama_matapelajaran',
+                                                        'Bahasa Jawa',
+                                                    );
+                                                @endphp
+                                                @if ($bahasaJawa)
+                                                    <tr>
+                                                        <td rowspan="2">{{ $indexB++ }}.</td>
+                                                        <td colspan="7" class="text-left"><b>Muatan
+                                                                Lokal</b></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{{ $bahasaJawa->mapel->nama_matapelajaran }}
+                                                        </td>
+                                                        <td>{{ $bahasaJawa->kelas4_1 }}</td>
+                                                        <td>{{ $bahasaJawa->kelas4_2 }}</td>
+                                                        <td>{{ $bahasaJawa->kelas5_1 }}</td>
+                                                        <td>{{ $bahasaJawa->kelas5_2 }}</td>
+                                                        <td>{{ $bahasaJawa->kelas6_1 }}</td>
+                                                    </tr>
+                                                @endif
+                                                @if (!$raports->isEmpty())
+                                                    <tr>
+                                                        <td colspan="2"><strong>Rata-rata
+                                                                Nilai</strong>
+                                                        </td>
+                                                        <td>{{ $raports->avg('rata_kelas4_sem1') }}
+                                                        </td>
+                                                        <td>{{ $raports->avg('rata_kelas4_sem2') }}
+                                                        </td>
+                                                        <td>{{ $raports->avg('rata_kelas5_sem1') }}
+                                                        </td>
+                                                        <td>{{ $raports->avg('rata_kelas5_sem2') }}
+                                                        </td>
+                                                        <td>{{ $raports->avg('rata_kelas6_sem1') }}
+                                                        </td>
+                                                    </tr>
+                                                @endif
+                                            </tbody>
+                                        @else
+                                            <tbody>
+                                                <tr>
+                                                    <td colspan="8">Tidak ada data</td>
+                                                </tr>
+                                            </tbody>
+                                        @endif
+                                    </table>
+                                </div>
+                                <div class="border m-3 py-1 px-2 text-center" id="photo-box">
+                                    <label for="pribadi_blob" class="form-label">
+                                        Dokumen Rapor
+                                    </label>
+
+                                    <img id="img-raport_blob"
+                                        src="{{ asset('storage/' . $pendaftarans->register->rata_rata_raport?->image) }}"
+                                        {{-- {{ $data->rata_rata_raport?->image ? asset('storage/' . $data->rata_rata_raport?->image) : asset('assets/img/default_document.png') }} --}} class="img-fluid rounded border mb-2"
+                                        style="max-width: 100%;">
+                                    <div id="info-raport_blob" class="text-muted mt-2" style="display:none;"></div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div><!-- End Bordered Tabs -->
+
                 </div>
-
             </div>
+
+        </div>
         </div>
     </section>
 @endsection

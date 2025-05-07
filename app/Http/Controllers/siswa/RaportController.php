@@ -36,7 +36,7 @@ class RaportController extends Controller
     public function create()
     {
         $breadcrumb = (object) [
-            'list' => ['Data Raport', 'Tambah Data Raport']
+            'list' => ['Data Rapor', 'Tambah Data Rapor']
         ];
         $header = "Form input raport";
         $mapel = MataPelajaran::all();
@@ -115,11 +115,11 @@ class RaportController extends Controller
     public function edit(string $id)
     {
         $breadcrumb = (object) [
-            'list' => ['Data Raport', 'Edit Data Raport']
+            'list' => ['Data Rapor', 'Edit Data Rapor']
         ];
 
         $raports = DataRaport::where('id_register', $id)->get();
-        $header = "Perbarui raport";
+        $header = "Perbarui Rapor";
         return view('siswa.edit-raport',  ['data' => $this->data, "raports" => $raports, "breadcrumb" => $breadcrumb, "header" => $header]);
     }
 

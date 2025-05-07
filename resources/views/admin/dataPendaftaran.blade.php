@@ -186,7 +186,7 @@
                                     @if ($pendaftaran->register->id_jalur == 6)
                                         <td class="text-center">
                                             <strong>{{ $pendaftaran->peringkat_raport ?? '-' }}</strong>
-                                            ({{ $pendaftaran->register->rata_rata_raport->total_rata_rata }})
+                                            ({{ optional($pendaftaran->register->rata_rata_raport)->total_rata_rata ?? '-' }})
                                         </td>
                                     @elseif ($pendaftaran->register->id_jalur == 1)
                                         <td>
@@ -279,7 +279,7 @@
                                     <td>
                                         @if ($pendaftaran->register->id_jalur == 6)
                                             <strong>{{ $pendaftaran->peringkat_raport ?? '-' }}</strong>
-                                            ({{ $pendaftaran->register->raport->total_rata_rata }})
+                                            ({{ optional($pendaftaran->register->rata_rata_raport)->total_rata_rata ?? '-' }})
                                         @elseif ($pendaftaran->register->id_jalur == 1)
                                             <strong>{{ $pendaftaran->peringkat_zonasi ?? '-' }}</strong>
                                             ({{ $pendaftaran->register->siswa->jarak_sekolah }} km)

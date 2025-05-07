@@ -26,7 +26,7 @@
             <li class="nav-item">
                 <a class="nav-link remove-tab-format font-bold {{ $active_tab == 'prestasi_lomba' ? 'active' : '' }}"
                     id="dokumen-prestasi-tab" data-toggle="pill" href="{{ route('siswa.akademik') }}" role="tab">
-                    Dokument Prestasi Akademik
+                    Dokumen Prestasi Akademik
                 </a>
             </li>
         @elseif ($data->jalur->id == 5)
@@ -34,14 +34,14 @@
                 <a class="nav-link remove-tab-format font-bold {{ $active_tab == 'prestasi_lomba' ? 'active' : '' }}"
                     id="dokumen-prestasi-tab" data-toggle="pill" href="{{ route('siswa.non-akademik') }}"
                     role="tab">
-                    Dokument Prestasi Non Akademik
+                    Dokumen Prestasi Nonakademik
                 </a>
             </li>
         @elseif ($data->jalur->id == 6)
             <li class="nav-item">
                 <a class="nav-link remove-tab-format font-bold {{ $active_tab == 'raport' ? 'active' : '' }}"
                     id="raport-tab" data-toggle="pill" href="{{ route('siswa.raport') }}" role="tab">
-                    Raport
+                    Rapor
                 </a>
             </li>
         @endif
