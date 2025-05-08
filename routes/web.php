@@ -81,7 +81,6 @@ Route::middleware(['cache_verify', 'auth_siswa'])->group(function () {
     Route::get('/prestasi-akademik/{id}/edit', [PenunjangController::class, 'editPrestasiAkademik'])->name('akademik.edit');
     Route::put('/prestasi-akademik/{id}/update', [PenunjangController::class, 'updatePrestasiAkademik'])->name('akademik.update');
     Route::delete('/prestasi-akademik/{id}/delete', [PenunjangController::class, 'deletePrestasiAkademik'])->name('akademik.delete');
-
     // Non Akademik
     route::get('/prestasi-non-akademik', [PenunjangController::class, 'viewPrestasi'])->name('siswa.non-akademik');
     Route::get('/prestasi-non-akademik/create', [PenunjangController::class, 'createNonAkademik'])->name('non-akademik.create');

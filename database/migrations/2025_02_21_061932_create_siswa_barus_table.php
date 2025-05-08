@@ -26,8 +26,8 @@ return new class extends Migration
             $table->char('kab_id')->nullable();
             $table->char('kec_id')->nullable();
             $table->char('desa_id')->nullable();
-            $table->string('rt')->nullable();
-            $table->string('rw')->nullable();
+            $table->char('rt')->nullable();
+            $table->char('rw')->nullable();
             $table->text('alamat')->nullable();
             $table->string('no_hp')->nullable();
             $table->string('email')->nullable();
@@ -37,7 +37,6 @@ return new class extends Migration
             $table->string('foto_siswa')->nullable();
             $table->string('foto_akte')->nullable();
             $table->enum('status_berkas', ['0', '1'])->default('0');
-            // $table->ulid('id_register_siswa');
             $table->foreignUlid('id_register_siswa')->references('id')->on('registers')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });

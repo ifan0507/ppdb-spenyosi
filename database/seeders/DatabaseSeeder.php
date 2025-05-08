@@ -10,6 +10,7 @@ use App\Models\DocumentPrestasiLomba;
 use App\Models\Jalur;
 use App\Models\Info;
 use App\Models\MataPelajaran;
+use App\Models\NonAkademik;
 use App\Models\OrtuSiswa;
 use App\Models\Pendaftaran;
 use App\Models\RataRataRaport;
@@ -37,51 +38,51 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        MataPelajaran::insert([
-            ["nama_matapelajaran" => "Pendidikan Agama"],
-            ["nama_matapelajaran" => "Pendidikan Pancasila & Kewarganegaraan"],
-            ["nama_matapelajaran" => "Bahasa Indonesia"],
-            ["nama_matapelajaran" => "Matematika"],
-            ["nama_matapelajaran" => "Ilmu Pengetahuan Alam (IPA)"],
-            ["nama_matapelajaran" => "Ilmu Pengetahuan Sosial (IPS)"],
-            ["nama_matapelajaran" => "Seni Budaya dan Prakarya"],
-            ["nama_matapelajaran" => "Pend. Jasmani, Olahraga dan Kesehatan"],
-            ["nama_matapelajaran" => "Bahasa Jawa"]
-        ]);
+        // MataPelajaran::insert([
+        //     ["nama_matapelajaran" => "Pendidikan Agama"],
+        //     ["nama_matapelajaran" => "Pendidikan Pancasila & Kewarganegaraan"],
+        //     ["nama_matapelajaran" => "Bahasa Indonesia"],
+        //     ["nama_matapelajaran" => "Matematika"],
+        //     ["nama_matapelajaran" => "Ilmu Pengetahuan Alam (IPA)"],
+        //     ["nama_matapelajaran" => "Ilmu Pengetahuan Sosial (IPS)"],
+        //     ["nama_matapelajaran" => "Seni Budaya dan Prakarya"],
+        //     ["nama_matapelajaran" => "Pend. Jasmani, Olahraga dan Kesehatan"],
+        //     ["nama_matapelajaran" => "Bahasa Jawa"]
+        // ]);
 
-        Jalur::insert([
-            [
-                "nama_jalur" => "Umum",
-                "keterangan" => "Jalur Umum adalah jalur pendaftaran terbuka bagi seluruh calon peserta didik yang ingin melanjutkan pendidikan ke SMP Negeri 1 Yosowilangun tanpa kriteria khusus. Seleksi dilakukan berdasarkan kuota dan waktu pendaftaran."
-            ],
-            [
-                "nama_jalur" => "Afirmasi (KIP, KKS, PKH)",
-                "keterangan" => "Jalur Afirmasi diperuntukkan bagi calon peserta didik yang berasal dari keluarga kurang mampu dan ingin bersekolah di SMP Negeri 1 Yosowilangun. Dibutuhkan bukti pendukung seperti KIP, KKS, atau surat keterangan tidak mampu dari pihak berwenang."
-            ],
-            [
-                "nama_jalur" => "Pindah Tugas (Orang tua/wali pindah kerja)",
-                "keterangan" => "Jalur ini dikhususkan untuk calon peserta didik yang mengikuti orang tua/wali yang pindah tugas kerja ke wilayah sekitar SMP Negeri 1 Yosowilangun. Wajib melampirkan surat keterangan resmi dari instansi tempat orang tua/wali bekerja."
-            ],
-            [
-                "nama_jalur" => "Prestasi Lomba Akademik",
-                "keterangan" => "Jalur ini memberi kesempatan bagi calon peserta didik yang memiliki prestasi lomba di bidang akademik, non-akademik, atau hafalan Al-Qur'an untuk mendaftar ke SMP Negeri 1 Yosowilangun. Wajib melampirkan bukti prestasi atau surat keterangan tahfidz."
-            ],
-            [
-                "nama_jalur" => "Prestasi Lomba Non Akademik",
-                "keterangan" => "Jalur ini memberi kesempatan bagi calon peserta didik yang memiliki prestasi lomba di bidang akademik, non-akademik, atau hafalan Al-Qur'an untuk mendaftar ke SMP Negeri 1 Yosowilangun. Wajib melampirkan bukti prestasi atau surat keterangan tahfidz."
-            ],
-            [
-                "nama_jalur" => "Prestasi Nilai Raport",
-                "keterangan" => "Jalur Prestasi seleksi berdasarkan nilai rapor dari semester sebelumnya. Jalur ini ditujukan bagi calon peserta didik dengan capaian akademik tinggi yang ingin melanjutkan pendidikan di SMP Negeri 1 Yosowilangun."
-            ],
-        ]);
+        // Jalur::insert([
+        //     [
+        //         "nama_jalur" => "Umum",
+        //         "keterangan" => "Jalur Umum adalah jalur pendaftaran terbuka bagi seluruh calon peserta didik yang ingin melanjutkan pendidikan ke SMP Negeri 1 Yosowilangun tanpa kriteria khusus. Seleksi dilakukan berdasarkan kuota dan waktu pendaftaran."
+        //     ],
+        //     [
+        //         "nama_jalur" => "Afirmasi (KIP, KKS, PKH)",
+        //         "keterangan" => "Jalur Afirmasi diperuntukkan bagi calon peserta didik yang berasal dari keluarga kurang mampu dan ingin bersekolah di SMP Negeri 1 Yosowilangun. Dibutuhkan bukti pendukung seperti KIP, KKS, atau surat keterangan tidak mampu dari pihak berwenang."
+        //     ],
+        //     [
+        //         "nama_jalur" => "Pindah Tugas (Orang tua/wali pindah kerja)",
+        //         "keterangan" => "Jalur ini dikhususkan untuk calon peserta didik yang mengikuti orang tua/wali yang pindah tugas kerja ke wilayah sekitar SMP Negeri 1 Yosowilangun. Wajib melampirkan surat keterangan resmi dari instansi tempat orang tua/wali bekerja."
+        //     ],
+        //     [
+        //         "nama_jalur" => "Prestasi Lomba Akademik",
+        //         "keterangan" => "Jalur ini memberi kesempatan bagi calon peserta didik yang memiliki prestasi lomba di bidang akademik, non-akademik, atau hafalan Al-Qur'an untuk mendaftar ke SMP Negeri 1 Yosowilangun. Wajib melampirkan bukti prestasi atau surat keterangan tahfidz."
+        //     ],
+        //     [
+        //         "nama_jalur" => "Prestasi Lomba Non Akademik",
+        //         "keterangan" => "Jalur ini memberi kesempatan bagi calon peserta didik yang memiliki prestasi lomba di bidang akademik, non-akademik, atau hafalan Al-Qur'an untuk mendaftar ke SMP Negeri 1 Yosowilangun. Wajib melampirkan bukti prestasi atau surat keterangan tahfidz."
+        //     ],
+        //     [
+        //         "nama_jalur" => "Prestasi Nilai Raport",
+        //         "keterangan" => "Jalur Prestasi seleksi berdasarkan nilai rapor dari semester sebelumnya. Jalur ini ditujukan bagi calon peserta didik dengan capaian akademik tinggi yang ingin melanjutkan pendidikan di SMP Negeri 1 Yosowilangun."
+        //     ],
+        // ]);
 
-        User::create([
-            'email' => "ipan@gmail.com",
-            'password' => '123',
-            'name' => "ifan",
-            'role' => "admin",
-        ]);
+        // User::create([
+        //     'email' => "ipan@gmail.com",
+        //     'password' => '123',
+        //     'name' => "ifan",
+        //     'role' => "admin",
+        // ]);
 
         // $akun = Register::create([
         //     'nisn' => '1234567890',
@@ -96,7 +97,8 @@ class DatabaseSeeder extends Seeder
 
 
         $tingkatPrestasi = ['Kecamatan', 'Kabupaten/Kota', 'Provinsi', 'Nasional'];
-        $jura = ['Juara 1', 'Juara 2', 'Juara 3', 'Lainnya'];
+        $jura = ['Peringkat 1', 'Peringkat 2', 'Peringkat 3', 'Lainnya'];
+        $afirmasi = ['KIP', 'KKS', 'PKH'];
         for ($i = 0; $i < 20; $i++) {
             $akun = Register::create([
                 'nisn' => fake()->unique()->numerify('##########'), // 10 digit angka
@@ -114,7 +116,24 @@ class DatabaseSeeder extends Seeder
                 'nama' => fake()->name(),
                 'nisn' => $akun->nisn,
                 'email' => $akun->email,
-                'jarak_sekolah' => fake()->randomFloat(2, 0.1, 10), // contoh jarak 0.1 - 10 km
+                'nik' => fake()->numerify('################'),
+                'jenis_kelamin' => fake()->randomElement(['Laki-Laki', 'Perempuan']),
+                'tempat_lahir' => fake()->city(),
+                'tanggal_lahir' => fake()->date(),
+                'asal_sekolah' => fake()->company(),
+                'kabupaten' => fake()->city(),
+                'kecamatan' => fake()->city(),
+                'desa' => fake()->streetName(),
+                'kab_id' => fake()->numerify('35###'),
+                'kec_id' => fake()->numerify('35###'),
+                'desa_id' => fake()->numerify('35###'),
+                'rt' => fake()->numerify('###'),
+                'rw' => fake()->numerify('###'),
+                'alamat' => fake()->address(),
+                'no_hp' => fake()->phoneNumber(),
+                'email' => fake()->safeEmail(),
+                'lokasi' => fake()->latitude(-8.5, -7.0) . ',' . fake()->longitude(111.0, 114.0),
+                'jarak_sekolah' => fake()->randomFloat(2, 0.1, 10.0),
                 'foto_kk' => 'default_document.png',
                 'foto_siswa' => 'default_siswa.png',
                 'foto_akte' => 'default_document.png',
@@ -124,17 +143,65 @@ class DatabaseSeeder extends Seeder
 
             OrtuSiswa::create([
                 'id_siswa' => $siswa->id,
-                'status_berkas' => '1'
+                'ayah' => fake()->name('male'),
+                'status_ayah' => 'Hidup',
+                'status_hubungan' => 'Ayah Kandung',
+                'hubungan_wali' => 'Orang Tua',
+                'pekerjaan_ayah' => fake()->jobTitle(),
+                'pendidikan_ayah' => 'SMA',
+                'ibu' => fake()->name('female'),
+                'status_ibu' => 'Hidup',
+                'pekerjaan_ibu' => fake()->jobTitle(),
+                'pendidikan_ibu' => 'SMA',
+                'no_hp' => fake()->phoneNumber(),
+                'status_berkas' => '1',
             ]);
+
+            // DocumentAfirmasi::create([
+            //     'id_register' => $akun->id,
+            //     'jenis_afirmasi' => Arr::random($afirmasi),
+            //     'status_berkas' => '1',
+            //     'image' => 'default_document.png'
+            // ]);
+
+            // DocumentMutasi::create([
+            //     'id_register' => $akun->id,
+            //     'asal_tugas' => fake()->city(),
+            //     'status_berkas' => '1',
+            //     'thn_pindah' => fake()->numberBetween(2005, 2010),
+            //     'image' => 'default_document.png'
+            // ]);
 
             Akademik::create([
                 'id_register' => $akun->id,
+                'nama_prestasi' => fake()->randomElement([
+                    'Olimpiade Matematika',
+                    'Lomba Cerdas Cermat',
+                    'Lomba Baca Puisi',
+                    'Lomba Sains',
+                    'Lomba Desain Poster',
+                ]),
                 'tingkat_prestasi' => Arr::random($tingkatPrestasi),
                 'perolehan' => Arr::random($jura),
                 // 'kategori' => 
                 'status_berkas' => '1',
                 'image' => 'default_document.png'
             ]);
+            // NonAkademik::create([
+            //     'id_register' => $akun->id,
+            //     'nama_prestasi' => fake()->randomElement([
+            //         'Lomba Pidato Bahasa Indonesia',
+            //         'Turnamen Futsal',
+            //         'Festival Musik Tradisional',
+            //         'Lomba Kaligrafi',
+            //         'Lomba Karya Tulis Ilmia'
+            //     ]),
+            //     'tingkat_prestasi' => Arr::random($tingkatPrestasi),
+            //     'perolehan' => Arr::random($jura),
+            //     // 'kategori' => 
+            //     'status_berkas' => '1',
+            //     'image' => 'default_document.png'
+            // ]);
 
             // $mapelList = MataPelajaran::all(); // Ambil semua 8 mapel
 
@@ -189,6 +256,7 @@ class DatabaseSeeder extends Seeder
             // ]);
             // RataRataRaport::create([
             //     'id_register' => $akun->id,
+            //     'image' => 'default_document.png',
             //     'total_rata_rata' => $total_rata
             // ]);
 

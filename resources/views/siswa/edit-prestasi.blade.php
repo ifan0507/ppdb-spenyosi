@@ -55,13 +55,6 @@
                                                     {{ $prestasis->tingkat_prestasi == 'Nasional' ? 'checked' : '' }}>
                                                 <label class="custom-control-label" for="tingkat_nasional">Nasional</label>
                                             </div>
-                                            <div class="custom-control custom-radio d-inline-block">
-                                                <input type="radio" class="custom-control-input"
-                                                    id="tingkat_internasional" name="tingkat_prestasi" value="Internasional"
-                                                    {{ $prestasis->tingkat_prestasi == 'Internasional' ? 'checked' : '' }}>
-                                                <label class="custom-control-label"
-                                                    for="tingkat_internasional">Internasional</label>
-                                            </div>
                                         </div>
                                     </div>
 
@@ -92,19 +85,17 @@
                                         <select class="form-control" id="perolehan" name="perolehan">
                                             <option value="" disabled selected>-- Pilih Pencapaian --
                                             </option>
-                                            <option value="Juara 1"
-                                                {{ $prestasis->perolehan == 'Juara 1' ? 'selected' : '' }}>Juara 1
+                                            <option value="Peringkat 1"
+                                                {{ $prestasis->perolehan == 'Peringkat 1' ? 'selected' : '' }}>Peringkat 1
                                             </option>
-                                            <option value="Juara 2"
-                                                {{ $prestasis->perolehan == 'Juara 2' ? 'selected' : '' }}>Juara 2
+                                            <option value="Peringkat 2"
+                                                {{ $prestasis->perolehan == 'Peringkat 2' ? 'selected' : '' }}>Peringkat 2
                                             </option>
-                                            <option value="Juara 3"
-                                                {{ $prestasis->perolehan == 'Juara 3' ? 'selected' : '' }}>Juara 3
+                                            <option value="Peringkat 3"
+                                                {{ $prestasis->perolehan == 'Peringkat 3' ? 'selected' : '' }}>Peringkat 3
                                             </option>
-                                            <option value="Golden Ticket"
-                                                {{ $prestasis->perolehan == 'Golden Ticket' ? 'selected' : '' }}>Golden
-                                                Ticket
-                                            </option>
+                                            <option value="Lainnya"
+                                                {{ $prestasis->perolehan == 'Lainya' ? 'selected' : '' }}>Lainnya</option>
                                         </select>
                                     </div>
                                 </div>

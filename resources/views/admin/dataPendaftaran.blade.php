@@ -206,7 +206,8 @@
                                     <th scope="col">Peringkat Zonasi</th>
                                 @elseif ($jalur == 'Jalur Afirmasi')
                                     <th scope="col" class="text-nowrap">Jenis Afirmasi</th>
-                                @elseif ($jalur == 'Jalur Prestasi Akademik')
+                                @elseif ($jalur == 'Jalur Prestasi Akademik' || $jalur == 'Jalur Prestasi Non Akademik')
+                                    <th scope="col">Nama Lomba</th>
                                     <th scope="col" class="text-nowrap">Perolehan</th>
                                 @endif
                                 <th scope="col">Tanggal Daftar</th>
@@ -227,7 +228,7 @@
                                     @if ($pendaftaran->register->id_jalur == 6)
                                         <td class="text-center">
                                             <strong>{{ $pendaftaran->peringkat_raport ?? '-' }}</strong>
-                                            ({{ optional($pendaftaran->register->rata_rata_raport)->total_rata_rata ?? '-' }})
+                                            ({{ $pendaftaran->register->rata_rata_raport?->total_rata_rata }})
                                         </td>
                                     @elseif ($pendaftaran->register->id_jalur == 1)
                                         <td>
@@ -240,12 +241,20 @@
                                         </td>
                                     @elseif ($pendaftaran->register->id_jalur == 4)
                                         <td>
-                                            @foreach ($pendaftaran->register->akademik as $akademik)
-                                                <div>{{ $akademik->perolehan . ', ' . $akademik->tingkat_prestasi }}</div>
-                                            @endforeach
+                                            {!! $pendaftaran->register->akademik->map(fn($a) => "<div>$a->nama_prestasi</div>")->implode('') !!}
+                                        </td>
+                                        <td>
+                                            {!! $pendaftaran->register->akademik->map(fn($a) => "<div>{$a->perolehan} ({$a->tingkat_prestasi})</div>")->implode('') !!}
+                                        </td>
+                                    @elseif ($pendaftaran->register->id_jalur == 5)
+                                        <td>
+                                            {!! $pendaftaran->register->nonAkademik->map(fn($a) => "<div>$a->nama_prestasi</div>")->implode('') !!}
+                                        </td>
+                                        <td>
+                                            {!! $pendaftaran->register->nonAkademik->map(fn($a) => "<div>{$a->perolehan} ({$a->tingkat_prestasi})</div>")->implode('') !!}
                                         </td>
                                     @endif
-                                    </td>
+
                                     <td>{{ $pendaftaran->created_at?->format('d/m/Y') ?? '-' }}</td>
                                     <td class="text-center">
                                         @if ($pendaftaran->decline == '1')
@@ -288,7 +297,7 @@
 
 
                 {{-- Mobile --}}
-                <div class="table-responsive d-md-none">
+                {{-- <div class="table-responsive d-md-none">
                     <table class="table tblPendaftaran">
                         <thead>
                             <tr>
@@ -356,7 +365,7 @@
                         </tbody>
                     </table>
 
-                </div>
+                </div> --}}
                 {{-- {{ $pendaftarans->links('pagination::bootstrap-5') }} --}}
 
             </div>
