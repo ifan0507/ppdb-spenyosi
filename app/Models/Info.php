@@ -12,5 +12,10 @@ class Info extends Model
     protected $table = 'infos';
     public $incrementing = false;
     protected $keyType = 'string';
-    protected $fillable = ['judul', 'file', 'deskripsi'];
+    protected $fillable = ['judul', 'file', 'deskripsi', 'slug'];
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
 }

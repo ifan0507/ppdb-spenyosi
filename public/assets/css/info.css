@@ -32,20 +32,15 @@ body {
 }
 
 .info-box {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    background: white; /* supaya solid, tidak transparan */
-    gap: 12px;
-    padding: 12px;
-    border: 1px solid #e0e0e0;
+    transition: transform 0.2s, box-shadow 0.2s;
     border-radius: 8px;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.09);
+    overflow: hidden;
+    background-color: white;
 }
 
 .info-box:hover {
-    transform: translateY(-5px); /* naik 5px */
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
 }
 
 .info-box img,
@@ -75,18 +70,41 @@ body {
     white-space: nowrap;
     overflow: hidden;
 }
+.info-card {
+    border-radius: 8px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
 
-@media (min-width: 768px) {
+.info-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
+}
+
+.card-title {
+    color: #222;
+    font-size: 1.35rem;
+    line-height: 1.3;
+}
+
+/* Mobile styles */
+@media (max-width: 767px) {
+    .info-image img {
+        width: 100% !important;
+        max-height: 200px !important;
+        object-fit: cover;
+    }
+
+    .info-card .row {
+        flex-direction: column;
+    }
+
+    .card-title {
+        font-size: 1.25rem;
+        margin-top: 0.5rem;
+    }
+
     .info-image {
-        width: 90px;
-        height: 90px;
-    }
-
-    .info-content h4 {
-        font-size: 1.05rem;
-    }
-
-    .info-content p {
-        font-size: 0.9rem;
+        max-height: 200px;
+        overflow: hidden;
     }
 }

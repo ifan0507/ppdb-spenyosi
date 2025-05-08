@@ -66,22 +66,19 @@
                                 @elseif ($ext === 'pdf')
                                     <img src="{{ asset('assets/img/icons/pdf.png') }}" alt="PDF File" class="img-fluid"
                                         style="object-fit: cover; width: 100%; height: 100%;">
-                                @elseif (in_array($ext, ['doc', 'docx']))
-                                    <img src="{{ asset('img/icons/word-icon.png') }}" alt="Word File" class="img-fluid"
-                                        style="object-fit: cover; width: 100%; height: 100%;">
                                 @else
                                     <img src="{{ asset('img/icons/file-icon.png') }}" alt="File" class="img-fluid"
                                         style="object-fit: cover; width: 100%; height: 100%;">
                                 @endif
                             </div>
-                            <a href="">
-                                <div class="flex-grow-1 text-start">
+                            <div class="flex-grow-1 text-start">
+                                <a href="{{ route('info.detail', $info->slug) }}">
                                     <h5 class="fw-bold mb-1" style="font-family: Poppins;">{{ $info->judul }}</h5>
                                     <p class="text-muted mb-2" style="font-size: 0.9rem;">Diunggah pada
                                         {{ \Carbon\Carbon::parse($info->created_at)->translatedFormat('d F Y') }}</p>
-                                    <p class="mb-0" style="font-size: 0.95rem;">{!! \Illuminate\Support\Str::limit(strip_tags($info->deskripsi), 150) !!}</p>
-                                </div>
-                            </a>
+                                </a>
+                                <p class="mb-0" style="font-size: 0.95rem;">{!! \Illuminate\Support\Str::limit(strip_tags($info->deskripsi), 150) !!}</p>
+                            </div>
                         </div>
                     </div>
                 @endforeach

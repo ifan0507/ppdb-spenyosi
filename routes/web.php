@@ -27,7 +27,7 @@ Route::get('/', [BerandaController::class, 'index'])->name('beranda');
 
 // Info Terkini
 Route::get('/info-terkini', [ClientInfoController::class, 'index'])->name('info.lengkap');
-Route::get('/info-terkini/detail/{id}', [ClientInfoController::class, 'detailInfo'])->name('info.detail');
+Route::get('/info-terkini/detail/{slug}', [ClientInfoController::class, 'detailInfo'])->name('info.detail');
 
 // Portal
 Route::get('/portal', [PortalController::class, 'index'])->name('portal');
@@ -148,7 +148,7 @@ Route::middleware(['cache_verify', 'auth_admin'])->group(function () {
 
     Route::get('/admin/manajemen-info', [InfoController::class, 'index'])->name('admin.info');
     Route::post('/admin/info', [InfoController::class, 'store'])->name('info.post');
-    Route::put('/admin/info/{id}/update', [InfoController::class, 'update'])->name('info.update');
+    Route::put('/admin/info/{slug}/update', [InfoController::class, 'update'])->name('info.update');
     Route::delete('/admin/info{id}/delete', [InfoController::class, 'destroy'])->name('info.delete');
     Route::get('/admin/logout', [AuthController::class, 'logout'])->name('logout-admin');
 });

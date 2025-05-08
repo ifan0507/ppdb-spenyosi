@@ -7,6 +7,7 @@ use App\Models\Info;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class InfoController extends Controller
 {
@@ -39,24 +40,38 @@ class InfoController extends Controller
             'file.mimes' => 'File yang diunggah harus berupa PDF atau gambar (jpg, jpeg, png, gif, webp).',
         ]);
 
+        $slug = $this->generateUniqueSlug($request->judul);
 
-        if ($request->hasFile('file')) {
-            $path = $request->file('file')->store('admin/info-files');
 
-            Info::create([
-                'judul' => $request->judul,
-                'file' => $path,
-                'deskripsi' => $request->deskripsi
+        try {
+            if ($request->hasFile('file')) {
+                $path = $request->file('file')->store('admin/info-files');
+
+                Info::create([
+                    'judul' => $request->judul,
+                    'slug' => $slug,
+                    'file' => $path,
+                    'deskripsi' => $request->deskripsi
+                ]);
+            } else {
+                Info::create([
+                    'judul' => $request->judul,
+                    'slug' => $slug,
+                    'deskripsi' => $request->deskripsi
+                ]);
+            }
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Data berhasil ditambahkan',
+                'redirect' => route('admin.info')
             ]);
-        } else {
-            Info::create([
-                'judul' => $request->judul,
-                'deskripsi' => $request->deskripsi
-            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal menambahkan data: ' . $e->getMessage()
+            ], 500);
         }
-
-
-        return response()->json(['redirect' => route('admin.info')]);
     }
 
     /**
@@ -78,32 +93,47 @@ class InfoController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $slug)
     {
         $request->validate([
-            'file' => 'mimes:pdf,jpg,jpeg,png,gif,webp'
-        ], [
-            'file.mimes' => 'File yang diunggah harus berupa PDF atau gambar (jpg, jpeg, png, gif, webp).',
+            'judul' => 'required|string|max:255',
+            'file' => 'nullable|mimes:pdf,jpg,jpeg,png,gif,webp'
         ]);
 
-        $dataLama = Info::where('id', $id)->first();
+        try {
+            $dataLama = Info::where('slug', $slug)->firstOrFail();
 
-        if ($request->hasFile('file')) {
-            Storage::delete($dataLama->file);
-            $path = $request->file('file')->store('admin/info-files');
-            $dataLama->update([
+            $newSlug = $dataLama->slug;
+            if ($dataLama->judul != $request->judul) {
+                $newSlug = $this->generateUniqueSlug($request->judul);
+            }
+
+            $updateData = [
                 'judul' => $request->judul,
-                'file' => $path,
+                'slug' => $newSlug,
                 'deskripsi' => $request->deskripsi
+            ];
+
+            if ($request->hasFile('file')) {
+                if ($dataLama->file) {
+                    Storage::delete($dataLama->file);
+                }
+                $updateData['file'] = $request->file('file')->store('admin/info-files');
+            }
+
+            $dataLama->update($updateData);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Data berhasil diperbarui',
+                'redirect' => route('admin.info')
             ]);
-        } else {
-            $dataLama->update([
-                'judul' => $request->judul,
-                'deskripsi' => $request->deskripsi
-            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal memperbarui data: ' . $e->getMessage()
+            ], 500);
         }
-
-        return response()->json(['success' => true]);
     }
 
     /**
@@ -113,5 +143,20 @@ class InfoController extends Controller
     {
         Info::where('id', $id)->delete();
         return response()->json(['success' => true]);
+    }
+
+    private function generateUniqueSlug($title)
+    {
+        $slug = Str::slug($title);
+        $originalSlug = $slug;
+        $count = 1;
+
+        // Periksa apakah slug sudah ada
+        while (Info::where('slug', $slug)->exists()) {
+            $slug = "{$originalSlug}-{$count}";
+            $count++;
+        }
+
+        return $slug;
     }
 }

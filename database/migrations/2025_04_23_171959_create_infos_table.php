@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('judul');
             $table->string('file')->nullable();
             $table->text('deskripsi')->nullable();
+            $table->string('slug')->unique()->after('judul');
             $table->timestamps();
         });
     }

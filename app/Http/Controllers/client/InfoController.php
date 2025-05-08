@@ -18,10 +18,27 @@ class InfoController extends Controller
         return view('clients.info', ['infos' => $infos, 'active' => $active]);
     }
 
-    public function detailInfo($id)
+    public function detailInfo(string $slug)
     {
-        $infos = Info::findOrfail($id);
-        return view('clients.info-detail', compact('infos'));
+        $active = 'info';
+        $infos = Info::where('slug', $slug)->firstOrFail();
+        // Mendapatkan artikel sebelumnya dan sesudahnya
+        $prevInfo = Info::where('id', '<', $infos->id)
+            ->orderBy('id', 'desc')
+            ->first();
+
+        $nextInfo = Info::where('id', '>', $infos->id)
+            ->orderBy('id', 'asc')
+            ->first();
+
+        // Mendapatkan artikel terkait (bisa berdasarkan kategori atau tag)
+        // Contoh: mengambil 3 info terbaru selain info saat ini
+        $relatedInfos = Info::where('id', '!=', $infos->id)
+            ->orderBy('created_at', 'desc')
+            ->limit(3)
+            ->get();
+
+        return view('clients.info-detail', compact('infos', 'prevInfo', 'nextInfo', 'relatedInfos', 'active'));
     }
 
     /**
