@@ -56,11 +56,11 @@
                                             </button>
 
                                             <form action="{{ route('info.delete', $info->id) }}" method="POST"
-                                                class="d-inline">
-                                                @csrf @method('DELETE')
-                                                <button type="submit" class="btn btn-danger btn-sm"
-                                                    onclick="return confirm('Yakin hapus berita ini?')" title="Hapus">
-                                                    <i class="bi bi-trash"></i>
+                                                class="form-delete" style="display: inline-block;">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-sm btn-danger" title="Hapus">
+                                                    <i class="fas fa-trash"></i>
                                                 </button>
                                             </form>
                                         </div>
@@ -90,22 +90,22 @@
                                     <div class="mb-3">
                                         <label for="judul" class="form-label">Judul <span
                                                 class="text-danger">*</span></label>
-                                        <textarea name="judul" id="judul" cols="30" rows="2" class="form-control" required></textarea>
+                                        <textarea name="judul" id="judul" cols="30" rows="2" class="form-control"></textarea>
                                         <div class="invalid-feedback">Judul wajib diisi</div>
                                     </div>
 
                                     <div class="mb-3">
                                         <label class="form-label">Deskripsi <span class="text-danger">*</span></label>
                                         <div id="quill-deskripsi" style="height: 200px;"></div>
-                                        <input type="hidden" name="deskripsi" id="deskripsi-input" required>
-                                        <div class="invalid-feedback">Deskripsi wajib diisi</div>
+                                        <input type="hidden" name="deskripsi" id="deskripsi-input">
+                                        <div class="invalid-deskripsi invalid-feedback"></div>
                                     </div>
 
                                     <div class="mb-3">
                                         <label for="file" class="form-label">Gambar / Dokumen <span
                                                 class="text-danger">*</span></label>
                                         <input type="file" class="form-control" name="file" id="file"
-                                            accept=".jpg,.jpeg,.png,.pdf,.doc,.docx" required>
+                                            accept=".jpg,.jpeg,.png,.pdf,.doc,.docx">
                                         <small class="text-muted">Format yang diterima: JPG, PNG, PDF, DOC (Max 1MB)</small>
                                         <div class="invalid-feedback" id="fileError">File wajib diisi dan harus sesuai
                                             format</div>
@@ -363,7 +363,46 @@
                 });
             });
 
-            // Helper function to reset modal
+            $(document).on('submit', '.form-delete', function(e) {
+                e.preventDefault();
+                const form = $(this);
+
+                Swal.fire({
+                    title: 'Apakah Anda yakin?',
+                    text: "Data yang dihapus tidak dapat dikembalikan!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    reverseButtons: true,
+                    confirmButtonColor: '#d33',
+                    confirmButtonText: 'Ya, hapus!',
+                    cancelButtonText: 'Batal',
+                    showLoaderOnConfirm: true,
+                    allowOutsideClick: () => !Swal.isLoading(),
+                    preConfirm: () => {
+                        return $.ajax({
+                            type: "POST",
+                            url: form.attr('action'),
+                            data: form.serialize()
+                        }).then(response => {
+                            Swal.fire({
+                                icon: "success",
+                                title: "Berhasil!",
+                                text: response.message ||
+                                    "Data berhasil dihapus!",
+                            }).then(() => {
+                                window.location.reload();
+                            });
+                        }).catch(xhr => {
+                            const mesg = xhr.responseJSON?.message ||
+                                'Terjadi kesalahan, coba lagi!';
+                            Swal.showValidationMessage(mesg);
+                        });
+                    }
+                });
+
+            });
+
+
             function resetModal() {
                 quill.root.innerHTML = '';
                 $('#formBerita')[0].reset();
@@ -374,7 +413,6 @@
                 $('#formBerita').attr('action', "{{ route('info.post') }}");
             }
 
-            // Helper function for form validation
             function validateForm() {
                 let isValid = true;
 
@@ -386,13 +424,21 @@
                     $('#judul').removeClass('is-invalid');
                 }
 
-                // Validate description
-                if (quill.getText().trim()) {
+                const deskripsi = quill.getText().trim();
+
+                if (deskripsi.length === 0) {
                     $('#quill-deskripsi').addClass('is-invalid');
+                    $(".invalid-deskripsi").html("Deskripsi wajib diisi!");
+                    isValid = false;
+                } else if (deskripsi.length < 10) {
+                    $('#quill-deskripsi').addClass('is-invalid');
+                    $(".invalid-deskripsi").html("Deskripsi minimal 10 karakter!");
                     isValid = false;
                 } else {
                     $('#quill-deskripsi').removeClass('is-invalid');
+                    $(".invalid-deskripsi").html("");
                 }
+
 
                 // Validate file (only for new entries)
                 if ($('#formMethod').val() === 'POST' && !$('#file')[0].files[0]) {
@@ -424,7 +470,7 @@
                 if (!isValid) {
                     Swal.fire({
                         icon: "error",
-                        title: "Error Validasi",
+                        title: "Error..!",
                         text: "Harap periksa kembali form Anda"
                     });
                     return false;
@@ -433,5 +479,7 @@
                 return true;
             }
         });
+
+        $('btn-')
     </script>
 @endsection

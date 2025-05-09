@@ -139,10 +139,28 @@ class InfoController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        Info::where('id', $id)->delete();
-        return response()->json(['success' => true]);
+        try {
+            $info = Info::findOrFail($id);
+
+            // Hapus file dari storage jika ada
+            if ($info->file && Storage::exists($info->file)) {
+                Storage::delete($info->file);
+            }
+
+            $info->delete();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Info berhasil dihapus'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal menghapus info: ' . $e->getMessage()
+            ], 500);
+        }
     }
 
     private function generateUniqueSlug($title)

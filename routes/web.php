@@ -148,6 +148,6 @@ Route::middleware(['cache_verify', 'auth_admin'])->group(function () {
     Route::get('/admin/manajemen-info', [InfoController::class, 'index'])->name('admin.info');
     Route::post('/admin/info', [InfoController::class, 'store'])->name('info.post');
     Route::put('/admin/info/{slug}/update', [InfoController::class, 'update'])->name('info.update');
-    Route::delete('/admin/info{id}/delete', [InfoController::class, 'destroy'])->name('info.delete');
+    Route::delete('/admin/info/{id}/delete', [InfoController::class, 'destroy'])->name('info.delete');
     Route::get('/admin/logout', [AuthController::class, 'logout'])->name('logout-admin');
 });
