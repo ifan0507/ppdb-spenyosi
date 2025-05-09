@@ -223,9 +223,6 @@
                         Swal.fire('Gagal', mesg, 'error')
                     }
                 });
-
-
-
             });
         });
     </script>

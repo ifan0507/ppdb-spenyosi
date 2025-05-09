@@ -56,11 +56,11 @@
                                             </button>
 
                                             <form action="{{ route('info.delete', $info->id) }}" method="POST"
-                                                class="d-inline">
-                                                @csrf @method('DELETE')
-                                                <button type="submit" class="btn btn-danger btn-sm"
-                                                    onclick="return confirm('Yakin hapus berita ini?')" title="Hapus">
-                                                    <i class="bi bi-trash"></i>
+                                                class="form-delete" style="display: inline-block;">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-sm btn-danger" title="Hapus">
+                                                    <i class="fas fa-trash"></i>
                                                 </button>
                                             </form>
                                         </div>
@@ -279,7 +279,7 @@
                 if (['jpg', 'jpeg', 'png', 'gif', 'webp'].includes(ext)) {
                     previewContainer.show();
                     $('#imagePreview').attr('src', "{{ asset('storage') }}/" + info.file).removeClass(
-                    'd-none');
+                        'd-none');
                     $('#docPreview').addClass('d-none');
                 } else if (info.file) {
                     previewContainer.show();
@@ -349,7 +349,46 @@
                 });
             });
 
-            // Helper function to reset modal
+            $(document).on('submit', '.form-delete', function(e) {
+                e.preventDefault();
+                const form = $(this);
+
+                Swal.fire({
+                    title: 'Apakah Anda yakin?',
+                    text: "Data yang dihapus tidak dapat dikembalikan!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya, hapus!',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: "POST",
+                            url: form.attr('action'),
+                            data: form.serialize(),
+                            success: function(response) {
+                                Swal.fire({
+                                    icon: "success",
+                                    title: "Berhasil!",
+                                    text: response.message ||
+                                        "Data berhasil dihapus!",
+                                }).then(() => {
+                                    window.location.reload();
+                                });
+                            },
+                            error: function(xhr) {
+                                const mesg = xhr.responseJSON?.message ||
+                                    'Terjadi kesalahan, coba lagi!';
+                                Swal.fire('Gagal', mesg, 'error');
+                            }
+                        });
+                    }
+                });
+            });
+
+
             function resetModal() {
                 quill.root.innerHTML = '';
                 $('#formBerita')[0].reset();
@@ -360,7 +399,6 @@
                 $('#formBerita').attr('action', "{{ route('info.post') }}");
             }
 
-            // Helper function for form validation
             function validateForm() {
                 let isValid = true;
 
@@ -372,7 +410,6 @@
                     $('#judul').removeClass('is-invalid');
                 }
 
-                // Validate description
                 if (quill.getText().trim().length < 10) {
                     $('#quill-deskripsi').addClass('is-invalid');
                     isValid = false;
@@ -419,5 +456,7 @@
                 return true;
             }
         });
+
+        $('btn-')
     </script>
 @endsection
