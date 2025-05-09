@@ -82,8 +82,8 @@
                                         <label for="yourUsername" class="form-label">Email</label>
                                         <div class="input-group has-validation">
                                             <span class="input-group-text" id="inputGroupPrepend">@</span>
-                                            <input type="email" name="email" class="form-control" id="yourUsername"
-                                                required>
+                                            <input type="email" value="{{ old('email') }}" name="email"
+                                                class="form-control" id="yourUsername" required>
                                             <div class="invalid-feedback">Please enter your email.</div>
                                         </div>
                                     </div>
@@ -93,8 +93,8 @@
                                         <div class="input-group has-validation">
                                             <span class="input-group-text" id="inputGroupPrepend"> <i
                                                     class="bi bi-lock-fill" style="color: gray"></i></span>
-                                            <input type="password" name="password" class="form-control"
-                                                id="yourPassword" required>
+                                            <input type="password" name="password" value="{{ old('password') }}"
+                                                class="form-control" id="yourPassword" required>
                                             <div class="invalid-feedback">Please enter your password!</div>
                                         </div>
                                     </div>

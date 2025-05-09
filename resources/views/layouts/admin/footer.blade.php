@@ -1,7 +1,7 @@
 <!-- ======= Footer ======= -->
 <footer id="footer" class="footer">
     <div class="copyright">
-        Admin PPDB <span>SPENYOSI</span>
+        Admin SPMB <span>SPENYOSI</span>
     </div>
     <div class="credits">
         <!-- All the links in the footer should remain intact. -->

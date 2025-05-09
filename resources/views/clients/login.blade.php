@@ -20,7 +20,7 @@
                     <h3 class="fw-bold sign-in-title ms-2 mb-0">Sign In</h3>
                 </div>
                 <p class="mt-3">Masukkan alamat email dan kata sandi akun Anda.</p>
-                
+
                 @if ($errors->any())
                     <div class="alert alert-danger">
                         @foreach ($errors->all() as $error)
@@ -31,8 +31,10 @@
 
                 <form action="{{ route('login.post') }}" method="POST">
                     @csrf
-                    <input type="email" name="email" class="form-control mb-3" placeholder="Email" required>
-                    <input type="password" name="password" class="form-control" placeholder="Password" required>
+                    <input type="email" name="email" value="{{ old('email') }}" class="form-control mb-3"
+                        placeholder="Email" required>
+                    <input type="password" name="password" value="{{ old('password') }}" class="form-control"
+                        placeholder="Password" required>
 
                     <a href="#" class="forgot-password">Lupa kata sandi?</a>
 

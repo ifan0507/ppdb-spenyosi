@@ -1,3 +1,3 @@
 <footer class="main-footer">
-    <strong>Copyright &copy; PPBB SPENYOSI</strong>
+    <strong>Copyright &copy; SPMMB SPENYOSI</strong>
 </footer>

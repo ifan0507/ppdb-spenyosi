@@ -177,8 +177,9 @@
                                         <div class="card-body">
                                             <div class="form-group required">
                                                 <label class="form-label">Nama Ibu</label>
-                                                <input type="text" class="form-control " name="ibu" id="nama_ibu"
-                                                    value="{{ old('ibu', $data->ibu) }}" placeholder="Nama lengkap ibu">
+                                                <input type="text" class="form-control " name="ibu"
+                                                    id="nama_ibu" value="{{ old('ibu', $data->ibu) }}"
+                                                    placeholder="Nama lengkap ibu">
                                             </div>
                                             <div class="form-group required">
                                                 <label class="form-label">Status Ibu</label><br>
@@ -403,7 +404,7 @@
                     $("#pendidikanIbu").addClass("is-invalid").removeClass("is-valid");
                     $("#validasiPendidikanIbu").text("Pilih Pendidikan Ibu").show();
                     isValid = false;
-                    
+
                 } else if ($("#pekerjaanAyah").val() === "") {
                     Swal.fire({
                         icon: "error",

@@ -87,9 +87,11 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-3 col-md-4 label">Tempat, Tanggal Lahir</div>
-                                    <div class="col-lg-9 col-md-8">{{ $pendaftarans->register->siswa->tempat_lahir }}
-                                        , {{ $pendaftarans->register->siswa->tanggal_lahir }}
+                                    <div class="col-lg-9 col-md-8">
+                                        {{ $pendaftarans->register->siswa->tempat_lahir }},
+                                        {{ \Carbon\Carbon::parse($pendaftarans->register->siswa->tanggal_lahir)->format('d-m-Y') }}
                                     </div>
+
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-3 col-md-4 label">Asal Sekolah</div>
@@ -106,6 +108,12 @@
                                 <div class="row">
                                     <div class="col-lg-3 col-md-4 label">Desa</div>
                                     <div class="col-lg-9 col-md-8">{{ $pendaftarans->register->siswa->desa }}</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">RT/RW</div>
+                                    <div class="col-lg-9 col-md-8">
+                                        {{ $pendaftarans->register->siswa->rt . '/' . $pendaftarans->register->siswa->rw }}
+                                    </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-3 col-md-4 label">Alamat</div>

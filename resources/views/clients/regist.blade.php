@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container text-center py-5">
-        <h2>Registrasi Akun PPDB</h2>
+        <h2>Registrasi Akun SPMB</h2>
 
         <div class="row justify-content-center mt-4">
             <!-- Box Tahap 1 -->

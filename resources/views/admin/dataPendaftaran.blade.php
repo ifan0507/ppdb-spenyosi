@@ -297,26 +297,36 @@
 
 
                 {{-- Mobile --}}
-                {{-- <div class="table-responsive d-md-none">
+                <div class="table-responsive d-md-none">
                     <table class="table tblPendaftaran">
                         <thead>
                             <tr>
+                                <th scope="col">#</th>
                                 <th scope="col">Action</th>
                                 <th scope="col" class="text-nowrap">No Register</th>
                                 <th scope="col">Nama</th>
                                 @if ($jalur == 'Jalur Prestasi Raport')
                                     <th scope="col" class="text-center text-nowrap">Peringkat Raport</th>
                                 @elseif ($jalur == 'Jalur Zonasi')
-                                    <th scope="col" class="text-center text-nowrap">Peringkat Zonasi</th>
+                                    <th scope="col" class="text-nowrap">Peringkat Zonasi</th>
+                                @elseif ($jalur == 'Jalur Afirmasi')
+                                    <th scope="col" class="text-nowrap">Jenis Afirmasi</th>
+                                @elseif ($jalur == 'Jalur Prestasi Akademik' || $jalur == 'Jalur Prestasi Non Akademik')
+                                    <th scope="col">Nama Lomba</th>
+                                    <th scope="col" class="text-nowrap">Perolehan</th>
                                 @endif
                                 <th scope="col" class="text-nowrap">Tanggal Daftar</th>
                                 <th scope="col" class="text-center">Status</th>
                             </tr>
                         </thead>
                         <tbody>
+                            @php
+                                $no = request('start_rank') ? (int) request('start_rank') : 1;
+                            @endphp
                             @forelse ($pendaftarans as $pendaftaran)
                                 <tr>
-                                    <td>
+                                    <th>{{ $no++ }}</th>
+                                    <td class="align-middle">
                                         <div class="d-flex gap-2 justify-content-center">
                                             <a href="{{ route('admin.detail', $pendaftaran->id) }}"
                                                 class="btn btn-info btn-sm">
@@ -330,19 +340,40 @@
                                         </div>
                                     </td>
                                     <td>{{ $pendaftaran->register->no_register }}</td>
-                                    <td class="text-nowrap">{{ $pendaftaran->register->siswa->nama }}</td>
+                                    <td>{{ $pendaftaran->register->siswa->nama }}</td>
 
-                                    <td>
-                                        @if ($pendaftaran->register->id_jalur == 6)
+                                    @if ($pendaftaran->register->id_jalur == 6)
+                                        <td class="text-center">
                                             <strong>{{ $pendaftaran->peringkat_raport ?? '-' }}</strong>
-                                            ({{ optional($pendaftaran->register->rata_rata_raport)->total_rata_rata ?? '-' }})
-                                        @elseif ($pendaftaran->register->id_jalur == 1)
+                                            ({{ $pendaftaran->register->rata_rata_raport?->total_rata_rata }})
+                                        </td>
+                                    @elseif ($pendaftaran->register->id_jalur == 1)
+                                        <td>
                                             <strong>{{ $pendaftaran->peringkat_zonasi ?? '-' }}</strong>
                                             ({{ $pendaftaran->register->siswa->jarak_sekolah }} km)
-                                        @endif
-                                    </td>
-                                    <td class="text-nowrap">{{ $pendaftaran->created_at?->format('d/m/Y') ?? '-' }}</td>
-                                    <td>
+                                        </td>
+                                    @elseif ($pendaftaran->register->id_jalur == 2)
+                                        <td>
+                                            {{ $pendaftaran->register->afirmasi->jenis_afirmasi }}
+                                        </td>
+                                    @elseif ($pendaftaran->register->id_jalur == 4)
+                                        <td>
+                                            {!! $pendaftaran->register->akademik->map(fn($a) => "<div>$a->nama_prestasi</div>")->implode('') !!}
+                                        </td>
+                                        <td>
+                                            {!! $pendaftaran->register->akademik->map(fn($a) => "<div>{$a->perolehan} ({$a->tingkat_prestasi})</div>")->implode('') !!}
+                                        </td>
+                                    @elseif ($pendaftaran->register->id_jalur == 5)
+                                        <td>
+                                            {!! $pendaftaran->register->nonAkademik->map(fn($a) => "<div>$a->nama_prestasi</div>")->implode('') !!}
+                                        </td>
+                                        <td>
+                                            {!! $pendaftaran->register->nonAkademik->map(fn($a) => "<div>{$a->perolehan} ({$a->tingkat_prestasi})</div>")->implode('') !!}
+                                        </td>
+                                    @endif
+
+                                    <td>{{ $pendaftaran->created_at?->format('d/m/Y') ?? '-' }}</td>
+                                    <td class="text-center">
                                         @if ($pendaftaran->decline == '1')
                                             <span class="badge bg-danger"><i class="bi bi-exclamation-octagon me-1"></i>
                                                 {{ $pendaftaran->status }}</span>
@@ -356,16 +387,17 @@
                                         @endif
                                     </td>
 
+
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="6" class="text-center">Tidak ada data</td>
+                                    <td colspan="7" class="text-center">Tidak ada data</td>
                                 </tr>
                             @endforelse
                         </tbody>
                     </table>
 
-                </div> --}}
+                </div>
                 {{-- {{ $pendaftarans->links('pagination::bootstrap-5') }} --}}
 
             </div>

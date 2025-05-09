@@ -128,7 +128,10 @@
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary"
                                         data-bs-dismiss="modal">Tutup</button>
-                                    <button type="submit" class="btn btn-primary">Simpan</button>
+                                    <button type="submit" class="btn btn-primary" id="btnSubmit"><span id="textBtn">
+                                            Simpan</span>
+                                        <span id="loadingBtn" class="spinner-border spinner-border-sm d-none"
+                                            role="status" aria-hidden="true"></span></button>
                                 </div>
                             </form>
                         </div>
@@ -279,7 +282,7 @@
                 if (['jpg', 'jpeg', 'png', 'gif', 'webp'].includes(ext)) {
                     previewContainer.show();
                     $('#imagePreview').attr('src', "{{ asset('storage') }}/" + info.file).removeClass(
-                    'd-none');
+                        'd-none');
                     $('#docPreview').addClass('d-none');
                 } else if (info.file) {
                     previewContainer.show();
@@ -288,6 +291,8 @@
                     $('#fileNamePreview').text(info.file.split('/').pop());
                 }
             }
+
+
 
             // Form submission
             $('#formBerita').on('submit', function(e) {
@@ -317,6 +322,9 @@
                         formData.append('file', $('#file')[0].files[0]);
                     }
                 }
+                $("#btnSubmit").attr("disabled", true);
+                $("#textBtn").addClass("d-none");
+                $("#loadingBtn").removeClass("d-none");
 
                 $.ajax({
                     url: url,
@@ -325,6 +333,9 @@
                     contentType: false,
                     processData: false,
                     success: function(response) {
+                        $("#btnSubmit").attr("disabled", false);
+                        $("#textBtn").removeClass("d-none");
+                        $("#loadingBtn").addClass("d-none");
                         Swal.fire({
                             icon: "success",
                             text: "Data berhasil " + (isUpdate ? "diperbarui" :
@@ -336,6 +347,9 @@
                         });
                     },
                     error: function(xhr) {
+                        $("#btnSubmit").attr("disabled", false);
+                        $("#textBtn").removeClass("d-none");
+                        $("#loadingBtn").addClass("d-none");
                         let errorMessage = xhr.responseJSON?.message || 'Terjadi kesalahan!';
                         if (xhr.responseJSON?.errors) {
                             errorMessage = Object.values(xhr.responseJSON.errors).join('<br>');
@@ -373,7 +387,7 @@
                 }
 
                 // Validate description
-                if (quill.getText().trim().length < 10) {
+                if (quill.getText().trim()) {
                     $('#quill-deskripsi').addClass('is-invalid');
                     isValid = false;
                 } else {
