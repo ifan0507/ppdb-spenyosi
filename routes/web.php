@@ -141,7 +141,7 @@ Route::middleware(['cache_verify', 'auth_admin'])->group(function () {
     Route::delete('/admin/notif/{id}/delete', [AdminDashboardController::class, 'notifDeleteById'])->name('delete-notif-byId');
     Route::delete('/admin/notif/delete-all', [AdminDashboardController::class, 'notifDeleteAll'])->name('delete-all-notif');
 
-    Route::get('/admin/export/{jalur}', [AdminDashboardController::class, 'exportExel']);
+    Route::get('/admin/export/{jalur}', [AdminDashboardController::class, 'exportExel'])->name('exportExel');
 
 
 

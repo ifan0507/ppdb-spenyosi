@@ -17,24 +17,25 @@
                                         <h6>Download</h6>
                                     </li>
 
-                                    <li><a class="dropdown-item" href="#">Unduh PDF</a></li>
+                                    <li><a class="dropdown-item"
+                                            href="{{ route('exportExel', ['jalur' => 'zonasi']) }}">Export
+                                            Exel</a></li>
                                 </ul>
                             </div>
 
                             <div class="card-body">
-                                <h5 class="card-title">Zonasi <span>| jalur</span></h5>
+                                <h5 class="card-title">Zonasi </h5>
 
                                 <div class="d-flex align-items-center">
                                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                                         <i class="fa-solid fa-location-dot"></i>
                                     </div>
                                     <div class="ps-3">
-                                        <h6>145</h6>
-                                        <span class="text-success small pt-1 fw-bold">12%</span> <span
-                                            class="text-muted small pt-2 ps-1">increase</span>
-
+                                        <h6>{{ $jumlahPerJalur[1] ?? 0 }}</h6>
+                                        <span class="text-muted small pt-2 ps-1">siswa</span>
                                     </div>
                                 </div>
+
                             </div>
 
                         </div>
@@ -51,21 +52,21 @@
                                         <h6>Download</h6>
                                     </li>
 
-                                    <li><a class="dropdown-item" href="#">Unduh PDF</a></li>
+                                    <li><a class="dropdown-item"
+                                            href="{{ route('exportExel', ['jalur' => 'afirmasi']) }}">Export Exel</a></li>
                                 </ul>
                             </div>
 
                             <div class="card-body">
-                                <h5 class="card-title">Afirmasi <span>| Jalur</span></h5>
+                                <h5 class="card-title">Afirmasi </h5>
 
                                 <div class="d-flex align-items-center">
                                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                                         <i class="fa-solid fa-handshake"></i>
                                     </div>
                                     <div class="ps-3">
-                                        <h6>145</h6>
-                                        <span class="text-success small pt-1 fw-bold">12%</span> <span
-                                            class="text-muted small pt-2 ps-1">increase</span>
+                                        <h6>{{ $jumlahPerJalur[2] ?? 0 }}</h6>
+                                        <span class="text-muted small pt-2 ps-1">siswa</span>
 
                                     </div>
                                 </div>
@@ -84,22 +85,21 @@
                                         <h6>Download</h6>
                                     </li>
 
-                                    <li><a class="dropdown-item" href="#">Unduh PDF</a></li>
+                                    <li><a class="dropdown-item"
+                                            href="{{ route('exportExel', ['jalur' => 'mutasi']) }}">Export Exel</a></li>
                                 </ul>
                             </div>
 
                             <div class="card-body">
-                                <h5 class="card-title">Mutasi <span>
-                                        | Jalur</span></h5>
+                                <h5 class="card-title">Mutasi</h5>
 
                                 <div class="d-flex align-items-center">
                                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                                         <i class="fa-solid fa-briefcase"></i>
                                     </div>
                                     <div class="ps-3">
-                                        <h6>145</h6>
-                                        <span class="text-success small pt-1 fw-bold">12%</span> <span
-                                            class="text-muted small pt-2 ps-1">increase</span>
+                                        <h6>{{ $jumlahPerJalur[3] ?? 0 }}</h6>
+                                        <span class="text-muted small pt-2 ps-1">siswa</span>
 
                                     </div>
                                 </div>
@@ -118,21 +118,21 @@
                                         <h6>Download</h6>
                                     </li>
 
-                                    <li><a class="dropdown-item" href="#">Unduh PDF</a></li>
+                                    <li><a class="dropdown-item"
+                                            href="{{ route('exportExel', ['jalur' => 'akademik']) }}">Export Exel</a></li>
                                 </ul>
                             </div>
 
                             <div class="card-body">
-                                <h5 class="card-title">Lomba Aakademik <span>| Jalur</span></h5>
+                                <h5 class="card-title">Lomba Aakademik </h5>
 
                                 <div class="d-flex align-items-center">
                                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                                         <i class="fa-solid fa-trophy"></i>
                                     </div>
                                     <div class="ps-3">
-                                        <h6>145</h6>
-                                        <span class="text-success small pt-1 fw-bold">12%</span> <span
-                                            class="text-muted small pt-2 ps-1">increase</span>
+                                        <h6>{{ $jumlahPerJalur[4] ?? 0 }}</h6>
+                                        <span class="text-muted small pt-2 ps-1">siswa</span>
 
                                     </div>
                                 </div>
@@ -151,54 +151,56 @@
                                         <h6>Download</h6>
                                     </li>
 
-                                    <li><a class="dropdown-item" href="#">Unduh PDF</a></li>
+                                    <li><a class="dropdown-item"
+                                            href="{{ route('exportExel', ['jalur' => 'non-akademik']) }}}">Export Exel</a>
+                                    </li>
                                 </ul>
                             </div>
 
                             <div class="card-body">
-                                <h5 class="card-title">Lomba Non akademik <span>| Jalur</span></h5>
+                                <h5 class="card-title">Lomba Non akademik </h5>
+
+                                <div class="d-flex align-items-center">
+                                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                        <i class="fa-solid fa-trophy"></i>
+
+                                    </div>
+                                    <div class="ps-3">
+                                        <h6>{{ $jumlahPerJalur[5] ?? 0 }}</h6>
+                                        <span class="text-muted small pt-2 ps-1">siswa</span>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div><!-- End Sales Card -->
+                    <div class="col-xxl-4 col-md-4">
+                        <div class="card info-card sales-card">
+
+                            <div class="filter">
+                                <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                        class="bi bi-three-dots"></i></a>
+                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                    <li class="dropdown-header text-start">
+                                        <h6>Download</h6>
+                                    </li>
+
+                                    <li><a class="dropdown-item"
+                                            href="{{ route('exportExel', ['jalur' => 'raport']) }}">Export Exel</a></li>
+                                </ul>
+                            </div>
+
+                            <div class="card-body">
+                                <h5 class="card-title">Prestasi Nilai Rapor </h5>
 
                                 <div class="d-flex align-items-center">
                                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                                         <i class="fa-solid fa-medal"></i>
                                     </div>
                                     <div class="ps-3">
-                                        <h6>145</h6>
-                                        <span class="text-success small pt-1 fw-bold">12%</span> <span
-                                            class="text-muted small pt-2 ps-1">increase</span>
-
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div><!-- End Sales Card -->
-                    <div class="col-xxl-4 col-md-4">
-                        <div class="card info-card sales-card">
-
-                            <div class="filter">
-                                <a class="icon" href="#" data-bs-toggle="dropdown"><i
-                                        class="bi bi-three-dots"></i></a>
-                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                    <li class="dropdown-header text-start">
-                                        <h6>Download</h6>
-                                    </li>
-
-                                    <li><a class="dropdown-item" href="#">Unduh PDF</a></li>
-                                </ul>
-                            </div>
-
-                            <div class="card-body">
-                                <h5 class="card-title">Prestasi Nilai Rapor <span>| Jalur</span></h5>
-
-                                <div class="d-flex align-items-center">
-                                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                        <i class="fa-solid fa-chart-line"></i>
-                                    </div>
-                                    <div class="ps-3">
-                                        <h6>145</h6>
-                                        <span class="text-success small pt-1 fw-bold">12%</span> <span
-                                            class="text-muted small pt-2 ps-1">increase</span>
+                                        <h6>{{ $jumlahPerJalur[6] ?? 0 }}</h6>
+                                        <span class="text-muted small pt-2 ps-1">siswa</span>
 
                                     </div>
                                 </div>
@@ -218,7 +220,7 @@
                                         <h6>Download</h6>
                                     </li>
 
-                                    <li><a class="dropdown-item" href="#">Unduh PDF</a></li>
+                                    <li><a class="dropdown-item" href="">Export Exel</a></li>
                                 </ul>
                             </div>
 
@@ -230,9 +232,8 @@
                                         <i class="bi bi-people"></i>
                                     </div>
                                     <div class="ps-3">
-                                        <h6>1244</h6>
-                                        <span class="text-danger small pt-1 fw-bold">12%</span> <span
-                                            class="text-muted small pt-2 ps-1">decrease</span>
+                                        <h6>{{ $pendaftarans->count() }}</h6><span
+                                            class="text-muted small pt-2 ps-1">siswa</span>
 
                                     </div>
                                 </div>

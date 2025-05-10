@@ -45,13 +45,31 @@ class DashboardController extends Controller
         ];
     }
     //dashboard
+
     public function index()
     {
         $breadcrumb = (object) [
             'list' => ['Dashboard', '']
         ];
-        return view('admin.dashboard', ['data' => $this->data, 'breadcrumb' => $breadcrumb]);
+        $pendaftarans = Pendaftaran::all();
+
+        $jumlahPerJalur = Pendaftaran::with('register.jalur')
+            ->get()
+            ->groupBy(function ($item) {
+                return $item->register->jalur->id ?? 'unknown';
+            })
+            ->map(function ($group) {
+                return $group->count();
+            });
+
+        return view('admin.dashboard', [
+            'data' => $this->data,
+            'breadcrumb' => $breadcrumb,
+            'pendaftarans' => $pendaftarans,
+            'jumlahPerJalur' => $jumlahPerJalur
+        ]);
     }
+
     public function viewZonasi()
     {
         $breadcrumb = (object) [

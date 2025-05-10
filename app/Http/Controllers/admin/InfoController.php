@@ -24,14 +24,7 @@ class InfoController extends Controller
         return view('admin.info', ['data' => $data, 'breadcrumb' => $breadcrumb, 'infos' => $infos]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create() {}
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $request->validate([
@@ -74,21 +67,6 @@ class InfoController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -139,28 +117,10 @@ class InfoController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy(string $id)
     {
-        try {
-            $info = Info::findOrFail($id);
-
-            // Hapus file dari storage jika ada
-            if ($info->file && Storage::exists($info->file)) {
-                Storage::delete($info->file);
-            }
-
-            $info->delete();
-
-            return response()->json([
-                'success' => true,
-                'message' => 'Info berhasil dihapus'
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Gagal menghapus info: ' . $e->getMessage()
-            ], 500);
-        }
+        Info::where('id', $id)->delete();
+        return response()->json(['success' => true]);
     }
 
     private function generateUniqueSlug($title)
