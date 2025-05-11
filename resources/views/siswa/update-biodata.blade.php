@@ -39,18 +39,32 @@
                                 </div>
 
                                 <div class="form-group  mb-3">
-                                    <label class="form-label">NISN</label>
+                                    <label class="form-label">Nomor Induk Siswa Nasional (NISN)</label>
                                     <input type="text" class="form-control" name="nisn" id="nisn"
                                         value="{{ $data->siswa->nisn }}" readonly>
                                 </div>
 
                                 <div class="form-group  mb-3">
-                                    <label class="form-label">NIK <span style="color:#e3342f">*</span></label>
+                                    <label class="form-label">Nomor Induk Kependudukan (NIK) <span
+                                            style="color:#e3342f">*</span></label>
                                     <input type="text" class="form-control" name="nik" id="nik"
                                         value="{{ old('nik', $data->siswa->nik) }}" placeholder="Masukan NIK">
                                     <div id="validasiNik" class="invalid-feedback"></div>
                                 </div>
 
+                                <div class="form-group  mb-3">
+                                    <label class="form-label">Nomor Kartu Keluarga <span
+                                            style="color:#e3342f">*</span></label>
+                                    <input type="text" class="form-control" name="no_kk" id="no_kk"
+                                        value="{{ old('no_kk', $data->siswa->no_kk) }}" placeholder="Masukan No KK">
+                                    <div id="validasiKK" class="invalid-feedback"></div>
+                                </div>
+                                <div class="form-group  mb-3">
+                                    <label class="form-label">Asal Sekolah</label>
+                                    <input type="text" class="form-control" name="asal_sekolah" id="asal-sekolah"
+                                        value="{{ old('asal_sekolah', $data->siswa->asal_sekolah) }}"
+                                        placeholder="Asal sekolah">
+                                </div>
                                 <div class="form-group  mb-3">
                                     <label class="form-label">Jenis Kelamin <span style="color:#e3342f">*</span></label>
                                     <div class="d-flex gap-3">
@@ -109,17 +123,25 @@
                                     value="{{ old('kec_id', $data->siswa->kec_id ?? '') }}">
                                 <input type="hidden" id="selected_desa"
                                     value="{{ old('desa_id', $data->siswa->desa_id ?? '') }}">
+
                                 <div class="form-group  mb-3">
-                                    <label class="form-label">RT <span style="color:#e3342f">*</span></label>
-                                    <input type="text" class="form-control" name="rt" id="rt"
-                                        value="{{ old('rt', $data->siswa->rt) }}" placeholder="RT">
-                                    <div id="validasiRT" class="invalid-feedback"></div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <label class="form-label">RT <span style="color:#e3342f">*</span></label>
+                                            <input type="text" class="form-control" name="rt" id="rt"
+                                                value="{{ old('rt', $data->siswa->rt) }}" placeholder="RT">
+                                            <div id="validasiRT" class="invalid-feedback"></div>
+                                        </div>
+                                        <div class="col">
+                                            <label class="form-label">RW <span style="color:#e3342f">*</span></label>
+                                            <input type="text" class="form-control" name="rw" id="rw"
+                                                value="{{ old('rw', $data->siswa->rw) }}" placeholder="RW">
+                                            <div id="validasiRW" class="invalid-feedback"></div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="form-group  mb-3">
-                                    <label class="form-label">RW <span style="color:#e3342f">*</span></label>
-                                    <input type="text" class="form-control" name="rw" id="rw"
-                                        value="{{ old('rw', $data->siswa->rw) }}" placeholder="RW">
-                                    <div id="validasiRW" class="invalid-feedback"></div>
+
                                 </div>
                                 <div class="form-group  mb-3">
                                     <label for="alamat" class="form-label">Alamat <span
@@ -148,12 +170,7 @@
                                         data-bs-toggle="modal" data-bs-target="#mapModal"><i
                                             class="fa-solid fa-location-dot"></i></button>
                                 </div>
-                                <div class="form-group  mb-3">
-                                    <label class="form-label">Asal Sekolah</label>
-                                    <input type="text" class="form-control" name="asal_sekolah" id="asal-sekolah"
-                                        value="{{ old('asal_sekolah', $data->siswa->asal_sekolah) }}"
-                                        placeholder="Asal sekolah">
-                                </div>
+
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="border m-3 py-1 px-2 text-center">
@@ -555,6 +572,19 @@
                     $(this).addClass("is-invalid");
                 } else {
                     $("#validasiNik").hide();
+                    $(this).removeClass("is-invalid").addClass("is-valid");
+                }
+            });
+
+            $("#no_kk").on("input", function() {
+                var no_kk = $(this).val();
+                var kkRegex = /^[0-9]{16}$/;
+
+                if (!kkRegex.test(no_kk)) {
+                    $("#validasiKK").text("No KK harus terdiri dari 16 digit angka!").show();
+                    $(this).addClass("is-invalid");
+                } else {
+                    $("#validasiKK").hide();
                     $(this).removeClass("is-invalid").addClass("is-valid");
                 }
             });

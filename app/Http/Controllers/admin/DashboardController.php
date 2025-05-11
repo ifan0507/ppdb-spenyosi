@@ -7,8 +7,10 @@ use App\Http\Controllers\Controller;
 use App\Mail\Confirmation;
 use App\Mail\DeclineMail;
 use App\Models\DataRaport;
+use App\Models\Jalur;
 use App\Models\Pendaftaran;
 use App\Models\Register;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -51,22 +53,55 @@ class DashboardController extends Controller
         $breadcrumb = (object) [
             'list' => ['Dashboard', '']
         ];
+
+        $jalurList = Jalur::pluck('nama_jalur', 'id');
         $pendaftarans = Pendaftaran::all();
 
         $jumlahPerJalur = Pendaftaran::with('register.jalur')
             ->get()
             ->groupBy(function ($item) {
-                return $item->register->jalur->id ?? 'unknown';
+                return $item->register->jalur->id ?? 'Unknown';
             })
             ->map(function ($group) {
                 return $group->count();
             });
 
+        $grouped = $pendaftarans->groupBy(function ($item) {
+            return Carbon::parse($item->created_at)->format('o-W');
+        })->map(function ($items) use ($jalurList) {
+            $perJalur = [];
+
+            foreach ($jalurList as $id => $nama) {
+                $perJalur[$nama] = $items->filter(function ($i) use ($id) {
+                    return $i->register->jalur->id == $id;
+                })->count();
+            }
+
+            return $perJalur;
+        });
+
+        $labelsMingguan = $grouped->keys()->map(function ($key) {
+            [$tahun, $minggu] = explode('-', $key);
+            return "Minggu $minggu, $tahun";
+        });
+
+        $series = [];
+        foreach ($jalurList as $nama) {
+            $data = $grouped->map(fn($week) => $week[$nama] ?? 0)->values();
+            $series[] = [
+                'name' => $nama,
+                'data' => $data
+            ];
+        }
+
+
         return view('admin.dashboard', [
             'data' => $this->data,
             'breadcrumb' => $breadcrumb,
             'pendaftarans' => $pendaftarans,
-            'jumlahPerJalur' => $jumlahPerJalur
+            'jumlahPerJalur' => $jumlahPerJalur,
+            'labelsMingguan' => $labelsMingguan,
+            'seriesChart' => $series
         ]);
     }
 
@@ -357,11 +392,23 @@ class DashboardController extends Controller
         $pendaftaran = Pendaftaran::where('id', $id)->first();
 
         if ($pendaftaran) {
-            $pendaftaran->update([
-                'confirmations' => '1',
-                'status' => 'valid',
-                'id_user' => $this->data->id
-            ]);
+            if ($pendaftaran->decline == '0') {
+                $pendaftaran->update([
+                    'confirmations' => '1',
+                    'status' => 'valid',
+                    'id_user' => $this->data->id
+                ]);
+            } else {
+                $pendaftaran->update([
+                    'confirmations' => '1',
+                    'decline' => '0',
+                    'status' => 'valid',
+                    'id_user' => $this->data->id
+                ]);
+                Register::where('id', $pendaftaran->id_register)->update([
+                    'submit' => "1"
+                ]);
+            }
 
             Mail::to($pendaftaran->register->email)->send(new Confirmation($pendaftaran->register->siswa->nama));
         };
@@ -374,11 +421,21 @@ class DashboardController extends Controller
         $pendaftaran = Pendaftaran::where('id', $id)->first();
 
         if ($pendaftaran) {
-            $pendaftaran->update([
-                'decline' => '1',
-                'status' => 'invalid',
-                'id_user' => $this->data->id,
-            ]);
+            if ($pendaftaran->confirmations == '0') {
+                $pendaftaran->update([
+                    'decline' => '1',
+                    'status' => 'invalid',
+                    'id_user' => $this->data->id,
+                ]);
+            } else {
+                $pendaftaran->update([
+                    'decline' => '1',
+                    'confirmations' => '0',
+                    'status' => 'invalid',
+                    'id_user' => $this->data->id,
+                ]);
+            }
+
 
             Register::where('id', $pendaftaran->id_register)->update([
                 'submit' => "0"

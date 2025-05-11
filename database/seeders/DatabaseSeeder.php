@@ -34,9 +34,11 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        // User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
+        // User::create([
+        //     'email' => "ipan.lmj0507@gmail.com",
+        //     'password' =>  '123',
+        //     'name' => "ifan",
+        //     'role' => "admin",
         // ]);
 
         // MataPelajaran::insert([
@@ -128,6 +130,8 @@ class DatabaseSeeder extends Seeder
         // ]);
 
 
+        $month = rand(5, 7); // Bulan acak antara Mei (5) dan Juli (7)
+        $daysInMonth = Carbon::create(2025, $month, 1)->daysInMonth; // Menghitung jumlah hari di bulan tersebut
 
         $tingkatPrestasi = ['Kecamatan', 'Kabupaten/Kota', 'Provinsi', 'Nasional'];
         $jura = ['Peringkat 1', 'Peringkat 2', 'Peringkat 3', 'Lainnya'];
@@ -297,6 +301,7 @@ class DatabaseSeeder extends Seeder
                 'id_register' => $akun->id,
                 'status' => 'Pending',
                 'tanggal_daftar' => Carbon::now(),
+                'created_at' => Carbon::create(2025, $month, rand(1, $daysInMonth)),
             ]);
         }
 

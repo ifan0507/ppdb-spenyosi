@@ -39,34 +39,6 @@ class DashboardController extends Controller
         return view('siswa.dashboard', compact('data', 'active_tab'));
     }
 
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit()
     {
         $breadcrumb = (object)[
@@ -168,6 +140,7 @@ class DashboardController extends Controller
         $update = SiswaBaru::where("id", $akun->siswa->id)->update([
             "foto_siswa" => $fotoSiswaPath,
             "nik" => $request->nik,
+            "no_kk" => $request->no_kk,
             "jenis_kelamin" => $request->jenis_kelamin,
             "tempat_lahir" => $request->tempat_lahir,
             "tanggal_lahir" => $request->tanggal_lahir,

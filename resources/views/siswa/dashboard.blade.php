@@ -44,10 +44,10 @@
                                                         <label for="pribadi_blob" class="form-label">
                                                             Foto Pribadi
                                                         </label>
-                                                        <a href="{{ asset('storage/' . $data->siswa->foto_siswa) }}">
+                                                        <a href="{{ asset('storage/' . $data->siswa->foto_siswa) }}"
+                                                            rel="noopener noreferrer" target="_blank">
                                                             <img src="{{ asset('storage/' . $data->siswa->foto_siswa) }}"
-                                                                class="img-fluid img-thumbnail mb-3" alt="Foto Pribadi"
-                                                                target="_blank"></a>
+                                                                class="img-fluid img-thumbnail mb-3" alt="Foto Pribadi"></a>
                                                     </div>
                                                 </div>
 
@@ -56,7 +56,8 @@
                                                         <table class="table table-striped table-bordered align-middle">
                                                             <tbody class="table-light">
                                                                 <tr>
-                                                                    <th width="30%">NISN</th>
+                                                                    <th width="30%">Nomor Induk Siswa Nasional (NISN)
+                                                                    </th>
                                                                     <td>{{ $data->siswa->nisn ?? '_' }}</td>
                                                                 </tr>
                                                                 <tr>
@@ -64,8 +65,16 @@
                                                                     <td>{{ $data->siswa->nama ?? '_' }}</td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <th>NIK</th>
+                                                                    <th>Nomor Induk Kependudukan (NIK)</th>
                                                                     <td>{{ $data->siswa->nik ?? '-' }}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th>Nomor KK</th>
+                                                                    <td>{{ $data->siswa->no_kk ?? '-' }}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th>Asal sekolah</th>
+                                                                    <td>{{ $data->siswa->asal_sekolah ?? '_' }}</td>
                                                                 </tr>
                                                                 <tr>
                                                                     <th>Jenis Kelamin</th>
@@ -80,10 +89,7 @@
                                                                             {{ $data->siswa->tanggal_lahir }}</td>
                                                                     @endif
                                                                 </tr>
-                                                                <tr>
-                                                                    <th>Asal sekolah</th>
-                                                                    <td>{{ $data->siswa->asal_sekolah ?? '_' }}</td>
-                                                                </tr>
+
                                                                 <tr>
                                                                     <th>Kabupaten</th>
                                                                     <td>{{ $data->siswa->kabupaten ?? '_' }}</td>
@@ -124,21 +130,21 @@
                                                                 </tr>
                                                                 <tr>
                                                                     <th>Foto KK</th>
-                                                                    <td><a
-                                                                            href="{{ asset('storage/' . $data->siswa->foto_kk) }}"><img
+                                                                    <td><a href="{{ asset('storage/' . $data->siswa->foto_kk) }}"
+                                                                            target="_blank" rel="noopener noreferrer"><img
                                                                                 src="{{ asset('storage/' . $data->siswa->foto_kk) }}"
                                                                                 alt="Foto KK"
-                                                                                style="width: 130px; height: 130px;"
-                                                                                target="_blank"></a></td>
+                                                                                style="width: 130px; height: 130px;"></a>
+                                                                    </td>
                                                                 </tr>
                                                                 <tr>
                                                                     <th>Foto Akte</th>
-                                                                    <td><a
-                                                                            href="{{ asset('storage/' . $data->siswa->foto_akte) }}"><img
+                                                                    <td><a href="{{ asset('storage/' . $data->siswa->foto_akte) }}"
+                                                                            target="_blank" rel="noopener noreferrer"><img
                                                                                 src="{{ asset('storage/' . $data->siswa->foto_akte) }}"
                                                                                 alt="Foto Akte"
-                                                                                style="width: 130px; height: 130px;"
-                                                                                target="_blank"></a></td>
+                                                                                style="width: 130px; height: 130px;" </a>
+                                                                    </td>
                                                                 </tr>
                                                             </tbody>
                                                         </table>

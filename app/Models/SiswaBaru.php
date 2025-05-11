@@ -23,6 +23,7 @@ class SiswaBaru extends Model
         'nisn',
         'nama',
         'nik',
+        'no_kk',
         'jenis_kelamin',
         'tempat_lahir',
         'tanggal_lahir',
