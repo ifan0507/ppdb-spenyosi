@@ -143,11 +143,17 @@ Route::middleware(['cache_verify', 'auth_admin'])->group(function () {
 
     Route::get('/admin/export/{jalur}', [AdminDashboardController::class, 'exportExel'])->name('exportExel');
 
-
-
     Route::get('/admin/manajemen-info', [InfoController::class, 'index'])->name('admin.info');
     Route::post('/admin/info', [InfoController::class, 'store'])->name('info.post');
     Route::put('/admin/info/{slug}/update', [InfoController::class, 'update'])->name('info.update');
     Route::delete('/admin/info/{id}/delete', [InfoController::class, 'destroy'])->name('info.delete');
+
+    Route::get('/admin/download/dokumen/{id}/{tipe}', [AdminDashboardController::class, 'downloadDocument'])->name('downloadDocument');
+    Route::get('/admin/download/document-afirmasi/{id}', [AdminDashboardController::class, 'downloadDocumentAfirmasi'])->name('downloadDocumentAfirmasi');
+    Route::get('/admin/download/rapor/{id}', [AdminDashboardController::class, 'downloadRapor'])->name('downloadRapor');
+    Route::get('/admin/download/akademik/{id}', [AdminDashboardController::class, 'downloadAkademik'])->name('downloadAkademik');
+    Route::get('/admin/download/non-akademik/{id}', [AdminDashboardController::class, 'downloadNonAkademik'])->name('downloadNonAkademik');
+
+
     Route::get('/admin/logout', [AuthController::class, 'logout'])->name('logout-admin');
 });

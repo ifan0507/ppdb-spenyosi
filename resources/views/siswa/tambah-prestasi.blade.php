@@ -238,7 +238,7 @@
                             Swal.fire({
                                 title: "Berhasil",
                                 icon: "success",
-                                text: "diperbarui!",
+                                text: "ditambahkan!",
                                 confirmButtonText: "OK",
                                 confirmButtonColor: "#18a342",
                             }).then(() => {

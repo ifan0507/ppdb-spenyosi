@@ -150,7 +150,7 @@
 
                                     @if ($jalur == 'Jalur Prestasi Raport' || $jalur == 'Jalur Zonasi')
                                         <div class="col-md-6">
-                                            <form action="" method="GET">
+                                            <form action="" method="GET" id="filter_besaran">
                                                 <label for="top_n" class="form-label">Top Berapa Besar</label>
                                                 <div class="input-group">
                                                     <input type="number" id="top_n" name="top_n"
@@ -450,8 +450,9 @@
                 if (startVal > 0 && endVal > 0 && endVal < startVal) {
                     $("#end_rank").addClass("is-invalid").removeClass("is-valid");
                 }
-            });
 
+
+            });
 
             $("#filter_no").submit(function(e) {
                 e.preventDefault();
@@ -522,6 +523,42 @@
 
                 this.submit();
             });
+            $("#top_n").on("input", function() {
+                const top_n = parseInt($("#top_n").val());
+                if (!top_n || top_n <= 0) {
+                    $("#top_n").addClass("is-invalid").removeClass("is-valid");
+                } else {
+                    $("#top_n").removeClass("is-invalid").addClass("is-valid");
+                }
+            });
+
+            $("#filter_besaran").submit(function(e) {
+                e.preventDefault();
+                const top_n = parseInt($("#top_n").val());
+                if (top_n <= 0) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "No urut sampai harus lebih dari 0"
+                    });
+                    $("#top_n").addClass("is-invalid");
+                    return;
+                }
+                Swal.fire({
+                    title: 'Memuat data...',
+                    text: 'Mohon tunggu sebentar',
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    showConfirmButton: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
+
+                this.submit();
+            });
+
+
             $('#exportExcel').on('click', function(e) {
                 e.preventDefault();
 

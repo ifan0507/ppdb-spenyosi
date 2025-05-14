@@ -39,8 +39,13 @@
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="col-md-3 text-center">
-                                                    <img src="{{ asset('storage/' . $data->afirmasi->image) }}"
-                                                        alt="Foto Prestasi" class="img-fluid img-thumbnail mb-3">
+                                                    <div class="border p-2">
+                                                        <label for="pribadi_blob" class="form-label">
+                                                            Dokumen Afirmasi
+                                                        </label>
+                                                        <img src="{{ asset('storage/' . $data->afirmasi->image) }}"
+                                                            alt="Foto Prestasi" class="img-fluid img-thumbnail mb-3">
+                                                    </div>
                                                 </div>
 
                                                 <div class="col-md-9">

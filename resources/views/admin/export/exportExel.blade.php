@@ -27,6 +27,7 @@
             <!-- BIODATA SISWA -->
             <th style="text-align: center; font-weight: bold;">NISN</th>
             <th style="text-align: center; font-weight: bold;">NIK</th>
+            <th style="text-align: center; font-weight: bold;">No KK</th>
             <th style="text-align: center; font-weight: bold;">Nama Lengkap</th>
             <th style="text-align: center; font-weight: bold;">Jenis Kelamin</th>
             <th style="text-align: center; font-weight: bold;">Tempat, Tanggal Lahir</th>
@@ -74,10 +75,12 @@
                 <!-- BIODATA SISWA -->
                 <td>{{ $item->register->siswa->nisn }}</td>
                 <td>{{ $item->register->siswa->nik }}</td>
-                <td>{{ $item->register->siswa->nama }}</td>
+                <td>{{ $item->register->siswa->nik }}</td>
+                <td>{{ $item->register->siswa->no_kk }}</td>
                 <td>{{ $item->register->siswa->jenis_kelamin }}</td>
                 <td>{{ $item->register->siswa->tempat_lahir }}, {{ $item->register->siswa->tanggal_lahir }}</td>
-                <td>{{ $item->register->siswa->alamat }}, {{ $item->register->siswa->desa }},
+                <td>{{ $item->register->siswa->alamat }},{{ $item->register->siswa->rt }} /
+                    {{ $item->register->siswa->rw }}, {{ $item->register->siswa->desa }},
                     {{ $item->register->siswa->kecamatan }}, {{ $item->register->siswa->kabupaten }}</td>
                 <td>{{ $item->register->siswa->no_hp }}</td>
                 <td>{{ $item->register->siswa->email }}</td>

@@ -10,11 +10,14 @@ use App\Models\DataRaport;
 use App\Models\Jalur;
 use App\Models\Pendaftaran;
 use App\Models\Register;
+use App\Models\SiswaBaru;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 
 class DashboardController extends Controller
@@ -486,6 +489,70 @@ class DashboardController extends Controller
 
         $filename = $filename . (str_ends_with($filename, '.xlsx') ? '' : '.xlsx');
         return Excel::download(new PendaftaranExport($jalur, $sort, $start, $end, $top_n), $filename);
+    }
+
+    public function downloadDocument($id, $tipe)
+    {
+        $dataSiswa = Pendaftaran::findOrFail($id);
+        $siswa = $dataSiswa->register->siswa;
+
+        // Mapping tipe dokumen ke field dan prefix
+        $tipeMap = [
+            'foto' => ['field' => 'foto_siswa', 'prefix' => 'FOTO'],
+            'kk' => ['field' => 'foto_kk', 'prefix' => 'KK'],
+            'akte' => ['field' => 'foto_akte', 'prefix' => 'AKTE'],
+        ];
+
+        if (!array_key_exists($tipe, $tipeMap)) {
+            abort(404);
+        }
+
+        $field = $tipeMap[$tipe]['field'];
+        $prefix = $tipeMap[$tipe]['prefix'];
+        $fileName = $siswa->$field;
+
+        if (!Storage::disk('public')->exists($fileName)) {
+            Session::flash('status', 'File tidak ditemukan.');
+            return redirect()->route('admin.detail', ['id' => $dataSiswa->id]);
+        }
+
+        $ext = pathinfo($fileName, PATHINFO_EXTENSION);
+        $namaFileAsli = $prefix . '_' . $dataSiswa->register->no_register . '_' . str_replace(' ', '_', $siswa->nama) . '.' . $ext;
+
+        return Storage::disk('public')->download($fileName, $namaFileAsli);
+    }
+
+
+    public function downloadDocumentAfirmasi($id)
+    {
+        $dataSiswa = Pendaftaran::findOrFail($id);
+        $fileName = $dataSiswa->register->afirmasi->image;
+
+        if (!Storage::disk('public')->exists($fileName)) {
+            Session::flash('status', 'File tidak ditemukan.');
+            return redirect()->route('admin.detail', ['id' => $dataSiswa->id]);
+        }
+
+        $ext = pathinfo($fileName, PATHINFO_EXTENSION);
+        $namaFileAsli = 'AFIRMASI' . '_' . $dataSiswa->register->no_register . '_' . str_replace(' ', '_', $dataSiswa->register->siswa->nama) . '.' . $ext;
+
+        return Storage::disk('public')->download($fileName, $namaFileAsli);
+    }
+
+    public function downloadRapor($id)
+    {
+        $dataSiswa = Pendaftaran::findOrFail($id);
+        $fileName = $dataSiswa->register->rata_rata_raport->image;
+
+        if (!Storage::disk('public')->exists($fileName)) {
+            Session::flash('status', 'File tidak ditemukan.');
+            return redirect()->route('admin.detail', ['id' => $dataSiswa->id]);
+        }
+
+        $ext = pathinfo($fileName, PATHINFO_EXTENSION);
+        $namaFileAsli = 'RAPOR' . '_' . $dataSiswa->register->no_register . '_' . str_replace(' ', '_', $dataSiswa->register->siswa->nama) . '.' . $ext;
+
+        return Storage::disk('public')->download($fileName, $namaFileAsli);
     }
 
     private function sortStatusPendaftaran($sort)
